@@ -17,6 +17,10 @@ import { firestoreConnect } from 'react-redux-firebase';
 import CardPoem from '../components/CardPoem';
 
 class HomeScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Home'
+  };
+
   state = {
     name: '',
     body: '',
@@ -26,9 +30,7 @@ class HomeScreen extends React.Component {
     isFetching: false,
     poems: null
   };
-  static navigationOptions = {
-    header: null
-  };
+
   sendTofireBase = async () => {
     const { firestore } = this.props;
     const lastOne = this.props.poems.length - 1;

@@ -2,12 +2,14 @@ import React from 'react';
 import { Platform } from 'react-native';
 import {
   createStackNavigator,
-  createBottomTabNavigator
+  createBottomTabNavigator,
+  createDrawerNavigator
 } from 'react-navigation';
 
 // import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import PostPoem from '../screens/PostPoem';
+import FooterTabs from '../components/FooterTabs';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -15,34 +17,37 @@ const HomeStack = createStackNavigator({
 const PostStack = createStackNavigator({
   Post: PostPoem
 });
+const Drawer = createDrawerNavigator({
+  Home: {
+    screen: HomeScreen
+  },
+  Post: {
+    screen: PostPoem
+  }
+});
 
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home'
-  // tabBarIcon: ({ focused }) => (
-  //   <TabBarIcon
-  //     focused={focused}
-  //     name={
-  //       Platform.OS === 'ios'
-  //         ? `ios-information-circle${focused ? '' : '-outline'}`
-  //         : 'md-information-circle'
-  //     }
-  //   />
-  // )
 };
 PostStack.navigationOptions = {
   tabBarLabel: 'Post'
-  // tabBarIcon: ({ focused }) => (
-  //   <TabBarIcon
-  //     focused={focused}
-  //     name={
-  //       Platform.OS === 'ios'
-  //         ? `ios-information-circle${focused ? '' : '-outline'}`
-  //         : 'md-information-circle'
-  //     }
-  //   />
-  // )
 };
-export default createBottomTabNavigator({
-  HomeStack,
-  PostStack
-});
+export default createBottomTabNavigator(
+  {
+    Drawer,
+    HomeStack,
+    PostStack
+  },
+  {
+    defaultNavigationOptions: {
+      tabBarComponent: props => <FooterTabs {...props} />,
+      headerStyle: {
+        backgroundColor: '#f4511e'
+      },
+      headerTintColor: '#000',
+      headerTitleStyle: {
+        fontWeight: 'bold'
+      }
+    }
+  }
+);
