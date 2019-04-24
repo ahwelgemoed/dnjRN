@@ -120,6 +120,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 40,
+    paddingLeft: 10,
+    paddingRight: 10,
     width: screenWidth
+  },
+  flatlist: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center'
   }
 });

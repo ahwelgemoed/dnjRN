@@ -17,18 +17,21 @@ import styled from 'styled-components/native';
 const StyledText = styled.View`
   shadow-opacity: 0.35;
   shadow-radius: 20px;
+  border-radius: 20px;
   shadow-color: rgba(0, 0, 0, 0.2);
   shadow-offset: 0px 0px;
   background: white;
   margin-bottom: 40px;
-  width: 95%;
+  width: 100%;
   padding: 10px;
+  display: flex;
+  justify-content: center;
 `;
 
 export default class CardPoem extends Component {
   render() {
     return (
-      <StyledText style={styles.container}>
+      <StyledText>
         <Row>
           <Col>
             <Text style={styles.name}>{this.props.poem.name}</Text>
