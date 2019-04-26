@@ -43,6 +43,7 @@ class PostPoem extends Component {
     name: '',
     update: false,
     handle: '',
+    nsfw: '',
     date: Date.now()
   };
 
@@ -51,16 +52,25 @@ class PostPoem extends Component {
       withInstagram: !this.state.withInstagram
     });
   };
+  nsfw = () => {
+    this.setState({
+      nsfw: !this.state.nsfw
+    });
+  };
   upDateSave = async () => {};
   postToPoem = async () => {
+    console.log(this.state.update);
+    console.log(this.state.withInstagram);
     if (this.state.update) {
       const { firestore, auth } = this.props;
-      const { id, date, body, name, handle, withInstagram } = this.state;
+      const { id, date, body, name, handle, nsfw, withInstagram } = this.state;
+
       let payLoad;
       if (withInstagram) {
         payLoad = {
           date,
           body,
+          nsfw,
           name,
           handle: this.props.profile.Instagram,
           uid: auth.uid
@@ -69,7 +79,9 @@ class PostPoem extends Component {
         payLoad = {
           date,
           body,
+          nsfw,
           name,
+          handle: '',
           uid: auth.uid
         };
       }
@@ -87,12 +99,13 @@ class PostPoem extends Component {
         });
     } else {
       const { firestore, auth } = this.props;
-      const { date, body, name, handle, withInstagram } = this.state;
+      const { date, body, name, handle, withInstagram, nsfw } = this.state;
       let payLoad;
       if (withInstagram) {
         payLoad = {
           date,
           body,
+          nsfw,
           name,
           handle: this.props.profile.Instagram,
           uid: auth.uid
@@ -100,8 +113,10 @@ class PostPoem extends Component {
       } else {
         payLoad = {
           date,
+          nsfw,
           body,
           name,
+          handle: '',
           uid: auth.uid
         };
       }
@@ -118,27 +133,32 @@ class PostPoem extends Component {
         });
     }
   };
-  componentDidMount() {
+  async componentDidMount() {
     const { navigation } = this.props;
     const id = navigation.getParam('id');
     const name = navigation.getParam('name');
     const handle = navigation.getParam('handle');
     const body = navigation.getParam('body');
+    const nsfw = navigation.getParam('nsfw');
     if (name) {
-      this.setState({
+      await this.setState({
         id,
         name,
+        nsfw,
         body,
         update: true
       });
+      console.log(handle);
+
       if (handle) {
-        this.setState({
+        await this.setState({
           withInstagram: true
         });
       }
     }
   }
   render() {
+    console.log(this.state.handle);
     const { handle, body } = this.state;
     return (
       <Container>
@@ -169,7 +189,9 @@ class PostPoem extends Component {
                   onPress={this.withInstagram}
                 />
                 <Body>
-                  <Text>Post as {this.props.profile.Instagram}</Text>
+                  <Text style={styles.check}>
+                    Post as {this.props.profile.Instagram}
+                  </Text>
                 </Body>
               </ListItem>
             ) : (
@@ -177,8 +199,21 @@ class PostPoem extends Component {
                 <AddInstagramModal />
               </React.Fragment>
             )}
+            <ListItem>
+              <CheckBox
+                color={'#000'}
+                checked={this.state.nsfw}
+                onPress={this.nsfw}
+              />
+              <Body>
+                <Text style={styles.check}>NSFW</Text>
+              </Body>
+            </ListItem>
             <Button block light onPress={this.postToPoem}>
               <Text style={styles.button}>Post Poem</Text>
+            </Button>
+            <Button block light onPress={() => this.props.navigation.goBack()}>
+              <Text style={styles.button}>Cancel</Text>
             </Button>
           </Form>
         </Content>
@@ -195,6 +230,12 @@ const styles = StyleSheet.create({
   button: {
     fontSize: 16,
     color: '#868686',
+    fontFamily: 'proxima-alt',
+    textAlign: 'left'
+  },
+  check: {
+    fontSize: 14,
+    color: '#999',
     fontFamily: 'proxima-alt',
     textAlign: 'left'
   }

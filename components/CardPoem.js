@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions } from 'react-native';
-import { Icon, Button, Row, Col, Toast } from 'native-base';
+import { Icon, Button, Row, Col, Badge } from 'native-base';
 import moment from 'moment';
 import styled from 'styled-components/native';
+import Pulse from 'react-native-pulse';
 const StyledText = styled.View`
   shadow-opacity: 0.35;
   shadow-radius: 10px;
@@ -27,7 +28,7 @@ export default class CardPoem extends Component {
     const posted = moment(this.props.poem.date);
     const differ = now.diff(posted, 'minutes');
 
-    if (this.props.auth.uid === this.props.poem.uid && differ < 2) {
+    if (this.props.auth.uid === this.props.poem.uid && differ < 10) {
       console.log('Mount');
       this.setState({
         userEdit: true
@@ -37,7 +38,7 @@ export default class CardPoem extends Component {
         const posted = moment(this.props.poem.date);
         const differ = now.diff(posted, 'minutes');
         console.log(differ);
-        if (differ < 2) {
+        if (differ < 10) {
           this.setState({
             userEdit: true
           });
@@ -58,6 +59,11 @@ export default class CardPoem extends Component {
         <Row>
           <Col>
             <Text style={styles.name}>{this.props.poem.name}</Text>
+            {this.props.poem.nsfw ? (
+              <Badge style={styles.IconBadge}>
+                <Text style={styles.nsfw}>NSFW</Text>
+              </Badge>
+            ) : null}
             {this.props.poem.handle ? (
               <Text
                 onPress={() =>
@@ -87,13 +93,15 @@ export default class CardPoem extends Component {
           <Col>
             {this.state.userEdit ? (
               <Button
-                block
+                style={styles.button}
                 transparent
+                block
+                small
                 onPress={() => {
                   this.props.navigation.navigate('Post', this.props.poem);
                 }}
               >
-                <Text style={styles.button}>Edit Poem</Text>
+                <Text style={styles.buttonText}>Edit Poem</Text>
               </Button>
             ) : null}
           </Col>
@@ -105,6 +113,17 @@ export default class CardPoem extends Component {
 let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
+  IconBadge: {
+    position: 'absolute',
+    backgroundColor: '#ddd',
+    top: 1,
+    right: 1,
+    minWidth: 20,
+    height: 20,
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   name: {
     fontSize: 24,
     fontFamily: 'proxima-alt',
@@ -113,6 +132,12 @@ const styles = StyleSheet.create({
   handle: {
     fontSize: 14,
     textAlign: 'left',
+    fontFamily: 'proxima-alt'
+  },
+  nsfw: {
+    fontSize: 12,
+    textAlign: 'left',
+    color: 'white',
     fontFamily: 'proxima-alt'
   },
   body: {
@@ -128,6 +153,20 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'raleway-extralight',
     textAlign: 'right',
-    color: '#DCDCDC'
+    color: '#ddd'
+  },
+  button: {
+    fontSize: 12,
+    fontFamily: 'raleway-extralight',
+    textAlign: 'right',
+    backgroundColor: '#ddd',
+    color: 'white',
+
+    marginLeft: 10
+  },
+  buttonText: {
+    fontSize: 14,
+    fontFamily: 'raleway-extralight',
+    textAlign: 'right'
   }
 });

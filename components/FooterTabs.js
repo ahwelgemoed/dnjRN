@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, AsyncStorage } from 'react-native';
+import { Text, StyleSheet, AsyncStorage } from 'react-native';
 import styled from 'styled-components/native';
 
 const FooterView = styled.View`
@@ -11,7 +11,7 @@ const FooterView = styled.View`
   border-radius: 20px;
   shadow-color: rgba(0, 0, 0, 0.2);
   shadow-offset: 0px 0px;
-  background: #fbfbfb;
+  background: #efefef;
   height: 10%;
 `;
 const FooterText = styled.Text`
@@ -43,14 +43,26 @@ export default class FooterTabs extends Component {
     } else {
       return (
         <FooterView>
-          <FooterText onPress={this.changeTab.bind(this, 'Home')}>
-            {activeTab === 'Home' ? 'Home Active' : 'Home'}
+          <FooterText
+            onPress={this.changeTab.bind(this, 'Home')}
+            style={activeTab === 'Home' ? styles.active : null}
+          >
+            Home
           </FooterText>
-          <FooterText onPress={this.changeTab.bind(this, 'Post')}>
-            {activeTab === 'Post' ? 'Post Active' : 'Post'}
+          <FooterText
+            onPress={this.changeTab.bind(this, 'Post')}
+            style={activeTab === 'Post' ? styles.active : null}
+          >
+            Post
           </FooterText>
         </FooterView>
       );
     }
   }
 }
+const styles = StyleSheet.create({
+  active: {
+    fontFamily: 'raleway-bold',
+    fontSize: 16
+  }
+});

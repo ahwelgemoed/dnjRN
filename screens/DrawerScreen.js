@@ -12,6 +12,9 @@ class DrawerScreen extends Component {
     this.props.navigation.navigate(name);
   };
   render() {
+    console.log(this.props.profile);
+    const { profile } = this.props;
+
     return (
       <Container style={styles.container}>
         <Content>
@@ -31,6 +34,18 @@ class DrawerScreen extends Component {
             <Icon style={styles.icons} name="log-out" />
             <Text> Sign Out</Text>
           </ListItem>
+          {profile.auth ? (
+            <View>
+              <ListItem onPress={() => this.props.firebase.logout()}>
+                <Icon style={styles.icons} name="person" />
+                <Text>Delete a Poem</Text>
+              </ListItem>
+              <ListItem onPress={() => this.props.firebase.logout()}>
+                <Icon style={styles.icons} name="person" />
+                <Text>Mark Poem as NSFW</Text>
+              </ListItem>
+            </View>
+          ) : null}
         </Content>
       </Container>
     );
@@ -48,5 +63,10 @@ const styles = StyleSheet.create({
 
 export default compose(
   withFirebase,
-  connect(({ firebase: { auth } }) => ({ auth }))
+  connect(state => ({
+    poems: state.firestore.ordered.poems,
+    auth: state.firebase.auth,
+    profile: state.firebase.profile,
+    addedPoem: state.poems.addedPoem
+  }))
 )(DrawerScreen);
