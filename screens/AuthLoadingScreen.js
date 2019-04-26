@@ -7,8 +7,11 @@ import {
   View
 } from 'react-native';
 import WelcomeScreen from '../screens/WelcomeScreen';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 
-export default class AuthLoadingScreen extends React.Component {
+class AuthLoadingScreen extends React.Component {
   constructor(props) {
     super(props);
     this._bootstrapAsync();
@@ -20,17 +23,28 @@ export default class AuthLoadingScreen extends React.Component {
     const firstVisit = await AsyncStorage.getItem('firstVisit');
     if (firstVisit !== 'Yes') {
       this.props.navigation.navigate('Welcome', this.props.navigation);
-    } else {
-      this.props.navigation.navigate(userToken ? 'App' : 'Auth');
     }
   };
 
   render() {
-    return (
-      <View>
-        <ActivityIndicator />
-        <StatusBar barStyle="default" />
-      </View>
-    );
+    const { auth } = this.props;
+
+    if (!isLoaded(auth)) {
+      return (
+        <View>
+          <ActivityIndicator />
+          <StatusBar barStyle="default" />
+        </View>
+      );
+    }
+    if (isEmpty(auth)) {
+      return this.props.navigation.navigate('Auth');
+    }
+    return this.props.navigation.navigate('App');
   }
 }
+
+export default compose(
+  withFirebase,
+  connect(({ firebase: { auth } }) => ({ auth }))
+)(AuthLoadingScreen);

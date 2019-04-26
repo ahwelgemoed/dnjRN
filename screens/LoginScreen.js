@@ -12,11 +12,16 @@ import {
   Container,
   Button,
   Text,
-  Icon
+  Icon,
+  Toast,
+  Spinner
 } from 'native-base';
-import { AsyncStorage, StyleSheet } from 'react-native';
+import { AsyncStorage, StyleSheet, Dimensions } from 'react-native';
 
 class LoginScreen extends Component {
+  state = {
+    loading: false
+  };
   static navigationOptions = ({ navigation }) => ({
     title: 'Sign In',
     headerTitleStyle: {
@@ -24,18 +29,33 @@ class LoginScreen extends Component {
       fontSize: 20
     }
   });
-  signIn = () => {
+  signIn = async () => {
+    await this.setState({ loading: true });
     const { firebase } = this.props;
     const { username, password } = this.state;
-    firebase
+    if (!username || !password) {
+      this.setState({ loading: false });
+      return Toast.show({
+        text: 'Please Fill In all the details',
+        buttonText: 'Okay',
+        position: 'top'
+      });
+    }
+    await firebase
       .login({
         email: username,
         password: password
       })
       .then(res => AsyncStorage.setItem('serToken', res.user.user.uid))
       .then(res => this.props.navigation.navigate('Home'))
-      .catch(err => console.log(err.message))
-      .catch(err => this.setState({ loading: false }));
+      .catch(err => {
+        this.setState({ loading: false });
+        Toast.show({
+          text: err.message,
+          buttonText: 'Okay',
+          position: 'top'
+        });
+      });
   };
   render() {
     return (
@@ -58,9 +78,12 @@ class LoginScreen extends Component {
               />
             </Item>
             <Button block light onPress={this.signIn} style={styles.button}>
-              <Text style={styles.label}>
-                <Icon name="person" style={styles.icon} /> Sign In
-              </Text>
+              {this.state.loading ? (
+                <Spinner color={'#ddd'} />
+              ) : (
+                <Icon name="person" style={styles.icon} />
+              )}
+              <Text style={styles.label}>Sign In</Text>
             </Button>
           </Form>
           <Button
@@ -69,22 +92,20 @@ class LoginScreen extends Component {
             light
             onPress={() => this.props.navigation.navigate('SignupScreen')}
           >
-            <Text style={styles.label}>
-              {' '}
-              <Icon name="person-add" style={styles.icon} /> Sign Up
-            </Text>
+            <Icon name="person-add" style={styles.icon} />
+            <Text style={styles.label}>Sign Up</Text>
           </Button>
         </Content>
       </Container>
     );
   }
 }
+let screenWidth = Dimensions.get('window').width - 20;
 const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
-    margin: 20
-    // alignItems: 'center',
-    // justifyContent: 'space-around'
+    alignItems: 'center',
+    justifyContent: 'space-around'
   },
   label: {
     fontSize: 16,
@@ -98,6 +119,7 @@ const styles = StyleSheet.create({
   },
   button: {
     fontSize: 16,
+    width: screenWidth,
     marginTop: 20,
     fontFamily: 'proxima-alt',
     textAlign: 'left'

@@ -21,8 +21,15 @@ const FooterText = styled.Text`
 `;
 export default class FooterTabs extends Component {
   state = {
-    activeTab: 'Home'
+    activeTab: 'Home',
+    firstVisit: ''
   };
+  async componentWillMount() {
+    const firstVisit = await AsyncStorage.getItem('firstVisit');
+    await this.setState({
+      firstVisit
+    });
+  }
   changeTab = name => {
     this.setState({
       activeTab: name
@@ -31,8 +38,7 @@ export default class FooterTabs extends Component {
   };
   render() {
     const { activeTab } = this.state;
-    const firstVisit = AsyncStorage.getItem('firstVisit');
-    if (firstVisit) {
+    if (this.state.firstVisit !== 'Yes') {
       return null;
     } else {
       return (

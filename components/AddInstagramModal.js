@@ -12,13 +12,7 @@ import {
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import {
-  Modal,
-  TouchableHighlight,
-  View,
-  Alert,
-  StyleSheet
-} from 'react-native';
+import { Modal, Dimensions, View, Alert, StyleSheet } from 'react-native';
 
 class AddInstagramModal extends Component {
   state = {
@@ -56,26 +50,35 @@ class AddInstagramModal extends Component {
             Alert.alert('Modal has been closed.');
           }}
         >
-          <View style={{ marginTop: 40 }}>
+          <View style={styles.mainContent}>
             <View>
               <Form>
                 <Item floatingLabel>
-                  <Label>Instagram Handle</Label>
+                  <Label style={styles.label}>Instagram Handle</Label>
                   <Input
+                    style={styles.label}
                     onChangeText={text => this.setState({ Instagram: text })}
                   />
                 </Item>
               </Form>
 
-              <TouchableHighlight
+              <Button
+                style={styles.mainButton}
+                block
+                light
+                onPress={this.saveInstagramHandle}
+              >
+                <Text>Add Instagram Handle</Text>
+              </Button>
+              <Button
+                style={styles.mainButton}
+                block
+                light
                 onPress={() => {
                   this.setModalVisible(!this.state.modalVisible);
                 }}
               >
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-              <Button block light onPress={this.saveInstagramHandle}>
-                <Text>Add Instagram Handle Poem</Text>
+                <Text>Close </Text>
               </Button>
             </View>
           </View>
@@ -93,10 +96,33 @@ class AddInstagramModal extends Component {
     );
   }
 }
+let screenWidth = Dimensions.get('window').width - 20;
 const styles = StyleSheet.create({
   button: {
     fontSize: 14,
     color: '#999',
+    fontFamily: 'proxima-alt',
+    textAlign: 'left'
+  },
+  mainContent: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  },
+  label: {
+    fontSize: 16,
+    fontFamily: 'proxima-alt',
+    textAlign: 'left'
+  },
+  icon: {
+    fontSize: 14,
+    fontFamily: 'proxima-alt',
+    textAlign: 'left'
+  },
+  mainButton: {
+    fontSize: 16,
+    marginTop: 20,
+    width: screenWidth,
     fontFamily: 'proxima-alt',
     textAlign: 'left'
   }

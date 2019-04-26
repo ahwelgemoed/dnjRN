@@ -16,7 +16,6 @@ import { firestoreConnect } from 'react-redux-firebase';
 // import { MonoText } from '../components/StyledText';
 import CardPoem from '../components/CardPoem';
 import { Icon, Button } from 'native-base';
-
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Dis Net Jy',
@@ -25,6 +24,7 @@ class HomeScreen extends React.Component {
         <Icon name="menu" style={{ color: '#999' }} />
       </Button>
     ),
+    headerLeft: navigation.state.params && navigation.state.params.headerLeft,
     headerTitleStyle: {
       fontFamily: 'playfair-display-black',
       fontSize: 20
@@ -38,12 +38,32 @@ class HomeScreen extends React.Component {
     lastOne: '',
     loading: true,
     isFetching: false,
+    orderBy: 'date',
+    ordered: 'desc',
     poems: null
   };
+  async _reload() {
+    const options = ['body', 'date', 'id', 'name'];
+    const orders = ['asc', 'desc'];
+
+    const rand = options[Math.floor(Math.random() * options.length)];
+    const randorders = orders[Math.floor(Math.random() * orders.length)];
+
+    await this.setState({
+      isFetching: true,
+      orderBy: rand,
+      limit: 10,
+      poems: null,
+      ordered: randorders
+    });
+    await this.initalFirebaseLoad();
+  }
 
   sendTofireBase = async () => {
     const { firestore } = this.props;
     const lastOne = this.props.poems.length - 1;
+    console.log(lastOne);
+
     await this.setState({
       isFetching: true,
       limit: this.state.limit + 10,
@@ -55,8 +75,8 @@ class HomeScreen extends React.Component {
       .get({
         collection: 'poems',
         limit: 20,
-        orderBy: ['date', 'desc'],
-        startAfter: this.props.poems[lastOne].date
+        orderBy: [this.state.orderBy, this.state.ordered],
+        startAfter: this.props.poems[lastOne][this.state.orderBy]
       })
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -76,7 +96,7 @@ class HomeScreen extends React.Component {
     await firestore.get({
       collection: 'poems',
       limit: this.state.limit,
-      orderBy: ['date', 'desc']
+      orderBy: [this.state.orderBy, this.state.ordered]
     });
     await this.setState({
       loading: false,
@@ -86,6 +106,13 @@ class HomeScreen extends React.Component {
   };
   async componentDidMount() {
     this.initalFirebaseLoad();
+    this.props.navigation.setParams({
+      headerLeft: (
+        <Button transparent onPress={() => this._reload()}>
+          <Icon name="shuffle" style={{ color: '#999' }} />
+        </Button>
+      )
+    });
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.addedPoem === false && this.props.addedPoem === true) {
@@ -106,8 +133,6 @@ class HomeScreen extends React.Component {
             refreshing={this.state.isFetching}
             showsVerticalScrollIndicator={false}
             ListFooterComponent={() => <ActivityIndicator />}
-            // initialNumToRender={10}
-            // maxToRenderPerBatch={10}
             data={poems}
             ref="full"
             renderItem={({ item, i }) => (
