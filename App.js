@@ -3,12 +3,22 @@ import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import { Provider } from 'react-redux';
+import { Root } from 'native-base';
 import store from './store';
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false
   };
+  componentDidMount() {
+    Font.loadAsync({
+      'playfair-display-bold': require('./assets/fonts/PlayfairDisplay-Bold.ttf'),
+      'playfair-display-black': require('./assets/fonts/PlayfairDisplay-Black.ttf'),
+      'raleway-medium': require('./assets/fonts/Raleway-Medium.ttf'),
+      'raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
+      'raleway-extralight': require('./assets/fonts/Raleway-ExtraLight.ttf')
+    });
+  }
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
@@ -22,11 +32,13 @@ export default class App extends React.Component {
     } else {
       return (
         <Provider store={store}>
-          <View style={styles.container}>
-            {/* <Text> Mainer</Text> */}
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <AppNavigator />
-          </View>
+          <Root>
+            <View style={styles.container}>
+              {/* <Text> Mainer</Text> */}
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              <AppNavigator />
+            </View>
+          </Root>
         </Provider>
       );
     }

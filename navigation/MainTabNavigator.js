@@ -5,19 +5,13 @@ import {
   createBottomTabNavigator,
   createDrawerNavigator
 } from 'react-navigation';
-
-// import TabBarIcon from '../components/TabBarIcon';
+import { fadeIn } from 'react-navigation-transitions';
 import HomeScreen from '../screens/HomeScreen';
 import PostPoem from '../screens/PostPoem';
+import DrawerScreen from '../screens/DrawerScreen';
 import FooterTabs from '../components/FooterTabs';
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen
-});
-const PostStack = createStackNavigator({
-  Post: PostPoem
-});
-const Drawer = createDrawerNavigator({
   Home: {
     screen: HomeScreen
   },
@@ -26,19 +20,12 @@ const Drawer = createDrawerNavigator({
   }
 });
 
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home'
-};
-PostStack.navigationOptions = {
-  tabBarLabel: 'Post'
-};
-export default createBottomTabNavigator(
+const Tabs = createBottomTabNavigator(
   {
-    Drawer,
-    HomeStack,
-    PostStack
+    HomeStack
   },
   {
+    transitionConfig: () => fadeIn(),
     defaultNavigationOptions: {
       tabBarComponent: props => <FooterTabs {...props} />,
       headerStyle: {
@@ -51,3 +38,16 @@ export default createBottomTabNavigator(
     }
   }
 );
+export default (Drawer = createDrawerNavigator(
+  {
+    Home: {
+      screen: Tabs
+    }
+  },
+  {
+    contentComponent: DrawerScreen,
+    initialRouteName: 'Home',
+    transitionConfig: () => fadeIn(),
+    drawerWidth: 200
+  }
+));

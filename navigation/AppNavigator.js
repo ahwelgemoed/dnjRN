@@ -9,6 +9,7 @@ import HomeScreen from '../screens/HomeScreen';
 import MainTabNavigator from './MainTabNavigator';
 import LoginScreen from '../screens/LoginScreen';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
+import { fadeIn } from 'react-navigation-transitions';
 import SignupScreen from '../screens/SignupScreen';
 // const AppStack = createStackNavigator({ Home: HomeScreen, Other: OtherScreen });
 const AuthStack = createStackNavigator({
@@ -27,7 +28,8 @@ export default createAppContainer(
       Auth: AuthStack
     },
     {
-      initialRouteName: 'AuthLoading'
+      initialRouteName: 'AuthLoading',
+      transitionConfig: () => fadeIn()
     }
   )
 );

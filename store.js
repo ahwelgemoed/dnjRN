@@ -24,13 +24,13 @@ const rrfConfig = {
 
 firebase.initializeApp(fbConfig);
 firebase.firestore();
+const middleware = [thunk];
 
 const createStoreWithFirebase = compose(
   reactReduxFirebase(firebase, rrfConfig),
   reduxFirestore(firebase),
   applyMiddleware(...middleware)
 )(createStore);
-const middleware = [thunk];
 
 const initialState = {};
 const store = createStoreWithFirebase(

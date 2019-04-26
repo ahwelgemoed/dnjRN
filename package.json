@@ -20,6 +20,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-app-intro-slider": "^2.0.1",
     "react-navigation": "3.0.9",
+    "react-navigation-transitions": "^1.0.10",
     "react-redux": "5.1.1",
     "react-redux-firebase": "2.2.4",
     "redux": "4.0.1",

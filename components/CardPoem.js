@@ -21,9 +21,10 @@ const StyledText = styled.View`
   shadow-color: rgba(0, 0, 0, 0.2);
   shadow-offset: 0px 0px;
   background: white;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   width: 100%;
   padding: 10px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 `;
@@ -67,15 +68,18 @@ let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   name: {
-    fontSize: 30,
+    fontSize: 24,
+    fontFamily: 'playfair-display-bold',
     textAlign: 'left'
   },
   handle: {
     fontSize: 16,
-    textAlign: 'left'
+    textAlign: 'left',
+    fontFamily: 'raleway-extralight'
   },
   body: {
-    fontSize: 18,
+    fontFamily: 'raleway-medium',
+    fontSize: 16,
     paddingBottom: 10,
     paddingTop: 10
   },
@@ -84,6 +88,7 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: 12,
+    fontFamily: 'raleway-extralight',
     textAlign: 'right',
     color: '#DCDCDC'
   }

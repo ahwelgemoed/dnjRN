@@ -24,7 +24,7 @@ class LoginScreen extends Component {
         email: username,
         password: password
       })
-      .then(res => AsyncStorage.setItem('userToken', res.user.user.uid))
+      .then(res => AsyncStorage.setItem('serToken', res.user.user.uid))
       .then(res => this.props.navigation.navigate('Home'))
       .catch(err => console.log(err.message))
       .catch(err => this.setState({ loading: false }));
