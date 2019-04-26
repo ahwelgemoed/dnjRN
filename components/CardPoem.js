@@ -1,23 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions } from 'react-native';
-import {
-  Icon,
-  Container,
-  Title,
-  Subtitle,
-  Body,
-  CardItem,
-  Card,
-  Row,
-  Col,
-  Toast
-} from 'native-base';
+import { Icon, Button, Row, Col, Toast } from 'native-base';
 import moment from 'moment';
 import styled from 'styled-components/native';
 const StyledText = styled.View`
   shadow-opacity: 0.35;
-  shadow-radius: 20px;
-  border-radius: 20px;
+  shadow-radius: 10px;
+  border-radius: 10px;
   shadow-color: rgba(0, 0, 0, 0.2);
   shadow-offset: 0px 0px;
   background: white;
@@ -30,6 +19,39 @@ const StyledText = styled.View`
 `;
 
 export default class CardPoem extends Component {
+  state = {
+    userEdit: false
+  };
+  componentDidMount() {
+    const now = moment();
+    const posted = moment(this.props.poem.date);
+    const differ = now.diff(posted, 'minutes');
+
+    if (this.props.auth.uid === this.props.poem.uid && differ < 2) {
+      console.log('Mount');
+      this.setState({
+        userEdit: true
+      });
+      let time = setInterval(() => {
+        const now = moment();
+        const posted = moment(this.props.poem.date);
+        const differ = now.diff(posted, 'minutes');
+        console.log(differ);
+        if (differ < 2) {
+          this.setState({
+            userEdit: true
+          });
+        } else {
+          if (this.state.userEdit) {
+            this.setState({
+              userEdit: false
+            });
+          }
+          clearInterval(time);
+        }
+      }, 30000);
+    }
+  }
   render() {
     return (
       <StyledText>
@@ -45,6 +67,7 @@ export default class CardPoem extends Component {
                 }
                 style={styles.handle}
               >
+                <Icon style={styles.handle} name="logo-instagram" />{' '}
                 {this.props.poem.handle}
               </Text>
             ) : null}
@@ -60,6 +83,21 @@ export default class CardPoem extends Component {
             </View>
           </Col>
         </Row>
+        <Row>
+          <Col>
+            {this.state.userEdit ? (
+              <Button
+                block
+                transparent
+                onPress={() => {
+                  this.props.navigation.navigate('Post', this.props.poem);
+                }}
+              >
+                <Text style={styles.button}>Edit Poem</Text>
+              </Button>
+            ) : null}
+          </Col>
+        </Row>
       </StyledText>
     );
   }
@@ -69,16 +107,16 @@ let screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   name: {
     fontSize: 24,
-    fontFamily: 'playfair-display-bold',
+    fontFamily: 'proxima-alt',
     textAlign: 'left'
   },
   handle: {
-    fontSize: 16,
+    fontSize: 14,
     textAlign: 'left',
-    fontFamily: 'raleway-extralight'
+    fontFamily: 'proxima-alt'
   },
   body: {
-    fontFamily: 'raleway-medium',
+    fontFamily: 'proxima-alt',
     fontSize: 16,
     paddingBottom: 10,
     paddingTop: 10

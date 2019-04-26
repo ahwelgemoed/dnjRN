@@ -4,26 +4,32 @@ import {
   FlatList,
   ScrollView,
   StyleSheet,
-  Text,
   Dimensions,
   View,
   ActivityIndicator
 } from 'react-native';
+import { successfullyAddedPoem } from '../actions/poemsActions';
 import { WebBrowser } from 'expo';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 // import { MonoText } from '../components/StyledText';
 import CardPoem from '../components/CardPoem';
+import { Icon, Button } from 'native-base';
 
 class HomeScreen extends React.Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     title: 'Dis Net Jy',
+    headerRight: (
+      <Button transparent onPress={() => navigation.toggleDrawer()}>
+        <Icon name="menu" style={{ color: '#999' }} />
+      </Button>
+    ),
     headerTitleStyle: {
       fontFamily: 'playfair-display-black',
       fontSize: 20
     }
-  };
+  });
 
   state = {
     name: '',
@@ -81,13 +87,10 @@ class HomeScreen extends React.Component {
   async componentDidMount() {
     this.initalFirebaseLoad();
   }
-  componentWillUnmount() {
-    console.log('unMounted');
-  }
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.props.addedPoem);
     if (prevProps.addedPoem === false && this.props.addedPoem === true) {
       this.initalFirebaseLoad();
+      this.props.successfullyAddedPoem(false);
     }
   }
 
@@ -107,7 +110,14 @@ class HomeScreen extends React.Component {
             // maxToRenderPerBatch={10}
             data={poems}
             ref="full"
-            renderItem={({ item, i }) => <CardPoem poem={item} key={i} />}
+            renderItem={({ item, i }) => (
+              <CardPoem
+                poem={item}
+                key={i}
+                auth={this.props.auth}
+                navigation={this.props.navigation}
+              />
+            )}
             keyExtractor={item => item.id}
           />
         ) : (
@@ -119,10 +129,14 @@ class HomeScreen extends React.Component {
 }
 export default compose(
   firestoreConnect(),
-  connect(state => ({
-    poems: state.firestore.ordered.poems,
-    addedPoem: state.poems.addedPoem
-  }))
+  connect(
+    state => ({
+      poems: state.firestore.ordered.poems,
+      auth: state.firebase.auth,
+      addedPoem: state.poems.addedPoem
+    }),
+    { successfullyAddedPoem }
+  )
 )(HomeScreen);
 
 let screenWidth = Dimensions.get('window').width;

@@ -7,6 +7,7 @@ import {
 } from 'react-navigation';
 import { fadeIn } from 'react-navigation-transitions';
 import HomeScreen from '../screens/HomeScreen';
+import WelcomeScreen from '../screens/WelcomeScreen';
 import PostPoem from '../screens/PostPoem';
 import DrawerScreen from '../screens/DrawerScreen';
 import FooterTabs from '../components/FooterTabs';
@@ -17,6 +18,12 @@ const HomeStack = createStackNavigator({
   },
   Post: {
     screen: PostPoem
+  },
+  Welcome: {
+    screen: WelcomeScreen,
+    navigationOptions: {
+      drawerLockMode: 'locked-closed'
+    }
   }
 });
 
@@ -25,7 +32,6 @@ const Tabs = createBottomTabNavigator(
     HomeStack
   },
   {
-    transitionConfig: () => fadeIn(),
     defaultNavigationOptions: {
       tabBarComponent: props => <FooterTabs {...props} />,
       headerStyle: {
@@ -38,6 +44,7 @@ const Tabs = createBottomTabNavigator(
     }
   }
 );
+
 export default (Drawer = createDrawerNavigator(
   {
     Home: {
@@ -45,6 +52,7 @@ export default (Drawer = createDrawerNavigator(
     }
   },
   {
+    drawerLockMode: 'locked-closed',
     contentComponent: DrawerScreen,
     initialRouteName: 'Home',
     transitionConfig: () => fadeIn(),

@@ -12,7 +12,13 @@ import {
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { Modal, TouchableHighlight, View, Alert } from 'react-native';
+import {
+  Modal,
+  TouchableHighlight,
+  View,
+  Alert,
+  StyleSheet
+} from 'react-native';
 
 class AddInstagramModal extends Component {
   state = {
@@ -50,7 +56,7 @@ class AddInstagramModal extends Component {
             Alert.alert('Modal has been closed.');
           }}
         >
-          <View style={{ marginTop: 22 }}>
+          <View style={{ marginTop: 40 }}>
             <View>
               <Form>
                 <Item floatingLabel>
@@ -76,17 +82,25 @@ class AddInstagramModal extends Component {
         </Modal>
         <Button
           block
-          light
+          transparent
           onPress={() => {
             this.setModalVisible(true);
           }}
         >
-          <Text>Add Instagram Handle</Text>
+          <Text style={styles.button}>Add Instagram Handle</Text>
         </Button>
       </View>
     );
   }
 }
+const styles = StyleSheet.create({
+  button: {
+    fontSize: 14,
+    color: '#999',
+    fontFamily: 'proxima-alt',
+    textAlign: 'left'
+  }
+});
 const mapStateToProps = state => ({
   auth: state.firebase.auth
 });
