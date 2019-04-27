@@ -1,20 +1,38 @@
 import React, { Component } from 'react';
 import { Content, Container, ListItem, Icon } from 'native-base';
-import { ScrollView, Text, View, StyleSheet } from 'react-native';
+import { AsyncStorage, Text, View, StyleSheet } from 'react-native';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
+import { activateDeleteAction } from '../actions/poemsActions';
 // import { DrawerActions, DrawerItems, SafeAreaView } from 'react-navigation';
 // import styles from '../../styles/index';
 
 class DrawerScreen extends Component {
+  state = {
+    activateDeleteAction: false
+  };
+  componentDidMount() {
+    this.props.activateDeleteAction(this.state.activateDeleteAction);
+  }
   changeTab = name => {
     this.props.navigation.navigate(name);
   };
-  render() {
-    console.log(this.props.profile);
-    const { profile } = this.props;
 
+  activateDeleteAction = async () => {
+    await this.setState({
+      activateDeleteAction: !this.state.activateDeleteAction
+    });
+    await this.props.activateDeleteAction(this.state.activateDeleteAction);
+  };
+
+  signOut = () => {
+    this.props.firebase.logout().then(res => {
+      this.props.navigation.navigate('Auth'), AsyncStorage.clear();
+    });
+  };
+  render() {
+    const { profile } = this.props;
     return (
       <Container style={styles.container}>
         <Content>
@@ -30,19 +48,19 @@ class DrawerScreen extends Component {
             <Icon style={styles.icons} name="key" />
             <Text> Account Page</Text>
           </ListItem>
-          <ListItem onPress={() => this.props.firebase.logout()}>
+          <ListItem onPress={this.signOut}>
             <Icon style={styles.icons} name="log-out" />
             <Text> Sign Out</Text>
           </ListItem>
           {profile.auth ? (
             <View>
-              <ListItem onPress={() => this.props.firebase.logout()}>
+              <ListItem onPress={this.activateDeleteAction}>
                 <Icon style={styles.icons} name="person" />
-                <Text>Delete a Poem</Text>
-              </ListItem>
-              <ListItem onPress={() => this.props.firebase.logout()}>
-                <Icon style={styles.icons} name="person" />
-                <Text>Mark Poem as NSFW</Text>
+                {this.props.activateDelete ? (
+                  <Text> Deactivate Admin Rights</Text>
+                ) : (
+                  <Text> Activate Admin Rights</Text>
+                )}
               </ListItem>
             </View>
           ) : null}
@@ -63,10 +81,14 @@ const styles = StyleSheet.create({
 
 export default compose(
   withFirebase,
-  connect(state => ({
-    poems: state.firestore.ordered.poems,
-    auth: state.firebase.auth,
-    profile: state.firebase.profile,
-    addedPoem: state.poems.addedPoem
-  }))
+  connect(
+    state => ({
+      poems: state.firestore.ordered.poems,
+      auth: state.firebase.auth,
+      profile: state.firebase.profile,
+      addedPoem: state.poems.addedPoem,
+      activateDelete: state.poems.activateDelete
+    }),
+    { activateDeleteAction }
+  )
 )(DrawerScreen);

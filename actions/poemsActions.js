@@ -4,3 +4,9 @@ export const successfullyAddedPoem = payLoad => async dispatch => {
     payload: payLoad
   });
 };
+export const activateDeleteAction = payLoad => async dispatch => {
+  dispatch({
+    type: 'ACTIVATEDELETE',
+    payload: payLoad
+  });
+};

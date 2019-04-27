@@ -59,8 +59,6 @@ class PostPoem extends Component {
   };
   upDateSave = async () => {};
   postToPoem = async () => {
-    console.log(this.state.update);
-    console.log(this.state.withInstagram);
     if (this.state.update) {
       const { firestore, auth } = this.props;
       const { id, date, body, name, handle, nsfw, withInstagram } = this.state;

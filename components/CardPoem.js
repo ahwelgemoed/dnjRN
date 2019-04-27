@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions } from 'react-native';
 import { Icon, Button, Row, Col, Badge } from 'native-base';
 import moment from 'moment';
+import AdminModal from './AdminModal';
 import styled from 'styled-components/native';
 import Pulse from 'react-native-pulse';
 const StyledText = styled.View`
@@ -104,6 +105,11 @@ export default class CardPoem extends Component {
                 <Text style={styles.buttonText}>Edit Poem</Text>
               </Button>
             ) : null}
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <AdminModal poem={this.props.poem} />
           </Col>
         </Row>
       </StyledText>
