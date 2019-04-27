@@ -13,12 +13,13 @@ import {
   Button,
   Text,
   Icon,
-  Toast
+  Toast,
+  Spinner
 } from 'native-base';
 import { AsyncStorage, StyleSheet } from 'react-native';
 
 class SignupScreen extends Component {
-  state = { loading: false, username: '', Instagram: '' };
+  state = { loading: false, username: '', Instagram: '', seensfw: true };
   static navigationOptions = ({ navigation }) => ({
     title: 'Create an Account',
     headerTitleStyle: {
@@ -43,10 +44,16 @@ class SignupScreen extends Component {
     try {
       const { firebase } = this.props;
       await firebase
-        .createUser({ email, password }, { username, email, Instagram })
-        .then(res => this.props.navigation.navigate('Home'));
-      console.log('user successfully signed up!: ', success);
+        .createUser(
+          { email, password },
+          { username, email, Instagram, auth: false, seensfw: true }
+        )
+        .then(res => {
+          this.props.navigation.navigate('Home');
+          AsyncStorage.setItem('firstVisit', 'Yes');
+        });
     } catch (err) {
+      this.setState({ loading: false });
       return Toast.show({
         text: err.message,
         buttonText: 'Okay',
@@ -90,10 +97,12 @@ class SignupScreen extends Component {
             </Item>
 
             <Button style={styles.button} block light onPress={this.signUp}>
-              <Text style={styles.label}>
-                {' '}
-                <Icon name="person-add" style={styles.icon} /> Sign Up
-              </Text>
+              {this.state.loading ? (
+                <Spinner color={'#ddd'} />
+              ) : (
+                <Icon name="person-add" style={styles.icon} />
+              )}
+              <Text style={styles.label}>Sign Up</Text>
             </Button>
           </Form>
         </Content>

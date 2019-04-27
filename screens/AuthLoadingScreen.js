@@ -28,7 +28,6 @@ class AuthLoadingScreen extends React.Component {
 
   render() {
     const { auth } = this.props;
-
     if (!isLoaded(auth)) {
       return (
         <View>

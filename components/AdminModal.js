@@ -121,7 +121,7 @@ class AdminModal extends Component {
               </Button>
 
               <Button
-                style={styles.mainButton}
+                style={styles.buttonRed}
                 block
                 danger
                 onPress={this.deletePoem}
@@ -131,7 +131,7 @@ class AdminModal extends Component {
               <Button
                 style={styles.mainButton}
                 block
-                light
+                warning
                 onPress={() => {
                   this.setModalVisible(!this.state.modalVisible);
                 }}
@@ -168,6 +168,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-around'
+  },
+  buttonRed: {
+    fontSize: 16,
+    width: screenWidth,
+    marginTop: 20,
+    fontFamily: 'proxima-alt',
+    textAlign: 'left',
+    backgroundColor: '#FF5C5C'
   },
   name: {
     fontSize: 24,

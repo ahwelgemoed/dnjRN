@@ -29,8 +29,7 @@ export default class CardPoem extends Component {
     const posted = moment(this.props.poem.date);
     const differ = now.diff(posted, 'minutes');
 
-    if (this.props.auth.uid === this.props.poem.uid && differ < 10) {
-      console.log('Mount');
+    if (this.props.auth.uid === this.props.poem.uid && differ < 5) {
       this.setState({
         userEdit: true
       });
@@ -38,8 +37,8 @@ export default class CardPoem extends Component {
         const now = moment();
         const posted = moment(this.props.poem.date);
         const differ = now.diff(posted, 'minutes');
-        console.log(differ);
-        if (differ < 10) {
+
+        if (differ < 5) {
           this.setState({
             userEdit: true
           });

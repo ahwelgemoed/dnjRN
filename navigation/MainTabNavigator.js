@@ -10,6 +10,7 @@ import HomeScreen from '../screens/HomeScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import PostPoem from '../screens/PostPoem';
 import DrawerScreen from '../screens/DrawerScreen';
+import AccountScreen from '../screens/AccountScreen';
 import FooterTabs from '../components/FooterTabs';
 
 const HomeStack = createStackNavigator({
@@ -18,6 +19,9 @@ const HomeStack = createStackNavigator({
   },
   Post: {
     screen: PostPoem
+  },
+  Account: {
+    screen: AccountScreen
   },
   Welcome: {
     screen: WelcomeScreen,

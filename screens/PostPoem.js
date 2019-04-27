@@ -156,10 +156,9 @@ class PostPoem extends Component {
     }
   }
   render() {
-    console.log(this.state.handle);
     const { handle, body } = this.state;
     return (
-      <Container>
+      <Container style={styles.mainContent}>
         <Content>
           <Form>
             <Item>
@@ -207,10 +206,20 @@ class PostPoem extends Component {
                 <Text style={styles.check}>NSFW</Text>
               </Body>
             </ListItem>
-            <Button block light onPress={this.postToPoem}>
+            <Button
+              style={styles.buttonItself}
+              block
+              light
+              onPress={this.postToPoem}
+            >
               <Text style={styles.button}>Post Poem</Text>
             </Button>
-            <Button block light onPress={() => this.props.navigation.goBack()}>
+            <Button
+              block
+              style={styles.buttonItself}
+              warning
+              onPress={() => this.props.navigation.goBack()}
+            >
               <Text style={styles.button}>Cancel</Text>
             </Button>
           </Form>
@@ -219,11 +228,17 @@ class PostPoem extends Component {
     );
   }
 }
+let screenWidth = Dimensions.get('window').width - 20;
 const styles = StyleSheet.create({
   input: {
     fontSize: 16,
     fontFamily: 'proxima-alt',
     textAlign: 'left'
+  },
+  mainContent: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-around'
   },
   button: {
     fontSize: 16,
@@ -234,6 +249,13 @@ const styles = StyleSheet.create({
   check: {
     fontSize: 14,
     color: '#999',
+    fontFamily: 'proxima-alt',
+    textAlign: 'left'
+  },
+  buttonItself: {
+    fontSize: 14,
+    width: screenWidth,
+    marginTop: 20,
     fontFamily: 'proxima-alt',
     textAlign: 'left'
   }

@@ -18,6 +18,7 @@ const fbConfig = {
 };
 const rrfConfig = {
   userProfile: 'users',
+  presence: 'presence', // where list of online users is stored in database
   useFirestoreForProfile: true,
   enableRedirectHandling: false
 };

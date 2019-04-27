@@ -35,6 +35,7 @@ class LoginScreen extends Component {
     const { username, password } = this.state;
     if (!username || !password) {
       this.setState({ loading: false });
+
       return Toast.show({
         text: 'Please Fill In all the details',
         buttonText: 'Okay',
@@ -46,7 +47,7 @@ class LoginScreen extends Component {
         email: username,
         password: password
       })
-      .then(res => AsyncStorage.setItem('serToken', res.user.user.uid))
+      .then(res => AsyncStorage.setItem('firstVisit', 'Yes'))
       .then(res => this.props.navigation.navigate('Home'))
       .catch(err => {
         this.setState({ loading: false });

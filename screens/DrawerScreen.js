@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Content, Container, ListItem, Icon } from 'native-base';
-import { AsyncStorage, Text, View, StyleSheet } from 'react-native';
+import { AsyncStorage, Text, View, StyleSheet, Linking } from 'react-native';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 import { activateDeleteAction } from '../actions/poemsActions';
+import { Constants, WebBrowser } from 'expo';
 // import { DrawerActions, DrawerItems, SafeAreaView } from 'react-navigation';
 // import styles from '../../styles/index';
 
@@ -18,7 +19,6 @@ class DrawerScreen extends Component {
   changeTab = name => {
     this.props.navigation.navigate(name);
   };
-
   activateDeleteAction = async () => {
     await this.setState({
       activateDeleteAction: !this.state.activateDeleteAction
@@ -44,7 +44,13 @@ class DrawerScreen extends Component {
             <Icon style={styles.icons} name="clipboard" />
             <Text> Post</Text>
           </ListItem>
-          <ListItem onPress={this.changeTab.bind(this, 'Account Settings')}>
+          <ListItem
+            onPress={() => WebBrowser.openBrowserAsync('https://klyntji.com/')}
+          >
+            <Icon style={styles.icons} name="heart" />
+            <Text> KLYNTJI</Text>
+          </ListItem>
+          <ListItem onPress={this.changeTab.bind(this, 'Account')}>
             <Icon style={styles.icons} name="key" />
             <Text> Account Page</Text>
           </ListItem>
