@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, Alert } from 'react-native';
 import { Icon, Button, Row, Col, Badge } from 'native-base';
 import moment from 'moment';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
 import AdminModal from './AdminModal';
 import styled from 'styled-components/native';
-import Pulse from 'react-native-pulse';
+import { WebBrowser } from 'expo';
 const StyledText = styled.View`
   shadow-opacity: 0.35;
   shadow-radius: 10px;
@@ -17,12 +20,45 @@ const StyledText = styled.View`
   padding: 10px;
   margin-top: 20px;
   display: flex;
+
   justify-content: center;
 `;
 
-export default class CardPoem extends Component {
+class CardPoem extends Component {
   state = {
     userEdit: false
+  };
+  reportPoem = () => {
+    const { firestore } = this.props;
+    Alert.alert(
+      'Are You Sure?',
+      'If you accept you will report this poem for being inappropriate or against the T&C`s  ',
+      [
+        {
+          text: 'Report',
+          onPress: () =>
+            firestore
+              .update(
+                { collection: 'poems', doc: this.props.poem.id },
+                { reported: true }
+              )
+              .then(res => {
+                Toast.show({
+                  text: 'Poem Reported to Admin',
+                  buttonText: 'Okay',
+                  position: 'bottom',
+                  type: 'danger'
+                });
+              })
+        },
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        }
+      ],
+      { cancelable: false }
+    );
   };
   componentDidMount() {
     const now = moment();
@@ -55,7 +91,13 @@ export default class CardPoem extends Component {
   }
   render() {
     return (
-      <StyledText>
+      <StyledText
+        style={
+          this.props.admin && this.props.poem.reported
+            ? { backgroundColor: '#F1E6CD' }
+            : null
+        }
+      >
         <Row>
           <Col>
             <Text style={styles.name}>{this.props.poem.name}</Text>
@@ -67,7 +109,7 @@ export default class CardPoem extends Component {
             {this.props.poem.handle ? (
               <Text
                 onPress={() =>
-                  Linking.openURL(
+                  WebBrowser.openBrowserAsync(
                     `https://www.instagram.com/${this.props.poem.handle}`
                   )
                 }
@@ -82,7 +124,16 @@ export default class CardPoem extends Component {
         <Text style={styles.body}>{this.props.poem.body}</Text>
         <Row>
           <Col>
-            <View>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between'
+              }}
+            >
+              <Text style={styles.dates} onLongPress={() => this.reportPoem()}>
+                REPORT
+              </Text>
               <Text style={styles.date}>
                 {moment(this.props.poem.date).fromNow()}
               </Text>
@@ -115,6 +166,15 @@ export default class CardPoem extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  auth: state.firebase.auth,
+  admin: state.poems.activateDelete
+});
+export default compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(CardPoem);
+
 let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
@@ -160,13 +220,18 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     color: '#ddd'
   },
+  dates: {
+    fontSize: 12,
+    fontFamily: 'raleway-extralight',
+    textAlign: 'left',
+    color: '#FF5C5C'
+  },
   button: {
     fontSize: 12,
     fontFamily: 'raleway-extralight',
     textAlign: 'right',
     backgroundColor: '#ddd',
     color: 'white',
-
     marginLeft: 10
   },
   buttonText: {

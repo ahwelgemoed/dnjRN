@@ -7,7 +7,7 @@ import {
   ListItem,
   Button,
   Text,
-  Toast
+  Toast,Switch
 } from 'native-base';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -22,7 +22,8 @@ class AdminModal extends Component {
   };
   componentDidMount() {
     this.setState({
-      nsfw: this.props.poem.nsfw
+      nsfw: this.props.poem.nsfw,
+      reported: this.props.poem.reported
     });
   }
 
@@ -32,7 +33,8 @@ class AdminModal extends Component {
   addNSFW = () => {
     const { firestore } = this.props;
     const payLoad = {
-      nsfw: this.state.nsfw
+      nsfw: this.state.nsfw,
+      reported:this.state.reported
     };
     firestore
       .update({ collection: 'poems', doc: this.props.poem.id }, payLoad)
@@ -83,6 +85,11 @@ class AdminModal extends Component {
       nsfw: !this.state.nsfw
     });
   };
+  reported = () => {
+    this.setState({
+      reported: !this.state.reported
+    });
+  };
 
   render() {
     return (
@@ -110,6 +117,16 @@ class AdminModal extends Component {
                   <Text style={styles.check}>NSFW</Text>
                 </Body>
               </ListItem>
+              <ListItem>
+              <CheckBox
+                  color={'#000'}
+                  checked={this.state.reported}
+                  onPress={this.reported}
+                />
+              <Body>
+                <Text style={styles.check}>Inapropriate?</Text>
+              </Body>
+            </ListItem>
 
               <Button
                 style={styles.mainButton}
