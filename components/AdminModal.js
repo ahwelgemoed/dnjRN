@@ -7,7 +7,9 @@ import {
   ListItem,
   Button,
   Text,
+  Item,
   Toast,
+  Input,
   Switch
 } from 'native-base';
 import { compose } from 'redux';
@@ -19,12 +21,15 @@ import { successfullyAddedPoem } from '../actions/poemsActions';
 class AdminModal extends Component {
   state = {
     modalVisible: false,
-    nsfw: false
+    nsfw: false,
+    adminNotes: '',
+    reported: false
   };
   componentDidMount() {
     this.setState({
       nsfw: this.props.poem.nsfw,
-      reported: this.props.poem.reported
+      reported: this.props.poem.reported,
+      adminNotes: this.props.poem.adminNotes
     });
   }
 
@@ -35,7 +40,8 @@ class AdminModal extends Component {
     const { firestore } = this.props;
     const payLoad = {
       nsfw: this.state.nsfw,
-      reported: this.state.reported
+      reported: this.state.reported,
+      adminNotes: this.state.adminNotes
     };
     firestore
       .update({ collection: 'poems', doc: this.props.poem.id }, payLoad)
@@ -128,6 +134,16 @@ class AdminModal extends Component {
                   <Text style={styles.check}>Inapropriate?</Text>
                 </Body>
               </ListItem>
+              <Form>
+                <Item>
+                  <Input
+                    style={styles.input}
+                    placeholder="Admin Notes"
+                    value={this.state.adminNotes}
+                    onChangeText={text => this.setState({ adminNotes: text })}
+                  />
+                </Item>
+              </Form>
 
               <Button
                 style={styles.mainButton}
@@ -135,7 +151,7 @@ class AdminModal extends Component {
                 light
                 onPress={this.addNSFW}
               >
-                <Text>Save Poem</Text>
+                <Text>Update Poem</Text>
               </Button>
 
               <Button
@@ -167,7 +183,7 @@ class AdminModal extends Component {
               this.setModalVisible(true);
             }}
           >
-            <Text style={styles.button}>Admin Panel</Text>
+            <Text style={styles.button}>Open Admin Panel</Text>
           </Button>
         ) : null}
       </View>

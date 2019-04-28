@@ -45,7 +45,9 @@ class PostPoem extends Component {
     name: '',
     update: false,
     handle: '',
-    nsfw: ''
+    nsfw: '',
+    adminNotes: 'None',
+    reported: false
   };
 
   withInstagram = () => {
@@ -67,14 +69,26 @@ class PostPoem extends Component {
     }
     if (this.state.update) {
       const { firestore, auth } = this.props;
-      const { id, date, body, name, handle, nsfw, withInstagram } = this.state;
+      const {
+        id,
+        date,
+        body,
+        name,
+        handle,
+        nsfw,
+        withInstagram,
+        adminNotes,
+        reported
+      } = this.state;
       let payLoad;
       if (withInstagram) {
         payLoad = {
           date,
           body,
           nsfw,
+          reported,
           name,
+          adminNotes,
           handle: this.props.profile.Instagram,
           uid: auth.uid
         };
@@ -82,8 +96,10 @@ class PostPoem extends Component {
         payLoad = {
           date,
           body,
+          adminNotes,
           nsfw,
           name,
+          reported,
           handle: '',
           uid: auth.uid
         };
@@ -102,7 +118,16 @@ class PostPoem extends Component {
         });
     } else {
       const { firestore, auth } = this.props;
-      const { date, body, name, handle, withInstagram, nsfw } = this.state;
+      const {
+        date,
+        body,
+        reported,
+        name,
+        handle,
+        withInstagram,
+        nsfw,
+        adminNotes
+      } = this.state;
       let payLoad;
       if (withInstagram) {
         payLoad = {
@@ -110,6 +135,8 @@ class PostPoem extends Component {
           body,
           nsfw,
           name,
+          adminNotes,
+          reported,
           handle: this.props.profile.Instagram,
           uid: auth.uid
         };
@@ -119,6 +146,8 @@ class PostPoem extends Component {
           nsfw,
           body,
           name,
+          reported,
+          adminNotes,
           handle: '',
           uid: auth.uid
         };
