@@ -151,9 +151,7 @@ class UpdateEmail extends Component {
             this.setModalVisible(true);
           }}
         >
-          <Text style={styles.buttontext}>
-            <Icon name="mail" style={styles.icon} /> Change Email
-          </Text>
+          <Text style={styles.buttontext}>Change Email</Text>
         </Button>
       </View>
     );

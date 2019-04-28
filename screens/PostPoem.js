@@ -217,7 +217,7 @@ class PostPoem extends Component {
             <Button
               block
               style={styles.buttonItself}
-              warning
+              light
               onPress={() => this.props.navigation.goBack()}
             >
               <Text style={styles.button}>Cancel</Text>

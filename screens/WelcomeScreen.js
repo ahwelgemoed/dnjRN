@@ -53,7 +53,7 @@ export default class WelcomeScreen extends Component {
   };
   _onDone = async () => {
     await AsyncStorage.setItem('firstVisit', 'Yes');
-    await this.props.navigation.navigate('Auth');
+    await this.props.navigation.navigate('LoginScreen');
   };
   render() {
     return (

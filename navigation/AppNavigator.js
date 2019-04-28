@@ -11,17 +11,21 @@ import LoginScreen from '../screens/LoginScreen';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import { fadeIn } from 'react-navigation-transitions';
 import SignupScreen from '../screens/SignupScreen';
+import WelcomeScreen from '../screens/WelcomeScreen';
 // const AppStack = createStackNavigator({ Home: HomeScreen, Other: OtherScreen });
 const AuthStack = createStackNavigator({
+  Welcome: {
+    screen: WelcomeScreen,
+    navigationOptions: {
+      drawerLockMode: 'locked-closed'
+    }
+  },
   LoginScreen: LoginScreen,
   SignupScreen: SignupScreen
 });
 
 export default createAppContainer(
   createSwitchNavigator(
-    // You could add another route here for authentication.
-    // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-    // Main: MainTabNavigator,
     {
       AuthLoading: AuthLoadingScreen,
       App: MainTabNavigator,

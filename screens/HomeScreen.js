@@ -6,12 +6,15 @@ import {
   StyleSheet,
   Dimensions,
   View,
-  ActivityIndicator
+  ActivityIndicator,
+  Text
 } from 'react-native';
+import { Permissions, Notifications } from 'expo';
 import { successfullyAddedPoem } from '../actions/poemsActions';
 import { WebBrowser } from 'expo';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import OnlineUsers from '../components/OnlineUsers';
 import { firestoreConnect } from 'react-redux-firebase';
 // import { MonoText } from '../components/StyledText';
 import CardPoem from '../components/CardPoem';
@@ -32,9 +35,11 @@ class HomeScreen extends React.Component {
   });
 
   state = {
+    scrollPosition: '',
     name: '',
     body: '',
     limit: 10,
+    random: false,
     lastOne: '',
     loading: true,
     isFetching: false,
@@ -43,20 +48,36 @@ class HomeScreen extends React.Component {
     poems: null
   };
   async _reload() {
-    const options = ['body', 'date', 'id', 'name'];
-    const orders = ['asc', 'desc'];
-
-    const rand = options[Math.floor(Math.random() * options.length)];
-    const randorders = orders[Math.floor(Math.random() * orders.length)];
-
     await this.setState({
-      isFetching: true,
-      orderBy: rand,
-      limit: 10,
-      poems: null,
-      ordered: randorders
+      random: !this.state.random
     });
-    await this.initalFirebaseLoad();
+    if (this.state.random) {
+      this.setLeftHeader();
+      const options = ['body', 'date', 'id', 'name'];
+      const orders = ['asc', 'desc'];
+
+      const rand = options[Math.floor(Math.random() * options.length)];
+      const randorders = orders[Math.floor(Math.random() * orders.length)];
+
+      await this.setState({
+        isFetching: true,
+        orderBy: rand,
+        limit: 10,
+        poems: null,
+        ordered: randorders
+      });
+      await this.initalFirebaseLoad();
+    } else {
+      this.setLeftHeader();
+      await this.setState({
+        isFetching: true,
+        orderBy: 'date',
+        ordered: 'desc',
+        limit: 10,
+        poems: null
+      });
+      await this.initalFirebaseLoad();
+    }
   }
 
   sendTofireBase = async () => {
@@ -105,31 +126,85 @@ class HomeScreen extends React.Component {
     });
   };
   async componentDidMount() {
-    this.initalFirebaseLoad();
+    await this.setLeftHeader();
+    await this.initalFirebaseLoad();
+    await this.registerForPushNotificationsAsync();
+  }
+  setLeftHeader = () => {
     this.props.navigation.setParams({
       headerLeft: (
         <Button transparent onPress={() => this._reload()}>
-          <Icon name="shuffle" style={{ color: '#999' }} />
+          {this.state.random ? (
+            <Icon name="refresh" style={{ color: '#999' }} />
+          ) : (
+            <Icon name="shuffle" style={{ color: '#999' }} />
+          )}
         </Button>
       )
     });
-  }
+  };
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.addedPoem === false && this.props.addedPoem === true) {
       this.initalFirebaseLoad();
       this.props.successfullyAddedPoem(false);
     }
   }
+  handleScroll = async event => {
+    const scroll = event.nativeEvent.contentOffset.y;
+    await this.setState({
+      scrollPosition: scroll
+    });
+  };
+  registerForPushNotificationsAsync = async () => {
+    const { status: existingStatus } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
+
+    if (existingStatus !== 'granted') {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+
+    if (finalStatus !== 'granted') {
+      return;
+    }
+
+    try {
+      let token = await Notifications.getExpoPushTokenAsync();
+
+      const { firestore } = this.props;
+      const payLoad = {
+        token
+      };
+
+      await firestore
+        .update({ collection: 'users', doc: this.props.auth.uid }, payLoad)
+        .then(res => {
+          retrun(console.log(res));
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   render() {
     const { loading, poems } = this.state;
+
     return (
       <View style={styles.container}>
+        <OnlineUsers scroll={this.state.scrollPosition} />
         {poems ? (
           <FlatList
+            useNativeDriver={true}
+            scrollEventThrottle={160}
+            onScroll={this.handleScroll}
             onEndReached={this.onRefresh}
             onEndReachedThreshold={0.5}
-            // onRefresh={() => this.onRefresh()}
+            onRefresh={() => this.onRefresh()}
             refreshing={this.state.isFetching}
             showsVerticalScrollIndicator={false}
             ListFooterComponent={() => <ActivityIndicator />}
@@ -157,6 +232,7 @@ export default compose(
   connect(
     state => ({
       poems: state.firestore.ordered.poems,
+      profile: state.firebase.profile,
       auth: state.firebase.auth,
       addedPoem: state.poems.addedPoem
     }),

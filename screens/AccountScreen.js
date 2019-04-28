@@ -48,19 +48,21 @@ class AccountScreen extends Component {
         auth: props.profile.auth,
         username: props.profile.username,
         seensfw: props.profile.seensfw,
+        token: props.profile.token,
         loaded: true
       };
     }
     return null;
   }
   updateProfile = () => {
-    const { email, Instagram, auth, username, seensfw } = this.state;
+    const { email, Instagram, auth, username, seensfw, token } = this.state;
     const payLoad = {
       email: this.props.auth.email,
       Instagram,
       auth,
       username,
-      seensfw
+      seensfw,
+      token
     };
     const { firebase } = this.props;
     firebase
@@ -151,9 +153,7 @@ class AccountScreen extends Component {
               light
               onPress={() => this.updateProfile()}
             >
-              <Text style={styles.label}>
-                <Icon name="person-add" style={styles.icon} /> Update Profile
-              </Text>
+              <Text style={styles.label}>Save Changes to Profile</Text>
             </Button>
             <UpdateEmail />
 
@@ -164,7 +164,7 @@ class AccountScreen extends Component {
                 this.resetPassword();
               }}
             >
-              <Text>Reset Account</Text>
+              <Text>Reset Password</Text>
             </Button>
             <DelelteAccount navigation={this.props.navigation} />
           </Form>

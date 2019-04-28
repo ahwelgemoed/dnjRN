@@ -19,7 +19,13 @@ import {
 import { AsyncStorage, StyleSheet } from 'react-native';
 
 class SignupScreen extends Component {
-  state = { loading: false, username: '', Instagram: '', seensfw: true };
+  state = {
+    loading: false,
+    username: '',
+    Instagram: '',
+    seensfw: true,
+    token: false
+  };
   static navigationOptions = ({ navigation }) => ({
     title: 'Create an Account',
     headerTitleStyle: {
@@ -32,7 +38,7 @@ class SignupScreen extends Component {
   };
   signUp = async () => {
     await this.setState({ loading: true });
-    const { username, password, email, Instagram } = this.state;
+    const { username, password, email, Instagram, token } = this.state;
     if (!email || !password) {
       this.setState({ loading: false });
       return Toast.show({
@@ -46,7 +52,7 @@ class SignupScreen extends Component {
       await firebase
         .createUser(
           { email, password },
-          { username, email, Instagram, auth: false, seensfw: true }
+          { username, email, Instagram, auth: false, seensfw: true, token }
         )
         .then(res => {
           this.props.navigation.navigate('Home');
