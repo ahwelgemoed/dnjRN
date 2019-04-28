@@ -29,7 +29,7 @@ class SignupScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Create an Account',
     headerTitleStyle: {
-      fontFamily: 'playfair-display-black',
+      fontFamily: 'raleway-boldI',
       fontSize: 20
     }
   });

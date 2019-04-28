@@ -25,7 +25,7 @@ class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Sign In',
     headerTitleStyle: {
-      fontFamily: 'playfair-display-black',
+      fontFamily: 'raleway-boldI',
       fontSize: 20
     }
   });

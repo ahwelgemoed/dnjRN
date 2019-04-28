@@ -38,34 +38,34 @@ class DrawerScreen extends Component {
         <Content>
           <ListItem onPress={this.changeTab.bind(this, 'Home')}>
             <Icon style={styles.icons} name="home" />
-            <Text> Home</Text>
+            <Text style={styles.label}> Home</Text>
           </ListItem>
           <ListItem onPress={this.changeTab.bind(this, 'Post')}>
             <Icon style={styles.icons} name="clipboard" />
-            <Text> Post</Text>
+            <Text style={styles.label}> Post</Text>
           </ListItem>
           <ListItem
             onPress={() => WebBrowser.openBrowserAsync('https://klyntji.com/')}
           >
             <Icon style={styles.icons} name="heart" />
-            <Text> KLYNTJI</Text>
+            <Text style={styles.label}> KLYNTJI</Text>
           </ListItem>
           <ListItem onPress={this.changeTab.bind(this, 'Account')}>
             <Icon style={styles.icons} name="key" />
-            <Text> Account Page</Text>
+            <Text style={styles.label}> Account Page</Text>
           </ListItem>
           <ListItem onPress={this.signOut}>
             <Icon style={styles.icons} name="log-out" />
-            <Text> Sign Out</Text>
+            <Text style={styles.label}> Sign Out</Text>
           </ListItem>
           {profile.auth ? (
             <View>
               <ListItem onPress={this.activateDeleteAction}>
                 <Icon style={styles.icons} name="person" />
                 {this.props.activateDelete ? (
-                  <Text> Deactivate Admin Rights</Text>
+                  <Text style={styles.label}> Deactivate Admin Rights</Text>
                 ) : (
-                  <Text> Activate Admin Rights</Text>
+                  <Text style={styles.label}> Activate Admin Rights</Text>
                 )}
               </ListItem>
             </View>
@@ -82,6 +82,11 @@ const styles = StyleSheet.create({
   },
   icons: {
     fontSize: 14
+  },
+  label: {
+    fontSize: 16,
+    fontFamily: 'raleway-boldI',
+    textAlign: 'left'
   }
 });
 

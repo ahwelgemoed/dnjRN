@@ -21,7 +21,7 @@ import CardPoem from '../components/CardPoem';
 import { Icon, Button } from 'native-base';
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Dis Net Jy',
+    title: 'DIS NET JY',
     headerRight: (
       <Button transparent onPress={() => navigation.toggleDrawer()}>
         <Icon name="menu" style={{ color: '#999' }} />
@@ -29,7 +29,7 @@ class HomeScreen extends React.Component {
     ),
     headerLeft: navigation.state.params && navigation.state.params.headerLeft,
     headerTitleStyle: {
-      fontFamily: 'playfair-display-black',
+      fontFamily: 'raleway-boldI',
       fontSize: 20
     }
   });

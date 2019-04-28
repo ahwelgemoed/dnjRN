@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     color: 'black',
-    fontFamily: 'playfair-display-black',
+    fontFamily: 'raleway-boldI',
     backgroundColor: 'transparent',
     textAlign: 'center',
     marginBottom: 16

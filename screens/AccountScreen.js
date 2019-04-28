@@ -35,7 +35,7 @@ class AccountScreen extends Component {
       </Button>
     ),
     headerTitleStyle: {
-      fontFamily: 'playfair-display-black',
+      fontFamily: 'raleway-boldI',
       fontSize: 20
     }
   });

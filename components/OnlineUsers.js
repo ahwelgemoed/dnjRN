@@ -51,7 +51,7 @@ class OnlineUsers extends Component {
             style={{
               fontSize: 12,
               paddingTop: 10,
-              fontFamily: 'proxima-alt',
+              fontFamily: 'raleway-bold',
               textAlign: 'left'
             }}
           >

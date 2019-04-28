@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 24,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-bold',
     textAlign: 'left'
   },
   handle: {
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   },
   body: {
     // width: screenWidth,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     fontSize: 16,
     paddingBottom: 10,
     paddingTop: 10

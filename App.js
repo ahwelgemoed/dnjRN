@@ -14,9 +14,10 @@ export default class App extends React.Component {
   async componentDidMount() {
     await Font.loadAsync({
       'playfair-display-bold': require('./assets/fonts/PlayfairDisplay-Bold.ttf'),
-      'playfair-display-black': require('./assets/fonts/PlayfairDisplay-Black.ttf'),
       'raleway-medium': require('./assets/fonts/Raleway-Medium.ttf'),
+      'raleway-regular': require('./assets/fonts/Raleway-Regular.ttf'),
       'raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
+      'raleway-boldI': require('./assets/fonts/Raleway-BoldItalic.ttf'),
       'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
       'raleway-extralight': require('./assets/fonts/Raleway-ExtraLight.ttf'),
       'proxima-alt': require('./assets/fonts/Proxima-Nova-Alt-Regular-webfont.ttf')

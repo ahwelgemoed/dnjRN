@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   },
   nameTitle: {
     fontSize: 24,
-    fontFamily: 'playfair-display-black',
+    fontFamily: 'raleway-boldI',
     textAlign: 'left',
     paddingBottom: 12
   },
