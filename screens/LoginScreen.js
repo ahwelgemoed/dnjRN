@@ -17,7 +17,7 @@ import {
   Spinner
 } from 'native-base';
 import { AsyncStorage, StyleSheet, Dimensions } from 'react-native';
-
+import { GoogleSignIn } from 'expo';
 class LoginScreen extends Component {
   state = {
     loading: false
@@ -58,6 +58,17 @@ class LoginScreen extends Component {
         });
       });
   };
+  _googleSingIn = async () => {
+    try {
+      await GoogleSignIn.askForPlayServicesAsync();
+      const { type, user } = await GoogleSignIn.signInAsync();
+      if (type === 'success') {
+        this.props.navigation.navigate('Home');
+      }
+    } catch ({ message }) {
+      alert('login: Error:' + message);
+    }
+  };
   render() {
     return (
       <Container style={styles.mainContent}>
@@ -95,6 +106,15 @@ class LoginScreen extends Component {
           >
             <Icon name="person-add" style={styles.icon} />
             <Text style={styles.label}>Sign Up</Text>
+          </Button>
+          <Button
+            style={styles.button}
+            block
+            light
+            onPress={() => this._googleSingIn()}
+          >
+            <Icon name="person-add" style={styles.icon} />
+            <Text style={styles.label}>Google Sign In</Text>
           </Button>
         </Content>
       </Container>

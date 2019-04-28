@@ -155,7 +155,7 @@ class DelelteAccount extends Component {
             this.setModalVisible(true);
           }}
         >
-          <Text style={styles.button}>Delete Password</Text>
+          <Text style={styles.button}>Delete Account</Text>
         </Button>
       </View>
     );

@@ -20,8 +20,8 @@ const StyledText = styled.View`
   padding: 10px;
   margin-top: 20px;
   display: flex;
-
   justify-content: center;
+  /* display: none; */
 `;
 
 class CardPoem extends Component {
@@ -97,6 +97,11 @@ class CardPoem extends Component {
             ? { backgroundColor: '#F1E6CD' }
             : null
         }
+        style={
+          !this.props.profile.seensfw && this.props.poem.nsfw
+            ? { display: 'none' }
+            : null
+        }
       >
         <Row>
           <Col>
@@ -168,6 +173,7 @@ class CardPoem extends Component {
 }
 const mapStateToProps = state => ({
   auth: state.firebase.auth,
+  profile: state.firebase.profile,
   admin: state.poems.activateDelete
 });
 export default compose(

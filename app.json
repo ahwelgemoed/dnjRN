@@ -1,16 +1,13 @@
 {
   "expo": {
     "name": "Dis Net Jy",
-    "slug": "klyntji",
+    "slug": "klyntjidnj",
     "privacy": "public",
     "sdkVersion": "32.0.0",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/DNJ.png",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -19,11 +16,20 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
+    "android": {
+      "package": "com.disnetons.googlesignin",
+      "googleServicesFile": "./google-services.json"
+    },
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "com.disnetons.googlesignin",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.554939781321-dlf3glaq77s8menkgofqt12rsa77u1d8"
+        }
+      }
+    },
+    "description": ""
   }
 }

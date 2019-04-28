@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "554939781321",
+    "firebase_url": "https://disnetons.firebaseio.com",
+    "project_id": "disnetons",
+    "storage_bucket": "disnetons.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554939781321:android:39a57709e385f56c",
+        "android_client_info": {
+          "package_name": "com.disnetons.googlesignin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "554939781321-l6nnl7qu61d7qigmd60gomnapqq17sig.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfk8Ag4bCz8RARmX5GoyLWo5rS6Rsqt8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "554939781321-l6nnl7qu61d7qigmd60gomnapqq17sig.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "554939781321-dlf3glaq77s8menkgofqt12rsa77u1d8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.disnetons.googlesignin"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

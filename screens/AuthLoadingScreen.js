@@ -10,6 +10,7 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
+import { GoogleSignIn } from 'expo';
 
 class AuthLoadingScreen extends React.Component {
   constructor(props) {
@@ -19,6 +20,14 @@ class AuthLoadingScreen extends React.Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
+    // try {
+    //   await GoogleSignIn.initAsync({
+    //     clientId:
+    //       'com.googleusercontent.apps.554939781321-dlf3glaq77s8menkgofqt12rsa77u1d8'
+    //   });
+    // } catch ({ message }) {
+    //   alert('GoogleSignIn.initAsync(): ' + message);
+    // }
     const userToken = await AsyncStorage.getItem('userToke');
     const firstVisit = await AsyncStorage.getItem('firstVisit');
     if (firstVisit !== 'Yes') {
