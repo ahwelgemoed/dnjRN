@@ -7,7 +7,8 @@ import {
   ListItem,
   Button,
   Text,
-  Toast,Switch
+  Toast,
+  Switch
 } from 'native-base';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -34,7 +35,7 @@ class AdminModal extends Component {
     const { firestore } = this.props;
     const payLoad = {
       nsfw: this.state.nsfw,
-      reported:this.state.reported
+      reported: this.state.reported
     };
     firestore
       .update({ collection: 'poems', doc: this.props.poem.id }, payLoad)
@@ -118,15 +119,15 @@ class AdminModal extends Component {
                 </Body>
               </ListItem>
               <ListItem>
-              <CheckBox
+                <CheckBox
                   color={'#000'}
                   checked={this.state.reported}
                   onPress={this.reported}
                 />
-              <Body>
-                <Text style={styles.check}>Inapropriate?</Text>
-              </Body>
-            </ListItem>
+                <Body>
+                  <Text style={styles.check}>Inapropriate?</Text>
+                </Body>
+              </ListItem>
 
               <Button
                 style={styles.mainButton}
@@ -184,7 +185,9 @@ const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    paddingLeft: 12,
+    paddingRight: 12
   },
   buttonRed: {
     fontSize: 16,

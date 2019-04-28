@@ -5,7 +5,8 @@ import { firestoreConnect } from 'react-redux-firebase';
 import moment from 'moment';
 import AddInstagramModal from '../components/AddInstagramModal';
 import { successfullyAddedPoem } from '../actions/poemsActions';
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, AsyncStorage } from 'react-native';
+import FirstPostModal from '../components/FirstPostModal';
 import {
   Content,
   Form,
@@ -40,11 +41,11 @@ class PostPoem extends Component {
     withInstagram: false,
     instagram: false,
     body: '',
+    openFirstModal: false,
     name: '',
     update: false,
     handle: '',
-    nsfw: '',
-    date: Date.now()
+    nsfw: ''
   };
 
   withInstagram = () => {
@@ -59,10 +60,14 @@ class PostPoem extends Component {
   };
   upDateSave = async () => {};
   postToPoem = async () => {
+    if (this.state.firstPost != 'true') {
+      return this.setState({
+        openFirstModal: true
+      });
+    }
     if (this.state.update) {
       const { firestore, auth } = this.props;
       const { id, date, body, name, handle, nsfw, withInstagram } = this.state;
-
       let payLoad;
       if (withInstagram) {
         payLoad = {
@@ -101,7 +106,7 @@ class PostPoem extends Component {
       let payLoad;
       if (withInstagram) {
         payLoad = {
-          date,
+          date: Date.now(),
           body,
           nsfw,
           name,
@@ -110,7 +115,7 @@ class PostPoem extends Component {
         };
       } else {
         payLoad = {
-          date,
+          date: Date.now(),
           nsfw,
           body,
           name,
@@ -131,23 +136,37 @@ class PostPoem extends Component {
         });
     }
   };
+  async componentDidUpdate(prevProps, prevState) {
+    const firstPost = await AsyncStorage.getItem('firstPost');
+    if (this.state.openFirstModal === true && firstPost == 'true') {
+      await this.setState({
+        openFirstModal: false,
+        firstPost
+      });
+      await this.postToPoem();
+    }
+  }
   async componentDidMount() {
+    const firstPost = await AsyncStorage.getItem('firstPost');
+    this.setState({
+      firstPost
+    });
     const { navigation } = this.props;
     const id = navigation.getParam('id');
     const name = navigation.getParam('name');
     const handle = navigation.getParam('handle');
     const body = navigation.getParam('body');
     const nsfw = navigation.getParam('nsfw');
+    const date = navigation.getParam('date');
     if (name) {
       await this.setState({
         id,
         name,
         nsfw,
         body,
+        date,
         update: true
       });
-      console.log(handle);
-
       if (handle) {
         await this.setState({
           withInstagram: true
@@ -156,7 +175,7 @@ class PostPoem extends Component {
     }
   }
   render() {
-    const { handle, body } = this.state;
+    const { handle, body, firstPost } = this.state;
     return (
       <Container style={styles.mainContent}>
         <Content>
@@ -223,6 +242,7 @@ class PostPoem extends Component {
               <Text style={styles.button}>Cancel</Text>
             </Button>
           </Form>
+          <FirstPostModal openFirstModal={this.state.openFirstModal} />
         </Content>
       </Container>
     );

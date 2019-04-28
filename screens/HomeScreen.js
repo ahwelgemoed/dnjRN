@@ -7,7 +7,7 @@ import {
   Dimensions,
   View,
   ActivityIndicator,
-  Text
+  AsyncStorage
 } from 'react-native';
 import { Permissions, Notifications } from 'expo';
 import { successfullyAddedPoem } from '../actions/poemsActions';
@@ -126,6 +126,7 @@ class HomeScreen extends React.Component {
     });
   };
   async componentDidMount() {
+    // AsyncStorage.removeItem('firstPost');
     await this.setLeftHeader();
     await this.initalFirebaseLoad();
     await this.registerForPushNotificationsAsync();

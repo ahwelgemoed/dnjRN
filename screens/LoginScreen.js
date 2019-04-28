@@ -126,6 +126,8 @@ const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
     alignItems: 'center',
+    paddingLeft: 12,
+    paddingRight: 12,
     justifyContent: 'space-around'
   },
   label: {

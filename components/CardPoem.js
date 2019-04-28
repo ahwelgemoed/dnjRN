@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions, Alert } from 'react-native';
-import { Icon, Button, Row, Col, Badge } from 'native-base';
+import { Icon, Button, Row, Col, Badge, Toast } from 'native-base';
 import moment from 'moment';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -93,19 +93,20 @@ class CardPoem extends Component {
     return (
       <StyledText
         style={
-          this.props.admin && this.props.poem.reported
-            ? { backgroundColor: '#F1E6CD' }
-            : null
-        }
-        style={
           !this.props.profile.seensfw && this.props.poem.nsfw
-            ? { display: 'none' }
-            : null
+            ? { display: 'none', width: screenWidth }
+            : { width: screenWidth }
         }
       >
         <Row>
           <Col>
             <Text style={styles.name}>{this.props.poem.name}</Text>
+
+            {this.props.admin && this.props.poem.reported ? (
+              <Badge style={styles.IconBadgeReported}>
+                <Text style={styles.nsfw}>Reported</Text>
+              </Badge>
+            ) : null}
             {this.props.poem.nsfw ? (
               <Badge style={styles.IconBadge}>
                 <Text style={styles.nsfw}>NSFW</Text>
@@ -181,13 +182,24 @@ export default compose(
   connect(mapStateToProps)
 )(CardPoem);
 
-let screenWidth = Dimensions.get('window').width;
+let screenWidth = Dimensions.get('window').width - 40;
 let screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   IconBadge: {
     position: 'absolute',
     backgroundColor: '#ddd',
     top: 1,
+    right: 1,
+    minWidth: 20,
+    height: 20,
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  IconBadgeReported: {
+    position: 'absolute',
+    backgroundColor: '#FF5C5C',
+    bottom: 1,
     right: 1,
     minWidth: 20,
     height: 20,
@@ -212,6 +224,7 @@ const styles = StyleSheet.create({
     fontFamily: 'proxima-alt'
   },
   body: {
+    // width: screenWidth,
     fontFamily: 'proxima-alt',
     fontSize: 16,
     paddingBottom: 10,

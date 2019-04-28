@@ -107,7 +107,9 @@ const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    paddingLeft: 12,
+    paddingRight: 12
   },
   label: {
     fontSize: 16,
