@@ -63,7 +63,7 @@ class FirstPostModal extends Component {
                 reminder
               </Text>
               <Text style={styles.body}>
-                You get 5min after the post to edit/fix some misteaks
+                You get 5min after the post to edit/fix some mistakes
               </Text>
               <Text style={styles.body}>
                 You can choose to add your instagram handle with the post or not
@@ -74,17 +74,16 @@ class FirstPostModal extends Component {
               <Text style={styles.body}>
                 Admin's will review all post and change/mark poems accordingly
               </Text>
-              <Text style={styles.body}>By posting you agree to out T&C's</Text>
+              <Text style={styles.body}>By posting you agree to our T&C's</Text>
               <TandC />
               <Button
-                style={styles.mainButton}
+                style={styles.buttonIn}
                 block
-                warning
                 onPress={() => {
                   this.setModalVisible(!this.state.modalVisible);
                 }}
               >
-                <Text>Close </Text>
+                <Text style={styles.labelIn}>Okay</Text>
               </Button>
             </View>
           </View>
@@ -115,6 +114,19 @@ const styles = StyleSheet.create({
     fontFamily: 'proxima-alt',
     textAlign: 'left',
     backgroundColor: '#FF5C5C'
+  },
+  labelIn: {
+    color: '#fff',
+    fontFamily: 'raleway-regular',
+    fontSize: 16
+  },
+  buttonIn: {
+    fontSize: 16,
+    backgroundColor: '#91D9D9',
+    width: screenWidth,
+    marginTop: 20,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
   },
   name: {
     fontSize: 24,

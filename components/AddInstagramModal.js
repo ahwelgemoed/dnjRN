@@ -74,6 +74,7 @@ class AddInstagramModal extends Component {
                 style={styles.mainButton}
                 block
                 light
+                bordered
                 onPress={() => {
                   this.setModalVisible(!this.state.modalVisible);
                 }}

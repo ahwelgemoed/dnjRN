@@ -19,6 +19,7 @@ import {
   Text,
   CheckBox,
   ListItem,
+  Toast,
   Body,
   Icon
 } from 'native-base';
@@ -62,6 +63,22 @@ class PostPoem extends Component {
   };
   upDateSave = async () => {};
   postToPoem = async () => {
+    if (!this.state.name) {
+      return Toast.show({
+        text: 'Please give Poem a name',
+        position: 'bottom',
+        type: 'danger',
+        duration: 3000
+      });
+    }
+    if (!this.state.body) {
+      return Toast.show({
+        text: 'Please give Poem a body',
+        position: 'bottom',
+        type: 'danger',
+        duration: 3000
+      });
+    }
     if (this.state.firstPost != 'true') {
       return this.setState({
         openFirstModal: true
@@ -255,17 +272,18 @@ class PostPoem extends Component {
               </Body>
             </ListItem>
             <Button
-              style={styles.buttonItself}
+              style={styles.buttonIn}
               block
               light
               onPress={this.postToPoem}
             >
-              <Text style={styles.button}>Post Poem</Text>
+              <Text style={styles.labelIn}>Post Poem</Text>
             </Button>
             <Button
               block
               style={styles.buttonItself}
-              light
+              bordered
+              warning
               onPress={() => this.props.navigation.goBack()}
             >
               <Text style={styles.button}>Cancel</Text>
@@ -281,7 +299,7 @@ let screenWidth = Dimensions.get('window').width - 20;
 const styles = StyleSheet.create({
   input: {
     fontSize: 16,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   mainContent: {
@@ -289,23 +307,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around'
   },
+  labelIn: {
+    color: '#fff',
+    fontFamily: 'raleway-regular',
+    fontSize: 16
+  },
+  buttonIn: {
+    fontSize: 16,
+    backgroundColor: '#91D9D9',
+    width: screenWidth,
+    marginTop: 20,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
+  },
   button: {
     fontSize: 16,
-    color: '#868686',
-    fontFamily: 'proxima-alt',
+
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   check: {
     fontSize: 14,
     color: '#999',
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   buttonItself: {
     fontSize: 14,
     width: screenWidth,
     marginTop: 20,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   }
 });

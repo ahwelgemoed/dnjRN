@@ -83,7 +83,6 @@ class UpdateEmail extends Component {
         });
         Toast.show({
           text: error.message,
-
           position: 'bottom',
           type: 'danger',
           duration: 3000
@@ -134,6 +133,7 @@ class UpdateEmail extends Component {
                 style={styles.mainButton}
                 block
                 warning
+                bordered
                 onPress={() => {
                   this.setModalVisible(!this.state.modalVisible);
                 }}

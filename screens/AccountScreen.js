@@ -70,9 +70,9 @@ class AccountScreen extends Component {
       .then(res => {
         Toast.show({
           text: 'Profile Updated',
-          position: 'bottom',
-          type: 'warning'
+          position: 'bottom'
         });
+        this.props.navigation.navigate('Home');
       })
       .catch(err => {
         Toast.show({
@@ -183,12 +183,12 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   buttonBlue: {
     fontSize: 16,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     marginTop: 20,
     textAlign: 'left',
     backgroundColor: '#91D9D9',
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     width: screenWidth,
     marginTop: 20,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   buttonRed: {

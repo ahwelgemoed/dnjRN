@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
   },
   dates: {
     fontSize: 12,
-    fontFamily: 'raleway-extralight',
+    fontFamily: 'raleway-regular',
     textAlign: 'left',
     color: '#FF5C5C'
   },

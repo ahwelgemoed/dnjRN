@@ -138,6 +138,7 @@ class DelelteAccount extends Component {
                 style={styles.mainButton}
                 block
                 warning
+                bordered
                 onPress={() => {
                   this.setModalVisible(!this.state.modalVisible);
                 }}
