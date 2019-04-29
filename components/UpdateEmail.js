@@ -121,14 +121,14 @@ class UpdateEmail extends Component {
                 />
               </Item>
               <Button
-                style={styles.mainButton}
+                style={styles.buttonBlue}
                 block
                 light
                 onPress={() => {
                   this.changeEmail(this.state.password, this.state.email);
                 }}
               >
-                <Text>Save New Email</Text>
+                <Text style={styles.labelUp}>Save New Email</Text>
               </Button>
               <Button
                 style={styles.mainButton}
@@ -146,12 +146,13 @@ class UpdateEmail extends Component {
         <Button
           block
           light
-          style={styles.buttonBlue}
+          bordered
+          style={styles.buttonUp}
           onPress={() => {
             this.setModalVisible(true);
           }}
         >
-          <Text style={styles.buttontext}>Change Email</Text>
+          <Text style={styles.blueText}>Change Email</Text>
         </Button>
       </View>
     );
@@ -161,17 +162,24 @@ let screenWidth = Dimensions.get('window').width - 20;
 const styles = StyleSheet.create({
   button: {
     fontSize: 16,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   buttonBlue: {
     fontSize: 16,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     marginTop: 20,
     textAlign: 'left',
     backgroundColor: '#91D9D9',
     color: 'white'
   },
+  labelUp: {
+    color: '#fff',
+    fontSize: 16,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
+  },
+
   buttontext: {
     color: 'white',
     fontSize: 16
@@ -185,19 +193,32 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 24,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   label: {
     fontSize: 16,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   icon: {
     fontSize: 14,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left',
     color: 'white'
+  },
+  buttonUp: {
+    fontSize: 16,
+    borderColor: '#91D9D9',
+    marginTop: 20,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
+  },
+  blueText: {
+    color: '#91D9D9',
+    fontSize: 16,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
   },
   mainButton: {
     fontSize: 16,

@@ -148,23 +148,24 @@ class AccountScreen extends Component {
               </Body>
             </ListItem>
             <Button
-              style={styles.button}
+              style={styles.buttonBlue}
               block
               light
               onPress={() => this.updateProfile()}
             >
-              <Text style={styles.label}>Save Changes to Profile</Text>
+              <Text style={styles.labelUp}>Save Changes to Profile</Text>
             </Button>
             <UpdateEmail />
 
             <Button
-              style={styles.buttonBlue}
+              style={styles.buttonUp}
               block
+              bordered
               onPress={() => {
                 this.resetPassword();
               }}
             >
-              <Text>Reset Password</Text>
+              <Text style={styles.blueText}>Reset Password</Text>
             </Button>
             <DelelteAccount navigation={this.props.navigation} />
           </Form>
@@ -193,9 +194,28 @@ const styles = StyleSheet.create({
     backgroundColor: '#91D9D9',
     color: 'white'
   },
+  blueText: {
+    color: '#91D9D9',
+    fontSize: 16,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
+  },
   input: {
     fontSize: 16,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
+  },
+  buttonUp: {
+    fontSize: 16,
+    borderColor: '#91D9D9',
+    marginTop: 20,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
+  },
+  labelUp: {
+    color: '#fff',
+    fontSize: 16,
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   button: {
@@ -209,19 +229,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     width: screenWidth,
     marginTop: 20,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left',
     backgroundColor: '#FF5C5C'
   },
   check: {
     fontSize: 14,
     color: '#999',
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   icon: {
     fontSize: 14,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   }
 });

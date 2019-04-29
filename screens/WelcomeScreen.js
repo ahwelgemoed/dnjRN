@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, AsyncStorage } from 'react-native';
+import { Button } from 'native-base';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import TandC from '../components/TandC';
 const slides = [
@@ -13,14 +14,17 @@ const slides = [
   },
   {
     key: 'somethun-dos',
-    title: 'Be Truthfull',
-    text:
-      'You can post with or with out the ability to be contacted by other users via Instagram',
+    title: 'We build',
+    subsubtitle: 'and you',
+    subTitle: 'come',
+    text: 'You get 5 min to review your post and then it is locked for ever.',
     backgroundColor: '#febe29'
   },
   {
     key: 'somethun1',
-    title: 'Play Nice with the\nother kids on the Bus',
+    title: 'Play Nice with the',
+    subsubtitle: 'other kids ',
+    subTitle: 'on the Bus',
     text:
       "By continuing and creating an account you agree to our T&C's and that you are older that 17 Years old",
     backgroundColor: '#22bcb5',
@@ -55,9 +59,26 @@ export default class WelcomeScreen extends Component {
     await AsyncStorage.setItem('firstVisit', 'Yes');
     await this.props.navigation.navigate('LoginScreen');
   };
+  _renderDoneButton = () => {
+    return (
+      <Button style={styles.buttonBlueDone} block onPress={this._onDone}>
+        <Text style={styles.buttonBlueTextDone}>Agree and Done</Text>
+      </Button>
+    );
+  };
+  _renderNextButton = () => {
+    return (
+      <View style={styles.buttonBlue} block bordered>
+        <Text style={styles.buttonBlueText}>Next</Text>
+      </View>
+    );
+  };
   render() {
     return (
       <AppIntroSlider
+        renderNextButton={this._renderNextButton}
+        renderDoneButton={this._renderDoneButton}
+        showNextButton={true}
         renderItem={this._renderItem}
         slides={slides}
         onDone={this._onDone}
@@ -67,6 +88,41 @@ export default class WelcomeScreen extends Component {
   }
 }
 const styles = StyleSheet.create({
+  buttonBlue: {
+    flex: 1,
+    // width: 40,
+    height: 40,
+    borderWidth: 0.5,
+    borderRadius: 20,
+    borderColor: '#91D9D9',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 16,
+    fontFamily: 'proxima-alt',
+    backgroundColor: 'transparent',
+    color: 'white'
+  },
+  buttonBlueDone: {
+    height: 40,
+    fontSize: 16,
+    borderRadius: 20,
+    fontFamily: 'proxima-alt',
+    marginTop: 20,
+    textAlign: 'left',
+    borderColor: '#91D9D9',
+    backgroundColor: '#91D9D9',
+    color: 'white'
+  },
+  buttonCircle: {
+    flex: 1,
+    // width: 40,
+    height: 40,
+    backgroundColor: '#91D9D9',
+    color: '#fff',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   slide: {
     flex: 1,
     alignItems: 'center',
@@ -77,17 +133,27 @@ const styles = StyleSheet.create({
     height: 320
   },
   text: {
-    color: 'black',
+    color: '#111111',
     marginTop: 200,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     backgroundColor: 'transparent',
     textAlign: 'center',
     paddingHorizontal: 16,
     fontSize: 16
   },
+  buttonBlueText: {
+    color: '#91D9D9',
+    fontFamily: 'raleway-regular',
+    fontSize: 16
+  },
+  buttonBlueTextDone: {
+    color: '#fff',
+    fontFamily: 'raleway-regular',
+    fontSize: 16
+  },
   title: {
     fontSize: 26,
-    color: 'black',
+    color: '#111111',
     fontFamily: 'raleway-boldI',
     backgroundColor: 'transparent',
     textAlign: 'center',
@@ -95,7 +161,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 20,
-    color: 'black',
+    color: '#999',
     fontFamily: 'proxima-alt',
     fontStyle: 'italic',
     backgroundColor: 'transparent',

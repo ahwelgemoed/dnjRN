@@ -13,16 +13,23 @@ import { fadeIn } from 'react-navigation-transitions';
 import SignupScreen from '../screens/SignupScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 // const AppStack = createStackNavigator({ Home: HomeScreen, Other: OtherScreen });
-const AuthStack = createStackNavigator({
-  Welcome: {
-    screen: WelcomeScreen,
-    navigationOptions: {
-      drawerLockMode: 'locked-closed'
-    }
+const AuthStack = createStackNavigator(
+  {
+    Welcome: {
+      screen: WelcomeScreen,
+      navigationOptions: {
+        drawerLockMode: 'locked-closed'
+      }
+    },
+    LoginScreen: LoginScreen,
+    SignupScreen: SignupScreen
   },
-  LoginScreen: LoginScreen,
-  SignupScreen: SignupScreen
-});
+  {
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
+  }
+);
 
 export default createAppContainer(
   createSwitchNavigator(

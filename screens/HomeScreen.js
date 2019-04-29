@@ -18,6 +18,7 @@ import OnlineUsers from '../components/OnlineUsers';
 import { firestoreConnect } from 'react-redux-firebase';
 // import { MonoText } from '../components/StyledText';
 import CardPoem from '../components/CardPoem';
+import TandC from '../components/TandC';
 import { Icon, Button } from 'native-base';
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -198,6 +199,7 @@ class HomeScreen extends React.Component {
 
     return (
       <View style={styles.container}>
+        {/* <TandC /> */}
         <OnlineUsers scroll={this.state.scrollPosition} />
         {poems ? (
           <FlatList

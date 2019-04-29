@@ -187,7 +187,7 @@ let screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   IconBadge: {
     position: 'absolute',
-    backgroundColor: '#ddd',
+    backgroundColor: '#91D9D9',
     top: 1,
     right: 1,
     minWidth: 20,

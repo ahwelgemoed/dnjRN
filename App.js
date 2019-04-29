@@ -12,17 +12,9 @@ export default class App extends React.Component {
     mountyLoad: true
   };
   async componentDidMount() {
-    await Font.loadAsync({
-      'playfair-display-bold': require('./assets/fonts/PlayfairDisplay-Bold.ttf'),
-      'raleway-medium': require('./assets/fonts/Raleway-Medium.ttf'),
-      'raleway-regular': require('./assets/fonts/Raleway-Regular.ttf'),
-      'raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
-      'raleway-boldI': require('./assets/fonts/Raleway-BoldItalic.ttf'),
-      'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
-      'raleway-extralight': require('./assets/fonts/Raleway-ExtraLight.ttf'),
-      'proxima-alt': require('./assets/fonts/Proxima-Nova-Alt-Regular-webfont.ttf')
-    });
-    await this.setState({ mountyLoad: false });
+    // await Font.loadAsync({
+    // });
+    // await this.setState({ mountyLoad: false });
   }
 
   render() {
@@ -36,6 +28,7 @@ export default class App extends React.Component {
           startAsync={this._loadResourcesAsync}
           onError={this._handleLoadingError}
           onFinish={this._handleFinishLoading}
+          // autoHideSplash={false}
         />
       );
     } else {
@@ -54,7 +47,7 @@ export default class App extends React.Component {
   }
 
   _loadResourcesAsync = async () => {
-    return Promise.all([
+    Promise.all([
       Asset.loadAsync([
         require('./assets/images/robot-dev.png'),
         require('./assets/images/robot-prod.png')
@@ -63,11 +56,20 @@ export default class App extends React.Component {
         // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
         Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+        'raleway-boldI': require('./assets/fonts/Raleway-BoldItalic.ttf'),
+        'raleway-medium': require('./assets/fonts/Raleway-Medium.ttf'),
+        'raleway-regular': require('./assets/fonts/Raleway-Regular.ttf'),
+        'raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
+        'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
+        'raleway-extralight': require('./assets/fonts/Raleway-ExtraLight.ttf'),
+        'playfair-display-bold': require('./assets/fonts/PlayfairDisplay-Bold.ttf'),
+        'proxima-alt': require('./assets/fonts/Proxima-Nova-Alt-Regular-webfont.ttf'),
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf')
       })
     ]);
+    await this.setState({ mountyLoad: false });
   };
 
   _handleLoadingError = error => {

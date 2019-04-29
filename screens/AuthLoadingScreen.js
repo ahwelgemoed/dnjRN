@@ -15,9 +15,11 @@ import { GoogleSignIn } from 'expo';
 class AuthLoadingScreen extends React.Component {
   constructor(props) {
     super(props);
-    this._bootstrapAsync();
+    // this._bootstrapAsync();
   }
-
+  async componentDidMount() {
+    await this._bootstrapAsync();
+  }
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
     // try {
@@ -48,7 +50,7 @@ class AuthLoadingScreen extends React.Component {
       );
     }
     if (isEmpty(auth)) {
-      return this.props.navigation.navigate('Auth');
+      return this.props.navigation.navigate('LoginScreen');
     }
     return this.props.navigation.navigate('App');
   }

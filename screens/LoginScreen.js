@@ -16,7 +16,7 @@ import {
   Toast,
   Spinner
 } from 'native-base';
-import { AsyncStorage, StyleSheet, Dimensions } from 'react-native';
+import { AsyncStorage, StyleSheet, Dimensions, View } from 'react-native';
 import { GoogleSignIn } from 'expo';
 class LoginScreen extends Component {
   state = {
@@ -24,6 +24,7 @@ class LoginScreen extends Component {
   };
   static navigationOptions = ({ navigation }) => ({
     title: 'Sign In',
+    headerLeft: null,
     headerTitleStyle: {
       fontFamily: 'raleway-boldI',
       fontSize: 20
@@ -39,7 +40,8 @@ class LoginScreen extends Component {
       return Toast.show({
         text: 'Please Fill In all the details',
         buttonText: 'Okay',
-        position: 'top'
+        position: 'bottom',
+        type: 'danger'
       });
     }
     await firebase
@@ -54,7 +56,8 @@ class LoginScreen extends Component {
         Toast.show({
           text: err.message,
           buttonText: 'Okay',
-          position: 'top'
+          position: 'bottom',
+          type: 'danger'
         });
       });
   };
@@ -71,50 +74,48 @@ class LoginScreen extends Component {
   };
   render() {
     return (
-      <Container style={styles.mainContent}>
+      <Container>
         <Content>
-          <Form>
-            <Item floatingLabel>
-              <Label style={styles.label}>Email Address</Label>
-              <Input
-                style={styles.label}
-                onChangeText={text => this.setState({ username: text })}
-              />
-            </Item>
-            <Item floatingLabel last>
-              <Label style={styles.label}>Password</Label>
-              <Input
-                style={styles.label}
-                secureTextEntry={true}
-                onChangeText={text => this.setState({ password: text })}
-              />
-            </Item>
-            <Button block light onPress={this.signIn} style={styles.button}>
-              {this.state.loading ? (
-                <Spinner color={'#ddd'} />
-              ) : (
-                <Icon name="person" style={styles.icon} />
-              )}
-              <Text style={styles.label}>Sign In</Text>
+          <View style={styles.mainContent}>
+            <Form>
+              <Item floatingLabel>
+                <Label style={styles.label}>Email Address</Label>
+                <Input
+                  style={styles.label}
+                  onChangeText={text => this.setState({ username: text })}
+                />
+              </Item>
+              <Item floatingLabel last>
+                <Label style={styles.label}>Password</Label>
+                <Input
+                  style={styles.label}
+                  secureTextEntry={true}
+                  onChangeText={text => this.setState({ password: text })}
+                />
+              </Item>
+              <Button block light onPress={this.signIn} style={styles.buttonIn}>
+                {this.state.loading ? <Spinner color={'#fff'} /> : null}
+                <Text style={styles.labelIn}>Sign In</Text>
+              </Button>
+            </Form>
+            <Button
+              style={styles.buttonUp}
+              block
+              bordered
+              light
+              onPress={() => this.props.navigation.navigate('SignupScreen')}
+            >
+              <Text style={styles.labelSignUp}>Sign Up</Text>
             </Button>
-          </Form>
-          <Button
-            style={styles.button}
-            block
-            light
-            onPress={() => this.props.navigation.navigate('SignupScreen')}
-          >
-            <Icon name="person-add" style={styles.icon} />
-            <Text style={styles.label}>Sign Up</Text>
-          </Button>
+          </View>
+
           <Button
             style={styles.button}
             block
             light
             onPress={() => this._googleSingIn()}
           >
-            <Icon name="person-add" style={styles.icon} />
-            <Text style={styles.label}>Google Sign In</Text>
+            <Text style={styles.label}>Facebook Sign In</Text>
           </Button>
         </Content>
       </Container>
@@ -132,19 +133,47 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
+  },
+  labelSignUp: {
+    color: '#91D9D9',
+    fontSize: 16,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
+  },
+  labelIn: {
+    color: '#fff',
+    fontFamily: 'raleway-regular',
+    fontSize: 16
   },
   icon: {
     fontSize: 14,
-    fontFamily: 'proxima-alt',
+    color: '#91D9D9',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   button: {
     fontSize: 16,
     width: screenWidth,
     marginTop: 20,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
+  },
+  buttonIn: {
+    fontSize: 16,
+    backgroundColor: '#91D9D9',
+    width: screenWidth,
+    marginTop: 20,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
+  },
+  buttonUp: {
+    fontSize: 16,
+    borderColor: '#91D9D9',
+    width: screenWidth,
+    marginTop: 20,
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   }
 });

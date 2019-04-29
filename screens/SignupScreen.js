@@ -16,7 +16,7 @@ import {
   Toast,
   Spinner
 } from 'native-base';
-import { AsyncStorage, StyleSheet } from 'react-native';
+import { AsyncStorage, StyleSheet, View, Dimensions } from 'react-native';
 
 class SignupScreen extends Component {
   state = {
@@ -44,7 +44,8 @@ class SignupScreen extends Component {
       return Toast.show({
         text: 'Please Fill In all the details',
         buttonText: 'Okay',
-        position: 'top'
+        position: 'bottom',
+        type: 'danger'
       });
     }
     try {
@@ -57,86 +58,105 @@ class SignupScreen extends Component {
         .then(res => {
           this.props.navigation.navigate('Home');
           AsyncStorage.setItem('firstVisit', 'Yes');
+          Toast.show({
+            text: 'Account Created',
+            buttonText: 'Okay',
+            position: 'bottom'
+          });
         });
     } catch (err) {
       this.setState({ loading: false });
       return Toast.show({
         text: err.message,
         buttonText: 'Okay',
-        position: 'top'
+        position: 'bottom',
+        type: 'danger'
       });
     }
   };
   render() {
     return (
-      <Container style={styles.mainContent}>
+      <Container>
         <Content>
-          <Form>
-            <Item floatingLabel>
-              <Label style={styles.label}>Name</Label>
-              <Input
-                style={styles.label}
-                onChangeText={val => this.onChangeText('username', val)}
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label style={styles.label}>Password</Label>
-              <Input
-                style={styles.label}
-                secureTextEntry={true}
-                onChangeText={val => this.onChangeText('password', val)}
-              />
-            </Item>
-            <Item floatingLabel style={styles.label}>
-              <Label style={styles.label}>Email Address</Label>
-              <Input
-                style={styles.label}
-                onChangeText={val => this.onChangeText('email', val)}
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label style={styles.label}>Instagram Handle</Label>
-              <Input
-                style={styles.label}
-                onChangeText={val => this.onChangeText('Instagram', val)}
-              />
-            </Item>
-
-            <Button style={styles.button} block light onPress={this.signUp}>
-              {this.state.loading ? (
-                <Spinner color={'#ddd'} />
-              ) : (
-                <Icon name="person-add" style={styles.icon} />
-              )}
-              <Text style={styles.label}>Sign Up</Text>
-            </Button>
-          </Form>
+          <View style={styles.mainContent}>
+            <Form>
+              <Item floatingLabel>
+                <Label style={styles.label}>Name</Label>
+                <Input
+                  style={styles.label}
+                  onChangeText={val => this.onChangeText('username', val)}
+                />
+              </Item>
+              <Item floatingLabel style={styles.label}>
+                <Label style={styles.label}>Email Address</Label>
+                <Input
+                  style={styles.label}
+                  onChangeText={val => this.onChangeText('email', val)}
+                />
+              </Item>
+              <Item floatingLabel>
+                <Label style={styles.label}>Password</Label>
+                <Input
+                  style={styles.label}
+                  secureTextEntry={true}
+                  onChangeText={val => this.onChangeText('password', val)}
+                />
+              </Item>
+              <Item floatingLabel>
+                <Label style={styles.label}>Instagram Handle</Label>
+                <Input
+                  style={styles.label}
+                  onChangeText={val => this.onChangeText('Instagram', val)}
+                />
+              </Item>
+              <Button block light onPress={this.signUp} style={styles.buttonIn}>
+                {this.state.loading ? <Spinner color={'#fff'} /> : null}
+                <Text style={styles.labelIn}>Sign Up</Text>
+              </Button>
+            </Form>
+          </View>
         </Content>
       </Container>
     );
   }
 }
+let screenWidth = Dimensions.get('window').width - 20;
 const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
-    margin: 20
-    // alignItems: 'center',
-    // justifyContent: 'space-around'
+    alignItems: 'center',
+    paddingLeft: 12,
+    paddingRight: 12,
+    justifyContent: 'space-around'
   },
   label: {
     fontSize: 16,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   icon: {
     fontSize: 14,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
+  },
+  labelIn: {
+    color: '#fff',
+    fontFamily: 'raleway-regular',
+    fontSize: 16
   },
   button: {
     fontSize: 16,
     marginTop: 20,
-    fontFamily: 'proxima-alt',
+    width: screenWidth,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
+  },
+  buttonIn: {
+    fontSize: 16,
+    backgroundColor: '#91D9D9',
+    width: screenWidth,
+    marginTop: 20,
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   }
 });
