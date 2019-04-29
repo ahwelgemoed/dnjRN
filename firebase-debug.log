@@ -1,0 +1,57 @@
+[debug] [2019-04-28T18:28:46.289Z] ----------------------------------------------------------------------
+[debug] [2019-04-28T18:28:46.292Z] Command:       /usr/local/Cellar/node/11.14.0_1/bin/node /usr/local/bin/firebase init
+[debug] [2019-04-28T18:28:46.293Z] CLI Version:   6.7.1
+[debug] [2019-04-28T18:28:46.293Z] Platform:      darwin
+[debug] [2019-04-28T18:28:46.293Z] Node Version:  v11.14.0
+[debug] [2019-04-28T18:28:46.294Z] Time:          Sun Apr 28 2019 20:28:46 GMT+0200 (South Africa Standard Time)
+[debug] [2019-04-28T18:28:46.294Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-04-28T18:28:46.309Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-04-28T18:28:46.309Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/arno/Desktop/disnetjyexpo/dnjexpo
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2019-04-28T18:28:52.493Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-04-28T18:28:52.493Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-04-28T18:28:53.247Z] <<< HTTP RESPONSE 200
+[debug] [2019-04-28T18:28:53.270Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects?page_size=100  
+ 
+[debug] [2019-04-28T18:28:54.504Z] <<< HTTP RESPONSE 200
+[info] i  Using project disnetons (disnetons)
+[info] 
+=== Functions Setup
+[info] 
+[info] A functions directory will be created in your project with a Node.js
+[info] package pre-configured. Functions can be deployed with firebase deploy.
+[info] 
+[debug] [2019-04-28T18:28:59.001Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-04-28T18:28:59.001Z] > authorizing via signed-in user
+[debug] [2019-04-28T18:28:59.002Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/disnetons  
+ 
+[debug] [2019-04-28T18:28:59.690Z] <<< HTTP RESPONSE 200
+[debug] [2019-04-28T18:28:59.693Z] >>> HTTP REQUEST PATCH https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/disnetons?updateMask=usageSettings  
+
+[debug] [2019-04-28T18:28:59.694Z] >>> HTTP REQUEST PATCH https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/disnetons?updateMask=usageSettings  
+
+[debug] [2019-04-28T18:29:03.003Z] <<< HTTP RESPONSE 200
+[debug] [2019-04-28T18:29:03.289Z] <<< HTTP RESPONSE 200
+[info] ✔  Wrote functions/package.json
+[info] ✔  Wrote functions/.eslintrc.json
+[info] ✔  Wrote functions/index.js
+[info] ✔  Wrote functions/.gitignore

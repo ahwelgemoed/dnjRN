@@ -117,6 +117,7 @@ class HomeScreen extends React.Component {
     await firestore.get({
       collection: 'poems',
       limit: this.state.limit,
+      // where: ['nsfw', '==', true],
       orderBy: [this.state.orderBy, this.state.ordered]
     });
     await this.setState({
