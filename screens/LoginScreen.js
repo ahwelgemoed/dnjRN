@@ -119,7 +119,7 @@ class LoginScreen extends Component {
                 borderRadius: 40,
                 marginTop: 20
               }}
-              source={require('../assets/images/DNJBW.png')}
+              source={require('../assets/images/DNJ.png')}
             />
             <Form>
               <Item floatingLabel>

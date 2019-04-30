@@ -12,9 +12,7 @@ export default class App extends React.Component {
     mountyLoad: true
   };
   async componentDidMount() {
-    // await Font.loadAsync({
-    // });
-    // await this.setState({ mountyLoad: false });
+    await this._loadResourcesAsync();
   }
 
   render() {
@@ -36,7 +34,6 @@ export default class App extends React.Component {
         <Provider store={store}>
           <Root>
             <View style={styles.container}>
-              {/* <Text> Mainer</Text> */}
               {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
               <AppNavigator />
             </View>
@@ -48,24 +45,14 @@ export default class App extends React.Component {
 
   _loadResourcesAsync = async () => {
     Promise.all([
-      Asset.loadAsync([
-        require('./assets/images/robot-dev.png'),
-        require('./assets/images/robot-prod.png')
-      ]),
       Font.loadAsync({
-        // This is the font that we are using for our tab bar
         Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
         'raleway-boldI': require('./assets/fonts/Raleway-BoldItalic.ttf'),
         'raleway-medium': require('./assets/fonts/Raleway-Medium.ttf'),
         'raleway-regular': require('./assets/fonts/Raleway-Regular.ttf'),
         'raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
-        'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
         'raleway-extralight': require('./assets/fonts/Raleway-ExtraLight.ttf'),
         ...Icon.Ionicons.font
-        // 'playfair-display-bold': require('./assets/fonts/PlayfairDisplay-Bold.ttf'),
-        // 'proxima-alt': require('./assets/fonts/Proxima-Nova-Alt-Regular-webfont.ttf'),
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
-        // to remove this if you are not using it in your app
       })
     ]);
     await this.setState({ mountyLoad: false });

@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Dimensions, Alert } from 'react-native';
-import { Icon, Button, Row, Col, Badge, Toast } from 'native-base';
+import { View, StyleSheet, Dimensions, Alert } from 'react-native';
+import { Icon, Button, Row, Col, Badge, Toast, Text } from 'native-base';
 import moment from 'moment';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import AdminModal from './AdminModal';
 import styled from 'styled-components/native';
+import Dialog, {
+  SlideAnimation,
+  DialogContent
+} from 'react-native-popup-dialog';
 import { WebBrowser } from 'expo';
 const StyledText = styled.View`
   shadow-opacity: 0.35;
@@ -43,6 +47,7 @@ class CardPoem extends Component {
                 { reported: true }
               )
               .then(res => {
+                this.setState({ reportDialog: false });
                 Toast.show({
                   text: 'Poem Reported to Admin',
                   buttonText: 'Okay',
@@ -101,17 +106,38 @@ class CardPoem extends Component {
         <Row>
           <Col>
             <Text style={styles.name}>{this.props.poem.name}</Text>
-
-            {this.props.admin && this.props.poem.reported ? (
-              <Badge style={styles.IconBadgeReported}>
-                <Text style={styles.nsfw}>Reported</Text>
-              </Badge>
-            ) : null}
-            {this.props.poem.nsfw ? (
-              <Badge style={styles.IconBadge}>
-                <Text style={styles.nsfw}>NSFW</Text>
-              </Badge>
-            ) : null}
+            <Text
+              style={styles.elipse}
+              onPress={() => {
+                this.setState({ reportDialog: true });
+              }}
+            >
+              {' '}
+              <Icon
+                style={styles.elipseIcon}
+                type="FontAwesome"
+                color="#ddd"
+                name="ellipsis-v"
+              />
+            </Text>
+            <Dialog
+              visible={this.state.reportDialog}
+              onTouchOutside={() => {
+                this.setState({ reportDialog: false });
+              }}
+              dialogAnimation={
+                new SlideAnimation({
+                  slideFrom: 'bottom'
+                })
+              }
+            >
+              <DialogContent style={styles.mainContent}>
+                <Text style={styles.nameDialog}> Options </Text>
+                <Text style={styles.dates} onPress={() => this.reportPoem()}>
+                  REPORT AS INAPPROPRIATE
+                </Text>
+              </DialogContent>
+            </Dialog>
             {this.props.poem.handle ? (
               <Text
                 onPress={() =>
@@ -137,12 +163,14 @@ class CardPoem extends Component {
                 justifyContent: 'space-between'
               }}
             >
-              <Text style={styles.dates} onLongPress={() => this.reportPoem()}>
-                REPORT
-              </Text>
               <Text style={styles.date}>
                 {moment(this.props.poem.date).fromNow()}
               </Text>
+              {this.props.poem.nsfw ? (
+                <Badge style={styles.IconBadge}>
+                  <Text style={styles.nsfw}>NSFW</Text>
+                </Badge>
+              ) : null}
             </View>
           </Col>
         </Row>
@@ -165,6 +193,11 @@ class CardPoem extends Component {
         </Row>
         <Row>
           <Col>
+            {this.props.admin && this.props.poem.reported ? (
+              <Badge style={styles.IconBadgeReported}>
+                <Text style={styles.nsfw}>Reported</Text>
+              </Badge>
+            ) : null}
             <AdminModal poem={this.props.poem} />
           </Col>
         </Row>
@@ -185,23 +218,46 @@ export default compose(
 let screenWidth = Dimensions.get('window').width - 60;
 let screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
-  IconBadge: {
+  mainContent: {
+    width: screenWidth,
+    alignItems: 'center',
+    paddingTop: 20,
+    paddingLeft: 12,
+    paddingRight: 12
+  },
+  elipse: {
     position: 'absolute',
-    backgroundColor: '#91D9D9',
     top: 1,
     right: 1,
     minWidth: 20,
-    height: 20,
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  elipseIcon: {
+    color: '#ddd',
+    fontSize: 14
+  },
+  IconBadge: {
+    position: 'absolute',
+    backgroundColor: '#FF5C5C',
+    opacity: 0.3,
+    bottom: 1,
+    right: 1,
+    // minWidth: 20,
+    height: 25,
     borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'center'
   },
   IconBadgeReported: {
-    position: 'absolute',
+    marginTop: 10,
+    display: 'flex',
     backgroundColor: '#FF5C5C',
     bottom: 1,
     right: 1,
     minWidth: 20,
+    width: '100%',
     height: 20,
     borderRadius: 15,
     alignItems: 'center',
@@ -212,14 +268,20 @@ const styles = StyleSheet.create({
     fontFamily: 'raleway-bold',
     textAlign: 'left'
   },
+  nameDialog: {
+    fontSize: 22,
+    fontFamily: 'raleway-bold',
+    textAlign: 'left',
+    paddingBottom: 10
+  },
   handle: {
     fontSize: 14,
     textAlign: 'left',
     fontFamily: 'proxima-alt'
   },
   nsfw: {
-    fontSize: 12,
-    textAlign: 'left',
+    fontSize: 10,
+    textAlign: 'center',
     color: 'white',
     fontFamily: 'proxima-alt'
   },
