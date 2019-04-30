@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import moment from 'moment';
 import AddInstagramModal from '../components/AddInstagramModal';
 import { successfullyAddedPoem } from '../actions/poemsActions';
-import { StyleSheet, Dimensions, AsyncStorage } from 'react-native';
+import { StyleSheet, Dimensions, AsyncStorage, View } from 'react-native';
 import FirstPostModal from '../components/FirstPostModal';
 import {
   Content,
@@ -223,72 +223,74 @@ class PostPoem extends Component {
   render() {
     const { handle, body, firstPost } = this.state;
     return (
-      <Container style={styles.mainContent}>
+      <Container>
         <Content>
-          <Form>
-            <Item>
-              <Input
-                style={styles.input}
-                placeholder="Poem Title"
-                value={this.state.name}
-                onChangeText={text => this.setState({ name: text })}
-              />
-            </Item>
-            <Item>
-              <Textarea
-                style={styles.input}
-                rowSpan={5}
-                placeholder="Poem"
-                value={this.state.body}
-                onChangeText={text => this.setState({ body: text })}
-              />
-            </Item>
-            {this.props.profile.isLoaded && this.props.profile.Instagram ? (
+          <View style={styles.mainContent}>
+            <Form>
+              <Item>
+                <Input
+                  style={styles.input}
+                  placeholder="Poem Title"
+                  value={this.state.name}
+                  onChangeText={text => this.setState({ name: text })}
+                />
+              </Item>
+              <Item>
+                <Textarea
+                  style={styles.inputs}
+                  rowSpan={5}
+                  placeholder="Poem"
+                  value={this.state.body}
+                  onChangeText={text => this.setState({ body: text })}
+                />
+              </Item>
+              {this.props.profile.isLoaded && this.props.profile.Instagram ? (
+                <ListItem>
+                  <CheckBox
+                    color={'#000'}
+                    checked={this.state.withInstagram}
+                    onPress={this.withInstagram}
+                  />
+                  <Body>
+                    <Text style={styles.check}>
+                      Post as {this.props.profile.Instagram}
+                    </Text>
+                  </Body>
+                </ListItem>
+              ) : (
+                <React.Fragment>
+                  <AddInstagramModal />
+                </React.Fragment>
+              )}
               <ListItem>
                 <CheckBox
                   color={'#000'}
-                  checked={this.state.withInstagram}
-                  onPress={this.withInstagram}
+                  checked={this.state.nsfw}
+                  onPress={this.nsfw}
                 />
                 <Body>
-                  <Text style={styles.check}>
-                    Post as {this.props.profile.Instagram}
-                  </Text>
+                  <Text style={styles.check}>NSFW</Text>
                 </Body>
               </ListItem>
-            ) : (
-              <React.Fragment>
-                <AddInstagramModal />
-              </React.Fragment>
-            )}
-            <ListItem>
-              <CheckBox
-                color={'#000'}
-                checked={this.state.nsfw}
-                onPress={this.nsfw}
-              />
-              <Body>
-                <Text style={styles.check}>NSFW</Text>
-              </Body>
-            </ListItem>
-            <Button
-              style={styles.buttonIn}
-              block
-              light
-              onPress={this.postToPoem}
-            >
-              <Text style={styles.labelIn}>Post Poem</Text>
-            </Button>
-            <Button
-              block
-              style={styles.buttonItself}
-              bordered
-              warning
-              onPress={() => this.props.navigation.goBack()}
-            >
-              <Text style={styles.button}>Cancel</Text>
-            </Button>
-          </Form>
+              <Button
+                style={styles.buttonIn}
+                block
+                light
+                onPress={this.postToPoem}
+              >
+                <Text style={styles.labelIn}>Post Poem</Text>
+              </Button>
+              <Button
+                block
+                style={styles.buttonItself}
+                bordered
+                warning
+                onPress={() => this.props.navigation.goBack()}
+              >
+                <Text style={styles.button}>Cancel</Text>
+              </Button>
+            </Form>
+          </View>
           <FirstPostModal openFirstModal={this.state.openFirstModal} />
         </Content>
       </Container>
@@ -299,6 +301,12 @@ let screenWidth = Dimensions.get('window').width - 20;
 const styles = StyleSheet.create({
   input: {
     fontSize: 16,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
+  },
+  inputs: {
+    fontSize: 16,
+    width: screenWidth,
     fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
@@ -315,16 +323,15 @@ const styles = StyleSheet.create({
   buttonIn: {
     fontSize: 16,
     backgroundColor: '#91D9D9',
-    width: screenWidth,
     marginTop: 20,
     fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   button: {
     fontSize: 16,
-
     fontFamily: 'raleway-regular',
-    textAlign: 'left'
+
+    textAlign: 'center'
   },
   check: {
     fontSize: 14,
@@ -334,7 +341,6 @@ const styles = StyleSheet.create({
   },
   buttonItself: {
     fontSize: 14,
-    width: screenWidth,
     marginTop: 20,
     fontFamily: 'raleway-regular',
     textAlign: 'left'

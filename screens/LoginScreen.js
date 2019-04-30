@@ -37,12 +37,10 @@ class LoginScreen extends Component {
       if (user != null && user.providerData[0].providerId == 'facebook.com') {
         const payLoad = {
           user: user.uid,
-          Instagram: '',
           auth: false,
           username: user.displayName,
           seensfw: true,
-          email: user.email,
-          token: ''
+          email: user.email
         };
         const { firebase } = this.props;
         firebase

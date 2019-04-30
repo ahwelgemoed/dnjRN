@@ -178,7 +178,6 @@ class CardPoem extends Component {
           <Col>
             {this.state.userEdit ? (
               <Button
-                style={styles.button}
                 transparent
                 block
                 small
@@ -318,6 +317,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 14,
     fontFamily: 'raleway-extralight',
+    color: '#999',
     textAlign: 'right'
   }
 });
