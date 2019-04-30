@@ -33,7 +33,7 @@ class AddInstagramModal extends Component {
         Toast.show({
           text: 'Instagram Handle Added!',
           buttonText: 'Okay',
-          position: 'top'
+          position: 'bottom'
         });
         this.setState({ modalVisible: false });
       });

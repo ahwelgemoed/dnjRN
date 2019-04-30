@@ -18,10 +18,37 @@ import {
 } from 'native-base';
 import { AsyncStorage, StyleSheet, Dimensions, View } from 'react-native';
 import { GoogleSignIn } from 'expo';
+import FacebookLogin from '../components/FacebookLogin';
 class LoginScreen extends Component {
   state = {
     loading: false
   };
+
+  componentDidMount() {
+    this.props.firebase.auth().onAuthStateChanged(user => {
+      if (user != null && user.providerData[0].providerId == 'facebook.com') {
+        const payLoad = {
+          user: user.uid,
+          Instagram: '',
+          auth: false,
+          username: user.displayName,
+          seensfw: true,
+          email: user.email,
+          token: ''
+        };
+        const { firebase } = this.props;
+        firebase
+          .updateProfile(payLoad)
+          .then(res => {
+            this.props.navigation.navigate('Home');
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        console.log(user);
+      }
+    });
+  }
   static navigationOptions = ({ navigation }) => ({
     title: 'Sign In',
     headerLeft: null,
@@ -61,17 +88,17 @@ class LoginScreen extends Component {
         });
       });
   };
-  _googleSingIn = async () => {
-    try {
-      await GoogleSignIn.askForPlayServicesAsync();
-      const { type, user } = await GoogleSignIn.signInAsync();
-      if (type === 'success') {
-        this.props.navigation.navigate('Home');
-      }
-    } catch ({ message }) {
-      alert('login: Error:' + message);
-    }
-  };
+  // _googleSingIn = async () => {
+  //   try {
+  //     await GoogleSignIn.askForPlayServicesAsync();
+  //     const { type, user } = await GoogleSignIn.signInAsync();
+  //     if (type === 'success') {
+  //       this.props.navigation.navigate('Home');
+  //     }
+  //   } catch ({ message }) {
+  //     alert('login: Error:' + message);
+  //   }
+  // };
   render() {
     return (
       <Container>
@@ -107,16 +134,9 @@ class LoginScreen extends Component {
             >
               <Text style={styles.labelSignUp}>Sign Up</Text>
             </Button>
+            <Text style={styles.name}>- or use Facebook -</Text>
+            <FacebookLogin />
           </View>
-
-          <Button
-            style={styles.button}
-            block
-            light
-            onPress={() => this._googleSingIn()}
-          >
-            <Text style={styles.label}>Facebook Sign In</Text>
-          </Button>
         </Content>
       </Container>
     );
@@ -135,6 +155,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'raleway-regular',
     textAlign: 'left'
+  },
+  name: {
+    fontSize: 12,
+    marginTop: 20,
+    color: '#ddd',
+    fontFamily: 'proxima-alt',
+    textAlign: 'center'
   },
   labelSignUp: {
     color: '#91D9D9',
