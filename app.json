@@ -4,10 +4,7 @@
     "slug": "klyntjidnj",
     "privacy": "public",
     "sdkVersion": "32.0.0",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/DNJ.png",
@@ -19,13 +16,14 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "package": "com.disnetons.googlesignin",
       "googleServicesFile": "./google-services.json"
     },
+    "facebookScheme": "fb433863794055791",
+    "facebookAppId": "433863794055791",
+    "facebookDisplayName": "DisNetJy",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.disnetons.googlesignin",

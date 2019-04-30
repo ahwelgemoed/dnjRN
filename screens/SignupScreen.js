@@ -16,8 +16,15 @@ import {
   Toast,
   Spinner
 } from 'native-base';
-import { AsyncStorage, StyleSheet, View, Dimensions } from 'react-native';
-
+import {
+  AsyncStorage,
+  StyleSheet,
+  View,
+  Dimensions,
+  ActivityIndicator,
+  Image
+} from 'react-native';
+import FacebookLogin from '../components/FacebookLogin';
 class SignupScreen extends Component {
   state = {
     loading: false,
@@ -79,6 +86,15 @@ class SignupScreen extends Component {
       <Container>
         <Content>
           <View style={styles.mainContent}>
+            <Image
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 40,
+                marginTop: 20
+              }}
+              source={require('../assets/images/DNJBW.png')}
+            />
             <Form>
               <Item floatingLabel>
                 <Label style={styles.label}>Name</Label>
@@ -110,9 +126,12 @@ class SignupScreen extends Component {
                 />
               </Item>
               <Button block light onPress={this.signUp} style={styles.buttonIn}>
-                {this.state.loading ? <Spinner color={'#fff'} /> : null}
+                {this.state.loading ? (
+                  <ActivityIndicator color={'#fff'} />
+                ) : null}
                 <Text style={styles.labelIn}>Sign Up</Text>
               </Button>
+              <FacebookLogin />
             </Form>
           </View>
         </Content>

@@ -16,9 +16,17 @@ import {
   Toast,
   Spinner
 } from 'native-base';
-import { AsyncStorage, StyleSheet, Dimensions, View } from 'react-native';
+import {
+  AsyncStorage,
+  StyleSheet,
+  Dimensions,
+  View,
+  ActivityIndicator,
+  Image
+} from 'react-native';
 import { GoogleSignIn } from 'expo';
 import FacebookLogin from '../components/FacebookLogin';
+import GoolgeLogin from '../components/GoolgeLogin';
 class LoginScreen extends Component {
   state = {
     loading: false
@@ -104,6 +112,15 @@ class LoginScreen extends Component {
       <Container>
         <Content>
           <View style={styles.mainContent}>
+            <Image
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 40,
+                marginTop: 20
+              }}
+              source={require('../assets/images/DNJBW.png')}
+            />
             <Form>
               <Item floatingLabel>
                 <Label style={styles.label}>Email Address</Label>
@@ -121,7 +138,9 @@ class LoginScreen extends Component {
                 />
               </Item>
               <Button block light onPress={this.signIn} style={styles.buttonIn}>
-                {this.state.loading ? <Spinner color={'#fff'} /> : null}
+                {this.state.loading ? (
+                  <ActivityIndicator color={'#fff'} />
+                ) : null}
                 <Text style={styles.labelIn}>Sign In</Text>
               </Button>
             </Form>
@@ -136,6 +155,7 @@ class LoginScreen extends Component {
             </Button>
             <Text style={styles.name}>- or use Facebook -</Text>
             <FacebookLogin />
+            {/* <GoolgeLogin /> */}
           </View>
         </Content>
       </Container>

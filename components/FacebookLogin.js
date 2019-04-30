@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
-import { Button, Text } from 'native-base';
+import { View, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
+import { Button, Text, Spinner } from 'native-base';
 import { Facebook } from 'expo';
 import { compose } from 'redux';
 import { withFirebase } from 'react-redux-firebase';
 import firebase from 'firebase';
 class FacebookLogin extends Component {
+  state = {
+    loading: false
+  };
   facebookSignin = async () => {
+    await this.setState({
+      loading: true
+    });
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
       '433863794055791',
       { permissions: ['public_profile'] }
@@ -18,8 +24,15 @@ class FacebookLogin extends Component {
         .auth()
         .signInWithCredential(credential)
         .catch(error => {
+          this.setState({
+            loading: true
+          });
           console.log(error);
         });
+    } else {
+      await this.setState({
+        loading: true
+      });
     }
   };
 
@@ -32,6 +45,7 @@ class FacebookLogin extends Component {
         style={styles.buttonUp}
         onPress={() => this.facebookSignin()}
       >
+        {this.state.loading ? <ActivityIndicator color={'#3b5998'} /> : null}
         <Text style={styles.buttonText}>Sign In with Facebook</Text>
       </Button>
     );

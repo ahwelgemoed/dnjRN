@@ -54,7 +54,6 @@ export default class App extends React.Component {
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar
-        ...Icon.Ionicons.font,
         Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
         'raleway-boldI': require('./assets/fonts/Raleway-BoldItalic.ttf'),
         'raleway-medium': require('./assets/fonts/Raleway-Medium.ttf'),
@@ -62,11 +61,11 @@ export default class App extends React.Component {
         'raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
         'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
         'raleway-extralight': require('./assets/fonts/Raleway-ExtraLight.ttf'),
-        'playfair-display-bold': require('./assets/fonts/PlayfairDisplay-Bold.ttf'),
-        'proxima-alt': require('./assets/fonts/Proxima-Nova-Alt-Regular-webfont.ttf'),
+        ...Icon.Ionicons.font
+        // 'playfair-display-bold': require('./assets/fonts/PlayfairDisplay-Bold.ttf'),
+        // 'proxima-alt': require('./assets/fonts/Proxima-Nova-Alt-Regular-webfont.ttf'),
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
-        'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf')
       })
     ]);
     await this.setState({ mountyLoad: false });
