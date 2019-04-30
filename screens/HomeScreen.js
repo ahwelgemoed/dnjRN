@@ -19,6 +19,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 // import { MonoText } from '../components/StyledText';
 import CardPoem from '../components/CardPoem';
 import TandC from '../components/TandC';
+import Loading from '../components/Loading';
 import { Icon, Button } from 'native-base';
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -200,32 +201,37 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         {/* <TandC /> */}
-        <OnlineUsers scroll={this.state.scrollPosition} />
         {poems ? (
-          <FlatList
-            useNativeDriver={true}
-            scrollEventThrottle={160}
-            onScroll={this.handleScroll}
-            onEndReached={this.onRefresh}
-            onEndReachedThreshold={0.5}
-            onRefresh={() => this.onRefresh()}
-            refreshing={this.state.isFetching}
-            showsVerticalScrollIndicator={false}
-            ListFooterComponent={() => <ActivityIndicator />}
-            data={poems}
-            ref="full"
-            renderItem={({ item, i }) => (
-              <CardPoem
-                poem={item}
-                key={i}
-                auth={this.props.auth}
-                navigation={this.props.navigation}
-              />
-            )}
-            keyExtractor={item => item.id}
-          />
+          <React.Fragment>
+            <OnlineUsers scroll={this.state.scrollPosition} />
+            <FlatList
+              useNativeDriver={true}
+              scrollEventThrottle={160}
+              onScroll={this.handleScroll}
+              onEndReached={this.onRefresh}
+              onEndReachedThreshold={0.5}
+              onRefresh={() => this.onRefresh()}
+              refreshing={this.state.isFetching}
+              showsVerticalScrollIndicator={false}
+              ListFooterComponent={() => (
+                <ActivityIndicator color={'#91D9D9'} />
+              )}
+              data={poems}
+              ref="full"
+              renderItem={({ item, i }) => (
+                <CardPoem
+                  poem={item}
+                  key={i}
+                  auth={this.props.auth}
+                  navigation={this.props.navigation}
+                />
+              )}
+              keyExtractor={item => item.id}
+            />
+          </React.Fragment>
         ) : (
-          <ActivityIndicator />
+          <ActivityIndicator color={'#91D9D9'} />
+          // <Loading />
         )}
       </View>
     );
@@ -249,7 +255,7 @@ let screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fbfbfb',
+    backgroundColor: '#ffffff',
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: 15,

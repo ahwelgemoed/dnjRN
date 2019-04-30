@@ -50,7 +50,7 @@ export default (Drawer = createDrawerNavigator(
     }
   },
   {
-    drawerLockMode: 'locked-closed',
+    // drawerLockMode: 'locked-closed',
     contentComponent: DrawerScreen,
     initialRouteName: 'Home',
     transitionConfig: () => fadeIn(),

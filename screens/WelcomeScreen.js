@@ -61,9 +61,9 @@ export default class WelcomeScreen extends Component {
   };
   _renderDoneButton = () => {
     return (
-      <Button style={styles.buttonBlueDone} block onPress={this._onDone}>
+      <View style={styles.buttonBlueDone} block onPress={this._onDone}>
         <Text style={styles.buttonBlueTextDone}>Agree and Done</Text>
-      </Button>
+      </View>
     );
   };
   _renderNextButton = () => {
@@ -111,6 +111,9 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     borderColor: '#91D9D9',
     backgroundColor: '#91D9D9',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 16,
     color: 'white'
   },
   buttonCircle: {

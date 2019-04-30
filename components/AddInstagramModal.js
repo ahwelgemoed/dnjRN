@@ -52,6 +52,7 @@ class AddInstagramModal extends Component {
         >
           <View style={styles.mainContent}>
             <View>
+              <Text style={styles.name}>Add your Instagram Handle</Text>
               <Form>
                 <Item floatingLabel>
                   <Label style={styles.label}>Instagram Handle</Label>
@@ -63,23 +64,23 @@ class AddInstagramModal extends Component {
               </Form>
 
               <Button
-                style={styles.mainButton}
+                style={styles.buttonIn}
                 block
                 light
                 onPress={this.saveInstagramHandle}
               >
-                <Text>Add Instagram Handle</Text>
+                <Text style={styles.labelIn}>Add Instagram Handle</Text>
               </Button>
               <Button
-                style={styles.mainButton}
                 block
-                light
+                style={styles.buttonItself}
                 bordered
+                warning
                 onPress={() => {
                   this.setModalVisible(!this.state.modalVisible);
                 }}
               >
-                <Text>Close </Text>
+                <Text style={styles.button}>Close </Text>
               </Button>
             </View>
           </View>
@@ -91,7 +92,7 @@ class AddInstagramModal extends Component {
             this.setModalVisible(true);
           }}
         >
-          <Text style={styles.button}>Add Instagram Handle</Text>
+          <Text style={styles.mainButton}>Add Instagram Handle</Text>
         </Button>
       </View>
     );
@@ -100,9 +101,26 @@ class AddInstagramModal extends Component {
 let screenWidth = Dimensions.get('window').width - 20;
 const styles = StyleSheet.create({
   button: {
-    fontSize: 14,
-    color: '#999',
-    fontFamily: 'proxima-alt',
+    fontSize: 16,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
+  },
+  labelIn: {
+    color: '#fff',
+    fontFamily: 'raleway-regular',
+    fontSize: 16
+  },
+  name: {
+    fontSize: 24,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
+  },
+  buttonIn: {
+    fontSize: 16,
+    backgroundColor: '#91D9D9',
+    width: screenWidth,
+    marginTop: 20,
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   mainContent: {
@@ -112,21 +130,28 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 12
   },
+  buttonItself: {
+    fontSize: 14,
+    width: screenWidth,
+    marginTop: 20,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left'
+  },
   label: {
     fontSize: 16,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   icon: {
     fontSize: 14,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   mainButton: {
     fontSize: 16,
-    marginTop: 20,
-    width: screenWidth,
-    fontFamily: 'proxima-alt',
+
+    fontFamily: 'raleway-regular',
+    color: '#91D9D9',
     textAlign: 'left'
   }
 });

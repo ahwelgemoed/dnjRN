@@ -13,10 +13,10 @@ const StyledText = styled.View`
   shadow-radius: 10px;
   border-radius: 10px;
   shadow-color: rgba(0, 0, 0, 0.2);
-  shadow-offset: 0px 0px;
+  shadow-offset: 1px 1px;
   background: white;
-  margin-bottom: 10px;
-  width: 100%;
+  margin: 10px;
+  /* width: 100%; */
   padding: 10px;
   margin-top: 20px;
   display: flex;
@@ -182,7 +182,7 @@ export default compose(
   connect(mapStateToProps)
 )(CardPoem);
 
-let screenWidth = Dimensions.get('window').width - 40;
+let screenWidth = Dimensions.get('window').width - 60;
 let screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   IconBadge: {
