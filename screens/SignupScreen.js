@@ -20,6 +20,7 @@ import {
   AsyncStorage,
   StyleSheet,
   View,
+  ImageBackground,
   Dimensions,
   ActivityIndicator,
   Image
@@ -82,59 +83,70 @@ class SignupScreen extends Component {
     }
   };
   render() {
+    const background = require('../assets/images/background.png');
     return (
       <Container>
-        <Content>
-          <View style={styles.mainContent}>
-            <Image
-              style={{
-                width: 100,
-                height: 100,
-                borderRadius: 40,
-                marginTop: 20
-              }}
-              source={require('../assets/images/DNJ.png')}
-            />
-            <Form>
-              <Item floatingLabel>
-                <Label style={styles.label}>Name</Label>
-                <Input
-                  style={styles.label}
-                  onChangeText={val => this.onChangeText('username', val)}
-                />
-              </Item>
-              <Item floatingLabel style={styles.label}>
-                <Label style={styles.label}>Email Address</Label>
-                <Input
-                  style={styles.label}
-                  onChangeText={val => this.onChangeText('email', val)}
-                />
-              </Item>
-              <Item floatingLabel>
-                <Label style={styles.label}>Password</Label>
-                <Input
-                  style={styles.label}
-                  secureTextEntry={true}
-                  onChangeText={val => this.onChangeText('password', val)}
-                />
-              </Item>
-              <Item floatingLabel>
-                <Label style={styles.label}>Instagram Handle</Label>
-                <Input
-                  style={styles.label}
-                  onChangeText={val => this.onChangeText('Instagram', val)}
-                />
-              </Item>
-              <Button block light onPress={this.signUp} style={styles.buttonIn}>
-                {this.state.loading ? (
-                  <ActivityIndicator color={'#fff'} />
-                ) : null}
-                <Text style={styles.labelIn}>Sign Up</Text>
-              </Button>
-              <FacebookLogin />
-            </Form>
-          </View>
-        </Content>
+        <ImageBackground
+          source={background}
+          style={{ width: '100%', height: '100%' }}
+        >
+          <Content>
+            <View style={styles.mainContent}>
+              <Image
+                style={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: 40,
+                  marginTop: 20
+                }}
+                source={require('../assets/images/DNJ.png')}
+              />
+              <Form>
+                <Item floatingLabel>
+                  <Label style={styles.label}>Name</Label>
+                  <Input
+                    style={styles.label}
+                    onChangeText={val => this.onChangeText('username', val)}
+                  />
+                </Item>
+                <Item floatingLabel style={styles.label}>
+                  <Label style={styles.label}>Email Address</Label>
+                  <Input
+                    style={styles.label}
+                    onChangeText={val => this.onChangeText('email', val)}
+                  />
+                </Item>
+                <Item floatingLabel>
+                  <Label style={styles.label}>Password</Label>
+                  <Input
+                    style={styles.input}
+                    secureTextEntry={true}
+                    onChangeText={val => this.onChangeText('password', val)}
+                  />
+                </Item>
+                <Item floatingLabel>
+                  <Label style={styles.label}>Instagram Handle</Label>
+                  <Input
+                    style={styles.input}
+                    onChangeText={val => this.onChangeText('Instagram', val)}
+                  />
+                </Item>
+                <Button
+                  block
+                  light
+                  onPress={this.signUp}
+                  style={styles.buttonIn}
+                >
+                  {this.state.loading ? (
+                    <ActivityIndicator color={'#fff'} />
+                  ) : null}
+                  <Text style={styles.labelIn}>Sign Up</Text>
+                </Button>
+                <FacebookLogin />
+              </Form>
+            </View>
+          </Content>
+        </ImageBackground>
       </Container>
     );
   }
@@ -147,6 +159,12 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 12,
     justifyContent: 'space-around'
+  },
+  input: {
+    fontSize: 16,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left',
+    backgroundColor: 'rgba(255, 255, 255, .2)'
   },
   label: {
     fontSize: 16,

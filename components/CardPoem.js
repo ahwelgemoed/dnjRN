@@ -164,7 +164,7 @@ class CardPoem extends Component {
               }}
             >
               <Text style={styles.date}>
-                {moment(this.props.poem.date).fromNow()}
+                {moment.unix(this.props.poem.date).fromNow()}
               </Text>
               {this.props.poem.nsfw ? (
                 <Badge style={styles.IconBadge}>
@@ -235,7 +235,9 @@ const styles = StyleSheet.create({
   },
   elipseIcon: {
     color: '#ddd',
-    fontSize: 14
+    fontSize: 16,
+    margin: 10,
+    width: 10
   },
   IconBadge: {
     position: 'absolute',

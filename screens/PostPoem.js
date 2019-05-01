@@ -148,7 +148,7 @@ class PostPoem extends Component {
       let payLoad;
       if (withInstagram) {
         payLoad = {
-          date: Date.now(),
+          date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0)),
           body,
           nsfw,
           name,
@@ -159,7 +159,7 @@ class PostPoem extends Component {
         };
       } else {
         payLoad = {
-          date: Date.now(),
+          date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0)),
           nsfw,
           body,
           name,

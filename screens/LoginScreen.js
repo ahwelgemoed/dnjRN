@@ -22,11 +22,14 @@ import {
   Dimensions,
   View,
   ActivityIndicator,
+  ImageBackground,
   Image
 } from 'react-native';
 import { GoogleSignIn } from 'expo';
 import FacebookLogin from '../components/FacebookLogin';
+import ForgotPassword from '../components/ForgotPassword';
 import GoolgeLogin from '../components/GoolgeLogin';
+const background = require('../assets/images/background.png');
 class LoginScreen extends Component {
   state = {
     loading: false
@@ -93,68 +96,68 @@ class LoginScreen extends Component {
         });
       });
   };
-  // _googleSingIn = async () => {
-  //   try {
-  //     await GoogleSignIn.askForPlayServicesAsync();
-  //     const { type, user } = await GoogleSignIn.signInAsync();
-  //     if (type === 'success') {
-  //       this.props.navigation.navigate('Home');
-  //     }
-  //   } catch ({ message }) {
-  //     alert('login: Error:' + message);
-  //   }
-  // };
   render() {
     return (
       <Container>
-        <Content>
-          <View style={styles.mainContent}>
-            <Image
-              style={{
-                width: 100,
-                height: 100,
-                borderRadius: 40,
-                marginTop: 20
-              }}
-              source={require('../assets/images/DNJ.png')}
-            />
-            <Form>
-              <Item floatingLabel>
-                <Label style={styles.label}>Email Address</Label>
-                <Input
-                  style={styles.label}
-                  onChangeText={text => this.setState({ username: text })}
-                />
-              </Item>
-              <Item floatingLabel last>
-                <Label style={styles.label}>Password</Label>
-                <Input
-                  style={styles.label}
-                  secureTextEntry={true}
-                  onChangeText={text => this.setState({ password: text })}
-                />
-              </Item>
-              <Button block light onPress={this.signIn} style={styles.buttonIn}>
-                {this.state.loading ? (
-                  <ActivityIndicator color={'#fff'} />
-                ) : null}
-                <Text style={styles.labelIn}>Sign In</Text>
+        <ImageBackground
+          source={background}
+          style={{ width: '100%', height: '100%' }}
+        >
+          <Content>
+            <View style={styles.mainContent}>
+              <Image
+                style={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: 40,
+                  marginTop: 20
+                }}
+                source={require('../assets/images/DNJ.png')}
+              />
+              <Form>
+                <Item floatingLabel>
+                  <Label style={styles.label}>Email Address</Label>
+                  <Input
+                    style={styles.input}
+                    onChangeText={text => this.setState({ username: text })}
+                  />
+                </Item>
+                <Item floatingLabel last>
+                  <Label style={styles.label}>Password</Label>
+                  <Input
+                    style={styles.input}
+                    secureTextEntry={true}
+                    onChangeText={text => this.setState({ password: text })}
+                  />
+                </Item>
+                <Button
+                  block
+                  light
+                  onPress={this.signIn}
+                  style={styles.buttonIn}
+                >
+                  {this.state.loading ? (
+                    <ActivityIndicator color={'#fff'} />
+                  ) : null}
+                  <Text style={styles.labelIn}>Sign In</Text>
+                </Button>
+              </Form>
+              <Button
+                style={styles.buttonUp}
+                block
+                bordered
+                light
+                onPress={() => this.props.navigation.navigate('SignupScreen')}
+              >
+                <Text style={styles.labelSignUp}>Sign Up</Text>
               </Button>
-            </Form>
-            <Button
-              style={styles.buttonUp}
-              block
-              bordered
-              light
-              onPress={() => this.props.navigation.navigate('SignupScreen')}
-            >
-              <Text style={styles.labelSignUp}>Sign Up</Text>
-            </Button>
-            <Text style={styles.name}>- or use Facebook -</Text>
-            <FacebookLogin />
-            {/* <GoolgeLogin /> */}
-          </View>
-        </Content>
+              <Text style={styles.name}>- or use Facebook -</Text>
+              <FacebookLogin />
+              <ForgotPassword />
+              {/* <GoolgeLogin /> */}
+            </View>
+          </Content>
+        </ImageBackground>
       </Container>
     );
   }
@@ -173,18 +176,32 @@ const styles = StyleSheet.create({
     fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
+  input: {
+    fontSize: 16,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left',
+    backgroundColor: 'rgba(255, 255, 255, .2)'
+  },
   name: {
     fontSize: 12,
     marginTop: 20,
     color: '#ddd',
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
+    textAlign: 'center'
+  },
+  names: {
+    fontSize: 14,
+    marginTop: 20,
+    color: '#999',
+    fontFamily: 'raleway-regular',
     textAlign: 'center'
   },
   labelSignUp: {
     color: '#91D9D9',
     fontSize: 16,
     fontFamily: 'raleway-regular',
-    textAlign: 'left'
+    textAlign: 'left',
+    backgroundColor: '#fff'
   },
   labelIn: {
     color: '#fff',
@@ -218,6 +235,7 @@ const styles = StyleSheet.create({
     width: screenWidth,
     marginTop: 20,
     fontFamily: 'raleway-regular',
+    backgroundColor: '#fff',
     textAlign: 'left'
   }
 });

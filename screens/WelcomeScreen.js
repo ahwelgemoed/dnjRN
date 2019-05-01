@@ -1,30 +1,35 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, AsyncStorage } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  AsyncStorage,
+  Image,
+  ImageBackground
+} from 'react-native';
 import { Button } from 'native-base';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import TandC from '../components/TandC';
+import { Font } from 'expo';
+const background = require('../assets/images/background.png');
 const slides = [
   {
     key: 'somethun',
-    title: 'Welcome To',
-    subsubtitle: 'DIS NET JY',
-    subTitle: 'KLYNTJI',
+    title: 'Welcome',
     text: 'Here you can post and consume poetry by other poetry lovers',
-    backgroundColor: '#59b2ab'
+    backgroundColor: '#59b2ab',
+    image: require('../assets/images/DNJ.png')
   },
   {
     key: 'somethun-dos',
-    title: 'We build',
-    subsubtitle: 'and you',
-    subTitle: 'come',
+    title: 'Quick Overview',
+
     text: 'You get 5 min to review your post and then it is locked for ever.',
     backgroundColor: '#febe29'
   },
   {
     key: 'somethun1',
-    title: 'Play Nice with the',
-    subsubtitle: 'other kids ',
-    subTitle: 'on the Bus',
+    title: 'Play Nice with the other kids on the bus',
     text:
       "By continuing and creating an account you agree to our T&C's and that you are older that 17 Years old",
     backgroundColor: '#22bcb5',
@@ -44,15 +49,26 @@ export default class WelcomeScreen extends Component {
   state = {
     showRealApp: false
   };
+  async componentWillMount() {
+    await Font.loadAsync({
+      'raleway-boldI': require('../assets/fonts/Raleway-BoldItalic.ttf')
+    });
+  }
   _renderItem = item => {
     return (
-      <View style={styles.slide}>
-        <Text style={styles.subtitle}>{item.title}</Text>
-        <Text style={styles.title}>{item.subsubtitle}</Text>
-        <Text style={styles.subtitle}>{item.subTitle}</Text>
-        <Text style={styles.text}>{item.text}</Text>
-        {item.button ? <TandC /> : null}
-      </View>
+      <ImageBackground
+        source={background}
+        style={{ width: '100%', height: '100%' }}
+      >
+        <View style={styles.slide}>
+          <Text style={styles.title}>{item.title}</Text>
+          {/* <Text style={styles.title}>{item.subsubtitle}</Text> */}
+          <Image source={item.image} style={styles.image} />
+          <Text style={styles.subtitle}>{item.subTitle}</Text>
+          <Text style={styles.text}>{item.text}</Text>
+          {item.button ? <TandC /> : null}
+        </View>
+      </ImageBackground>
     );
   };
   _onDone = async () => {
@@ -81,6 +97,8 @@ export default class WelcomeScreen extends Component {
         showNextButton={true}
         renderItem={this._renderItem}
         slides={slides}
+        dotStyle={{ backgroundColor: '#ddd' }}
+        activeDotStyle={{ backgroundColor: '#91D9D9' }}
         onDone={this._onDone}
         bottomButton
       />
@@ -98,16 +116,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 16,
-    fontFamily: 'proxima-alt',
-    backgroundColor: 'transparent',
+    fontFamily: 'raleway-regular',
+    backgroundColor: '#fff',
     color: 'white'
   },
   buttonBlueDone: {
     height: 40,
     fontSize: 16,
     borderRadius: 20,
-    fontFamily: 'proxima-alt',
-    marginTop: 20,
+    fontFamily: 'raleway-regular',
     textAlign: 'left',
     borderColor: '#91D9D9',
     backgroundColor: '#91D9D9',
@@ -132,8 +149,15 @@ const styles = StyleSheet.create({
     marginTop: 100
   },
   image: {
-    width: 320,
-    height: 320
+    width: 100,
+    height: 100,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 5,
+    shadowOpacity: 1.0
   },
   text: {
     color: '#111111',
@@ -156,8 +180,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    color: '#111111',
-    fontFamily: 'raleway-boldI',
+    color: '#91D9D9',
+    fontFamily: 'raleway-regular',
     backgroundColor: 'transparent',
     textAlign: 'center',
     marginBottom: 16

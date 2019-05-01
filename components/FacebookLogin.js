@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderColor: '#3b5998',
     width: screenWidth,
+    backgroundColor: '#fff',
     marginTop: 20,
     fontFamily: 'raleway-regular',
     textAlign: 'left'
