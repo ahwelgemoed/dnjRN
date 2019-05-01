@@ -85,8 +85,6 @@ class HomeScreen extends React.Component {
   sendTofireBase = async () => {
     const { firestore } = this.props;
     const lastOne = this.props.poems.length - 1;
-    console.log(lastOne);
-
     await this.setState({
       isFetching: true,
       limit: this.state.limit + 10,

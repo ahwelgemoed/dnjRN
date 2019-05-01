@@ -32,8 +32,6 @@ class AuthLoadingScreen extends React.Component {
     // }
     const userToken = await AsyncStorage.getItem('userToke');
     const firstVisit = await AsyncStorage.getItem('firstVisit');
-    console.log(firstVisit);
-
     if (firstVisit !== 'Yes') {
       this.props.navigation.navigate('Welcome');
     }
