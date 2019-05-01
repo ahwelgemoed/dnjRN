@@ -130,7 +130,9 @@ class HomeScreen extends React.Component {
     // AsyncStorage.removeItem('firstPost');
     await this.setLeftHeader();
     await this.initalFirebaseLoad();
-    await this.registerForPushNotificationsAsync();
+    await setTimeout(() => {
+      this.registerForPushNotificationsAsync();
+    }, 2000);
   }
   setLeftHeader = () => {
     this.props.navigation.setParams({
@@ -158,39 +160,35 @@ class HomeScreen extends React.Component {
     });
   };
   registerForPushNotificationsAsync = async () => {
+    console.log('Ran');
+
+    const { firestore } = this.props;
     const { status: existingStatus } = await Permissions.getAsync(
       Permissions.NOTIFICATIONS
     );
+
     let finalStatus = existingStatus;
 
     if (existingStatus !== 'granted') {
       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
       finalStatus = status;
     }
-
     if (finalStatus !== 'granted') {
       return;
     }
+    let token = await Notifications.getExpoPushTokenAsync();
 
-    try {
-      let token = await Notifications.getExpoPushTokenAsync();
-
-      const { firestore } = this.props;
-      const payLoad = {
-        token
-      };
-
-      await firestore
-        .update({ collection: 'users', doc: this.props.auth.uid }, payLoad)
-        .then(res => {
-          retrun(console.log(res));
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+    const payLoad = {
+      token
+    };
+    await firestore
+      .update({ collection: 'users', doc: this.props.auth.uid }, payLoad)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {

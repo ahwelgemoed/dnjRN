@@ -52,7 +52,7 @@ class SignupScreen extends Component {
       return Toast.show({
         text: 'Please Fill In all the details',
         buttonText: 'Okay',
-        position: 'bottom',
+        position: 'top',
         type: 'danger'
       });
     }
@@ -69,7 +69,7 @@ class SignupScreen extends Component {
           Toast.show({
             text: 'Account Created',
             buttonText: 'Okay',
-            position: 'bottom'
+            position: 'top'
           });
         });
     } catch (err) {
@@ -77,7 +77,7 @@ class SignupScreen extends Component {
       return Toast.show({
         text: err.message,
         buttonText: 'Okay',
-        position: 'bottom',
+        position: 'top',
         type: 'danger'
       });
     }

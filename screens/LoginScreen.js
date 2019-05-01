@@ -75,7 +75,7 @@ class LoginScreen extends Component {
       return Toast.show({
         text: 'Please Fill In all the details',
         buttonText: 'Okay',
-        position: 'bottom',
+        position: 'top',
         type: 'danger'
       });
     }
@@ -91,7 +91,7 @@ class LoginScreen extends Component {
         Toast.show({
           text: err.message,
           buttonText: 'Okay',
-          position: 'bottom',
+          position: 'top',
           type: 'danger'
         });
       });

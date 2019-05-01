@@ -5,7 +5,11 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll",
+    "buildios": "expo build:ios",
+    "buildandroid": "expo build:android",
+    "uploadios": "expo upload:ios",
+    "uploadandroid": "expo upload:android"
   },
   "jest": {
     "preset": "jest-expo"

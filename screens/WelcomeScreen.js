@@ -63,7 +63,9 @@ export default class WelcomeScreen extends Component {
         <View style={styles.slide}>
           <Text style={styles.title}>{item.title}</Text>
           {/* <Text style={styles.title}>{item.subsubtitle}</Text> */}
-          <Image source={item.image} style={styles.image} />
+          {item.image ? (
+            <Image source={item.image} style={styles.image} />
+          ) : null}
           <Text style={styles.subtitle}>{item.subTitle}</Text>
           <Text style={styles.text}>{item.text}</Text>
           {item.button ? <TandC /> : null}
