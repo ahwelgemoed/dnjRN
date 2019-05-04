@@ -41,7 +41,7 @@ class HomeScreen extends React.Component {
     scrollPosition: '',
     name: '',
     body: '',
-    limit: 5,
+    limit: 10,
     random: false,
     lastOne: '',
     loading: true,
@@ -65,7 +65,7 @@ class HomeScreen extends React.Component {
       await this.setState({
         isFetching: true,
         orderBy: rand,
-        limit: 5,
+        limit: 10,
         poems: null,
         ordered: randorders
       });
@@ -217,8 +217,8 @@ class HomeScreen extends React.Component {
               scrollEventThrottle={160}
               onScroll={this.handleScroll}
               onEndReached={this.onRefresh}
-              onEndReachedThreshold={0}
-              onRefresh={this.initalFirebaseLoad}
+              onEndReachedThreshold={0.5}
+              // onRefresh={this.initalFirebaseLoad}
               refreshing={this.state.isFetching}
               showsVerticalScrollIndicator={false}
               ListFooterComponent={() => (
@@ -229,7 +229,7 @@ class HomeScreen extends React.Component {
               renderItem={({ item, i }) => (
                 <CardPoem
                   poem={item}
-                  key={i}
+                  // key={i}
                   auth={this.props.auth}
                   navigation={this.props.navigation}
                 />
