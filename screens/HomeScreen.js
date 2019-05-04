@@ -7,7 +7,8 @@ import {
   Dimensions,
   View,
   ActivityIndicator,
-  AsyncStorage
+  AsyncStorage,
+  Text
 } from 'react-native';
 import { Permissions, Notifications } from 'expo';
 import { successfullyAddedPoem } from '../actions/poemsActions';
@@ -40,7 +41,7 @@ class HomeScreen extends React.Component {
     scrollPosition: '',
     name: '',
     body: '',
-    limit: 10,
+    limit: 5,
     random: false,
     lastOne: '',
     loading: true,
@@ -64,7 +65,7 @@ class HomeScreen extends React.Component {
       await this.setState({
         isFetching: true,
         orderBy: rand,
-        limit: 10,
+        limit: 5,
         poems: null,
         ordered: randorders
       });
@@ -87,7 +88,7 @@ class HomeScreen extends React.Component {
     const lastOne = this.props.poems.length - 1;
     await this.setState({
       isFetching: true,
-      limit: this.state.limit + 10,
+      limit: this.state.limit,
       lastOne: lastOne
     });
     const { loading, poems } = this.state;
@@ -95,7 +96,7 @@ class HomeScreen extends React.Component {
     await firestore
       .get({
         collection: 'poems',
-        limit: 20,
+        limit: 10,
         orderBy: [this.state.orderBy, this.state.ordered],
         startAfter: this.props.poems[lastOne][this.state.orderBy]
       })
@@ -205,7 +206,6 @@ class HomeScreen extends React.Component {
 
   render() {
     const { loading, poems } = this.state;
-
     return (
       <View style={styles.container}>
         {/* <TandC /> */}
@@ -217,8 +217,8 @@ class HomeScreen extends React.Component {
               scrollEventThrottle={160}
               onScroll={this.handleScroll}
               onEndReached={this.onRefresh}
-              onEndReachedThreshold={0.5}
-              onRefresh={() => this.onRefresh()}
+              onEndReachedThreshold={0}
+              onRefresh={this.initalFirebaseLoad}
               refreshing={this.state.isFetching}
               showsVerticalScrollIndicator={false}
               ListFooterComponent={() => (
