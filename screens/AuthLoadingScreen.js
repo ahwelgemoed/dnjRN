@@ -10,7 +10,7 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
-import { GoogleSignIn } from 'expo';
+import { AppLoading, Asset, Font, Icon } from 'expo';
 
 class AuthLoadingScreen extends React.Component {
   constructor(props) {
@@ -18,6 +18,14 @@ class AuthLoadingScreen extends React.Component {
     // this._bootstrapAsync();
   }
   async componentDidMount() {
+    await Font.loadAsync({
+      'raleway-boldI': require('../assets/fonts/Raleway-BoldItalic.ttf'),
+      'raleway-medium': require('../assets/fonts/Raleway-Medium.ttf'),
+      'raleway-regular': require('../assets/fonts/Raleway-Regular.ttf'),
+      'raleway-bold': require('../assets/fonts/Raleway-Bold.ttf'),
+      'raleway-extralight': require('../assets/fonts/Raleway-ExtraLight.ttf'),
+      ...Icon.Ionicons.font
+    });
     await this._bootstrapAsync();
   }
   // Fetch the token from storage then navigate to our appropriate place
