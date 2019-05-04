@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 20,
     width: screenWidth,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   }
 });

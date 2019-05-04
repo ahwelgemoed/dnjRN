@@ -56,21 +56,14 @@ export default class WelcomeScreen extends Component {
   }
   _renderItem = item => {
     return (
-      <ImageBackground
-        source={background}
-        style={{ width: '100%', height: '100%' }}
-      >
-        <View style={styles.slide}>
-          <Text style={styles.title}>{item.title}</Text>
-          {/* <Text style={styles.title}>{item.subsubtitle}</Text> */}
-          {item.image ? (
-            <Image source={item.image} style={styles.image} />
-          ) : null}
-          <Text style={styles.subtitle}>{item.subTitle}</Text>
-          <Text style={styles.text}>{item.text}</Text>
-          {item.button ? <TandC /> : null}
-        </View>
-      </ImageBackground>
+      <View style={styles.slide}>
+        <Text style={styles.title}>{item.title}</Text>
+        {/* <Text style={styles.title}>{item.subsubtitle}</Text> */}
+        {item.image ? <Image source={item.image} style={styles.image} /> : null}
+        <Text style={styles.subtitle}>{item.subTitle}</Text>
+        <Text style={styles.text}>{item.text}</Text>
+        {item.button ? <TandC /> : null}
+      </View>
     );
   };
   _onDone = async () => {
@@ -193,7 +186,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 20,
     color: '#999',
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     fontStyle: 'italic',
     backgroundColor: 'transparent',
     textAlign: 'center',

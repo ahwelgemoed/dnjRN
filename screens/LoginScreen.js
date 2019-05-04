@@ -43,6 +43,8 @@ class LoginScreen extends Component {
           auth: false,
           username: user.displayName,
           seensfw: true,
+          token: false,
+          Instagram: '',
           email: user.email
         };
         const { firebase } = this.props;
@@ -99,65 +101,55 @@ class LoginScreen extends Component {
   render() {
     return (
       <Container>
-        <ImageBackground
-          source={background}
-          style={{ width: '100%', height: '100%' }}
-        >
-          <Content>
-            <View style={styles.mainContent}>
-              <Image
-                style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: 40,
-                  marginTop: 20
-                }}
-                source={require('../assets/images/DNJ.png')}
-              />
-              <Form>
-                <Item floatingLabel>
-                  <Label style={styles.label}>Email Address</Label>
-                  <Input
-                    style={styles.input}
-                    onChangeText={text => this.setState({ username: text })}
-                  />
-                </Item>
-                <Item floatingLabel last>
-                  <Label style={styles.label}>Password</Label>
-                  <Input
-                    style={styles.input}
-                    secureTextEntry={true}
-                    onChangeText={text => this.setState({ password: text })}
-                  />
-                </Item>
-                <Button
-                  block
-                  light
-                  onPress={this.signIn}
-                  style={styles.buttonIn}
-                >
-                  {this.state.loading ? (
-                    <ActivityIndicator color={'#fff'} />
-                  ) : null}
-                  <Text style={styles.labelIn}>Sign In</Text>
-                </Button>
-              </Form>
-              <Button
-                style={styles.buttonUp}
-                block
-                bordered
-                light
-                onPress={() => this.props.navigation.navigate('SignupScreen')}
-              >
-                <Text style={styles.labelSignUp}>Sign Up</Text>
+        <Content>
+          <View style={styles.mainContent}>
+            <Image
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 40,
+                marginTop: 20
+              }}
+              source={require('../assets/images/DNJ.png')}
+            />
+            <Form>
+              <Item floatingLabel>
+                <Label style={styles.label}>Email Address</Label>
+                <Input
+                  style={styles.input}
+                  onChangeText={text => this.setState({ username: text })}
+                />
+              </Item>
+              <Item floatingLabel last>
+                <Label style={styles.label}>Password</Label>
+                <Input
+                  style={styles.input}
+                  secureTextEntry={true}
+                  onChangeText={text => this.setState({ password: text })}
+                />
+              </Item>
+              <Button block light onPress={this.signIn} style={styles.buttonIn}>
+                {this.state.loading ? (
+                  <ActivityIndicator color={'#fff'} />
+                ) : null}
+                <Text style={styles.labelIn}>Sign In</Text>
               </Button>
-              <Text style={styles.name}>- or use Facebook -</Text>
-              <FacebookLogin />
-              <ForgotPassword />
-              {/* <GoolgeLogin /> */}
-            </View>
-          </Content>
-        </ImageBackground>
+            </Form>
+            <Button
+              style={styles.buttonUp}
+              block
+              bordered
+              light
+              onPress={() => this.props.navigation.navigate('SignupScreen')}
+            >
+              <Text style={styles.labelSignUp}>Sign Up</Text>
+            </Button>
+            <Text style={styles.name}>- or use Facebook -</Text>
+            <FacebookLogin />
+            <ForgotPassword />
+            {/* <GoolgeLogin /> */}
+          </View>
+        </Content>
       </Container>
     );
   }

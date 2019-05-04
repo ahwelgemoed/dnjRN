@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   button: {
     fontSize: 14,
     color: 'red',
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   mainContent: {
@@ -263,35 +263,35 @@ const styles = StyleSheet.create({
     fontSize: 16,
     width: screenWidth,
     marginTop: 20,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left',
     backgroundColor: '#FF5C5C'
   },
   name: {
     fontSize: 24,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   label: {
     fontSize: 16,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   handle: {
     fontSize: 14,
     textAlign: 'left',
-    fontFamily: 'proxima-alt'
+    fontFamily: 'raleway-regular'
   },
   icon: {
     fontSize: 14,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   mainButton: {
     fontSize: 16,
     marginTop: 20,
     width: screenWidth,
-    fontFamily: 'proxima-alt',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   }
 });

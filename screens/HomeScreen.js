@@ -130,6 +130,7 @@ class HomeScreen extends React.Component {
     // AsyncStorage.removeItem('firstPost');
     await this.setLeftHeader();
     await this.initalFirebaseLoad();
+
     await setTimeout(() => {
       this.registerForPushNotificationsAsync();
     }, 2000);
@@ -147,11 +148,24 @@ class HomeScreen extends React.Component {
       )
     });
   };
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     if (prevProps.addedPoem === false && this.props.addedPoem === true) {
       this.initalFirebaseLoad();
       this.props.successfullyAddedPoem(false);
     }
+    await this.props.firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const { firestore, profile } = this.props;
+
+        if ((!profile.user && user.uid) || user.uid !== profile.user) {
+          firestore
+            .update({ collection: 'users', doc: user.uid }, { user: user.uid })
+            .then(res => {
+              console.log('Updated');
+            });
+        }
+      }
+    });
   }
   handleScroll = async event => {
     const scroll = event.nativeEvent.contentOffset.y;
@@ -160,8 +174,6 @@ class HomeScreen extends React.Component {
     });
   };
   registerForPushNotificationsAsync = async () => {
-    console.log('Ran');
-
     const { firestore } = this.props;
     const { status: existingStatus } = await Permissions.getAsync(
       Permissions.NOTIFICATIONS

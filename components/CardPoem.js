@@ -67,10 +67,10 @@ class CardPoem extends Component {
   };
   componentDidMount() {
     const now = moment();
-    const posted = moment(this.props.poem.date);
+    const posted = moment.unix(this.props.poem.date);
     const differ = now.diff(posted, 'minutes');
 
-    if (this.props.auth.uid === this.props.poem.uid && differ < 5) {
+    if (this.props.profile.user === this.props.poem.uid && differ < 5) {
       this.setState({
         userEdit: true
       });
@@ -278,13 +278,13 @@ const styles = StyleSheet.create({
   handle: {
     fontSize: 14,
     textAlign: 'left',
-    fontFamily: 'proxima-alt'
+    fontFamily: 'raleway-regular'
   },
   nsfw: {
     fontSize: 10,
     textAlign: 'center',
     color: 'white',
-    fontFamily: 'proxima-alt'
+    fontFamily: 'raleway-regular'
   },
   body: {
     // width: screenWidth,

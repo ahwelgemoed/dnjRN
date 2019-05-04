@@ -5,7 +5,7 @@
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": ["ios", "android"],
-    "version": "1.0.4",
+    "version": "1.0.8",
     "orientation": "portrait",
     "icon": "./assets/images/DNJ.png",
     "splash": {
@@ -18,20 +18,15 @@
     },
     "assetBundlePatterns": ["**/*"],
     "android": {
-      "package": "com.disnetons.googlesignin",
+      "package": "com.disnetons.ahwelgemoed",
       "googleServicesFile": "./google-services.json"
     },
     "facebookScheme": "fb433863794055791",
     "facebookAppId": "433863794055791",
     "facebookDisplayName": "DisNetJy",
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.disnetons.googlesignin",
-      "config": {
-        "googleSignIn": {
-          "reservedClientId": "com.googleusercontent.apps.554939781321-dlf3glaq77s8menkgofqt12rsa77u1d8"
-        }
-      }
+      "supportsTablet": false,
+      "bundleIdentifier": "com.disnetjy.ahwelgemoed"
     },
     "description": ""
   }
