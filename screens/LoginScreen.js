@@ -43,8 +43,6 @@ class LoginScreen extends Component {
           auth: false,
           username: user.displayName,
           seensfw: true,
-          token: false,
-          Instagram: '',
           email: user.email
         };
         const { firebase } = this.props;
