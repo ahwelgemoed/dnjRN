@@ -5,7 +5,13 @@ import { firestoreConnect } from 'react-redux-firebase';
 import moment from 'moment';
 import AddInstagramModal from '../components/AddInstagramModal';
 import { successfullyAddedPoem } from '../actions/poemsActions';
-import { StyleSheet, Dimensions, AsyncStorage, View } from 'react-native';
+import {
+  StyleSheet,
+  Dimensions,
+  AsyncStorage,
+  View,
+  ActivityIndicator
+} from 'react-native';
 import FirstPostModal from '../components/FirstPostModal';
 import {
   Content,
@@ -48,7 +54,8 @@ class PostPoem extends Component {
     handle: '',
     nsfw: '',
     adminNotes: 'None',
-    reported: false
+    reported: false,
+    loading: false
   };
 
   withInstagram = () => {
@@ -84,6 +91,9 @@ class PostPoem extends Component {
         openFirstModal: true
       });
     }
+    this.setState({
+      loading: true
+    });
     if (this.state.update) {
       const { firestore, auth } = this.props;
       const {
@@ -132,7 +142,12 @@ class PostPoem extends Component {
         .then(res => {
           this.props.successfullyAddedPoem(true);
           this.props.navigation.navigate('Home');
-        });
+        })
+        .catch(err =>
+          this.setState({
+            loading: false
+          })
+        );
     } else {
       const { firestore, auth } = this.props;
       const {
@@ -179,7 +194,12 @@ class PostPoem extends Component {
         .then(res => {
           this.props.successfullyAddedPoem(true);
           this.props.navigation.navigate('Home');
-        });
+        })
+        .catch(err =>
+          this.setState({
+            loading: false
+          })
+        );
     }
   };
   async componentDidUpdate(prevProps, prevState) {
@@ -278,6 +298,9 @@ class PostPoem extends Component {
                 light
                 onPress={this.postToPoem}
               >
+                {this.state.loading ? (
+                  <ActivityIndicator color={'#fff'} />
+                ) : null}
                 <Text style={styles.labelIn}>Post Poem</Text>
               </Button>
               <Button
