@@ -15,7 +15,7 @@ import { successfullyAddedPoem } from '../actions/poemsActions';
 import { WebBrowser } from 'expo';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import OnlineUsers from '../components/OnlineUsers';
+import RefreshButton from '../components/RefreshButton';
 import { firestoreConnect } from 'react-redux-firebase';
 // import { MonoText } from '../components/StyledText';
 import CardPoem from '../components/CardPoem';
@@ -208,6 +208,11 @@ class HomeScreen extends React.PureComponent {
   };
   _keyExtractor = (item, index) => index;
 
+  clickedRefreshButton = () => {
+    this.onRefresh();
+    this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
+  };
+
   render() {
     const { loading, poems } = this.state;
     return (
@@ -215,8 +220,11 @@ class HomeScreen extends React.PureComponent {
         {/* <TandC /> */}
         {poems ? (
           <React.Fragment>
-            <Text>{poems.length}</Text>
-            <OnlineUsers scroll={this.state.scrollPosition} />
+            {/* <Text>{poems.length}</Text> */}
+            <RefreshButton
+              scroll={this.state.scrollPosition}
+              clickedRefreshButton={this.clickedRefreshButton}
+            />
             <FlatList
               scrollEventThrottle={160}
               onScroll={this.handleScroll}
@@ -230,7 +238,9 @@ class HomeScreen extends React.PureComponent {
                 <ActivityIndicator color={'#91D9D9'} />
               )}
               data={poems}
-              ref="full"
+              ref={ref => {
+                this.flatListRef = ref;
+              }}
               renderItem={({ item, i }) => (
                 <CardPoem
                   poem={item}

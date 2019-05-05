@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 import { activateDeleteAction } from '../actions/poemsActions';
 import { Constants, WebBrowser } from 'expo';
+import OnlineUsers from '../components/OnlineUsers';
 // import { DrawerActions, DrawerItems, SafeAreaView } from 'react-navigation';
 // import styles from '../../styles/index';
 
@@ -36,6 +37,11 @@ class DrawerScreen extends Component {
     return (
       <Container style={styles.container}>
         <Content>
+          <ListItem>
+            <Text style={styles.label}>
+              <OnlineUsers />
+            </Text>
+          </ListItem>
           <ListItem onPress={this.changeTab.bind(this, 'Home')}>
             <Icon style={styles.icons} name="home" />
             <Text style={styles.label}> Home</Text>

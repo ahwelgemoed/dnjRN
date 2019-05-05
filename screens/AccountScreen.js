@@ -39,8 +39,26 @@ class AccountScreen extends Component {
       fontSize: 20
     }
   });
-  state = { loaded: false };
+  state = { loaded: false, facebook: false };
   static getDerivedStateFromProps(props, state) {
+    if (
+      props.profile.isLoaded &&
+      !props.profile.isEmpty &&
+      !state.loaded &&
+      props.auth.providerData[0].providerId == 'facebook.com' &&
+      state.facebook === false
+    ) {
+      return {
+        email: props.profile.email,
+        Instagram: props.profile.Instagram,
+        auth: props.profile.auth,
+        username: props.profile.username,
+        seensfw: props.profile.seensfw,
+        token: props.profile.token,
+        loaded: true,
+        facebook: true
+      };
+    }
     if (props.profile.isLoaded && !props.profile.isEmpty && !state.loaded) {
       return {
         email: props.profile.email,
@@ -114,6 +132,7 @@ class AccountScreen extends Component {
   };
 
   render() {
+    const { facebook } = this.state;
     return (
       <Container style={styles.mainContent}>
         <Content>
@@ -155,18 +174,22 @@ class AccountScreen extends Component {
             >
               <Text style={styles.labelUp}>Save Changes to Profile</Text>
             </Button>
-            <UpdateEmail />
+            {facebook ? null : (
+              <React.Fragment>
+                <UpdateEmail />
 
-            <Button
-              style={styles.buttonUp}
-              block
-              bordered
-              onPress={() => {
-                this.resetPassword();
-              }}
-            >
-              <Text style={styles.blueText}>Reset Password</Text>
-            </Button>
+                <Button
+                  style={styles.buttonUp}
+                  block
+                  bordered
+                  onPress={() => {
+                    this.resetPassword();
+                  }}
+                >
+                  <Text style={styles.blueText}>Reset Password</Text>
+                </Button>
+              </React.Fragment>
+            )}
             <DelelteAccount navigation={this.props.navigation} />
           </Form>
         </Content>
