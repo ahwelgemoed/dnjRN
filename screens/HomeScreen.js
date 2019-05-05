@@ -22,7 +22,7 @@ import CardPoem from '../components/CardPoem';
 import TandC from '../components/TandC';
 import Loading from '../components/Loading';
 import { Icon, Button } from 'native-base';
-class HomeScreen extends React.Component {
+class HomeScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
     title: 'DIS NET JY',
     headerRight: (
@@ -45,7 +45,7 @@ class HomeScreen extends React.Component {
     random: false,
     lastOne: '',
     loading: true,
-    isFetching: false,
+    isFetching: true,
     orderBy: 'date',
     ordered: 'desc',
     poems: null
@@ -92,7 +92,6 @@ class HomeScreen extends React.Component {
       lastOne: lastOne
     });
     const { loading, poems } = this.state;
-
     await firestore
       .get({
         collection: 'poems',
@@ -114,24 +113,28 @@ class HomeScreen extends React.Component {
     await this.sendTofireBase();
   };
   initalFirebaseLoad = async () => {
-    const { firestore } = this.props;
-    await firestore.get({
-      collection: 'poems',
-      limit: this.state.limit,
-      // where: ['nsfw', '==', true],
-      orderBy: [this.state.orderBy, this.state.ordered]
-    });
     await this.setState({
-      loading: false,
-      poems: this.props.poems,
-      isFetching: false
+      isFetching: true
     });
+    const { firestore } = this.props;
+    await firestore
+      .get({
+        collection: 'poems',
+        limit: this.state.limit,
+        orderBy: [this.state.orderBy, this.state.ordered]
+      })
+      .then(() => {
+        this.setState({
+          poems: this.props.poems,
+          isFetching: false,
+          loading: false
+        });
+      });
   };
   async componentDidMount() {
     // AsyncStorage.removeItem('firstPost');
     await this.setLeftHeader();
     await this.initalFirebaseLoad();
-
     await setTimeout(() => {
       this.registerForPushNotificationsAsync();
     }, 2000);
@@ -203,6 +206,7 @@ class HomeScreen extends React.Component {
         console.log(err);
       });
   };
+  _keyExtractor = (item, index) => index;
 
   render() {
     const { loading, poems } = this.state;
@@ -211,16 +215,17 @@ class HomeScreen extends React.Component {
         {/* <TandC /> */}
         {poems ? (
           <React.Fragment>
+            <Text>{poems.length}</Text>
             <OnlineUsers scroll={this.state.scrollPosition} />
             <FlatList
-              useNativeDriver={true}
               scrollEventThrottle={160}
               onScroll={this.handleScroll}
               onEndReached={this.onRefresh}
               onEndReachedThreshold={0.5}
-              // onRefresh={this.initalFirebaseLoad}
+              onRefresh={this.initalFirebaseLoad}
               refreshing={this.state.isFetching}
               showsVerticalScrollIndicator={false}
+              keyExtractor={this._keyExtractor}
               ListFooterComponent={() => (
                 <ActivityIndicator color={'#91D9D9'} />
               )}
@@ -229,12 +234,10 @@ class HomeScreen extends React.Component {
               renderItem={({ item, i }) => (
                 <CardPoem
                   poem={item}
-                  // key={i}
                   auth={this.props.auth}
                   navigation={this.props.navigation}
                 />
               )}
-              keyExtractor={item => item.id}
             />
           </React.Fragment>
         ) : (

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, AsyncStorage } from 'react-native';
+import { Text, StyleSheet, AsyncStorage, View } from 'react-native';
 import styled from 'styled-components/native';
 
 const FooterView = styled.View`
@@ -42,20 +42,21 @@ export default class FooterTabs extends Component {
       return null;
     } else {
       return (
-        <FooterView>
-          <FooterText
-            onPress={this.changeTab.bind(this, 'Home')}
-            style={activeTab === 'Home' ? styles.active : null}
-          >
-            Home
-          </FooterText>
-          <FooterText
-            onPress={this.changeTab.bind(this, 'Post')}
-            style={activeTab === 'Post' ? styles.active : null}
-          >
-            Post
-          </FooterText>
-        </FooterView>
+        <View />
+        // <FooterView>
+        //   <FooterText
+        //     onPress={this.changeTab.bind(this, 'Home')}
+        //     style={activeTab === 'Home' ? styles.active : null}
+        //   >
+        //     Home
+        //   </FooterText>
+        //   <FooterText
+        //     onPress={this.changeTab.bind(this, 'Post')}
+        //     style={activeTab === 'Post' ? styles.active : null}
+        //   >
+        //     Post
+        //   </FooterText>
+        // </FooterView>
       );
     }
   }

@@ -17,16 +17,8 @@ class AuthLoadingScreen extends React.Component {
     super(props);
     // this._bootstrapAsync();
   }
-  async componentDidMount() {
-    await Font.loadAsync({
-      'raleway-boldI': require('../assets/fonts/Raleway-BoldItalic.ttf'),
-      'raleway-medium': require('../assets/fonts/Raleway-Medium.ttf'),
-      'raleway-regular': require('../assets/fonts/Raleway-Regular.ttf'),
-      'raleway-bold': require('../assets/fonts/Raleway-Bold.ttf'),
-      'raleway-extralight': require('../assets/fonts/Raleway-ExtraLight.ttf'),
-      ...Icon.Ionicons.font
-    });
-    await this._bootstrapAsync();
+  componentDidMount() {
+    this._bootstrapAsync();
   }
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {

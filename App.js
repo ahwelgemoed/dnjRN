@@ -45,7 +45,7 @@ export default class App extends React.Component {
 
   _loadResourcesAsync = async () => {
     Promise.all([
-      Font.loadAsync({
+      await Font.loadAsync({
         Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
         'raleway-boldI': require('./assets/fonts/Raleway-BoldItalic.ttf'),
         'raleway-medium': require('./assets/fonts/Raleway-Medium.ttf'),

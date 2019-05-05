@@ -49,8 +49,8 @@ export default class WelcomeScreen extends Component {
   state = {
     showRealApp: false
   };
-  async componentWillMount() {
-    await Font.loadAsync({
+  componentWillMount() {
+    Font.loadAsync({
       'raleway-boldI': require('../assets/fonts/Raleway-BoldItalic.ttf')
     });
   }
