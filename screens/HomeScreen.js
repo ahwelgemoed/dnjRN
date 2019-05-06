@@ -19,6 +19,7 @@ import RefreshButton from '../components/RefreshButton';
 import { firestoreConnect } from 'react-redux-firebase';
 // import { MonoText } from '../components/StyledText';
 import CardPoem from '../components/CardPoem';
+import HorisontalPoems from '../components/HorisontalPoems';
 import TandC from '../components/TandC';
 import Loading from '../components/Loading';
 import { Icon, Button } from 'native-base';
@@ -244,6 +245,7 @@ class HomeScreen extends React.PureComponent {
               renderItem={({ item, i }) => (
                 <CardPoem
                   poem={item}
+                  poems={poems}
                   auth={this.props.auth}
                   navigation={this.props.navigation}
                 />

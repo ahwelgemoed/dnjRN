@@ -94,6 +94,11 @@ class CardPoem extends Component {
       }, 30000);
     }
   }
+  openPoem = () => {
+    console.log('PRSSY');
+
+    this.props.navigation.navigate('Poem');
+  };
   render() {
     return (
       <StyledText
@@ -104,7 +109,7 @@ class CardPoem extends Component {
         }
       >
         <Row>
-          <Col>
+          <Col onPress={this.openPoem}>
             <Text style={styles.name}>{this.props.poem.name}</Text>
             <Text
               style={styles.elipse}
