@@ -55,6 +55,7 @@ class AccountScreen extends Component {
         username: props.profile.username,
         seensfw: props.profile.seensfw,
         token: props.profile.token,
+        bookmarks: props.profile.bookmarks,
         loaded: true,
         facebook: true
       };
