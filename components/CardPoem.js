@@ -69,14 +69,15 @@ class CardPoem extends Component {
   };
   componentDidMount() {
     const { id } = this.props.poem;
-
-    const found = this.props.profile.bookmarks.find(function(element) {
-      return element === id;
-    });
-    if (found) {
-      this.setState({
-        bookmarked: true
+    if (this.props.profile.bookmarks) {
+      const found = this.props.profile.bookmarks.find(function(element) {
+        return element === id;
       });
+      if (found) {
+        this.setState({
+          bookmarked: true
+        });
+      }
     }
 
     const now = moment();

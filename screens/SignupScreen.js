@@ -60,7 +60,15 @@ class SignupScreen extends Component {
       await firebase
         .createUser(
           { email, password },
-          { username, email, Instagram, auth: false, seensfw: true, token }
+          {
+            username,
+            email,
+            Instagram,
+            auth: false,
+            seensfw: true,
+            token,
+            bookmarks: []
+          }
         )
         .then(res => {
           this.props.navigation.navigate('Home');
