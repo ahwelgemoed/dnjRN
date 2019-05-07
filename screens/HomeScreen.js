@@ -272,7 +272,7 @@ export default compose(
 )(HomeScreen);
 
 let screenWidth = Dimensions.get('window').width;
-let screenHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

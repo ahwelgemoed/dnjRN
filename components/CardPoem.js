@@ -11,6 +11,7 @@ import Dialog, {
   SlideAnimation,
   DialogContent
 } from 'react-native-popup-dialog';
+import Bookmark from './Bookmark';
 import { WebBrowser } from 'expo';
 const StyledText = styled.View`
   shadow-opacity: 0.35;
@@ -30,7 +31,8 @@ const StyledText = styled.View`
 
 class CardPoem extends Component {
   state = {
-    userEdit: false
+    userEdit: false,
+    bookmarked: false
   };
   reportPoem = () => {
     const { firestore } = this.props;
@@ -66,6 +68,17 @@ class CardPoem extends Component {
     );
   };
   componentDidMount() {
+    const { id } = this.props.poem;
+
+    const found = this.props.profile.bookmarks.find(function(element) {
+      return element === id;
+    });
+    if (found) {
+      this.setState({
+        bookmarked: true
+      });
+    }
+
     const now = moment();
     const posted = moment.unix(this.props.poem.date);
     const differ = now.diff(posted, 'minutes');
@@ -94,6 +107,11 @@ class CardPoem extends Component {
       }, 30000);
     }
   }
+  toggleBookMark = () => {
+    this.setState({
+      bookmarked: !this.state.bookmarked
+    });
+  };
   render() {
     return (
       <StyledText
@@ -105,6 +123,11 @@ class CardPoem extends Component {
       >
         <Row>
           <Col>
+            <Bookmark
+              poemId={this.props.poem.id}
+              bookmarked={this.state.bookmarked}
+              toggleBookMark={this.toggleBookMark}
+            />
             <Text style={styles.name}>{this.props.poem.name}</Text>
             <Text
               style={styles.elipse}
