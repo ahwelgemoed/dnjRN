@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import moment from 'moment';
 import {
   Content,
   Form,
@@ -37,15 +39,30 @@ class LoginScreen extends Component {
 
   componentDidMount() {
     this.props.firebase.auth().onAuthStateChanged(user => {
+      let payLoad = {};
+      console.log(user.providerData[0].providerId);
+
       if (user != null && user.providerData[0].providerId == 'facebook.com') {
-        const payLoad = {
-          user: user.uid,
-          auth: false,
-          username: user.displayName,
-          seensfw: true,
-          bookmarks: [],
-          email: user.email
-        };
+        const now = this.props.auth.lastLoginAt - this.props.auth.createdAt;
+        if (now <= 10000) {
+          payLoad = {
+            user: user.uid,
+            auth: false,
+            username: user.displayName,
+            seensfw: true,
+            bookmarks: [],
+            email: user.email
+          };
+        } else {
+          payLoad = {
+            user: user.uid,
+            auth: false,
+            username: user.displayName,
+            seensfw: true,
+            email: user.email
+          };
+        }
+
         const { firebase } = this.props;
         firebase
           .updateProfile(payLoad)
@@ -230,4 +247,12 @@ const styles = StyleSheet.create({
     textAlign: 'left'
   }
 });
-export default compose(firestoreConnect())(LoginScreen);
+const mapStateToProps = state => ({
+  profile: state.firebase.profile,
+  auth: state.firebase.auth
+});
+
+export default compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(LoginScreen);

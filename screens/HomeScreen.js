@@ -160,14 +160,16 @@ class HomeScreen extends React.PureComponent {
     await this.props.firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const { firestore, profile } = this.props;
-
-        if ((!profile.user && user.uid) || user.uid !== profile.user) {
-          firestore
-            .update({ collection: 'users', doc: user.uid }, { user: user.uid })
-            .then(res => {
-              console.log('Updated');
-            });
-        }
+        setTimeout(() => {
+          if ((!profile.user && user.uid) || user.uid !== profile.user) {
+            firestore
+              .update(
+                { collection: 'users', doc: user.uid },
+                { user: user.uid }
+              )
+              .then(res => {});
+          }
+        }, 5000);
       }
     });
   }
