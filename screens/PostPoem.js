@@ -95,7 +95,8 @@ class PostPoem extends Component {
       loading: true
     });
     if (this.state.update) {
-      const { firestore, auth } = this.props;
+      const { firestore, auth, firebase } = this.props;
+      var db = firebase.firestore();
       const {
         id,
         date,
@@ -139,10 +140,20 @@ class PostPoem extends Component {
           },
           payLoad
         )
-        .then(res => {
-          this.props.successfullyAddedPoem(true);
-          this.props.navigation.navigate('Home');
-        })
+        .then(docRef =>
+          firestore
+            .update(
+              {
+                collection: 'poems',
+                doc: docRef.id
+              },
+              { id: docRef.id }
+            )
+            .then(() => {
+              this.props.successfullyAddedPoem(true);
+              this.props.navigation.goBack();
+            })
+        )
         .catch(err =>
           this.setState({
             loading: false
@@ -191,10 +202,20 @@ class PostPoem extends Component {
           },
           payLoad
         )
-        .then(res => {
-          this.props.successfullyAddedPoem(true);
-          this.props.navigation.navigate('Home');
-        })
+        .then(docRef =>
+          firestore
+            .update(
+              {
+                collection: 'poems',
+                doc: docRef.id
+              },
+              { id: docRef.id }
+            )
+            .then(() => {
+              this.props.successfullyAddedPoem(true);
+              this.props.navigation.goBack();
+            })
+        )
         .catch(err =>
           this.setState({
             loading: false

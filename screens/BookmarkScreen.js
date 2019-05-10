@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Text,
-  View,
+  SafeAreaView,
   ActivityIndicator,
   FlatList,
   StyleSheet,
@@ -11,8 +11,22 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import CardPoem from '../components/CardPoem';
+import { Button, Icon } from 'native-base';
 
 class BookmarkScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Bookmarks',
+    headerLeft: null,
+    headerRight: (
+      <Button transparent onPress={() => navigation.toggleDrawer()}>
+        <Icon name="menu" style={{ color: '#999' }} />
+      </Button>
+    ),
+    headerTitleStyle: {
+      fontFamily: 'raleway-boldI',
+      fontSize: 20
+    }
+  });
   state = {
     loading: true,
     poems: ''
@@ -28,17 +42,16 @@ class BookmarkScreen extends Component {
     });
     await this.setState({ loading: false });
   }
-  _keyExtractor = (item, index) => index;
   render() {
     const { loading, poems } = this.state;
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         {loading ? (
-          <Text> Loading </Text>
+          <ActivityIndicator color={'#3b5998'} />
         ) : (
           <FlatList
             showsVerticalScrollIndicator={false}
-            keyExtractor={this._keyExtractor}
+            keyExtractor={(item, index) => index.toString()}
             data={poems}
             ref={ref => {
               this.flatListRef = ref;
@@ -52,7 +65,7 @@ class BookmarkScreen extends Component {
             )}
           />
         )}
-      </View>
+      </SafeAreaView>
     );
   }
 }

@@ -38,42 +38,39 @@ class LoginScreen extends Component {
   };
 
   componentDidMount() {
-    this.props.firebase.auth().onAuthStateChanged(user => {
-      let payLoad = {};
-      console.log(user.providerData[0].providerId);
-
-      if (user != null && user.providerData[0].providerId == 'facebook.com') {
-        const now = this.props.auth.lastLoginAt - this.props.auth.createdAt;
-        if (now <= 10000) {
-          payLoad = {
-            user: user.uid,
-            auth: false,
-            username: user.displayName,
-            seensfw: true,
-            bookmarks: [],
-            email: user.email
-          };
-        } else {
-          payLoad = {
-            user: user.uid,
-            auth: false,
-            username: user.displayName,
-            seensfw: true,
-            email: user.email
-          };
-        }
-
-        const { firebase } = this.props;
-        firebase
-          .updateProfile(payLoad)
-          .then(res => {
-            this.props.navigation.navigate('Home');
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-    });
+    // this.props.firebase.auth().onAuthStateChanged(user => {
+    //   let payLoad = {};
+    //   if (user != null && user.providerData[0].providerId == 'facebook.com') {
+    //     const now = this.props.auth.lastLoginAt - this.props.auth.createdAt;
+    //     if (now <= 10000) {
+    //       payLoad = {
+    //         user: user.uid,
+    //         auth: false,
+    //         username: user.displayName,
+    //         seensfw: true,
+    //         bookmarks: [],
+    //         email: user.email
+    //       };
+    //     } else {
+    //       payLoad = {
+    //         user: user.uid,
+    //         auth: false,
+    //         username: user.displayName,
+    //         seensfw: true,
+    //         email: user.email
+    //       };
+    //     }
+    //     const { firebase } = this.props;
+    //     firebase
+    //       .updateProfile(payLoad)
+    //       .then(res => {
+    //         this.props.navigation.navigate('Home');
+    //       })
+    //       .catch(err => {
+    //         console.log(err);
+    //       });
+    //   }
+    // });
   }
   static navigationOptions = ({ navigation }) => ({
     title: 'Sign In',
@@ -161,7 +158,7 @@ class LoginScreen extends Component {
               <Text style={styles.labelSignUp}>Sign Up</Text>
             </Button>
             <Text style={styles.name}>- or use Facebook -</Text>
-            <FacebookLogin />
+            <FacebookLogin navigation={this.props.navigation} />
             <ForgotPassword />
             {/* <GoolgeLogin /> */}
           </View>

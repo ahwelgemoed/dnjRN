@@ -44,17 +44,16 @@ export default class App extends React.Component {
   }
 
   _loadResourcesAsync = async () => {
-    Promise.all([
-      await Font.loadAsync({
-        Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-        'raleway-boldI': require('./assets/fonts/Raleway-BoldItalic.ttf'),
-        'raleway-medium': require('./assets/fonts/Raleway-Medium.ttf'),
-        'raleway-regular': require('./assets/fonts/Raleway-Regular.ttf'),
-        'raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
-        'raleway-extralight': require('./assets/fonts/Raleway-ExtraLight.ttf'),
-        ...Icon.Ionicons.font
-      })
-    ]);
+    await Font.loadAsync({
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+      'raleway-boldI': require('./assets/fonts/Raleway-BoldItalic.ttf'),
+      'raleway-medium': require('./assets/fonts/Raleway-Medium.ttf'),
+      'raleway-regular': require('./assets/fonts/Raleway-Regular.ttf'),
+      'raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
+      'raleway-extralight': require('./assets/fonts/Raleway-ExtraLight.ttf'),
+      ...Icon.Ionicons.font
+    });
+
     await this.setState({ mountyLoad: false });
   };
 

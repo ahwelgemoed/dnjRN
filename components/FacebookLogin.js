@@ -23,6 +23,9 @@ class FacebookLogin extends Component {
       firebase
         .auth()
         .signInWithCredential(credential)
+        .then(res => {
+          this.props.navigation.navigate('Home');
+        })
         .catch(error => {
           this.setState({
             loading: true

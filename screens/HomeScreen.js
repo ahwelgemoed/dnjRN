@@ -208,7 +208,6 @@ class HomeScreen extends React.PureComponent {
         console.log(err);
       });
   };
-  _keyExtractor = (item, index) => index;
 
   clickedRefreshButton = () => {
     this.onRefresh();
@@ -235,7 +234,7 @@ class HomeScreen extends React.PureComponent {
               onRefresh={this.initalFirebaseLoad}
               refreshing={this.state.isFetching}
               showsVerticalScrollIndicator={false}
-              keyExtractor={this._keyExtractor}
+              keyExtractor={(item, index) => index.toString()}
               ListFooterComponent={() => (
                 <ActivityIndicator color={'#91D9D9'} />
               )}
@@ -278,7 +277,7 @@ let screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#f9f9f9',
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: 15,

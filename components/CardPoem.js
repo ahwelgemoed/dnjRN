@@ -32,7 +32,8 @@ const StyledText = styled.View`
 class CardPoem extends Component {
   state = {
     userEdit: false,
-    bookmarked: false
+    bookmarked: false,
+    reportDialog: false
   };
   reportPoem = () => {
     const { firestore } = this.props;
