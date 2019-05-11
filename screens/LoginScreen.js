@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import moment from 'moment';
 import {
   Content,
   Form,
@@ -35,28 +37,6 @@ class LoginScreen extends Component {
     loading: false
   };
 
-  componentDidMount() {
-    this.props.firebase.auth().onAuthStateChanged(user => {
-      if (user != null && user.providerData[0].providerId == 'facebook.com') {
-        const payLoad = {
-          user: user.uid,
-          auth: false,
-          username: user.displayName,
-          seensfw: true,
-          email: user.email
-        };
-        const { firebase } = this.props;
-        firebase
-          .updateProfile(payLoad)
-          .then(res => {
-            this.props.navigation.navigate('Home');
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-    });
-  }
   static navigationOptions = ({ navigation }) => ({
     title: 'Sign In',
     headerLeft: null,
@@ -143,7 +123,7 @@ class LoginScreen extends Component {
               <Text style={styles.labelSignUp}>Sign Up</Text>
             </Button>
             <Text style={styles.name}>- or use Facebook -</Text>
-            <FacebookLogin />
+            <FacebookLogin navigation={this.props.navigation} />
             <ForgotPassword />
             {/* <GoolgeLogin /> */}
           </View>
@@ -229,4 +209,12 @@ const styles = StyleSheet.create({
     textAlign: 'left'
   }
 });
-export default compose(firestoreConnect())(LoginScreen);
+const mapStateToProps = state => ({
+  profile: state.firebase.profile,
+  auth: state.firebase.auth
+});
+
+export default compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(LoginScreen);

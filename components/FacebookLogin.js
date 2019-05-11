@@ -23,6 +23,9 @@ class FacebookLogin extends Component {
       firebase
         .auth()
         .signInWithCredential(credential)
+        .then(res => {
+          this.props.navigation.navigate('Home');
+        })
         .catch(error => {
           this.setState({
             loading: true
@@ -46,7 +49,7 @@ class FacebookLogin extends Component {
         onPress={() => this.facebookSignin()}
       >
         {this.state.loading ? <ActivityIndicator color={'#3b5998'} /> : null}
-        <Text style={styles.buttonText}>Sign In with Facebook</Text>
+        <Text style={styles.buttonText}>Sign In/Up with Facebook</Text>
       </Button>
     );
   }

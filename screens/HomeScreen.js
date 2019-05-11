@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import { Permissions, Notifications } from 'expo';
 import { successfullyAddedPoem } from '../actions/poemsActions';
-import { WebBrowser } from 'expo';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import RefreshButton from '../components/RefreshButton';
@@ -22,6 +21,7 @@ import CardPoem from '../components/CardPoem';
 import TandC from '../components/TandC';
 import Loading from '../components/Loading';
 import { Icon, Button } from 'native-base';
+import UpdateUserInfo from '../components/UpdateUserInfo';
 class HomeScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
     title: 'DIS NET JY',
@@ -114,7 +114,8 @@ class HomeScreen extends React.PureComponent {
   };
   initalFirebaseLoad = async () => {
     await this.setState({
-      isFetching: true
+      isFetching: true,
+      poems: []
     });
     const { firestore } = this.props;
     await firestore
@@ -154,23 +155,11 @@ class HomeScreen extends React.PureComponent {
   };
   async componentDidUpdate(prevProps, prevState) {
     if (prevProps.addedPoem === false && this.props.addedPoem === true) {
-      this.initalFirebaseLoad();
-      this.props.successfullyAddedPoem(false);
+      await this.initalFirebaseLoad();
+      await this.props.successfullyAddedPoem(false);
     }
-    await this.props.firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        const { firestore, profile } = this.props;
-
-        if ((!profile.user && user.uid) || user.uid !== profile.user) {
-          firestore
-            .update({ collection: 'users', doc: user.uid }, { user: user.uid })
-            .then(res => {
-              console.log('Updated');
-            });
-        }
-      }
-    });
   }
+
   handleScroll = async event => {
     const scroll = event.nativeEvent.contentOffset.y;
     await this.setState({
@@ -206,10 +195,9 @@ class HomeScreen extends React.PureComponent {
         console.log(err);
       });
   };
-  _keyExtractor = (item, index) => index;
 
   clickedRefreshButton = () => {
-    this.onRefresh();
+    this.initalFirebaseLoad();
     this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
   };
 
@@ -217,6 +205,7 @@ class HomeScreen extends React.PureComponent {
     const { loading, poems } = this.state;
     return (
       <View style={styles.container}>
+        <UpdateUserInfo />
         {/* <TandC /> */}
         {poems ? (
           <React.Fragment>
@@ -233,7 +222,7 @@ class HomeScreen extends React.PureComponent {
               onRefresh={this.initalFirebaseLoad}
               refreshing={this.state.isFetching}
               showsVerticalScrollIndicator={false}
-              keyExtractor={this._keyExtractor}
+              keyExtractor={(item, index) => index.toString()}
               ListFooterComponent={() => (
                 <ActivityIndicator color={'#91D9D9'} />
               )}
@@ -272,11 +261,11 @@ export default compose(
 )(HomeScreen);
 
 let screenWidth = Dimensions.get('window').width;
-let screenHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#f9f9f9',
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: 15,

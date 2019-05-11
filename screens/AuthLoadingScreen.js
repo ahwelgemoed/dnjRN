@@ -13,28 +13,20 @@ import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 
 class AuthLoadingScreen extends React.Component {
+  state = { firstVisit: null };
   constructor(props) {
     super(props);
-    // this._bootstrapAsync();
   }
   componentDidMount() {
-    this._bootstrapAsync();
+    // this._bootstrapAsync();
   }
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    // try {
-    //   await GoogleSignIn.initAsync({
-    //     clientId:
-    //       'com.googleusercontent.apps.554939781321-dlf3glaq77s8menkgofqt12rsa77u1d8'
-    //   });
-    // } catch ({ message }) {
-    //   alert('GoogleSignIn.initAsync(): ' + message);
-    // }
     const userToken = await AsyncStorage.getItem('userToke');
     const firstVisit = await AsyncStorage.getItem('firstVisit');
-    if (firstVisit !== 'Yes') {
-      this.props.navigation.navigate('Welcome');
-    }
+    await this.setState({
+      firstVisit
+    });
   };
 
   render() {
@@ -42,13 +34,17 @@ class AuthLoadingScreen extends React.Component {
     if (!isLoaded(auth)) {
       return (
         <View>
-          <ActivityIndicator />
           <StatusBar barStyle="default" />
+          <ActivityIndicator />
         </View>
       );
     }
     if (isEmpty(auth)) {
-      return this.props.navigation.navigate('LoginScreen');
+      if (this.state.firstVisit !== 'Yes') {
+        return this.props.navigation.navigate('Welcome');
+      } else {
+        return this.props.navigation.navigate('LoginScreen');
+      }
     }
     return this.props.navigation.navigate('App');
   }

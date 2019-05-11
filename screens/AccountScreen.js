@@ -55,6 +55,7 @@ class AccountScreen extends Component {
         username: props.profile.username,
         seensfw: props.profile.seensfw,
         token: props.profile.token,
+        bookmarks: props.profile.bookmarks,
         loaded: true,
         facebook: true
       };
@@ -65,6 +66,7 @@ class AccountScreen extends Component {
         Instagram: props.profile.Instagram,
         auth: props.profile.auth,
         username: props.profile.username,
+        bookmarks: props.profile.bookmarks,
         seensfw: props.profile.seensfw,
         token: props.profile.token,
         loaded: true
@@ -73,11 +75,20 @@ class AccountScreen extends Component {
     return null;
   }
   updateProfile = () => {
-    const { email, Instagram, auth, username, seensfw, token } = this.state;
+    const {
+      email,
+      Instagram,
+      auth,
+      username,
+      seensfw,
+      token,
+      bookmarks
+    } = this.state;
     const payLoad = {
       email: this.props.auth.email,
       Instagram,
       auth,
+      bookmarks,
       username,
       seensfw,
       token

@@ -39,8 +39,7 @@ export default createAppContainer(
       Auth: AuthStack
     },
     {
-      initialRouteName: 'AuthLoading',
-      transitionConfig: () => fadeIn()
+      initialRouteName: 'AuthLoading'
     }
   )
 );
