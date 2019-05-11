@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   View,
+  SafeAreaView,
   ActivityIndicator,
   AsyncStorage,
   Text
@@ -204,7 +205,7 @@ class HomeScreen extends React.PureComponent {
   render() {
     const { loading, poems } = this.state;
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <UpdateUserInfo />
         {/* <TandC /> */}
         {poems ? (
@@ -224,7 +225,17 @@ class HomeScreen extends React.PureComponent {
               showsVerticalScrollIndicator={false}
               keyExtractor={(item, index) => index.toString()}
               ListFooterComponent={() => (
-                <ActivityIndicator color={'#91D9D9'} />
+                <Image
+                  source={require('../assets/images/Loading.gif')}
+                  style={{
+                    width: 100,
+                    height: 100,
+                    flex: 1,
+                    alignItems: 'center',
+                    marginBottom: 20,
+                    paddingLeft: 30
+                  }}
+                />
               )}
               data={poems}
               ref={ref => {
@@ -240,10 +251,19 @@ class HomeScreen extends React.PureComponent {
             />
           </React.Fragment>
         ) : (
-          <ActivityIndicator color={'#91D9D9'} />
+          <Image
+            source={require('../assets/images/DNJ.png')}
+            style={{
+              width: 100,
+              height: 100,
+              flex: 1,
+              alignItems: 'center'
+            }}
+          />
+          // <ActivityIndicator color={'#91D9D9'} />
           // <Loading />
         )}
-      </View>
+      </SafeAreaView>
     );
   }
 }
