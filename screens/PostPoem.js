@@ -51,8 +51,9 @@ class PostPoem extends Component {
     openFirstModal: false,
     name: '',
     update: false,
+    bookmarkedCount: 0,
     handle: '',
-    nsfw: '',
+    nsfw: false,
     adminNotes: 'None',
     reported: false,
     loading: false
@@ -100,6 +101,7 @@ class PostPoem extends Component {
       const {
         id,
         date,
+        bookmarkedCount,
         body,
         name,
         handle,
@@ -115,6 +117,7 @@ class PostPoem extends Component {
           body,
           nsfw,
           reported,
+          bookmarkedCount,
           name,
           adminNotes,
           handle: this.props.profile.Instagram,
@@ -126,6 +129,7 @@ class PostPoem extends Component {
           body,
           adminNotes,
           nsfw,
+          bookmarkedCount,
           name,
           reported,
           handle: '',
@@ -140,20 +144,12 @@ class PostPoem extends Component {
           },
           payLoad
         )
-        .then(docRef =>
-          firestore
-            .update(
-              {
-                collection: 'poems',
-                doc: docRef.id
-              },
-              { id: docRef.id }
-            )
-            .then(() => {
-              this.props.successfullyAddedPoem(true);
-              this.props.navigation.goBack();
-            })
-        )
+        .then(docRef => {
+          console.log('1');
+          this.props.navigation.navigate('Home');
+          this.props.successfullyAddedPoem(true);
+        })
+
         .catch(err =>
           this.setState({
             loading: false
@@ -167,6 +163,7 @@ class PostPoem extends Component {
         reported,
         name,
         handle,
+        bookmarkedCount,
         withInstagram,
         nsfw,
         adminNotes
@@ -179,6 +176,7 @@ class PostPoem extends Component {
           nsfw,
           name,
           adminNotes,
+          bookmarkedCount,
           reported,
           handle: this.props.profile.Instagram,
           uid: auth.uid
@@ -189,6 +187,7 @@ class PostPoem extends Component {
           nsfw,
           body,
           name,
+          bookmarkedCount,
           reported,
           adminNotes,
           handle: '',
@@ -212,8 +211,9 @@ class PostPoem extends Component {
               { id: docRef.id }
             )
             .then(() => {
+              console.log('2');
+              this.props.navigation.navigate('Home');
               this.props.successfullyAddedPoem(true);
-              this.props.navigation.goBack();
             })
         )
         .catch(err =>
@@ -242,6 +242,7 @@ class PostPoem extends Component {
     const id = navigation.getParam('id');
     const name = navigation.getParam('name');
     const handle = navigation.getParam('handle');
+    const bookmarkedCount = navigation.getParam('bookmarkedCount');
     const body = navigation.getParam('body');
     const nsfw = navigation.getParam('nsfw');
     const date = navigation.getParam('date');
@@ -252,6 +253,7 @@ class PostPoem extends Component {
         nsfw,
         body,
         date,
+        bookmarkedCount,
         update: true
       });
       if (handle) {

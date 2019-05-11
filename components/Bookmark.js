@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Icon, Toast } from 'native-base';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 
 class Bookmark extends Component {
+  state = { bookmarkedCount: this.props.bookmarkedCount };
   addToBookmarks = bookmark => {
     const { firestore } = this.props;
     const payLoad = {
@@ -20,6 +21,16 @@ class Bookmark extends Component {
           position: 'bottom'
         });
         this.props.toggleBookMark();
+        firestore
+          .update(
+            { collection: 'poems', doc: this.props.poemId },
+            { bookmarkedCount: this.state.bookmarkedCount + 1 }
+          )
+          .then(() => {
+            this.setState({
+              bookmarkedCount: this.state.bookmarkedCount + 1
+            });
+          });
       });
   };
   removeBookmark = bookmark => {
@@ -40,11 +51,21 @@ class Bookmark extends Component {
           position: 'bottom'
         });
         this.props.toggleBookMark();
+        firestore
+          .update(
+            { collection: 'poems', doc: this.props.poemId },
+            { bookmarkedCount: this.state.bookmarkedCount - 1 }
+          )
+          .then(() => {
+            this.setState({
+              bookmarkedCount: this.state.bookmarkedCount - 1
+            });
+          });
       });
   };
   render() {
     return (
-      <View>
+      <Text syle={styles.elipse}>
         {this.props.bookmarked ? (
           <Icon
             style={styles.selected}
@@ -60,18 +81,34 @@ class Bookmark extends Component {
             onPress={this.addToBookmarks.bind(this, this.props.poemId)}
           />
         )}
-      </View>
+      </Text>
     );
   }
 }
 const styles = StyleSheet.create({
   selected: {
     color: '#91D9D9',
-    fontSize: 16,
+    fontSize: 20,
     margin: 10,
     width: 10
   },
   notSelected: {
+    color: '#ddd',
+    fontSize: 20,
+    margin: 10,
+    width: 10
+  },
+  elipse: {
+    position: 'absolute',
+    top: 1,
+    right: 1,
+    minWidth: 20,
+    borderRadius: 15,
+    alignItems: 'center',
+    paddingBottom: 10,
+    justifyContent: 'center'
+  },
+  elipseIcon: {
     color: '#ddd',
     fontSize: 16,
     margin: 10,

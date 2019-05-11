@@ -84,7 +84,7 @@ class CardPoem extends Component {
     const now = moment();
     const posted = moment.unix(this.props.poem.date);
     const differ = now.diff(posted, 'minutes');
-
+    console.log(differ);
     if (this.props.profile.user === this.props.poem.uid && differ < 5) {
       this.setState({
         userEdit: true
@@ -127,6 +127,7 @@ class CardPoem extends Component {
           <Col>
             <Bookmark
               poemId={this.props.poem.id}
+              bookmarkedCount={this.props.poem.bookmarkedCount}
               bookmarked={this.state.bookmarked}
               toggleBookMark={this.toggleBookMark}
             />
@@ -137,7 +138,6 @@ class CardPoem extends Component {
                 this.setState({ reportDialog: true });
               }}
             >
-              {' '}
               <Icon
                 style={styles.elipseIcon}
                 type="FontAwesome"
@@ -260,14 +260,14 @@ const styles = StyleSheet.create({
   },
   elipseIcon: {
     color: '#ddd',
-    fontSize: 16,
-    margin: 10,
-    width: 10
+    fontSize: 20
+    // margin: 10,
+    // width: 10
   },
   IconBadge: {
     position: 'absolute',
     backgroundColor: '#FF5C5C',
-    opacity: 0.3,
+    opacity: 0.5,
     bottom: 1,
     right: 1,
     // minWidth: 20,
@@ -290,7 +290,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   name: {
-    fontSize: 24,
+    fontSize: 22,
+    paddingTop: 10,
     fontFamily: 'raleway-bold',
     textAlign: 'left'
   },
