@@ -49,7 +49,7 @@ class FacebookLogin extends Component {
         onPress={() => this.facebookSignin()}
       >
         {this.state.loading ? <ActivityIndicator color={'#3b5998'} /> : null}
-        <Text style={styles.buttonText}>Sign In with Facebook</Text>
+        <Text style={styles.buttonText}>Sign In/Up with Facebook</Text>
       </Button>
     );
   }
