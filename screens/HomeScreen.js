@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import { Permissions, Notifications } from 'expo';
 import { successfullyAddedPoem } from '../actions/poemsActions';
-import { WebBrowser } from 'expo';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import RefreshButton from '../components/RefreshButton';
@@ -22,6 +21,7 @@ import CardPoem from '../components/CardPoem';
 import TandC from '../components/TandC';
 import Loading from '../components/Loading';
 import { Icon, Button } from 'native-base';
+import UpdateUserInfo from '../components/UpdateUserInfo';
 class HomeScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
     title: 'DIS NET JY',
@@ -157,22 +157,8 @@ class HomeScreen extends React.PureComponent {
       this.initalFirebaseLoad();
       this.props.successfullyAddedPoem(false);
     }
-    await this.props.firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        const { firestore, profile } = this.props;
-        setTimeout(() => {
-          if ((!profile.user && user.uid) || user.uid !== profile.user) {
-            firestore
-              .update(
-                { collection: 'users', doc: user.uid },
-                { user: user.uid }
-              )
-              .then(res => {});
-          }
-        }, 5000);
-      }
-    });
   }
+
   handleScroll = async event => {
     const scroll = event.nativeEvent.contentOffset.y;
     await this.setState({
@@ -218,6 +204,7 @@ class HomeScreen extends React.PureComponent {
     const { loading, poems } = this.state;
     return (
       <View style={styles.container}>
+        <UpdateUserInfo />
         {/* <TandC /> */}
         {poems ? (
           <React.Fragment>
