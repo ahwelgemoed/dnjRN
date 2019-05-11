@@ -84,15 +84,28 @@ class AccountScreen extends Component {
       token,
       bookmarks
     } = this.state;
-    const payLoad = {
-      email: this.props.auth.email,
-      Instagram,
-      auth,
-      bookmarks,
-      username,
-      seensfw,
-      token
-    };
+    let payLoad = {};
+    if (Instagram) {
+      payLoad = {
+        email: this.props.auth.email,
+        Instagram,
+        auth,
+        bookmarks,
+        username,
+        seensfw,
+        token
+      };
+    } else {
+      payLoad = {
+        email: this.props.auth.email,
+        Instagram,
+        auth,
+        bookmarks,
+        username,
+        seensfw,
+        token
+      };
+    }
     const { firebase } = this.props;
     firebase
       .updateProfile(payLoad)

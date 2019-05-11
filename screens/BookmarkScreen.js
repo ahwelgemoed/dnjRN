@@ -5,7 +5,8 @@ import {
   ActivityIndicator,
   FlatList,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  Image
 } from 'react-native';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -72,7 +73,15 @@ class BookmarkScreen extends Component {
       return (
         <SafeAreaView style={styles.container}>
           {loading ? (
-            <ActivityIndicator color={'#91D9D9'} />
+            <Image
+              source={require('../assets/images/Loading.gif')}
+              style={{
+                width: 100,
+                height: 100,
+                marginBottom: 20,
+                paddingLeft: 30
+              }}
+            />
           ) : (
             <React.Fragment>
               <FlatList
@@ -106,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 15,
     paddingRight: 15,
-    width: screenWidth
+    width: '100%'
   },
   name: {
     fontSize: 22,

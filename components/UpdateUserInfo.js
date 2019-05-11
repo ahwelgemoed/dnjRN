@@ -24,14 +24,13 @@ class UpdateUserInfo extends Component {
               username: user.displayName,
               seensfw: true,
               bookmarks: [],
+              Instagram: '',
               email: user.email
             };
           } else {
             payLoad = {
               user: user.uid,
-              auth: false,
               username: user.displayName,
-              seensfw: true,
               email: user.email
             };
           }

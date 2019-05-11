@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   AsyncStorage,
   StatusBar,
+  Image,
   StyleSheet,
   View
 } from 'react-native';
@@ -35,7 +36,17 @@ class AuthLoadingScreen extends React.Component {
       return (
         <View>
           <StatusBar barStyle="default" />
-          <ActivityIndicator />
+          <Image
+            source={require('../assets/images/Loading.gif')}
+            style={{
+              width: 100,
+              height: 100,
+              flex: 1,
+              alignItems: 'center',
+              marginBottom: 20,
+              paddingLeft: 30
+            }}
+          />
         </View>
       );
     }
