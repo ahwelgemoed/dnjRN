@@ -114,7 +114,8 @@ class HomeScreen extends React.PureComponent {
   };
   initalFirebaseLoad = async () => {
     await this.setState({
-      isFetching: true
+      isFetching: true,
+      poems: []
     });
     const { firestore } = this.props;
     await firestore
@@ -154,8 +155,8 @@ class HomeScreen extends React.PureComponent {
   };
   async componentDidUpdate(prevProps, prevState) {
     if (prevProps.addedPoem === false && this.props.addedPoem === true) {
-      this.initalFirebaseLoad();
-      this.props.successfullyAddedPoem(false);
+      await this.initalFirebaseLoad();
+      await this.props.successfullyAddedPoem(false);
     }
   }
 
@@ -196,7 +197,7 @@ class HomeScreen extends React.PureComponent {
   };
 
   clickedRefreshButton = () => {
-    this.onRefresh();
+    this.initalFirebaseLoad();
     this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
   };
 

@@ -13,6 +13,7 @@ import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 
 class AuthLoadingScreen extends React.Component {
+  state = { firstVisit: null };
   constructor(props) {
     super(props);
   }
@@ -23,9 +24,9 @@ class AuthLoadingScreen extends React.Component {
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('userToke');
     const firstVisit = await AsyncStorage.getItem('firstVisit');
-    // if (firstVisit !== 'Yes') {
-    //   this.props.navigation.navigate('Welcome');
-    // }
+    await this.setState({
+      firstVisit
+    });
   };
 
   render() {
@@ -39,7 +40,11 @@ class AuthLoadingScreen extends React.Component {
       );
     }
     if (isEmpty(auth)) {
-      return this.props.navigation.navigate('LoginScreen');
+      if (this.state.firstVisit !== 'Yes') {
+        return this.props.navigation.navigate('Welcome');
+      } else {
+        return this.props.navigation.navigate('LoginScreen');
+      }
     }
     return this.props.navigation.navigate('App');
   }

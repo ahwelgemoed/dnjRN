@@ -5,7 +5,7 @@
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": ["ios", "android"],
-    "version": "1.0.11",
+    "version": "1.0.12",
     "orientation": "portrait",
     "icon": "./assets/images/DNJ.png",
     "splash": {
@@ -28,6 +28,18 @@
       "supportsTablet": false,
       "bundleIdentifier": "com.disnetjy.ahwelgemoed"
     },
-    "description": ""
+    "description": "",
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "ahwelgemoed",
+            "project": "dis-net-jy",
+            "authToken": "0ff0ae42875f444d843d893af3ee64c1a0e56ccd8d6a41aeb6c32f5782235ef7"
+          }
+        }
+      ]
+    }
   }
 }

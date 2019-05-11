@@ -5,6 +5,11 @@ import AppNavigator from './navigation/AppNavigator';
 import { Provider } from 'react-redux';
 import { Root } from 'native-base';
 import store from './store';
+import Sentry from 'sentry-expo';
+
+Sentry.config(
+  'https://36083bf90a3448a3ba1fe017613bf988@sentry.io/1457296'
+).install();
 
 export default class App extends React.Component {
   state = {

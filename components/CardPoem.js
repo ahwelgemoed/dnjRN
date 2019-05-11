@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import AdminModal from './AdminModal';
 import styled from 'styled-components/native';
+import { successfullyAddedPoem } from '../actions/poemsActions';
 import Dialog, {
   SlideAnimation,
   DialogContent
@@ -68,23 +69,10 @@ class CardPoem extends Component {
       { cancelable: false }
     );
   };
-  componentDidMount() {
-    const { id } = this.props.poem;
-    if (this.props.profile.bookmarks) {
-      const found = this.props.profile.bookmarks.find(function(element) {
-        return element === id;
-      });
-      if (found) {
-        this.setState({
-          bookmarked: true
-        });
-      }
-    }
-
+  addTimeOutToEdit = () => {
     const now = moment();
     const posted = moment.unix(this.props.poem.date);
     const differ = now.diff(posted, 'minutes');
-    console.log(differ);
     if (this.props.profile.user === this.props.poem.uid && differ < 5) {
       this.setState({
         userEdit: true
@@ -108,6 +96,27 @@ class CardPoem extends Component {
         }
       }, 30000);
     }
+  };
+  async componentDidUpdate(prevProps, prevState) {
+    if (prevProps.addedPoem === false && this.props.addedPoem === true) {
+      this.addTimeOutToEdit();
+      this.props.successfullyAddedPoem(false);
+    }
+  }
+  componentDidMount() {
+    const { id } = this.props.poem;
+    if (this.props.profile.bookmarks) {
+      const found = this.props.profile.bookmarks.find(function(element) {
+        return element === id;
+      });
+      if (found) {
+        this.setState({
+          bookmarked: true
+        });
+      }
+    }
+
+    this.addTimeOutToEdit();
   }
   toggleBookMark = () => {
     this.setState({
@@ -236,7 +245,10 @@ const mapStateToProps = state => ({
 });
 export default compose(
   firestoreConnect(),
-  connect(mapStateToProps)
+  connect(
+    mapStateToProps,
+    { successfullyAddedPoem }
+  )
 )(CardPoem);
 
 let screenWidth = Dimensions.get('window').width - 60;
