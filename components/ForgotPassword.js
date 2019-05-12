@@ -56,6 +56,7 @@ class ForgotPassword extends Component {
                 <Item floatingLabel>
                   <Label style={styles.label}>Email Address</Label>
                   <Input
+                    keyboardType="email-address"
                     style={styles.label}
                     onChangeText={text => this.setState({ email: text })}
                   />

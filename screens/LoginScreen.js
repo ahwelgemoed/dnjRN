@@ -95,6 +95,7 @@ class LoginScreen extends Component {
                 <Label style={styles.label}>Email Address</Label>
                 <Input
                   style={styles.input}
+                  keyboardType="email-address"
                   onChangeText={text => this.setState({ username: text })}
                 />
               </Item>

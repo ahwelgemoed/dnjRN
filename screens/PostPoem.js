@@ -10,7 +10,8 @@ import {
   Dimensions,
   AsyncStorage,
   View,
-  ActivityIndicator
+  ActivityIndicator,
+  KeyboardAvoidingView
 } from 'react-native';
 import FirstPostModal from '../components/FirstPostModal';
 import {
@@ -268,7 +269,7 @@ class PostPoem extends Component {
     return (
       <Container>
         <Content>
-          <View style={styles.mainContent}>
+          <KeyboardAvoidingView style={styles.mainContent}>
             <Form>
               <Item>
                 <Input
@@ -336,7 +337,7 @@ class PostPoem extends Component {
                 <Text style={styles.button}>Cancel</Text>
               </Button>
             </Form>
-          </View>
+          </KeyboardAvoidingView>
           <FirstPostModal openFirstModal={this.state.openFirstModal} />
         </Content>
       </Container>

@@ -115,6 +115,7 @@ class UpdateEmail extends Component {
               <Item floatingLabel>
                 <Label style={styles.label}>New Email Address</Label>
                 <Input
+                  keyboardType="email-address"
                   style={styles.input}
                   onChangeText={text => this.setState({ email: text })}
                 />

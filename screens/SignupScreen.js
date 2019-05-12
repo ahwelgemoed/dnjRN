@@ -116,6 +116,7 @@ class SignupScreen extends Component {
                 <Label style={styles.label}>Email Address</Label>
                 <Input
                   style={styles.label}
+                  keyboardType="email-address"
                   onChangeText={val => this.onChangeText('email', val)}
                 />
               </Item>
