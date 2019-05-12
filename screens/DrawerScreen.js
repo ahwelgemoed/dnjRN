@@ -50,10 +50,12 @@ class DrawerScreen extends Component {
             <Icon style={styles.icons} name="clipboard" />
             <Text style={styles.label}> Post</Text>
           </ListItem>
-          <ListItem onPress={this.changeTab.bind(this, 'Bookmark')}>
-            <Icon style={styles.icons} name="bookmarks" />
-            <Text style={styles.label}> Bookmarks</Text>
-          </ListItem>
+          {Platform.OS === 'ios' ? (
+            <ListItem onPress={this.changeTab.bind(this, 'Bookmark')}>
+              <Icon style={styles.icons} name="bookmarks" />
+              <Text style={styles.label}> Bookmarks</Text>
+            </ListItem>
+          ) : null}
           <ListItem
             onPress={() => WebBrowser.openBrowserAsync('https://klyntji.com/')}
           >
