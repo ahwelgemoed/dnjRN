@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { Content, Container, ListItem, Icon } from 'native-base';
-import { AsyncStorage, Text, View, StyleSheet, Linking } from 'react-native';
+import {
+  AsyncStorage,
+  Text,
+  View,
+  StyleSheet,
+  Linking,
+  Platform
+} from 'react-native';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';

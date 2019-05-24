@@ -9,7 +9,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/DNJ.png",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/splash.1-01.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
