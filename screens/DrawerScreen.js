@@ -57,12 +57,12 @@ class DrawerScreen extends Component {
             <Icon style={styles.icons} name="clipboard" />
             <Text style={styles.label}> Post</Text>
           </ListItem>
-          {Platform.OS === 'ios' ? (
-            <ListItem onPress={this.changeTab.bind(this, 'Bookmark')}>
-              <Icon style={styles.icons} name="bookmarks" />
-              <Text style={styles.label}> Bookmarks</Text>
-            </ListItem>
-          ) : null}
+
+          <ListItem onPress={this.changeTab.bind(this, 'Bookmark')}>
+            <Icon style={styles.icons} name="bookmarks" />
+            <Text style={styles.label}> Bookmarks</Text>
+          </ListItem>
+
           <ListItem
             onPress={() => WebBrowser.openBrowserAsync('https://klyntji.com/')}
           >
@@ -100,11 +100,11 @@ const styles = StyleSheet.create({
     marginTop: 40
   },
   icons: {
-    fontSize: 14
+    fontSize: 12
   },
   label: {
     fontSize: 16,
-    fontFamily: 'raleway-boldI',
+    fontFamily: 'raleway-regular',
     textAlign: 'left'
   }
 });

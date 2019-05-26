@@ -15,7 +15,8 @@ class OnlineUsers extends Component {
           fontSize: 12,
           paddingTop: 10,
           fontFamily: 'raleway-bold',
-          textAlign: 'left'
+          textAlign: 'left',
+          color: '#999'
         }}
       >
         {this.props.presence ? Object.keys(this.props.presence).length : null}{' '}

@@ -115,6 +115,13 @@ class AdminModal extends Component {
                 {this.props.poem.name} - Admin Options
               </Text>
               <ListItem>
+                <Body>
+                  <Text style={styles.check}>
+                    Bookmark Count: {this.props.poem.bookmarkedCount}
+                  </Text>
+                </Body>
+              </ListItem>
+              <ListItem>
                 <CheckBox
                   color={'#000'}
                   checked={this.state.nsfw}

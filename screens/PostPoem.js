@@ -146,7 +146,6 @@ class PostPoem extends Component {
           payLoad
         )
         .then(docRef => {
-          console.log('1');
           this.props.navigation.navigate('Home');
           this.props.successfullyAddedPoem(true);
         })

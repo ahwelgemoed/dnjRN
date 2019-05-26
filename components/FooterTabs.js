@@ -1,27 +1,28 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, AsyncStorage, View } from 'react-native';
+import { Text, StyleSheet, AsyncStorage, View, Icon } from 'react-native';
 import styled from 'styled-components/native';
+import { Col, Row, Grid } from 'react-native-easy-grid';
 
 const FooterView = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  shadow-opacity: 0.35;
-  shadow-radius: 20px;
-  border-radius: 20px;
-  shadow-color: rgba(0, 0, 0, 0.2);
-  shadow-offset: 0px 0px;
   background: #efefef;
-  height: 10%;
+  height: 7%;
+  padding-bottom: 10px;
 `;
 const FooterText = styled.Text`
+  text-align: center;
   color: #999;
   flex-wrap: wrap;
+  font-size: 16px;
   padding-top: 10px;
+  font-family: 'raleway-bold';
+  /* margin-bottom: 10px; */
 `;
 export default class FooterTabs extends Component {
   state = {
-    activeTab: 'Home',
+    // activeTab: 'Home',
     firstVisit: ''
   };
   async componentWillMount() {
@@ -31,34 +32,29 @@ export default class FooterTabs extends Component {
     });
   }
   changeTab = name => {
-    this.setState({
-      activeTab: name
-    });
+    // this.setState({
+    //   activeTab: name
+    // });
     this.props.navigation.navigate(name);
   };
   render() {
     const { activeTab } = this.state;
-    if (this.state.firstVisit !== 'Yes') {
-      return null;
-    } else {
-      return (
-        <View />
-        // <FooterView>
-        //   <FooterText
-        //     onPress={this.changeTab.bind(this, 'Home')}
-        //     style={activeTab === 'Home' ? styles.active : null}
-        //   >
-        //     Home
-        //   </FooterText>
-        //   <FooterText
-        //     onPress={this.changeTab.bind(this, 'Post')}
-        //     style={activeTab === 'Post' ? styles.active : null}
-        //   >
-        //     Post
-        //   </FooterText>
-        // </FooterView>
-      );
-    }
+    return (
+      // <Grid>
+      <FooterView>
+        <Col onPress={this.changeTab.bind(this, 'Home')}>
+          <FooterText style={activeTab === 'Home' ? styles.active : null}>
+            Home
+          </FooterText>
+        </Col>
+        <Col onPress={this.changeTab.bind(this, 'Post')}>
+          <FooterText style={activeTab === 'Post' ? styles.active : null}>
+            Post
+          </FooterText>
+        </Col>
+      </FooterView>
+      // </Grid>
+    );
   }
 }
 const styles = StyleSheet.create({
