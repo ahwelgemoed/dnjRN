@@ -18,7 +18,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "android": {
-      "versionCode": 2.1,
+      "versionCode": 3,
       "package": "com.disnetons.googlesignin",
       "googleServicesFile": "./google-services.json"
     },
