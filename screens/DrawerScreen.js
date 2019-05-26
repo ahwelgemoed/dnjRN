@@ -69,6 +69,22 @@ class DrawerScreen extends Component {
             <Icon style={styles.icons} name="heart" />
             <Text style={styles.label}> KLYNTJI</Text>
           </ListItem>
+          <ListItem
+            onPress={() =>
+              WebBrowser.openBrowserAsync(`https://www.instagram.com/KLYNTJI`)
+            }
+          >
+            <Icon style={styles.icons} name="logo-instagram" />
+            <Text style={styles.label}> Follow KLYNTJI</Text>
+          </ListItem>
+          <ListItem
+            onPress={() =>
+              WebBrowser.openBrowserAsync(`https://www.instagram.com/disnetjy`)
+            }
+          >
+            <Icon style={styles.icons} name="logo-instagram" />
+            <Text style={styles.label}> Follow DNJ</Text>
+          </ListItem>
           <ListItem onPress={this.changeTab.bind(this, 'Account')}>
             <Icon style={styles.icons} name="key" />
             <Text style={styles.label}> Account Page</Text>
