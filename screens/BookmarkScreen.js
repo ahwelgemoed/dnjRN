@@ -62,6 +62,7 @@ class BookmarkScreen extends Component {
   }
   render() {
     const { loading, poems } = this.state;
+
     if (this.props.profile.bookmarks.length === 0) {
       return (
         <SafeAreaView style={styles.container}>
