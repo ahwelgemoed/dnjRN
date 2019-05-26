@@ -231,6 +231,8 @@ class HomeScreen extends React.PureComponent {
                     width: 100,
                     height: 100,
                     flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
                     alignItems: 'center',
                     marginBottom: 20,
                     paddingLeft: 30

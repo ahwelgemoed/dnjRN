@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'raleway-extralight',
     textAlign: 'right',
-    color: '#ddd'
+    color: '#b1b1b1b1'
   },
   dates: {
     fontSize: 12,
