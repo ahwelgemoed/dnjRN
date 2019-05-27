@@ -11,6 +11,7 @@ import BookmarkScreen from '../screens/BookmarkScreen';
 import PostPoem from '../screens/PostPoem';
 import DrawerScreen from '../screens/DrawerScreen';
 import AccountScreen from '../screens/AccountScreen';
+import ShareScreen from '../screens/ShareScreen';
 import FooterTabs from '../components/FooterTabs';
 
 const HomeStack = createStackNavigator({
@@ -22,6 +23,9 @@ const HomeStack = createStackNavigator({
   },
   Account: {
     screen: AccountScreen
+  },
+  Share: {
+    screen: ShareScreen
   },
   Bookmark: {
     screen: BookmarkScreen
@@ -57,6 +61,6 @@ export default (Drawer = createDrawerNavigator(
     contentComponent: DrawerScreen,
     initialRouteName: 'Home',
     transitionConfig: () => fadeIn(),
-    drawerWidth: 200
+    drawerWidth: 250
   }
 ));

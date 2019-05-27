@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, AsyncStorage, View, Icon } from 'react-native';
+import { StyleSheet, AsyncStorage, View } from 'react-native';
+import {
+  Container,
+  Header,
+  Content,
+  Footer,
+  FooterTab,
+  Button,
+  Icon,
+  Text
+} from 'native-base';
 import styled from 'styled-components/native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
@@ -41,18 +51,30 @@ export default class FooterTabs extends Component {
     const { activeTab } = this.state;
     return (
       // <Grid>
-      <FooterView>
-        <Col onPress={this.changeTab.bind(this, 'Home')}>
-          <FooterText style={activeTab === 'Home' ? styles.active : null}>
-            Home
-          </FooterText>
-        </Col>
-        <Col onPress={this.changeTab.bind(this, 'Post')}>
-          <FooterText style={activeTab === 'Post' ? styles.active : null}>
-            Post
-          </FooterText>
-        </Col>
-      </FooterView>
+      // <FooterView>
+      //   <Col onPress={this.changeTab.bind(this, 'Home')}>
+      //     <FooterText style={activeTab === 'Home' ? styles.active : null}>
+      //       Home
+      //     </FooterText>
+      //   </Col>
+      //   <Col onPress={this.changeTab.bind(this, 'Post')}>
+      //     <FooterText style={activeTab === 'Post' ? styles.active : null}>
+      //       Post
+      //     </FooterText>
+      //   </Col>
+      // </FooterView>
+      <Footer>
+        <FooterTab>
+          <Button vertical onPress={this.changeTab.bind(this, 'Home')}>
+            <Icon name="home" />
+            <Text>Home</Text>
+          </Button>
+          <Button vertical onPress={this.changeTab.bind(this, 'Post')}>
+            <Icon name="add" />
+            <Text>Post</Text>
+          </Button>
+        </FooterTab>
+      </Footer>
       // </Grid>
     );
   }
