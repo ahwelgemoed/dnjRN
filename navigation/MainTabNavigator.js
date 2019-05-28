@@ -12,11 +12,15 @@ import PostPoem from '../screens/PostPoem';
 import DrawerScreen from '../screens/DrawerScreen';
 import AccountScreen from '../screens/AccountScreen';
 import ShareScreen from '../screens/ShareScreen';
+import YourPoems from '../screens/YourPoems';
 import FooterTabs from '../components/FooterTabs';
 
 const HomeStack = createStackNavigator({
   Home: {
     screen: HomeScreen
+  },
+  YourPoems: {
+    screen: YourPoems
   },
   Post: {
     screen: PostPoem

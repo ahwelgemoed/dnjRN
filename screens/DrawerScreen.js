@@ -57,6 +57,10 @@ class DrawerScreen extends Component {
             <Icon style={styles.icons} name="clipboard" />
             <Text style={styles.label}> Post</Text>
           </ListItem>
+          {/* <ListItem onPress={this.changeTab.bind(this, 'YourPoems')}>
+            <Icon style={styles.icons} name="person" />
+            <Text style={styles.label}> Your Poems</Text>
+          </ListItem> */}
 
           <ListItem onPress={this.changeTab.bind(this, 'Bookmark')}>
             <Icon style={styles.icons} name="bookmarks" />

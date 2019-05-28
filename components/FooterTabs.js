@@ -64,14 +64,22 @@ export default class FooterTabs extends Component {
       //   </Col>
       // </FooterView>
       <Footer>
-        <FooterTab>
-          <Button vertical onPress={this.changeTab.bind(this, 'Home')}>
-            <Icon name="home" />
-            <Text>Home</Text>
+        <FooterTab style={{ backgroundColor: '#efefef' }}>
+          <Button
+            style={{ color: '#999' }}
+            vertical
+            onPress={this.changeTab.bind(this, 'Home')}
+          >
+            <Icon name="home" style={{ color: '#999' }} />
+            <Text style={{ color: '#999' }}>Home</Text>
           </Button>
-          <Button vertical onPress={this.changeTab.bind(this, 'Post')}>
-            <Icon name="add" />
-            <Text>Post</Text>
+          <Button
+            style={{ color: '#999' }}
+            vertical
+            onPress={this.changeTab.bind(this, 'Post')}
+          >
+            <Icon name="add" style={{ color: '#999' }} />
+            <Text style={{ color: '#999' }}>Post</Text>
           </Button>
         </FooterTab>
       </Footer>
