@@ -137,6 +137,7 @@ class HomeScreen extends React.PureComponent {
     // AsyncStorage.removeItem('firstPost');
     await this.setLeftHeader();
     await this.initalFirebaseLoad();
+    await this.getGrantedToken();
     await setTimeout(() => {
       this.registerForPushNotificationsAsync();
     }, 2000);
@@ -196,6 +197,35 @@ class HomeScreen extends React.PureComponent {
         console.log(err);
       });
   };
+  getGrantedToken = () => {
+    const { firestore } = this.props;
+    Permissions.askAsync(Permissions.NOTIFICATIONS).then(status => {
+      Notifications.getExpoPushTokenAsync()
+        .then(token => {
+          const payLoad = {
+            token
+          };
+          if (token) {
+            firestore
+              .update(
+                { collection: 'users', doc: this.props.auth.uid },
+                payLoad
+              )
+              .then(res => {
+                console.log(res);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    });
+  };
+  // componentWillMount() {
+  // }
 
   clickedRefreshButton = () => {
     this.initalFirebaseLoad();
