@@ -32,7 +32,7 @@ class ForgotPassword extends Component {
         Toast.show({
           text: 'Reset Email Sent',
           buttonText: 'Okay',
-          position: 'bottom'
+          position: 'top'
         });
         this.setState({ modalVisible: false });
       });
