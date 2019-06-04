@@ -74,8 +74,8 @@ class PostPoem extends Component {
   postToPoem = async () => {
     if (!this.state.name) {
       return Toast.show({
-        text: 'Please give Poem a name',
-        position: 'bottom',
+        text: 'Please give Poem a Title',
+        position: 'top',
         type: 'danger',
         duration: 3000
       });
@@ -83,7 +83,7 @@ class PostPoem extends Component {
     if (!this.state.body) {
       return Toast.show({
         text: 'Please give Poem a body',
-        position: 'bottom',
+        position: 'top',
         type: 'danger',
         duration: 3000
       });
