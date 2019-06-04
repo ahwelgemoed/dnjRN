@@ -266,77 +266,75 @@ class PostPoem extends Component {
   render() {
     const { handle, body, firstPost } = this.state;
     return (
-      <Container>
+      <Container style={styles.mainContent}>
         <Content>
-          <KeyboardAvoidingView style={styles.mainContent}>
-            <Form>
-              <Item>
-                <Input
-                  style={styles.input}
-                  placeholder="Poem Title"
-                  value={this.state.name}
-                  onChangeText={text => this.setState({ name: text })}
-                />
-              </Item>
-              <Item>
-                <Textarea
-                  style={styles.inputs}
-                  rowSpan={5}
-                  placeholder="Poem"
-                  value={this.state.body}
-                  onChangeText={text => this.setState({ body: text })}
-                />
-              </Item>
-              {this.props.profile.isLoaded && this.props.profile.Instagram ? (
-                <ListItem>
-                  <CheckBox
-                    color={'#000'}
-                    checked={this.state.withInstagram}
-                    onPress={this.withInstagram}
-                  />
-                  <Body>
-                    <Text style={styles.check}>
-                      Post as {this.props.profile.Instagram}
-                    </Text>
-                  </Body>
-                </ListItem>
-              ) : (
-                <React.Fragment>
-                  <AddInstagramModal />
-                </React.Fragment>
-              )}
+          {/* <KeyboardAvoidingView style={styles.mainContent}> */}
+          <Form>
+            <Item>
+              <Input
+                style={styles.input}
+                placeholder="Poem Title"
+                value={this.state.name}
+                onChangeText={text => this.setState({ name: text })}
+              />
+            </Item>
+            <Item>
+              <Textarea
+                style={styles.inputs}
+                rowSpan={5}
+                placeholder="Poem"
+                value={this.state.body}
+                onChangeText={text => this.setState({ body: text })}
+              />
+            </Item>
+            {this.props.profile.isLoaded && this.props.profile.Instagram ? (
               <ListItem>
                 <CheckBox
                   color={'#000'}
-                  checked={this.state.nsfw}
-                  onPress={this.nsfw}
+                  checked={this.state.withInstagram}
+                  onPress={this.withInstagram}
                 />
                 <Body>
-                  <Text style={styles.check}>NSFW</Text>
+                  <Text style={styles.check}>
+                    Post as {this.props.profile.Instagram}
+                  </Text>
                 </Body>
               </ListItem>
-              <Button
-                style={styles.buttonIn}
-                block
-                light
-                onPress={this.postToPoem}
-              >
-                {this.state.loading ? (
-                  <ActivityIndicator color={'#fff'} />
-                ) : null}
-                <Text style={styles.labelIn}>Post Poem</Text>
-              </Button>
-              <Button
-                block
-                style={styles.buttonItself}
-                bordered
-                warning
-                onPress={() => this.props.navigation.goBack()}
-              >
-                <Text style={styles.button}>Cancel</Text>
-              </Button>
-            </Form>
-          </KeyboardAvoidingView>
+            ) : (
+              <React.Fragment>
+                <AddInstagramModal />
+              </React.Fragment>
+            )}
+            <ListItem>
+              <CheckBox
+                color={'#000'}
+                checked={this.state.nsfw}
+                onPress={this.nsfw}
+              />
+              <Body>
+                <Text style={styles.check}>NSFW</Text>
+              </Body>
+            </ListItem>
+            <Button
+              style={styles.buttonIn}
+              block
+              light
+              onPress={this.postToPoem}
+            >
+              {this.state.loading ? <ActivityIndicator color={'#fff'} /> : null}
+              <Text style={styles.labelIn}>Post Poem</Text>
+            </Button>
+            <Button
+              block
+              style={styles.buttonItself}
+              bordered
+              warning
+              onPress={() => this.props.navigation.goBack()}
+            >
+              <Text style={styles.button}>Cancel</Text>
+            </Button>
+          </Form>
+          {/* </KeyboardAvoidingView> */}
           <FirstPostModal openFirstModal={this.state.openFirstModal} />
         </Content>
       </Container>
@@ -370,13 +368,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: '#91D9D9',
     marginTop: 20,
+    marginLeft: 12,
+    marginRight: 12,
     fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
   button: {
     fontSize: 16,
-    fontFamily: 'raleway-regular',
 
+    fontFamily: 'raleway-regular',
     textAlign: 'center'
   },
   check: {
@@ -388,6 +388,8 @@ const styles = StyleSheet.create({
   buttonItself: {
     fontSize: 14,
     marginTop: 20,
+    marginLeft: 12,
+    marginRight: 12,
     fontFamily: 'raleway-regular',
     textAlign: 'left'
   }
