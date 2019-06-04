@@ -18,7 +18,7 @@ class Bookmark extends Component {
         Toast.show({
           text: 'Added Bookmark',
           buttonText: 'Okay',
-          position: 'bottom'
+          position: 'top'
         });
         this.props.toggleBookMark();
         firestore
@@ -48,7 +48,7 @@ class Bookmark extends Component {
         Toast.show({
           text: 'Removed Bookmark',
           buttonText: 'Okay',
-          position: 'bottom'
+          position: 'top'
         });
         this.props.toggleBookMark();
         firestore

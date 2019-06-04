@@ -65,7 +65,7 @@ class DelelteAccount extends Component {
           .then(() => {
             Toast.show({
               text: 'Account deleted',
-              position: 'bottom',
+              position: 'top',
               duration: 3000
             });
             this.props.firebase.logout().then(res => {
@@ -81,7 +81,7 @@ class DelelteAccount extends Component {
             });
             Toast.show({
               text: error.message,
-              position: 'bottom',
+              position: 'top',
               type: 'danger',
               duration: 3000
             });
@@ -93,7 +93,7 @@ class DelelteAccount extends Component {
         });
         Toast.show({
           text: error.message,
-          position: 'bottom',
+          position: 'top',
           type: 'danger',
           duration: 3000
         });

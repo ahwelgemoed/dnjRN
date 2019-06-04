@@ -55,7 +55,7 @@ class CardPoem extends Component {
                 Toast.show({
                   text: 'Poem Reported to Admin',
                   buttonText: 'Okay',
-                  position: 'bottom',
+                  position: 'top',
                   type: 'danger'
                 });
               })
