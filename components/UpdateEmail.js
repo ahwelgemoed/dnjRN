@@ -45,7 +45,7 @@ class UpdateEmail extends Component {
       });
       return Toast.show({
         text: 'Fill in Form',
-        position: 'bottom',
+        position: 'top',
         type: 'danger'
       });
     }
@@ -58,7 +58,7 @@ class UpdateEmail extends Component {
           .then(() => {
             Toast.show({
               text: 'Email Updated',
-              position: 'bottom',
+              position: 'top',
               duration: 3000
             });
             this.setState({
@@ -71,7 +71,7 @@ class UpdateEmail extends Component {
             });
             Toast.show({
               text: error.message,
-              position: 'bottom',
+              position: 'top',
               type: 'danger',
               duration: 3000
             });
@@ -83,7 +83,7 @@ class UpdateEmail extends Component {
         });
         Toast.show({
           text: error.message,
-          position: 'bottom',
+          position: 'top',
           type: 'danger',
           duration: 3000
         });

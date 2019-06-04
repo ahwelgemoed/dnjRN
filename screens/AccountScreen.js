@@ -112,14 +112,14 @@ class AccountScreen extends Component {
       .then(res => {
         Toast.show({
           text: 'Profile Updated',
-          position: 'bottom'
+          position: 'top'
         });
         this.props.navigation.navigate('Home');
       })
       .catch(err => {
         Toast.show({
           text: err.message,
-          position: 'bottom',
+          position: 'top',
           type: 'warning'
         });
       });
@@ -137,7 +137,7 @@ class AccountScreen extends Component {
       .then(res => {
         Toast.show({
           text: 'Reset Email Sent, Logging You Out Now',
-          position: 'bottom',
+          position: 'top',
           type: 'warning'
         });
       })
@@ -149,7 +149,7 @@ class AccountScreen extends Component {
       .catch(err => {
         Toast.show({
           text: err.message,
-          position: 'bottom',
+          position: 'top',
           type: 'danger'
         });
       });

@@ -49,7 +49,7 @@ class AdminModal extends Component {
         Toast.show({
           text: 'Marked as NSFW',
           buttonText: 'Okay',
-          position: 'bottom',
+          position: 'top',
           type: 'danger'
         });
         this.props.successfullyAddedPoem(true);
@@ -71,7 +71,7 @@ class AdminModal extends Component {
                 Toast.show({
                   text: 'Poem Deleted',
                   buttonText: 'Okay',
-                  position: 'bottom',
+                  position: 'top',
                   type: 'danger'
                 });
                 this.props.successfullyAddedPoem(true);
