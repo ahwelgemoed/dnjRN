@@ -106,7 +106,10 @@ class DrawerScreen extends Component {
         ) : null}
         {/* </Content> */}
         <View style={styles.bottom}>
-          <ListItem style={{ borderBottomWidth: 0, borderTopWidth: 0 }}>
+          <ListItem
+            onPress={this.signOut}
+            style={{ borderBottomWidth: 0, borderTopWidth: 0 }}
+          >
             <Icon style={styles.icons} name="log-out" />
             <Text style={styles.label}> Sign Out</Text>
           </ListItem>
