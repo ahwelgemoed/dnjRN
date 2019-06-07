@@ -13,7 +13,7 @@ import Dialog, {
 } from 'react-native-popup-dialog';
 import Bookmark from './Bookmark';
 import { WebBrowser } from 'expo';
-import { StyledText } from './styles';
+import { StyledText, PoemName, PoemBodyText, InstagramText } from './Styles';
 
 class CardPoem extends Component {
   state = {
@@ -109,6 +109,7 @@ class CardPoem extends Component {
     });
   };
   render() {
+    const { theme } = this.props;
     return (
       <StyledText
         style={
@@ -125,7 +126,7 @@ class CardPoem extends Component {
               bookmarked={this.state.bookmarked}
               toggleBookMark={this.toggleBookMark}
             />
-            <Text style={styles.name}>{this.props.poem.name}</Text>
+            <PoemName style={styles.name}>{this.props.poem.name}</PoemName>
             <Text
               style={styles.elipse}
               onPress={() => {
@@ -158,7 +159,7 @@ class CardPoem extends Component {
               </DialogContent>
             </Dialog>
             {this.props.poem.handle ? (
-              <Text
+              <InstagramText
                 onPress={() =>
                   WebBrowser.openBrowserAsync(
                     `https://www.instagram.com/${this.props.poem.handle}`
@@ -166,13 +167,30 @@ class CardPoem extends Component {
                 }
                 style={styles.handle}
               >
-                <Icon style={styles.handle} name="logo-instagram" />{' '}
+                <Icon
+                  style={
+                    theme
+                      ? {
+                          fontSize: 14,
+                          textAlign: 'left',
+                          fontFamily: 'raleway-regular',
+                          color: '#D8D9D9'
+                        }
+                      : {
+                          fontSize: 14,
+                          textAlign: 'left',
+                          fontFamily: 'raleway-regular',
+                          color: '#2C2D2D'
+                        }
+                  }
+                  name="logo-instagram"
+                />{' '}
                 {this.props.poem.handle}
-              </Text>
+              </InstagramText>
             ) : null}
           </Col>
         </Row>
-        <Text style={styles.body}>{this.props.poem.body}</Text>
+        <PoemBodyText style={styles.body}>{this.props.poem.body}</PoemBodyText>
         <Row>
           <Col>
             <View
@@ -186,7 +204,35 @@ class CardPoem extends Component {
                 {moment.unix(this.props.poem.date).fromNow()}
               </Text>
               {this.props.poem.nsfw ? (
-                <Badge style={styles.IconBadge}>
+                <Badge
+                  style={
+                    theme
+                      ? {
+                          position: 'absolute',
+                          backgroundColor: '#D8D9D9',
+                          opacity: 0.5,
+                          bottom: 1,
+                          right: 1,
+                          // minWidth: 20,
+                          height: 25,
+                          borderRadius: 15,
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }
+                      : {
+                          position: 'absolute',
+                          backgroundColor: '#2C2D2D',
+                          opacity: 0.5,
+                          bottom: 1,
+                          right: 1,
+                          // minWidth: 20,
+                          height: 25,
+                          borderRadius: 15,
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }
+                  }
+                >
                   <Text style={styles.nsfw}>NSFW</Text>
                 </Badge>
               ) : null}
@@ -226,7 +272,8 @@ class CardPoem extends Component {
 const mapStateToProps = state => ({
   auth: state.firebase.auth,
   profile: state.firebase.profile,
-  admin: state.poems.activateDelete
+  admin: state.poems.activateDelete,
+  theme: state.theme.isThemeDark
 });
 export default compose(
   firestoreConnect(),
@@ -262,16 +309,16 @@ const styles = StyleSheet.create({
     // width: 10
   },
   IconBadge: {
-    position: 'absolute',
-    backgroundColor: '#FF5C5C',
-    opacity: 0.5,
-    bottom: 1,
-    right: 1,
-    // minWidth: 20,
-    height: 25,
-    borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'center'
+    // position: 'absolute',
+    // backgroundColor: '#FF5C5C',
+    // opacity: 0.5,
+    // bottom: 1,
+    // right: 1,
+    // // minWidth: 20,
+    // height: 25,
+    // borderRadius: 15,
+    // alignItems: 'center',
+    // justifyContent: 'center'
   },
   IconBadgeReported: {
     marginTop: 10,
@@ -286,23 +333,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  name: {
-    fontSize: 22,
-    paddingTop: 10,
-    fontFamily: 'raleway-bold',
-    textAlign: 'left'
-  },
+  name: {},
   nameDialog: {
     fontSize: 22,
     fontFamily: 'raleway-bold',
     textAlign: 'left',
     paddingBottom: 10
   },
-  handle: {
-    fontSize: 14,
-    textAlign: 'left',
-    fontFamily: 'raleway-regular'
-  },
+  handle: { fontSize: 14, textAlign: 'left', fontFamily: 'raleway-regular' },
   nsfw: {
     fontSize: 10,
     textAlign: 'center',
@@ -311,10 +349,6 @@ const styles = StyleSheet.create({
   },
   body: {
     // width: screenWidth,
-    fontFamily: 'raleway-regular',
-    fontSize: 16,
-    paddingBottom: 10,
-    paddingTop: 10
   },
   icon: {
     fontSize: 14

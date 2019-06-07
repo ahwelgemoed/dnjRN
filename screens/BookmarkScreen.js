@@ -6,28 +6,18 @@ import {
   FlatList,
   StyleSheet,
   Dimensions,
-  Image
+  Image,
+  ScrollView
 } from 'react-native';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import CardPoem from '../components/CardPoem';
 import { Button, Icon } from 'native-base';
+import { ScreenBackground } from '../components/Styles';
+import TopNav from '../components/TopNav';
 
 class BookmarkScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Bookmarks',
-    headerLeft: null,
-    headerRight: (
-      <Button transparent onPress={() => navigation.toggleDrawer()}>
-        <Icon name="menu" style={{ color: '#999' }} />
-      </Button>
-    ),
-    headerTitleStyle: {
-      fontFamily: 'raleway-boldI',
-      fontSize: 20
-    }
-  });
   state = {
     loading: true,
     poems: ''
@@ -72,37 +62,44 @@ class BookmarkScreen extends Component {
       );
     } else {
       return (
-        <SafeAreaView style={styles.container}>
-          {loading ? (
-            <Image
-              source={require('../assets/images/Loading.gif')}
-              style={{
-                width: 100,
-                height: 100,
-                marginBottom: 20,
-                paddingLeft: 30
-              }}
-            />
-          ) : (
-            <React.Fragment>
-              <FlatList
-                showsVerticalScrollIndicator={false}
-                keyExtractor={(item, index) => index.toString()}
-                data={poems}
-                ref={ref => {
-                  this.flatListRef = ref;
+        <ScreenBackground style={styles.container}>
+          <TopNav
+            pageTitle={'Bookmarks'}
+            navigation={this.props.navigation}
+            leftComponent={this.setLeftHeader}
+          />
+          <ScrollView>
+            {loading ? (
+              <Image
+                source={require('../assets/images/Loading.gif')}
+                style={{
+                  width: 100,
+                  height: 100,
+                  marginBottom: 20,
+                  paddingLeft: 30
                 }}
-                renderItem={({ item, i }) => (
-                  <CardPoem
-                    poem={item}
-                    auth={this.props.auth}
-                    navigation={this.props.navigation}
-                  />
-                )}
               />
-            </React.Fragment>
-          )}
-        </SafeAreaView>
+            ) : (
+              <React.Fragment>
+                <FlatList
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={(item, index) => index.toString()}
+                  data={poems}
+                  ref={ref => {
+                    this.flatListRef = ref;
+                  }}
+                  renderItem={({ item, i }) => (
+                    <CardPoem
+                      poem={item}
+                      auth={this.props.auth}
+                      navigation={this.props.navigation}
+                    />
+                  )}
+                />
+              </React.Fragment>
+            )}
+          </ScrollView>
+        </ScreenBackground>
       );
     }
   }
@@ -110,13 +107,13 @@ class BookmarkScreen extends Component {
 let screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#f9f9f9',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingLeft: 15,
-    paddingRight: 15,
-    width: '100%'
+    // flex: 1,
+    // backgroundColor: '#f9f9f9',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // paddingLeft: 15,
+    // paddingRight: 15,
+    // width: '100%'
   },
   name: {
     fontSize: 22,

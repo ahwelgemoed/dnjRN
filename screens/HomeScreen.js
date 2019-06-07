@@ -23,20 +23,20 @@ import TandC from '../components/TandC';
 import Loading from '../components/Loading';
 import { Icon, Button } from 'native-base';
 import UpdateUserInfo from '../components/UpdateUserInfo';
+import { ScreenBackground } from '../components/Styles';
+import TopNav from '../components/TopNav';
 
 class HomeScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
-    title: 'DIS NET JY',
-    headerRight: (
-      <Button transparent onPress={() => navigation.toggleDrawer()}>
-        <Icon name="menu" style={{ color: '#999' }} />
-      </Button>
-    ),
-    headerLeft: navigation.state.params && navigation.state.params.headerLeft,
-    headerTitleStyle: {
-      fontFamily: 'raleway-boldI',
-      fontSize: 20
-    }
+    headerLeft: null,
+    // headerTransparent: true,
+    headerTitle: (
+      <TopNav
+        pageTitle={'Dis Net Jy'}
+        navigation={navigation}
+        leftComponent={this.setLeftHeader}
+      />
+    )
   });
 
   state = {
@@ -237,7 +237,12 @@ class HomeScreen extends React.PureComponent {
   render() {
     const { loading, poems } = this.state;
     return (
-      <SafeAreaView style={styles.container}>
+      <ScreenBackground style={styles.container}>
+        <TopNav
+          pageTitle={'Dis Net Jy'}
+          navigation={this.props.navigation}
+          leftComponent={this.setLeftHeader}
+        />
         <UpdateUserInfo />
 
         {/* <TandC /> */}
@@ -298,7 +303,7 @@ class HomeScreen extends React.PureComponent {
           // <ActivityIndicator color={'#91D9D9'} />
           // <Loading />
         )}
-      </SafeAreaView>
+      </ScreenBackground>
     );
   }
 }
@@ -319,12 +324,6 @@ let screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#f9f9f9',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingLeft: 15,
-    paddingRight: 15,
     width: screenWidth
   },
   flatlist: {

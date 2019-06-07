@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Content, Container, ListItem, Icon, CheckBox } from 'native-base';
+import {
+  Content,
+  Container,
+  ListItem,
+  Icon,
+  CheckBox,
+  Right,
+  Switch,
+  Left
+} from 'native-base';
 import {
   AsyncStorage,
   Text,
@@ -15,6 +24,7 @@ import { Constants, WebBrowser } from 'expo';
 import { activateDeleteAction } from '../actions/poemsActions';
 import { changePoem } from '../actions/themeActions';
 import OnlineUsers from '../components/OnlineUsers';
+import { ScreenBackground } from '../components/Styles';
 // import { DrawerActions, DrawerItems, SafeAreaView } from 'react-navigation';
 // import styles from '../../styles/index';
 
@@ -44,9 +54,10 @@ class DrawerScreen extends Component {
     });
   };
   render() {
-    const { profile } = this.props;
+    const { profile, theme } = this.props;
+    // const { theme } = this.props;
     return (
-      <View style={styles.container}>
+      <ScreenBackground style={styles.container}>
         {/* <Content> */}
         <ListItem>
           <Text style={styles.label}>
@@ -54,23 +65,123 @@ class DrawerScreen extends Component {
           </Text>
         </ListItem>
         <ListItem onPress={this.changeTab.bind(this, 'Home')}>
-          <Icon style={styles.icons} name="home" />
-          <Text style={styles.label}> Home</Text>
+          <Left>
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="home"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              Home
+            </Text>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+            />
+          </Right>
         </ListItem>
         <ListItem onPress={this.changeTab.bind(this, 'Post')}>
-          <Icon style={styles.icons} name="clipboard" />
-          <Text style={styles.label}> Post</Text>
+          <Left>
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="clipboard"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              Post
+            </Text>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+            />
+          </Right>
         </ListItem>
         <ListItem onPress={this.changeTab.bind(this, 'Bookmark')}>
-          <Icon style={styles.icons} name="bookmarks" />
-          <Text style={styles.label}> Bookmarks</Text>
+          <Left>
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="bookmarks"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              Bookmarks
+            </Text>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+            />
+          </Right>
         </ListItem>
 
         <ListItem
           onPress={() => WebBrowser.openBrowserAsync('https://klyntji.com/')}
         >
-          <Icon style={styles.icons} name="heart" />
-          <Text style={styles.label}> KLYNTJI</Text>
+          <Left>
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="heart"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              KLYNTJI
+            </Text>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+            />
+          </Right>
         </ListItem>
 
         <ListItem
@@ -78,59 +189,217 @@ class DrawerScreen extends Component {
             WebBrowser.openBrowserAsync(`https://www.instagram.com/disnetjy`)
           }
         >
-          <Icon style={styles.icons} name="logo-instagram" />
-          <Text style={styles.label}> Follow DNJ</Text>
+          <Left>
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="logo-instagram"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              Follow DNJ
+            </Text>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+            />
+          </Right>
         </ListItem>
         <ListItem onPress={this.changeTab.bind(this, 'Share')}>
-          <Icon style={styles.icons} name="share" />
-          <Text style={styles.label}> Share DNJ</Text>
+          <Left>
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="share"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              Share DNJ
+            </Text>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+            />
+          </Right>
         </ListItem>
         <ListItem onPress={this.changeTab.bind(this, 'Account')}>
-          <Icon style={styles.icons} name="key" />
-          <Text style={styles.label}> Account Page</Text>
+          <Left>
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="key"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              Account Page
+            </Text>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+            />
+          </Right>
         </ListItem>
         {profile.auth ? (
           <View>
-            <ListItem itemDivider>
-              <Text>ADMIN ONLY</Text>
+            <ListItem
+              itemDivider
+              style={[
+                theme
+                  ? { backgroundColor: '#2C2D2D' }
+                  : { backgroundColor: '#D8D9D9' }
+              ]}
+            >
+              <Text
+                style={[
+                  theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                  styles.label
+                ]}
+              >
+                ADMIN ONLY
+              </Text>
             </ListItem>
             <ListItem onPress={this.changeTab.bind(this, 'YourPoems')}>
-              <Icon style={styles.icons} name="person" />
-              <Text style={styles.label}> Your Poems</Text>
+              <Icon
+                style={[
+                  theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                  styles.icons
+                ]}
+                name="person"
+              />
+              <Text
+                style={[
+                  theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                  styles.label
+                ]}
+              >
+                {' '}
+                Your Poems
+              </Text>
             </ListItem>
             <ListItem onPress={this.activateDeleteAction}>
-              <Icon style={styles.icons} name="person" />
+              <Icon
+                style={[
+                  theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                  styles.icons
+                ]}
+                name="person"
+              />
               {this.props.activateDelete ? (
-                <Text style={styles.label}> Deactivate Admin Rights</Text>
+                <Text
+                  style={[
+                    theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                    styles.label
+                  ]}
+                >
+                  {' '}
+                  Deactivate Admin Rights
+                </Text>
               ) : (
-                <Text style={styles.label}> Activate Admin Rights</Text>
+                <Text
+                  style={[
+                    theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                    styles.label
+                  ]}
+                >
+                  {' '}
+                  Activate Admin Rights
+                </Text>
               )}
             </ListItem>
           </View>
         ) : null}
         {/* </Content> */}
         <View style={styles.bottom}>
-          <ListItem
-            onPress={this.signOut}
-            style={{ borderBottomWidth: 0, borderTopWidth: 0 }}
-          >
-            <Icon style={styles.icons} name="log-out" />
-            <Text style={styles.label}> Sign Out</Text>
+          <ListItem style={{ borderBottomWidth: 0, borderTopWidth: 0 }}>
+            <Left>
+              <Icon
+                style={[
+                  theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                  styles.icons
+                ]}
+                name="moon"
+              />
+              <Text
+                style={[
+                  theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                  styles.label
+                ]}
+              >
+                {' '}
+                Dark Mode
+              </Text>
+            </Left>
+            <Right>
+              <Switch
+                trackColor={{
+                  true: '#000',
+                  false: '#ddd'
+                }}
+                value={this.props.theme}
+                style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
+                onValueChange={this.toggleDarkMode}
+              />
+            </Right>
           </ListItem>
           <ListItem
             onPress={this.signOut}
             style={{ borderBottomWidth: 0, borderTopWidth: 0 }}
           >
-            <Icon style={styles.icons} name="moon" />
-            <Text style={styles.label}> Dark Mode</Text>
-            <CheckBox
-              color={'#000'}
-              checked={this.props.theme}
-              onPress={this.toggleDarkMode}
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="log-out"
             />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              Sign Out
+            </Text>
           </ListItem>
         </View>
-      </View>
+      </ScreenBackground>
     );
   }
 }
@@ -138,7 +407,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 40,
-    backgroundColor: '#efefef'
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    textAlign: 'left'
+    // backgroundColor: '#efefef'
   },
   icons: {
     fontSize: 12,
@@ -152,7 +424,7 @@ const styles = StyleSheet.create({
   bottom: {
     flex: 1,
     justifyContent: 'flex-end',
-    marginBottom: 36
+    marginBottom: 26
   }
 });
 

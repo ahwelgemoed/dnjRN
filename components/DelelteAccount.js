@@ -27,6 +27,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import { successfullyAddedPoem } from '../actions/poemsActions';
+import { ScreenBackground } from './Styles';
 
 class DelelteAccount extends Component {
   state = {
@@ -101,8 +102,7 @@ class DelelteAccount extends Component {
   };
 
   render() {
-    console.log(this.state.password);
-
+    const { theme } = this.props;
     return (
       <View>
         <Modal
@@ -113,14 +113,46 @@ class DelelteAccount extends Component {
             Alert.alert('Modal has been closed.');
           }}
         >
-          <View style={styles.mainContent}>
+          <ScreenBackground style={styles.mainContent}>
             <View>
-              <Text style={styles.name}>Delete Account</Text>
+              <Text
+                style={
+                  theme
+                    ? {
+                        color: '#D8D9D9',
+                        fontSize: 24,
+                        fontFamily: 'raleway-regular',
+                        textAlign: 'left'
+                      }
+                    : {
+                        color: '#2C2D2D',
+                        fontSize: 24,
+                        fontFamily: 'raleway-regular',
+                        textAlign: 'left'
+                      }
+                }
+              >
+                Delete Account
+              </Text>
               <Item floatingLabel>
                 <Label style={styles.label}>Current Password</Label>
                 <Input
                   secureTextEntry={true}
-                  style={styles.input}
+                  style={
+                    theme
+                      ? {
+                          color: '#D8D9D9',
+                          fontSize: 16,
+                          fontFamily: 'raleway-regular',
+                          textAlign: 'left'
+                        }
+                      : {
+                          color: '#2C2D2D',
+                          fontSize: 16,
+                          fontFamily: 'raleway-regular',
+                          textAlign: 'left'
+                        }
+                  }
                   onChangeText={text => this.setState({ password: text })}
                 />
               </Item>
@@ -146,7 +178,7 @@ class DelelteAccount extends Component {
                 <Text>Close </Text>
               </Button>
             </View>
-          </View>
+          </ScreenBackground>
         </Modal>
         <Button
           block
@@ -213,7 +245,8 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => ({
   auth: state.firebase.auth,
-  admin: state.poems.activateDelete
+  admin: state.poems.activateDelete,
+  theme: state.theme.isThemeDark
 });
 
 export default compose(

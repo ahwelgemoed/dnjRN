@@ -15,26 +15,31 @@ import ShareScreen from '../screens/ShareScreen';
 import YourPoems from '../screens/YourPoems';
 import FooterTabs from '../components/FooterTabs';
 
-const HomeStack = createStackNavigator({
-  Home: {
-    screen: HomeScreen
+const HomeStack = createStackNavigator(
+  {
+    Home: {
+      screen: HomeScreen
+    },
+    YourPoems: {
+      screen: YourPoems
+    },
+    Post: {
+      screen: PostPoem
+    },
+    Account: {
+      screen: AccountScreen
+    },
+    Share: {
+      screen: ShareScreen
+    },
+    Bookmark: {
+      screen: BookmarkScreen
+    }
   },
-  YourPoems: {
-    screen: YourPoems
-  },
-  Post: {
-    screen: PostPoem
-  },
-  Account: {
-    screen: AccountScreen
-  },
-  Share: {
-    screen: ShareScreen
-  },
-  Bookmark: {
-    screen: BookmarkScreen
+  {
+    headerMode: 'none'
   }
-});
+);
 
 const Tabs = createBottomTabNavigator(
   {
