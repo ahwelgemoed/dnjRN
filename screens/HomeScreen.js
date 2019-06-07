@@ -23,6 +23,7 @@ import TandC from '../components/TandC';
 import Loading from '../components/Loading';
 import { Icon, Button } from 'native-base';
 import UpdateUserInfo from '../components/UpdateUserInfo';
+
 class HomeScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
     title: 'DIS NET JY',
@@ -197,6 +198,7 @@ class HomeScreen extends React.PureComponent {
         console.log(err);
       });
   };
+
   getGrantedToken = () => {
     const { firestore } = this.props;
     Permissions.askAsync(Permissions.NOTIFICATIONS).then(status => {
@@ -237,6 +239,7 @@ class HomeScreen extends React.PureComponent {
     return (
       <SafeAreaView style={styles.container}>
         <UpdateUserInfo />
+
         {/* <TandC /> */}
         {poems ? (
           <React.Fragment>

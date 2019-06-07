@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Content, Container, ListItem, Icon } from 'native-base';
+import { Content, Container, ListItem, Icon, CheckBox } from 'native-base';
 import {
   AsyncStorage,
   Text,
@@ -11,8 +11,9 @@ import {
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
-import { activateDeleteAction } from '../actions/poemsActions';
 import { Constants, WebBrowser } from 'expo';
+import { activateDeleteAction } from '../actions/poemsActions';
+import { changePoem } from '../actions/themeActions';
 import OnlineUsers from '../components/OnlineUsers';
 // import { DrawerActions, DrawerItems, SafeAreaView } from 'react-navigation';
 // import styles from '../../styles/index';
@@ -32,6 +33,9 @@ class DrawerScreen extends Component {
       activateDeleteAction: !this.state.activateDeleteAction
     });
     await this.props.activateDeleteAction(this.state.activateDeleteAction);
+  };
+  toggleDarkMode = () => {
+    this.props.changePoem(!this.props.theme);
   };
 
   signOut = () => {
@@ -113,6 +117,18 @@ class DrawerScreen extends Component {
             <Icon style={styles.icons} name="log-out" />
             <Text style={styles.label}> Sign Out</Text>
           </ListItem>
+          <ListItem
+            onPress={this.signOut}
+            style={{ borderBottomWidth: 0, borderTopWidth: 0 }}
+          >
+            <Icon style={styles.icons} name="moon" />
+            <Text style={styles.label}> Dark Mode</Text>
+            <CheckBox
+              color={'#000'}
+              checked={this.props.theme}
+              onPress={this.toggleDarkMode}
+            />
+          </ListItem>
         </View>
       </View>
     );
@@ -148,8 +164,9 @@ export default compose(
       auth: state.firebase.auth,
       profile: state.firebase.profile,
       addedPoem: state.poems.addedPoem,
-      activateDelete: state.poems.activateDelete
+      activateDelete: state.poems.activateDelete,
+      theme: state.theme.isThemeDark
     }),
-    { activateDeleteAction }
+    { activateDeleteAction, changePoem }
   )
 )(DrawerScreen);

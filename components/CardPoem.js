@@ -6,7 +6,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import AdminModal from './AdminModal';
-import styled from 'styled-components/native';
 import { successfullyAddedPoem } from '../actions/poemsActions';
 import Dialog, {
   SlideAnimation,
@@ -14,21 +13,7 @@ import Dialog, {
 } from 'react-native-popup-dialog';
 import Bookmark from './Bookmark';
 import { WebBrowser } from 'expo';
-const StyledText = styled.View`
-  shadow-opacity: 0.35;
-  shadow-radius: 10px;
-  border-radius: 10px;
-  shadow-color: rgba(0, 0, 0, 0.2);
-  shadow-offset: 1px 1px;
-  background: white;
-  margin: 10px;
-  /* width: 100%; */
-  padding: 10px;
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  /* display: none; */
-`;
+import { StyledText } from './styles';
 
 class CardPoem extends Component {
   state = {
