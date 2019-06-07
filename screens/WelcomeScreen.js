@@ -31,7 +31,7 @@ const slides = [
     key: 'somethun1',
     title: 'Play Nice with the other kids on the bus',
     text:
-      "By continuing and creating an account you agree to our T&C's and that you are older that 17 Years old",
+      "By continuing and creating an account you agree to our T&C's and that you are older than 17 Years old",
     backgroundColor: '#22bcb5',
     button: true
   }
