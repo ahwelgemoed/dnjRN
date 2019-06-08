@@ -23,7 +23,7 @@ const Box = posed.View({
 });
 class RefreshButton extends Component {
   state = {
-    isVisible: true
+    isVisible: false
   };
   componentDidUpdate(prevProps) {
     // if (this.props.scroll <= 20 && this.state.isVisible === true) {
@@ -40,6 +40,9 @@ class RefreshButton extends Component {
         isVisible: false
       });
     }
+    console.log(prevProps.scroll);
+    console.log(this.props.scroll);
+
     if (
       prevProps.scroll - this.props.scroll > 10 &&
       this.state.isVisible === false
@@ -52,14 +55,25 @@ class RefreshButton extends Component {
 
   render() {
     return (
-      <Box pose={this.state.isVisible ? 'visible' : 'hidden'}>
+      <Box
+        style={{
+          position: 'absolute',
+          top: 80,
+          zIndex: 99,
+          backgroundColor: '#D9D9D9',
+          paddingLeft: 10,
+          paddingRight: 10,
+          borderRadius: 7
+        }}
+        pose={this.state.isVisible ? 'visible' : 'hidden'}
+      >
         {this.props.presence ? (
           <Text
             onPress={this.props.clickedRefreshButton}
             style={{
               fontSize: 12,
               color: '#999',
-              paddingTop: 10,
+              paddingTop: 5,
               fontFamily: 'raleway-bold',
               textAlign: 'left',
               paddingBottom: 5

@@ -141,6 +141,7 @@ class CardPoem extends Component {
               />
             </Text>
             <Dialog
+              overlayBackgroundColor={!theme ? '#D8D9D9' : '#2C2D2D'}
               visible={this.state.reportDialog}
               onTouchOutside={() => {
                 this.setState({ reportDialog: false });
@@ -151,8 +152,33 @@ class CardPoem extends Component {
                 })
               }
             >
-              <DialogContent style={styles.mainContent}>
-                <Text style={styles.nameDialog}> Options </Text>
+              <DialogContent
+                style={[
+                  styles.mainContent,
+                  theme
+                    ? {
+                        backgroundColor: '#232526'
+                      }
+                    : {
+                        backgroundColor: '#f9f9f9'
+                      }
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.nameDialog,
+                    theme
+                      ? {
+                          color: '#D8D9D9'
+                        }
+                      : {
+                          color: '#2C2D2D'
+                        }
+                  ]}
+                >
+                  {' '}
+                  Options{' '}
+                </Text>
                 <Text style={styles.dates} onPress={() => this.reportPoem()}>
                   REPORT AS INAPPROPRIATE
                 </Text>

@@ -8,13 +8,10 @@ export const StyledText = styled.View`
   background: ${props => props.theme.CARD_BACKGROUND};
   color: ${props => props.theme.CARD_FONT_COLOR};
   margin: 10px;
-  /* width: 100%; */
   padding: 10px;
   margin-top: 20px;
   display: flex;
   justify-content: center;
-  /* transition: transform 300ms ease-in-out; */
-  /* display: none; */
 `;
 export const PoemName = styled.Text`
   color: ${props => props.theme.CARD_FONT_COLOR};
