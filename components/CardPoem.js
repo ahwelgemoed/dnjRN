@@ -31,9 +31,8 @@ import Dialog, {
   DialogContent
 } from 'react-native-popup-dialog';
 import Bookmark from './Bookmark';
-import { WebBrowser } from 'expo';
+import { WebBrowser, Permissions } from 'expo';
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot';
-import * as Permissions from 'expo-permissions';
 import { StyledText, PoemName, PoemBodyText, InstagramText } from './Styles';
 
 class CardPoem extends Component {
@@ -130,36 +129,59 @@ class CardPoem extends Component {
     });
   };
   snapshot = async id => {
-    const targetPixelCount = 1080; // If you want full HD pictures
-    const pixelRatio = PixelRatio.get(); // The pixel ratio of the device
-    // pixels * pixelratio = targetPixelCount, so pixels = targetPixelCount / pixelRatio
-    const pixels = targetPixelCount / pixelRatio;
-    // const { status } = await Permissions.getAsync(Permissions.CAMERA_ROLL);
-    // if (status === 'granted') {
-    let result = await takeSnapshotAsync(this[id], {
-      format: 'png',
-      width: pixels,
-      height: '100%',
-      quality: 1,
-      result: 'tmpfile',
-      snapshotContentContainer: false
-    });
     // const encodedURI = encodeURIComponent(result);
     // const instagramURL = `instagram://library?AssetPath=${encodedURI}`;
     // return Linking.openURL(instagramURL);
-    let saveResult = await CameraRoll.saveToCameraRoll(result, 'photo').then(
-      () => {
-        this.setState({ reportDialog: false });
-        Toast.show({
-          text: 'Saved!',
-          buttonText: 'Okay',
-          position: 'top'
+    const targetPixelCount = 1080;
+    const pixelRatio = PixelRatio.get();
+    const pixels = targetPixelCount / pixelRatio;
+
+    const permission = await Permissions.getAsync(Permissions.CAMERA_ROLL);
+    if (permission.status !== 'granted') {
+      const newPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (newPermission.status === 'granted') {
+        let result = await takeSnapshotAsync(this[id], {
+          format: 'png',
+          width: pixels,
+          height: '100%',
+          quality: 1,
+          result: 'tmpfile',
+          snapshotContentContainer: false
         });
+        let saveResult = await CameraRoll.saveToCameraRoll(
+          result,
+          'photo'
+        ).then(() => {
+          this.setState({ reportDialog: false });
+          Toast.show({
+            text: 'Saved!',
+            buttonText: 'Okay',
+            position: 'top'
+          });
+        });
+        this.setState({ cameraRollUri: saveResult });
       }
-    );
-    this.setState({ cameraRollUri: saveResult });
-    // } else {
-    // }
+    } else {
+      let result = await takeSnapshotAsync(this[id], {
+        format: 'png',
+        width: pixels,
+        height: '100%',
+        quality: 1,
+        result: 'tmpfile',
+        snapshotContentContainer: false
+      });
+      let saveResult = await CameraRoll.saveToCameraRoll(result, 'photo').then(
+        () => {
+          this.setState({ reportDialog: false });
+          Toast.show({
+            text: 'Saved!',
+            buttonText: 'Okay',
+            position: 'top'
+          });
+        }
+      );
+      this.setState({ cameraRollUri: saveResult });
+    }
   };
 
   render() {
