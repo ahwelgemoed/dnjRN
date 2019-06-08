@@ -13,6 +13,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Modal, Dimensions, View, Alert, StyleSheet } from 'react-native';
+import { ScreenBackground } from './Styles';
 
 class AddInstagramModal extends Component {
   state = {
@@ -40,6 +41,7 @@ class AddInstagramModal extends Component {
   };
 
   render() {
+    const { theme } = this.props;
     return (
       <View>
         <Modal
@@ -50,14 +52,46 @@ class AddInstagramModal extends Component {
             Alert.alert('Modal has been closed.');
           }}
         >
-          <View style={styles.mainContent}>
+          <ScreenBackground style={styles.mainContent}>
             <View>
-              <Text style={styles.name}>Add your Instagram Handle</Text>
+              <Text
+                style={
+                  theme
+                    ? {
+                        color: '#D8D9D9',
+                        fontSize: 24,
+                        fontFamily: 'raleway-regular',
+                        textAlign: 'left'
+                      }
+                    : {
+                        color: '#2C2D2D',
+                        fontSize: 24,
+                        fontFamily: 'raleway-regular',
+                        textAlign: 'left'
+                      }
+                }
+              >
+                Add your Instagram Handle
+              </Text>
               <Form>
                 <Item floatingLabel>
                   <Label style={styles.label}>Instagram Handle</Label>
                   <Input
-                    style={styles.label}
+                    style={
+                      theme
+                        ? {
+                            color: '#D8D9D9',
+                            fontSize: 16,
+                            fontFamily: 'raleway-regular',
+                            textAlign: 'left'
+                          }
+                        : {
+                            color: '#2C2D2D',
+                            fontSize: 16,
+                            fontFamily: 'raleway-regular',
+                            textAlign: 'left'
+                          }
+                    }
                     onChangeText={text => this.setState({ Instagram: text })}
                   />
                 </Item>
@@ -83,7 +117,7 @@ class AddInstagramModal extends Component {
                 <Text style={styles.button}>Close </Text>
               </Button>
             </View>
-          </View>
+          </ScreenBackground>
         </Modal>
         <Button
           block
@@ -156,7 +190,8 @@ const styles = StyleSheet.create({
   }
 });
 const mapStateToProps = state => ({
-  auth: state.firebase.auth
+  auth: state.firebase.auth,
+  theme: state.theme.isThemeDark
 });
 
 export default compose(
