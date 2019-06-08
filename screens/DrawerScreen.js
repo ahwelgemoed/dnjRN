@@ -20,11 +20,12 @@ import {
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
-import { Constants, WebBrowser } from 'expo';
+import { WebBrowser } from 'expo';
 import { activateDeleteAction } from '../actions/poemsActions';
 import { changePoem } from '../actions/themeActions';
 import OnlineUsers from '../components/OnlineUsers';
 import { ScreenBackground } from '../components/Styles';
+import Constants from 'expo-constants';
 // import { DrawerActions, DrawerItems, SafeAreaView } from 'react-navigation';
 // import styles from '../../styles/index';
 

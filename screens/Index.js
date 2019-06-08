@@ -11,7 +11,7 @@ import AppNavigator from '../navigation/AppNavigator';
 import styled, { ThemeProvider } from 'styled-components';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { darkTheme, lightTheme } from '../assets/theme';
+import { darkTheme, lightTheme } from '../components/theme';
 import { changePoem } from '../actions/themeActions';
 
 class Index extends Component {
