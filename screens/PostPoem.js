@@ -5,10 +5,12 @@ import { firestoreConnect } from 'react-redux-firebase';
 import moment from 'moment';
 import AddInstagramModal from '../components/AddInstagramModal';
 import { successfullyAddedPoem } from '../actions/poemsActions';
+import { ScreenBackground } from '../components/Styles';
 import {
   StyleSheet,
   Dimensions,
   AsyncStorage,
+  ScrollView,
   View,
   ActivityIndicator,
   KeyboardAvoidingView
@@ -30,21 +32,33 @@ import {
   Body,
   Icon
 } from 'native-base';
+import TopNav from '../components/TopNav';
 
 class PostPoem extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Post a Poem',
     headerLeft: null,
-    headerRight: (
-      <Button transparent onPress={() => navigation.toggleDrawer()}>
-        <Icon name="menu" style={{ color: '#999' }} />
-      </Button>
-    ),
-    headerTitleStyle: {
-      fontFamily: 'raleway-boldI',
-      fontSize: 20
-    }
+    headerTitle: (
+      <TopNav
+        pageTitle={'Post a Poem'}
+        navigation={navigation}
+        leftComponent={this.setLeftHeader}
+      />
+    )
   });
+
+  // static navigationOptions = ({ navigation }) => ({
+  //   title: 'Post a Poem',
+  //   headerLeft: null,
+  //   headerRight: (
+  //     <Button transparent onPress={() => navigation.toggleDrawer()}>
+  //       <Icon name="menu" style={{ color: '#999' }} />
+  //     </Button>
+  //   ),
+  //   headerTitleStyle: {
+  //     fontFamily: 'raleway-boldI',
+  //     fontSize: 20
+  //   }
+  // });
   state = {
     withInstagram: false,
     instagram: false,
@@ -265,14 +279,33 @@ class PostPoem extends Component {
   }
   render() {
     const { handle, body, firstPost } = this.state;
+    const { theme } = this.props;
     return (
-      <Container style={styles.mainContent}>
-        <Content>
-          {/* <KeyboardAvoidingView style={styles.mainContent}> */}
+      <ScreenBackground style={styles.container}>
+        <TopNav
+          pageTitle={'Post a Poem'}
+          navigation={this.props.navigation}
+          leftComponent={this.setLeftHeader}
+        />
+        <ScrollView>
           <Form>
             <Item>
               <Input
-                style={styles.input}
+                style={
+                  theme
+                    ? {
+                        color: '#D8D9D9',
+                        fontSize: 16,
+                        fontFamily: 'raleway-regular',
+                        textAlign: 'left'
+                      }
+                    : {
+                        color: '#2C2D2D',
+                        fontSize: 16,
+                        fontFamily: 'raleway-regular',
+                        textAlign: 'left'
+                      }
+                }
                 placeholder="Poem Title"
                 value={this.state.name}
                 onChangeText={text => this.setState({ name: text })}
@@ -280,7 +313,23 @@ class PostPoem extends Component {
             </Item>
             <Item>
               <Textarea
-                style={styles.inputs}
+                style={
+                  theme
+                    ? {
+                        color: '#D8D9D9',
+                        fontSize: 16,
+                        width: screenWidth - 20,
+                        fontFamily: 'raleway-regular',
+                        textAlign: 'left'
+                      }
+                    : {
+                        color: '#2C2D2D',
+                        fontSize: 16,
+                        width: screenWidth - 20,
+                        fontFamily: 'raleway-regular',
+                        textAlign: 'left'
+                      }
+                }
                 rowSpan={5}
                 placeholder="Poem"
                 value={this.state.body}
@@ -334,28 +383,21 @@ class PostPoem extends Component {
               <Text style={styles.button}>Cancel</Text>
             </Button>
           </Form>
-          {/* </KeyboardAvoidingView> */}
           <FirstPostModal openFirstModal={this.state.openFirstModal} />
-        </Content>
-      </Container>
+        </ScrollView>
+      </ScreenBackground>
     );
   }
 }
-let screenWidth = Dimensions.get('window').width - 20;
+let screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
-  input: {
-    fontSize: 16,
-    fontFamily: 'raleway-regular',
-    textAlign: 'left'
-  },
-  inputs: {
-    fontSize: 16,
-    width: screenWidth,
-    fontFamily: 'raleway-regular',
-    textAlign: 'left'
-  },
   mainContent: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  container: {
+    width: screenWidth,
     alignItems: 'center',
     justifyContent: 'space-around'
   },
@@ -368,14 +410,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: '#91D9D9',
     marginTop: 20,
-    marginLeft: 12,
-    marginRight: 12,
+    width: screenWidth - 80,
     fontFamily: 'raleway-regular',
-    textAlign: 'left'
+    alignSelf: 'center',
+    textAlign: 'center'
   },
   button: {
     fontSize: 16,
-
     fontFamily: 'raleway-regular',
     textAlign: 'center'
   },
@@ -386,17 +427,18 @@ const styles = StyleSheet.create({
     textAlign: 'left'
   },
   buttonItself: {
-    fontSize: 14,
+    fontSize: 16,
     marginTop: 20,
-    marginLeft: 12,
-    marginRight: 12,
+    width: screenWidth - 80,
     fontFamily: 'raleway-regular',
-    textAlign: 'left'
+    alignSelf: 'center',
+    textAlign: 'center'
   }
 });
 const mapStateToProps = state => ({
   profile: state.firebase.profile,
-  auth: state.firebase.auth
+  auth: state.firebase.auth,
+  theme: state.theme.isThemeDark
 });
 
 export default compose(

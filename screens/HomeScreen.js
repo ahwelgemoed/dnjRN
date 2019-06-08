@@ -11,7 +11,8 @@ import {
   AsyncStorage,
   Text
 } from 'react-native';
-import { Permissions, Notifications } from 'expo';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 import { successfullyAddedPoem } from '../actions/poemsActions';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -23,19 +24,20 @@ import TandC from '../components/TandC';
 import Loading from '../components/Loading';
 import { Icon, Button } from 'native-base';
 import UpdateUserInfo from '../components/UpdateUserInfo';
+import { ScreenBackground } from '../components/Styles';
+import TopNav from '../components/TopNav';
+
 class HomeScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
-    title: 'DIS NET JY',
-    headerRight: (
-      <Button transparent onPress={() => navigation.toggleDrawer()}>
-        <Icon name="menu" style={{ color: '#999' }} />
-      </Button>
-    ),
-    headerLeft: navigation.state.params && navigation.state.params.headerLeft,
-    headerTitleStyle: {
-      fontFamily: 'raleway-boldI',
-      fontSize: 20
-    }
+    headerLeft: null,
+    // headerTransparent: true,
+    headerTitle: (
+      <TopNav
+        pageTitle={'Dis Net Jy'}
+        navigation={navigation}
+        leftComponent={this.setLeftHeader}
+      />
+    )
   });
 
   state = {
@@ -197,6 +199,7 @@ class HomeScreen extends React.PureComponent {
         console.log(err);
       });
   };
+
   getGrantedToken = () => {
     const { firestore } = this.props;
     Permissions.askAsync(Permissions.NOTIFICATIONS).then(status => {
@@ -234,9 +237,16 @@ class HomeScreen extends React.PureComponent {
 
   render() {
     const { loading, poems } = this.state;
+    const { theme } = this.props;
     return (
-      <SafeAreaView style={styles.container}>
+      <ScreenBackground style={styles.container}>
+        <TopNav
+          pageTitle={'Dis Net Jy'}
+          navigation={this.props.navigation}
+          leftComponent={this.setLeftHeader}
+        />
         <UpdateUserInfo />
+
         {/* <TandC /> */}
         {poems ? (
           <React.Fragment>
@@ -255,19 +265,7 @@ class HomeScreen extends React.PureComponent {
               showsVerticalScrollIndicator={false}
               keyExtractor={(item, index) => index.toString()}
               ListFooterComponent={() => (
-                <Image
-                  source={require('../assets/images/Loading.gif')}
-                  style={{
-                    width: 100,
-                    height: 100,
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignItems: 'center',
-                    marginBottom: 20,
-                    paddingLeft: 30
-                  }}
-                />
+                <ActivityIndicator color={theme ? '#D8D9D9' : '#2C2D2D'} />
               )}
               data={poems}
               ref={ref => {
@@ -283,19 +281,9 @@ class HomeScreen extends React.PureComponent {
             />
           </React.Fragment>
         ) : (
-          <Image
-            source={require('../assets/images/DNJ.png')}
-            style={{
-              width: 100,
-              height: 100,
-              flex: 1,
-              alignItems: 'center'
-            }}
-          />
-          // <ActivityIndicator color={'#91D9D9'} />
-          // <Loading />
+          <ActivityIndicator color={theme ? '#D8D9D9' : '#2C2D2D'} />
         )}
-      </SafeAreaView>
+      </ScreenBackground>
     );
   }
 }
@@ -306,7 +294,8 @@ export default compose(
       poems: state.firestore.ordered.poems,
       profile: state.firebase.profile,
       auth: state.firebase.auth,
-      addedPoem: state.poems.addedPoem
+      addedPoem: state.poems.addedPoem,
+      theme: state.theme.isThemeDark
     }),
     { successfullyAddedPoem }
   )
@@ -316,12 +305,6 @@ let screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#f9f9f9',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingLeft: 15,
-    paddingRight: 15,
     width: screenWidth
   },
   flatlist: {

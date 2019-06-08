@@ -1,7 +1,10 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
+import { StyleSheet, View, Text } from 'react-native';
+import { AppLoading, Asset } from 'expo';
+import * as Font from 'expo-font';
+import * as Icon from '@expo/vector-icons';
 import AppNavigator from './navigation/AppNavigator';
+import Index from './screens/Index';
 import { Provider } from 'react-redux';
 import { Root } from 'native-base';
 import store from './store';
@@ -39,8 +42,7 @@ export default class App extends React.Component {
         <Provider store={store}>
           <Root>
             <View style={styles.container}>
-              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-              <AppNavigator />
+              <Index />
             </View>
           </Root>
         </Provider>

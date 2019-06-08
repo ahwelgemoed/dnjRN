@@ -88,20 +88,18 @@ class Bookmark extends Component {
 const styles = StyleSheet.create({
   selected: {
     color: '#91D9D9',
-    fontSize: 20,
+    fontSize: 16,
     margin: 10,
     width: 10
   },
   notSelected: {
-    color: '#ddd',
-    fontSize: 20,
+    color: '#9D9E9E',
+    fontSize: 16,
     margin: 10,
     width: 10
   },
   elipse: {
-    position: 'absolute',
-    top: 1,
-    right: 1,
+    marginLeft: 20,
     minWidth: 20,
     borderRadius: 15,
     alignItems: 'center',
@@ -109,7 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   elipseIcon: {
-    color: '#ddd',
+    // color: '#ddd',
     fontSize: 16,
     margin: 10,
     width: 10

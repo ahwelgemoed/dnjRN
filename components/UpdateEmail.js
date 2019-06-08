@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Modal, Dimensions, View, Alert, StyleSheet } from 'react-native';
 import { successfullyAddedPoem } from '../actions/poemsActions';
+import { ScreenBackground } from './Styles';
 
 class UpdateEmail extends Component {
   state = {
@@ -91,6 +92,7 @@ class UpdateEmail extends Component {
   };
 
   render() {
+    const { theme } = this.props;
     return (
       <View>
         <Modal
@@ -101,14 +103,46 @@ class UpdateEmail extends Component {
             Alert.alert('Modal has been closed.');
           }}
         >
-          <View style={styles.mainContent}>
+          <ScreenBackground style={styles.mainContent}>
             <View>
-              <Text style={styles.name}>Update Email</Text>
+              <Text
+                style={
+                  theme
+                    ? {
+                        color: '#D8D9D9',
+                        fontSize: 24,
+                        fontFamily: 'raleway-regular',
+                        textAlign: 'left'
+                      }
+                    : {
+                        color: '#2C2D2D',
+                        fontSize: 24,
+                        fontFamily: 'raleway-regular',
+                        textAlign: 'left'
+                      }
+                }
+              >
+                Update Email
+              </Text>
               <Item floatingLabel>
                 <Label style={styles.label}>Current Password</Label>
                 <Input
                   secureTextEntry={true}
-                  style={styles.input}
+                  style={
+                    theme
+                      ? {
+                          color: '#D8D9D9',
+                          fontSize: 16,
+                          fontFamily: 'raleway-regular',
+                          textAlign: 'left'
+                        }
+                      : {
+                          color: '#2C2D2D',
+                          fontSize: 16,
+                          fontFamily: 'raleway-regular',
+                          textAlign: 'left'
+                        }
+                  }
                   onChangeText={text => this.setState({ password: text })}
                 />
               </Item>
@@ -116,7 +150,21 @@ class UpdateEmail extends Component {
                 <Label style={styles.label}>New Email Address</Label>
                 <Input
                   keyboardType="email-address"
-                  style={styles.input}
+                  style={
+                    theme
+                      ? {
+                          color: '#D8D9D9',
+                          fontSize: 16,
+                          fontFamily: 'raleway-regular',
+                          textAlign: 'left'
+                        }
+                      : {
+                          color: '#2C2D2D',
+                          fontSize: 16,
+                          fontFamily: 'raleway-regular',
+                          textAlign: 'left'
+                        }
+                  }
                   onChangeText={text => this.setState({ email: text })}
                 />
               </Item>
@@ -142,7 +190,7 @@ class UpdateEmail extends Component {
                 <Text>Close </Text>
               </Button>
             </View>
-          </View>
+          </ScreenBackground>
         </Modal>
         <Button
           block
@@ -231,7 +279,8 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => ({
   auth: state.firebase.auth,
-  admin: state.poems.activateDelete
+  admin: state.poems.activateDelete,
+  theme: state.theme.isThemeDark
 });
 
 export default compose(

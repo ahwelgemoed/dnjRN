@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { StyleSheet, AsyncStorage, View } from 'react-native';
 import {
   Container,
@@ -30,7 +32,7 @@ const FooterText = styled.Text`
   font-family: 'raleway-bold';
   /* margin-bottom: 10px; */
 `;
-export default class FooterTabs extends Component {
+class FooterTabs extends Component {
   state = {
     // activeTab: 'Home',
     firstVisit: ''
@@ -48,23 +50,21 @@ export default class FooterTabs extends Component {
     this.props.navigation.navigate(name);
   };
   render() {
+    const { theme } = this.props;
     const { activeTab } = this.state;
     return (
-      // <Grid>
-      // <FooterView>
-      //   <Col onPress={this.changeTab.bind(this, 'Home')}>
-      //     <FooterText style={activeTab === 'Home' ? styles.active : null}>
-      //       Home
-      //     </FooterText>
-      //   </Col>
-      //   <Col onPress={this.changeTab.bind(this, 'Post')}>
-      //     <FooterText style={activeTab === 'Post' ? styles.active : null}>
-      //       Post
-      //     </FooterText>
-      //   </Col>
-      // </FooterView>
       <Footer>
-        <FooterTab style={{ backgroundColor: '#efefef' }}>
+        <FooterTab
+          style={
+            !theme
+              ? {
+                  backgroundColor: '#efefef'
+                }
+              : {
+                  backgroundColor: '#232526'
+                }
+          }
+        >
           <Button
             style={{ color: '#999' }}
             vertical
@@ -93,3 +93,15 @@ const styles = StyleSheet.create({
     fontSize: 16
   }
 });
+const mapStateToProps = state => ({
+  auth: state.firebase.auth,
+  profile: state.firebase.profile,
+  admin: state.poems.activateDelete,
+  theme: state.theme.isThemeDark
+});
+export default compose(
+  connect(
+    mapStateToProps,
+    {}
+  )
+)(FooterTabs);

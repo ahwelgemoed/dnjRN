@@ -4,7 +4,13 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import moment from 'moment';
 import { successfullyAddedPoem } from '../actions/poemsActions';
-import { StyleSheet, Dimensions, AsyncStorage, Alert } from 'react-native';
+import {
+  StyleSheet,
+  Dimensions,
+  AsyncStorage,
+  Alert,
+  ScrollView
+} from 'react-native';
 import UpdateEmail from '../components/UpdateEmail';
 import DelelteAccount from '../components/DelelteAccount';
 import {
@@ -24,21 +30,10 @@ import {
   Body,
   Icon
 } from 'native-base';
+import { ScreenBackground } from '../components/Styles';
+import TopNav from '../components/TopNav';
 
 class AccountScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Your Account',
-    headerLeft: null,
-    headerRight: (
-      <Button transparent onPress={() => navigation.toggleDrawer()}>
-        <Icon name="menu" style={{ color: '#999' }} />
-      </Button>
-    ),
-    headerTitleStyle: {
-      fontFamily: 'raleway-boldI',
-      fontSize: 20
-    }
-  });
   state = { loaded: false, facebook: false };
   static getDerivedStateFromProps(props, state) {
     if (
@@ -157,14 +152,34 @@ class AccountScreen extends Component {
 
   render() {
     const { facebook } = this.state;
+    const { theme } = this.props;
     return (
-      <Container style={styles.mainContent}>
-        <Content>
+      <ScreenBackground style={styles.mainContent}>
+        <TopNav
+          pageTitle={'You Account'}
+          navigation={this.props.navigation}
+          leftComponent={this.setLeftHeader}
+        />
+        <ScrollView>
           <Form>
             <Item floatingLabel>
               <Label style={styles.label}>Name</Label>
               <Input
-                style={styles.input}
+                style={
+                  theme
+                    ? {
+                        color: '#D8D9D9',
+                        fontSize: 16,
+                        fontFamily: 'raleway-regular',
+                        textAlign: 'left'
+                      }
+                    : {
+                        color: '#2C2D2D',
+                        fontSize: 16,
+                        fontFamily: 'raleway-regular',
+                        textAlign: 'left'
+                      }
+                }
                 value={this.state.username}
                 onChangeText={text => this.setState({ username: text })}
               />
@@ -172,7 +187,21 @@ class AccountScreen extends Component {
             <Item floatingLabel>
               <Label style={styles.label}>Instagram</Label>
               <Input
-                style={styles.input}
+                style={
+                  theme
+                    ? {
+                        color: '#D8D9D9',
+                        fontSize: 16,
+                        fontFamily: 'raleway-regular',
+                        textAlign: 'left'
+                      }
+                    : {
+                        color: '#2C2D2D',
+                        fontSize: 16,
+                        fontFamily: 'raleway-regular',
+                        textAlign: 'left'
+                      }
+                }
                 value={this.state.Instagram}
                 onChangeText={text => this.setState({ Instagram: text })}
               />
@@ -216,12 +245,12 @@ class AccountScreen extends Component {
             )}
             <DelelteAccount navigation={this.props.navigation} />
           </Form>
-        </Content>
-      </Container>
+        </ScrollView>
+      </ScreenBackground>
     );
   }
 }
-let screenWidth = Dimensions.get('window').width - 20;
+let screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
@@ -294,7 +323,8 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => ({
   profile: state.firebase.profile,
-  auth: state.firebase.auth
+  auth: state.firebase.auth,
+  theme: state.theme.isThemeDark
 });
 
 export default compose(
