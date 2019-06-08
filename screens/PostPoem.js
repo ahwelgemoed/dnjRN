@@ -393,11 +393,13 @@ let screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-around'
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   container: {
-    width: screenWidth
+    width: screenWidth,
+    alignItems: 'center',
+    justifyContent: 'space-around'
   },
   labelIn: {
     color: '#fff',
@@ -408,14 +410,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: '#91D9D9',
     marginTop: 20,
-    marginLeft: 12,
-    marginRight: 12,
+    width: screenWidth - 80,
     fontFamily: 'raleway-regular',
-    textAlign: 'left'
+    alignSelf: 'center',
+    textAlign: 'center'
   },
   button: {
     fontSize: 16,
-
     fontFamily: 'raleway-regular',
     textAlign: 'center'
   },
@@ -426,13 +427,12 @@ const styles = StyleSheet.create({
     textAlign: 'left'
   },
   buttonItself: {
-    fontSize: 14,
+    fontSize: 16,
     marginTop: 20,
-    marginLeft: 12,
-    marginRight: 12,
-    paddingRight: 12,
+    width: screenWidth - 80,
     fontFamily: 'raleway-regular',
-    textAlign: 'left'
+    alignSelf: 'center',
+    textAlign: 'center'
   }
 });
 const mapStateToProps = state => ({
