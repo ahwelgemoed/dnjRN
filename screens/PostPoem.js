@@ -396,9 +396,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around'
   },
-  // container: {
-  //   width: screenWidth
-  // },
+  container: {
+    width: screenWidth
+  },
   labelIn: {
     color: '#fff',
     fontFamily: 'raleway-regular',
@@ -430,6 +430,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 12,
     marginRight: 12,
+    paddingRight: 12,
     fontFamily: 'raleway-regular',
     textAlign: 'left'
   }

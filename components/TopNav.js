@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { NavBarHeaderText, NavBarView, DrawerText } from './Styles';
-import { View, Text } from 'react-native';
+import { View, Text, Platform } from 'react-native';
 import { Icon, Button } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
@@ -11,6 +11,7 @@ class TopNav extends Component {
     return (
       <NavBarView
         style={{
+          marginTop: Platform.OS === 'android' ? 20 : 0,
           display: 'flex',
           width: '100%',
           height: 50,
@@ -21,11 +22,21 @@ class TopNav extends Component {
           borderBottomColor: '#D8D9D9'
         }}
       >
-        <Col>{this.props.leftComponent}</Col>
+        <Col
+          style={{
+            width: '10%'
+          }}
+        >
+          {this.props.leftComponent}
+        </Col>
         <Col>
           <NavBarHeaderText> {this.props.pageTitle} </NavBarHeaderText>
         </Col>
-        <Col>
+        <Col
+          style={{
+            width: '10%'
+          }}
+        >
           <DrawerText onPress={() => this.props.navigation.toggleDrawer()}>
             <Icon name="menu" style={{ color: '#999' }} />
           </DrawerText>

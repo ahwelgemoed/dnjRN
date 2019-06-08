@@ -7,8 +7,8 @@ export const StyledText = styled.View`
   shadow-offset: 1px 1px;
   background: ${props => props.theme.CARD_BACKGROUND};
   color: ${props => props.theme.CARD_FONT_COLOR};
-  margin: 10px;
-  padding: 10px;
+  /* margin: 10px;
+  padding: 10px; */
   margin-top: 20px;
   display: flex;
   justify-content: center;
@@ -50,6 +50,7 @@ export const NavBarView = styled.View`
 export const NavBarHeaderText = styled.Text`
   font-family: 'raleway-boldI';
   font-size: 20;
+  width: 100%;
   text-align: center;
   color: ${props => props.theme.FONT_COLOR};
 `;

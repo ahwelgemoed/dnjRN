@@ -52,13 +52,34 @@ class BookmarkScreen extends Component {
   }
   render() {
     const { loading, poems } = this.state;
+    const { theme } = this.props;
 
     if (this.props.profile.bookmarks.length === 0) {
       return (
-        <SafeAreaView style={styles.container}>
-          <Text style={styles.name}>You don't have any bookmarks</Text>
-          <Text style={styles.names}>#SAD</Text>
-        </SafeAreaView>
+        <ScreenBackground style={styles.container}>
+          <TopNav
+            pageTitle={'Bookmarks'}
+            navigation={this.props.navigation}
+            leftComponent={this.setLeftHeader}
+          />
+          <ScrollView>
+            <Text
+              style={[
+                styles.name,
+                theme
+                  ? {
+                      color: '#D8D9D9'
+                    }
+                  : {
+                      color: '#2C2D2D'
+                    }
+              ]}
+            >
+              You don't have any bookmarks
+            </Text>
+            <Text style={styles.names}>#SAD</Text>
+          </ScrollView>
+        </ScreenBackground>
       );
     } else {
       return (
@@ -70,15 +91,7 @@ class BookmarkScreen extends Component {
           />
           <ScrollView>
             {loading ? (
-              <Image
-                source={require('../assets/images/Loading.gif')}
-                style={{
-                  width: 100,
-                  height: 100,
-                  marginBottom: 20,
-                  paddingLeft: 30
-                }}
-              />
+              <ActivityIndicator color={theme ? '#D8D9D9' : '#2C2D2D'} />
             ) : (
               <React.Fragment>
                 <FlatList
@@ -132,7 +145,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   auth: state.firebase.auth,
   profile: state.firebase.profile,
-  poems: state.firestore.ordered.poems
+  poems: state.firestore.ordered.poems,
+  theme: state.theme.isThemeDark
 });
 
 export default compose(

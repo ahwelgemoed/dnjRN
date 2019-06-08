@@ -26,11 +26,11 @@ class RefreshButton extends Component {
     isVisible: false
   };
   componentDidUpdate(prevProps) {
-    // if (this.props.scroll <= 20 && this.state.isVisible === true) {
-    //   this.setState({
-    //     isVisible: false
-    //   });
-    // }
+    if (this.props.scroll <= 10 && this.state.isVisible) {
+      this.setState({
+        isVisible: false
+      });
+    }
     if (
       this.props.scroll >= 10 &&
       this.state.isVisible === true &&
@@ -40,9 +40,6 @@ class RefreshButton extends Component {
         isVisible: false
       });
     }
-    console.log(prevProps.scroll);
-    console.log(this.props.scroll);
-
     if (
       prevProps.scroll - this.props.scroll > 10 &&
       this.state.isVisible === false
