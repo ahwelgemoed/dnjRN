@@ -50,9 +50,6 @@ class FirstPostModal extends Component {
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}
         >
           <View style={styles.mainContent}>
             <View>
