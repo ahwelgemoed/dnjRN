@@ -17,6 +17,7 @@ export const PoemName = styled.Text`
   color: ${props => props.theme.CARD_FONT_COLOR};
   font-size: 22;
   padding-top: 10;
+  width: 90%;
   font-family: 'raleway-bold';
   text-align: left;
 `;
