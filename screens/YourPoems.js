@@ -77,6 +77,7 @@ class YourPoems extends Component {
                   <Text style={styles.names}>Only You Can See This</Text>
                   <FlatList
                     showsVerticalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
                     keyExtractor={(item, index) => index.toString()}
                     data={poems}
                     ref={ref => {

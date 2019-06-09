@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { Icon, Toast } from 'native-base';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 
 class Bookmark extends Component {
-  state = { bookmarkedCount: this.props.bookmarkedCount };
-  addToBookmarks = bookmark => {
+  state = { bookmarkedCount: this.props.bookmarkedCount, loading: false };
+  addToBookmarks = async bookmark => {
     const { firestore } = this.props;
+    await this.setState({
+      loading: true
+    });
+
     const payLoad = {
       bookmarks: [...this.props.profile.bookmarks, bookmark]
     };
-    firestore
+    await firestore
       .update({ collection: 'users', doc: this.props.auth.uid }, payLoad)
       .then(res => {
         Toast.show({
@@ -21,6 +25,9 @@ class Bookmark extends Component {
           position: 'top'
         });
         this.props.toggleBookMark();
+        this.setState({
+          loading: false
+        });
         firestore
           .update(
             { collection: 'poems', doc: this.props.poemId },
@@ -33,8 +40,11 @@ class Bookmark extends Component {
           });
       });
   };
-  removeBookmark = bookmark => {
+  removeBookmark = async bookmark => {
     const { firestore } = this.props;
+    await this.setState({
+      loading: true
+    });
     const array = this.props.profile.bookmarks;
     let index = array.indexOf(bookmark);
     if (index !== -1) array.splice(index, 1);
@@ -42,7 +52,7 @@ class Bookmark extends Component {
     const payLoad = {
       bookmarks: array
     };
-    firestore
+    await firestore
       .update({ collection: 'users', doc: this.props.auth.uid }, payLoad)
       .then(res => {
         Toast.show({
@@ -51,6 +61,9 @@ class Bookmark extends Component {
           position: 'top'
         });
         this.props.toggleBookMark();
+        this.setState({
+          loading: false
+        });
         firestore
           .update(
             { collection: 'poems', doc: this.props.poemId },
@@ -63,23 +76,75 @@ class Bookmark extends Component {
           });
       });
   };
+
   render() {
+    const { theme } = this.props;
     return (
       <Text syle={styles.elipse}>
         {this.props.bookmarked ? (
-          <Icon
-            style={styles.selected}
-            type="FontAwesome"
-            name="bookmark"
-            onPress={this.removeBookmark.bind(this, this.props.poemId)}
-          />
+          this.state.loading ? (
+            <Icon
+              style={styles.notSelected}
+              type="FontAwesome"
+              name="spinner"
+            />
+          ) : (
+            <Text
+              onPress={this.removeBookmark.bind(this, this.props.poemId)}
+              style={
+                theme
+                  ? {
+                      color: '#D8D9D9',
+                      fontSize: 20,
+                      fontFamily: 'raleway-regular',
+                      textAlign: 'left'
+                    }
+                  : {
+                      color: '#2C2D2D',
+                      fontSize: 20,
+                      fontFamily: 'raleway-regular',
+                      textAlign: 'left'
+                    }
+              }
+            >
+              <Icon
+                style={styles.selected}
+                type="FontAwesome"
+                name="bookmark"
+                onPress={this.removeBookmark.bind(this, this.props.poemId)}
+              />{' '}
+              Bookmarked
+            </Text>
+          )
+        ) : this.state.loading ? (
+          <Icon style={styles.notSelected} type="FontAwesome" name="spinner" />
         ) : (
-          <Icon
-            style={styles.notSelected}
-            type="FontAwesome"
-            name="bookmark"
-            onPress={this.addToBookmarks.bind(this, this.props.poemId)}
-          />
+          <Text
+            onPress={this.removeBookmark.bind(this, this.props.poemId)}
+            style={
+              theme
+                ? {
+                    color: '#D8D9D9',
+                    fontSize: 20,
+                    fontFamily: 'raleway-regular',
+                    textAlign: 'left'
+                  }
+                : {
+                    color: '#2C2D2D',
+                    fontSize: 20,
+                    fontFamily: 'raleway-regular',
+                    textAlign: 'left'
+                  }
+            }
+          >
+            <Icon
+              style={styles.notSelected}
+              type="FontAwesome"
+              name="bookmark"
+              onPress={this.addToBookmarks.bind(this, this.props.poemId)}
+            />{' '}
+            Bookmark
+          </Text>
         )}
       </Text>
     );
@@ -94,13 +159,13 @@ const styles = StyleSheet.create({
   },
   notSelected: {
     color: '#9D9E9E',
-    fontSize: 16,
+    fontSize: 18,
     margin: 10,
     width: 10
   },
   elipse: {
-    marginLeft: 20,
-    minWidth: 20,
+    // marginLeft: 20,
+    // minWidth: 20,
     borderRadius: 15,
     alignItems: 'center',
     paddingBottom: 10,
@@ -115,7 +180,8 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => ({
   auth: state.firebase.auth,
-  profile: state.firebase.profile
+  profile: state.firebase.profile,
+  theme: state.theme.isThemeDark
 });
 
 export default compose(
