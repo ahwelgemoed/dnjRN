@@ -101,7 +101,7 @@ class DrawerScreen extends Component {
                 theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
                 styles.icons
               ]}
-              name="clipboard"
+              name="add"
             />
             <Text
               style={[

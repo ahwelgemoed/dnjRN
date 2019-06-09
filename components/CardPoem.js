@@ -6,7 +6,9 @@ import {
   Alert,
   CameraRoll,
   PixelRatio,
-  Linking
+  Linking,
+  TouchableHighlight,
+  Modal
 } from 'react-native';
 import {
   Icon,
@@ -34,13 +36,21 @@ import Bookmark from './Bookmark';
 import { WebBrowser } from 'expo';
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot';
 import * as Permissions from 'expo-permissions';
-import { StyledText, PoemName, PoemBodyText, InstagramText } from './Styles';
+import {
+  StyledText,
+  PoemName,
+  PoemBodyText,
+  InstagramText,
+  ScreenBackground
+} from './Styles';
+// import { ScreenBackground } from './Styles';
 
 class CardPoem extends Component {
   state = {
     userEdit: false,
     bookmarked: false,
-    reportDialog: false
+    reportDialog: false,
+    modalVisible: false
   };
   reportPoem = () => {
     const { firestore } = this.props;
@@ -57,7 +67,7 @@ class CardPoem extends Component {
                 { reported: true }
               )
               .then(res => {
-                this.setState({ reportDialog: false });
+                this.setState({ modalVisible: !this.state.modalVisible });
                 Toast.show({
                   text: 'Poem Reported to Admin',
                   buttonText: 'Okay',
@@ -75,6 +85,9 @@ class CardPoem extends Component {
       { cancelable: false }
     );
   };
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
   addTimeOutToEdit = () => {
     const now = moment();
     const posted = moment.unix(this.props.poem.date);
@@ -126,7 +139,8 @@ class CardPoem extends Component {
   }
   toggleBookMark = () => {
     this.setState({
-      bookmarked: !this.state.bookmarked
+      bookmarked: !this.state.bookmarked,
+      modalVisible: !this.state.modalVisible
     });
   };
   snapshot = async id => {
@@ -149,7 +163,7 @@ class CardPoem extends Component {
     // return Linking.openURL(instagramURL);
     let saveResult = await CameraRoll.saveToCameraRoll(result, 'photo').then(
       () => {
-        this.setState({ reportDialog: false });
+        this.setState({ modalVisible: !this.state.modalVisible });
         Toast.show({
           text: 'Saved!',
           buttonText: 'Okay',
@@ -187,74 +201,6 @@ class CardPoem extends Component {
           <Row>
             <Col>
               <PoemName style={styles.name}>{this.props.poem.name}</PoemName>
-
-              <Dialog
-                overlayOpacity={0.9}
-                overlayBackgroundColor={!theme ? '#D8D9D9' : '#2C2D2D'}
-                visible={this.state.reportDialog}
-                onTouchOutside={() => {
-                  this.setState({ reportDialog: false });
-                }}
-                dialogAnimation={
-                  new SlideAnimation({
-                    slideFrom: 'bottom'
-                  })
-                }
-              >
-                <DialogContent
-                  style={[
-                    styles.mainContent,
-                    theme
-                      ? {
-                          backgroundColor: '#232526'
-                        }
-                      : {
-                          backgroundColor: '#f9f9f9'
-                        }
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.nameDialog,
-                      theme
-                        ? {
-                            color: '#D8D9D9'
-                          }
-                        : {
-                            color: '#2C2D2D'
-                          }
-                    ]}
-                  >
-                    {' '}
-                    Options{' '}
-                  </Text>
-                  <ListItem
-                    style={{ borderBottomWidth: 0, borderTopWidth: 0 }}
-                    onPress={() => this.snapshot(`${this.props.poem.id}`)}
-                  >
-                    <Text
-                      style={[
-                        styles.save,
-                        theme
-                          ? {
-                              color: '#D8D9D9'
-                            }
-                          : {
-                              color: '#2C2D2D'
-                            }
-                      ]}
-                    >
-                      Save To Gallery
-                    </Text>
-                  </ListItem>
-                  <ListItem
-                    style={{ borderBottomWidth: 0, borderTopWidth: 0 }}
-                    onPress={() => this.reportPoem()}
-                  >
-                    <Text style={styles.dates}>REPORT AS INAPPROPRIATE</Text>
-                  </ListItem>
-                </DialogContent>
-              </Dialog>
               {this.props.poem.handle ? (
                 <InstagramText
                   onPress={() =>
@@ -300,9 +246,9 @@ class CardPoem extends Component {
                     justifyContent: 'space-between'
                   }}
                 >
-                  <Text style={styles.date}>
+                  {/* <Text style={styles.date}>
                     {moment.unix(this.props.poem.date).fromNow()}
-                  </Text>
+                  </Text> */}
                   {this.props.poem.nsfw ? (
                     <Badge
                       style={
@@ -333,7 +279,20 @@ class CardPoem extends Component {
                             }
                       }
                     >
-                      <Text style={styles.nsfw}>NSFW</Text>
+                      <Text
+                        style={[
+                          styles.nsfw,
+                          theme
+                            ? {
+                                color: '#2C2D2D'
+                              }
+                            : {
+                                color: '#D8D9D9'
+                              }
+                        ]}
+                      >
+                        NSFW
+                      </Text>
                     </Badge>
                   ) : null}
                 </View>
@@ -375,46 +334,136 @@ class CardPoem extends Component {
                   backgroundColor: '#404142',
                   borderBottomLeftRadius: 10,
                   borderBottomRightRadius: 10,
-                  height: 20
+                  height: 30
                 }
               : {
                   width: '100%',
                   backgroundColor: '#F5F6F7',
                   borderBottomLeftRadius: 10,
                   borderBottomRightRadius: 10,
-                  height: 20
+                  height: 30
                 }
           }
         >
-          {!this.state.reportDialog ? (
-            <React.Fragment>
-              <Left>
+          <Modal
+            style={{ marginTop: 22 }}
+            animationType="slide"
+            transparent={false}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+            }}
+          >
+            <ScreenBackground style={styles.mainContents}>
+              <View>
                 <Text
-                  style={styles.elipse}
+                  style={[
+                    styles.nameDialog,
+                    theme
+                      ? {
+                          color: '#D8D9D9'
+                        }
+                      : {
+                          color: '#2C2D2D'
+                        }
+                  ]}
+                >
+                  {' '}
+                  Options{' '}
+                </Text>
+                <ListItem style={{ borderBottomWidth: 0, borderTopWidth: 0 }}>
+                  <Bookmark
+                    poemId={this.props.poem.id}
+                    bookmarkedCount={this.props.poem.bookmarkedCount}
+                    bookmarked={this.state.bookmarked}
+                    toggleBookMark={this.toggleBookMark}
+                  />
+                </ListItem>
+                <ListItem
+                  style={{ borderBottomWidth: 0, borderTopWidth: 0 }}
+                  onPress={() => this.snapshot(`${this.props.poem.id}`)}
+                >
+                  <Text
+                    style={[
+                      styles.save,
+                      theme
+                        ? {
+                            color: '#D8D9D9'
+                          }
+                        : {
+                            color: '#2C2D2D'
+                          }
+                    ]}
+                  >
+                    <Icon
+                      style={styles.selected}
+                      type="FontAwesome"
+                      name="image"
+                    />{' '}
+                    Save To Gallery - (Beta)
+                  </Text>
+                </ListItem>
+                <ListItem
+                  style={{ borderBottomWidth: 0, borderTopWidth: 0 }}
+                  onPress={() => this.reportPoem()}
+                >
+                  <Text style={styles.dates}>REPORT AS INAPPROPRIATE</Text>
+                </ListItem>
+                <Button
+                  block
+                  style={styles.buttonItself}
+                  bordered
+                  warning
                   onPress={() => {
-                    this.setState({ reportDialog: true });
+                    this.setModalVisible(!this.state.modalVisible);
                   }}
                 >
-                  <Icon
+                  <Text style={styles.closebutton}>Close </Text>
+                </Button>
+              </View>
+            </ScreenBackground>
+          </Modal>
+
+          {!this.state.modalVisible ? (
+            <React.Fragment>
+              <Col style={{ paddingTop: 5 }}>
+                <Left>
+                  <Text
+                    style={[
+                      styles.date,
+                      theme
+                        ? {
+                            color: '#D8D9D9'
+                          }
+                        : {
+                            color: '#2C2D2D'
+                          }
+                    ]}
+                  >
+                    {moment.unix(this.props.poem.date).fromNow()}
+                  </Text>
+                </Left>
+              </Col>
+              <Col style={{ paddingTop: 5 }} />
+              <Col style={{ paddingTop: 5 }}>
+                <Right>
+                  <TouchableHighlight
                     onPress={() => {
-                      this.setState({ reportDialog: true });
+                      this.setModalVisible(true);
                     }}
-                    style={styles.elipseIcon}
-                    type="FontAwesome"
-                    color="#9D9E9E"
-                    name="ellipsis-h"
-                  />{' '}
-                  Options
-                </Text>
-              </Left>
-              <Right style={{ paddingRight: 20 }}>
-                <Bookmark
-                  poemId={this.props.poem.id}
-                  bookmarkedCount={this.props.poem.bookmarkedCount}
-                  bookmarked={this.state.bookmarked}
-                  toggleBookMark={this.toggleBookMark}
-                />
-              </Right>
+                  >
+                    <Text style={styles.elipse}>
+                      {/* <Icon
+                        style={styles.elipseIcon}
+                        type="FontAwesome"
+                        color="#9D9E9E"
+                        name="ellipsis-h"
+                      />{' '} */}
+                      Options
+                    </Text>
+                  </TouchableHighlight>
+                </Right>
+              </Col>
             </React.Fragment>
           ) : (
             <Left>
@@ -448,8 +497,15 @@ export default compose(
 )(CardPoem);
 
 let screenWidth = Dimensions.get('window').width - 60;
+let screenWidths = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
+  selected: {
+    color: '#9D9E9E',
+    fontSize: 16,
+    margin: 10,
+    width: 10
+  },
   mainContent: {
     width: screenWidth,
     alignItems: 'center',
@@ -457,12 +513,25 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 12
   },
+  mainContents: {
+    width: screenWidths,
+    alignItems: 'center',
+    paddingTop: 20,
+    paddingLeft: 12,
+    paddingRight: 12
+  },
   elipse: {
-    fontSize: 10,
+    fontSize: 12,
     color: '#9D9E9E',
     fontFamily: 'raleway-regular',
     textAlign: 'left',
     marginLeft: 10
+  },
+  closebutton: {
+    fontSize: 16,
+    fontFamily: 'raleway-regular',
+    textAlign: 'center',
+    width: screenWidth
   },
   elipseIcon: {
     color: '#9D9E9E',
@@ -517,7 +586,7 @@ const styles = StyleSheet.create({
     color: '#FF5C5C'
   },
   save: {
-    fontSize: 12,
+    fontSize: 20,
     fontFamily: 'raleway-regular',
     textAlign: 'left'
   },

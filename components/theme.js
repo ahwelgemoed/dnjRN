@@ -2,7 +2,7 @@ export const lightTheme = {
   CARD_BACKGROUND: '#ffffff',
   CARD_FONT_COLOR: '#2C2D2D',
   FONT_COLOR: '#2C2D2D',
-  SCREEN_BACKGROUND: '#f9f9f9'
+  SCREEN_BACKGROUND: '#EAEAEA'
 };
 export const darkTheme = {
   CARD_BACKGROUND: '#2C2D2D',

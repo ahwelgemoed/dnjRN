@@ -96,6 +96,7 @@ class BookmarkScreen extends Component {
               <React.Fragment>
                 <FlatList
                   showsVerticalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
                   keyExtractor={(item, index) => index.toString()}
                   data={poems}
                   ref={ref => {
