@@ -120,7 +120,7 @@ class Bookmark extends Component {
           <Icon style={styles.notSelected} type="FontAwesome" name="spinner" />
         ) : (
           <Text
-            onPress={this.removeBookmark.bind(this, this.props.poemId)}
+            onPress={this.addToBookmarks.bind(this, this.props.poemId)}
             style={
               theme
                 ? {

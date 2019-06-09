@@ -35,7 +35,7 @@ import Dialog, {
 import Bookmark from './Bookmark';
 import { WebBrowser, Permissions } from 'expo';
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot';
-import * as Permissions from 'expo-permissions';
+// import * as Permissions from 'expo-permissions';
 import {
   StyledText,
   PoemName,
@@ -144,22 +144,27 @@ class CardPoem extends Component {
     });
   };
   snapshot = async id => {
-    // const encodedURI = encodeURIComponent(result);
-    // const instagramURL = `instagram://library?AssetPath=${encodedURI}`;
-    // return Linking.openURL(instagramURL);
-    let saveResult = await CameraRoll.saveToCameraRoll(result, 'photo').then(
-      () => {
-        this.setState({ modalVisible: !this.state.modalVisible });
-        Toast.show({
-          text: 'Saved!',
-          buttonText: 'Okay',
-          position: 'top'
+    const targetPixelCount = 1080;
+    const pixelRatio = PixelRatio.get();
+    const pixels = targetPixelCount / pixelRatio;
+
+    const permission = await Permissions.getAsync(Permissions.CAMERA_ROLL);
+    if (permission.status !== 'granted') {
+      const newPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (newPermission.status === 'granted') {
+        let result = await takeSnapshotAsync(this[id], {
+          format: 'png',
+          width: pixels,
+          height: '100%',
+          quality: 1,
+          result: 'tmpfile',
+          snapshotContentContainer: false
         });
         let saveResult = await CameraRoll.saveToCameraRoll(
           result,
           'photo'
         ).then(() => {
-          this.setState({ reportDialog: false });
+          this.setState({ modalVisible: !this.state.modalVisible });
           Toast.show({
             text: 'Saved!',
             buttonText: 'Okay',
@@ -179,7 +184,7 @@ class CardPoem extends Component {
       });
       let saveResult = await CameraRoll.saveToCameraRoll(result, 'photo').then(
         () => {
-          this.setState({ reportDialog: false });
+          this.setState({ modalVisible: !this.state.modalVisible });
           Toast.show({
             text: 'Saved!',
             buttonText: 'Okay',
@@ -213,6 +218,20 @@ class CardPoem extends Component {
             width: '100%'
           }}
         >
+          {this.state.bookmarked ? (
+            <Row
+              style={{
+                position: 'absolute',
+                right: 0,
+                width: '10%',
+                backgroundColor: '#91D9D9',
+                borderBottomLeftRadius: 10,
+                // borderBottomRightRadius: 10,
+                borderTopRightRadius: 10,
+                height: 30
+              }}
+            />
+          ) : null}
           <Row>
             <Col>
               <PoemName style={styles.name}>{this.props.poem.name}</PoemName>
