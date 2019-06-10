@@ -109,9 +109,6 @@ class DelelteAccount extends Component {
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}
         >
           <ScreenBackground style={styles.mainContent}>
             <View>
