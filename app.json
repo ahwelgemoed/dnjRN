@@ -3,8 +3,8 @@
     "name": "Dis Net Jy",
     "slug": "klyntjidnj",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
-    "platforms": ["ios", "android"],
+    "sdkVersion": "33.0.0",
+    "platforms": ["ios", "android", "web"],
     "version": "2.1.4",
     "orientation": "portrait",
     "icon": "./assets/images/DNJ.png",
@@ -26,7 +26,7 @@
     "facebookAppId": "433863794055791",
     "facebookDisplayName": "DisNetJy",
     "ios": {
-      "supportsTablet": false,
+      "supportsTablet": true,
       "bundleIdentifier": "com.disnetjy.ahwelgemoed"
     },
     "description": "",

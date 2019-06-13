@@ -20,6 +20,9 @@ const HomeStack = createStackNavigator(
     Home: {
       screen: HomeScreen
     },
+    // Home: {
+    //   screen: HomeScreens
+    // },
     YourPoems: {
       screen: YourPoems
     },
