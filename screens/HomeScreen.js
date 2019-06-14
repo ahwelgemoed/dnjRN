@@ -26,6 +26,7 @@ import { Icon, Button } from 'native-base';
 import UpdateUserInfo from '../components/UpdateUserInfo';
 import { ScreenBackground } from '../components/Styles';
 import TopNav from '../components/TopNav';
+import MorningModal from '../components/MorningModal';
 
 class HomeScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
@@ -245,6 +246,7 @@ class HomeScreen extends React.PureComponent {
           navigation={this.props.navigation}
           leftComponent={this.setLeftHeader}
         />
+        <MorningModal navigation={this.props.navigation} />
         <UpdateUserInfo />
 
         {/* <TandC /> */}

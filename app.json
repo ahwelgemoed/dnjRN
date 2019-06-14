@@ -3,9 +3,9 @@
     "name": "Dis Net Jy",
     "slug": "klyntjidnj",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
-    "platforms": ["ios", "android"],
-    "version": "2.1.4",
+    "sdkVersion": "33.0.0",
+    "platforms": ["ios", "android", "web"],
+    "version": "2.1.5",
     "orientation": "portrait",
     "icon": "./assets/images/DNJ.png",
     "splash": {
@@ -18,7 +18,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "android": {
-      "versionCode": 13,
+      "versionCode": 14,
       "package": "com.disnetons.googlesignin",
       "googleServicesFile": "./google-services.json"
     },
@@ -26,7 +26,7 @@
     "facebookAppId": "433863794055791",
     "facebookDisplayName": "DisNetJy",
     "ios": {
-      "supportsTablet": false,
+      "supportsTablet": true,
       "bundleIdentifier": "com.disnetjy.ahwelgemoed"
     },
     "description": "",
