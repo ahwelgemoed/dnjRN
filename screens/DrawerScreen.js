@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Constants from 'expo-constants';
 import {
   Content,
   Container,
@@ -25,7 +26,7 @@ import { activateDeleteAction } from '../actions/poemsActions';
 import { changePoem } from '../actions/themeActions';
 import OnlineUsers from '../components/OnlineUsers';
 import { ScreenBackground } from '../components/Styles';
-import Constants from 'expo-constants';
+const { manifest } = Constants;
 // import { DrawerActions, DrawerItems, SafeAreaView } from 'react-navigation';
 // import styles from '../../styles/index';
 
@@ -399,6 +400,16 @@ class DrawerScreen extends Component {
               Sign Out
             </Text>
           </ListItem>
+          <ListItem style={{ borderBottomWidth: 0, borderTopWidth: 0 }}>
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.labels
+              ]}
+            >
+              Version {manifest.version}
+            </Text>
+          </ListItem>
         </View>
       </ScreenBackground>
     );
@@ -419,6 +430,11 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
+    fontFamily: 'raleway-extralight',
+    textAlign: 'left'
+  },
+  labels: {
+    fontSize: 10,
     fontFamily: 'raleway-extralight',
     textAlign: 'left'
   },

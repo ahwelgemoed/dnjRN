@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { AppLoading, Asset } from 'expo';
 import * as Font from 'expo-font';
-import * as Icon from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import AppNavigator from './navigation/AppNavigator';
 import Index from './screens/Index';
 import { Provider } from 'react-redux';
@@ -58,7 +58,7 @@ export default class App extends React.Component {
       'raleway-regular': require('./assets/fonts/Raleway-Regular.ttf'),
       'raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
       'raleway-extralight': require('./assets/fonts/Raleway-ExtraLight.ttf'),
-      ...Icon.Ionicons.font
+      ...Ionicons.font
     });
 
     await this.setState({ mountyLoad: false });
