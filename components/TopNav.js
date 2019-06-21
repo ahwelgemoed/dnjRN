@@ -18,16 +18,27 @@ class TopNav extends Component {
           flexDirection: 'row',
           textAlign: 'center',
           justifyContent: 'space-between',
-          borderBottomWidth: 1,
-          borderBottomColor: '#D8D9D9'
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 0
+          },
+          shadowOpacity: 0.22,
+          shadowRadius: 2.0,
+          elevation: 1
+          // borderBottomWidth: 1,
+          // borderBottomColor: '#D8D9D9'
         }}
       >
         <Col
           style={{
-            width: '10%'
+            width: '10%',
+            marginLeft: 10
           }}
         >
-          {this.props.leftComponent}
+          <DrawerText onPress={() => this.props.navigation.toggleDrawer()}>
+            <Icon name="menu" style={{ color: '#999' }} />
+          </DrawerText>
         </Col>
         <Col>
           <NavBarHeaderText> {this.props.pageTitle} </NavBarHeaderText>
@@ -37,9 +48,7 @@ class TopNav extends Component {
             width: '10%'
           }}
         >
-          <DrawerText onPress={() => this.props.navigation.toggleDrawer()}>
-            <Icon name="menu" style={{ color: '#999' }} />
-          </DrawerText>
+          {this.props.leftComponent}
         </Col>
       </NavBarView>
     );

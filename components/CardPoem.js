@@ -431,7 +431,7 @@ class CardPoem extends Component {
                       type="FontAwesome"
                       name="image"
                     />{' '}
-                    Save To Gallery - (Beta)
+                    Save To Gallery
                   </Text>
                 </ListItem>
                 <ListItem

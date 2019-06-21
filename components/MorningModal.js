@@ -16,7 +16,6 @@ export default class MorningModal extends React.Component {
   };
 
   componentWillMount() {
-    console.log(moment().format('HH:mm'));
     if (
       moment().format('HH:mm') > '02:00' &&
       moment().format('HH:mm') < '04:00'
@@ -65,7 +64,7 @@ export default class MorningModal extends React.Component {
 
             <PoemName>
               It's past {moment().format('HH')}, You are probably somewhere
-              between Insomnia and drunk and existential.
+              between Insomnia, drunk and existential.
             </PoemName>
             <PoemName>Be kind to yourself</PoemName>
             <Grid style={{ paddingLeft: 12, paddingRight: 12 }}>
