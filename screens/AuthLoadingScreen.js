@@ -15,6 +15,7 @@ import { AppLoading, Asset, Font, Icon } from 'expo';
 import { DangerZone } from 'expo';
 import wiggly from '../components/data.json';
 import { ScreenBackground, PoemName } from '../components/Styles';
+import { ALWAYS_THIS_DEVICE_ONLY } from 'expo-secure-store';
 
 class AuthLoadingScreen extends React.Component {
   state = { firstVisit: null, animation: null, speed: 1, modalVisible: false };
@@ -22,17 +23,11 @@ class AuthLoadingScreen extends React.Component {
   constructor(props) {
     super(props);
   }
-  // componentDidMount() {
-  //   // this._bootstrapAsync();
-  // }
+  async componentDidMount() {
+    // AsyncStorage.clear();
+  }
   // Fetch the token from storage then navigate to our appropriate place
-  _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem('userToke');
-    const firstVisit = await AsyncStorage.getItem('firstVisit');
-    await this.setState({
-      firstVisit
-    });
-  };
+  _bootstrapAsync = async () => {};
   componentDidUpdate(prevProps, prevState) {
     if (this.state.modalVisible === true && prevState.modalVisible === false) {
       this._playAnimation();
@@ -42,6 +37,13 @@ class AuthLoadingScreen extends React.Component {
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
   }
+  isEmptyAuth = async () => {
+    if ((await AsyncStorage.getItem('FIRST')) !== 'Yes') {
+      return this.props.navigation.navigate('Welcome');
+    } else {
+      return this.props.navigation.navigate('LoginScreen');
+    }
+  };
 
   render() {
     const { auth } = this.props;
@@ -49,11 +51,7 @@ class AuthLoadingScreen extends React.Component {
       return <ScreenBackground style={styles.mainContent} />;
     }
     if (isEmpty(auth)) {
-      if (this.state.firstVisit !== 'Yes') {
-        return this.props.navigation.navigate('Welcome');
-      } else {
-        return this.props.navigation.navigate('LoginScreen');
-      }
+      this.isEmptyAuth();
     }
     return this.props.navigation.navigate('App');
   }

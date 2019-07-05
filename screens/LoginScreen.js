@@ -24,7 +24,7 @@ import {
   Dimensions,
   View,
   ActivityIndicator,
-  ImageBackground,
+  ScrollView,
   Image
 } from 'react-native';
 import { GoogleSignIn } from 'expo';
@@ -78,69 +78,66 @@ class LoginScreen extends Component {
   };
   render() {
     return (
-      <Container>
-        <Content>
-          <View style={styles.mainContent}>
-            <Image
-              style={{
-                width: 100,
-                height: 100,
-                borderRadius: 40,
-                marginTop: 20
-              }}
-              source={require('../assets/images/DNJ.png')}
+      <ScrollView style={styles.mainContent}>
+        <Image
+          style={{
+            width: 100,
+            height: 100,
+            borderRadius: 40,
+            marginTop: 20
+          }}
+          source={require('../assets/images/DNJ.png')}
+        />
+        <Form>
+          <Item floatingLabel>
+            <Label style={styles.label}>Email Address</Label>
+            <Input
+              style={styles.input}
+              keyboardType="email-address"
+              onChangeText={text => this.setState({ username: text })}
             />
-            <Form>
-              <Item floatingLabel>
-                <Label style={styles.label}>Email Address</Label>
-                <Input
-                  style={styles.input}
-                  keyboardType="email-address"
-                  onChangeText={text => this.setState({ username: text })}
-                />
-              </Item>
-              <Item floatingLabel last>
-                <Label style={styles.label}>Password</Label>
-                <Input
-                  style={styles.input}
-                  secureTextEntry={true}
-                  onChangeText={text => this.setState({ password: text })}
-                />
-              </Item>
-              <Button block light onPress={this.signIn} style={styles.buttonIn}>
-                {this.state.loading ? (
-                  <ActivityIndicator color={'#fff'} />
-                ) : null}
-                <Text style={styles.labelIn}>Sign In</Text>
-              </Button>
-            </Form>
-            <Button
-              style={styles.buttonUp}
-              block
-              bordered
-              light
-              onPress={() => this.props.navigation.navigate('SignupScreen')}
-            >
-              <Text style={styles.labelSignUp}>Sign Up</Text>
-            </Button>
-            <Text style={styles.name}>- or use Facebook -</Text>
-            <FacebookLogin navigation={this.props.navigation} />
-            <ForgotPassword />
-            {/* <GoolgeLogin /> */}
-          </View>
-        </Content>
-      </Container>
+          </Item>
+          <Item floatingLabel style={styles.inputG}>
+            <Label style={styles.label}>Password</Label>
+            <Input
+              style={styles.input}
+              secureTextEntry={true}
+              onChangeText={text => this.setState({ password: text })}
+            />
+          </Item>
+          <Button block light onPress={this.signIn} style={styles.buttonIn}>
+            {this.state.loading ? <ActivityIndicator color={'#fff'} /> : null}
+            <Text style={styles.labelIn}>Sign In</Text>
+          </Button>
+        </Form>
+        <Button
+          style={styles.buttonUp}
+          block
+          bordered
+          light
+          onPress={() => this.props.navigation.navigate('SignupScreen')}
+        >
+          <Text style={styles.labelSignUp}>Sign Up</Text>
+        </Button>
+        <Text style={styles.name}>- or use Facebook -</Text>
+        <FacebookLogin navigation={this.props.navigation} />
+        <ForgotPassword />
+        {/* <GoolgeLogin /> */}
+      </ScrollView>
     );
   }
 }
 let screenWidth = Dimensions.get('window').width - 20;
+let screenWidthMain = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
+    width: screenWidthMain,
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
     paddingLeft: 12,
-    paddingRight: 12,
-    justifyContent: 'space-around'
+    paddingRight: 12
   },
   label: {
     fontSize: 16,
@@ -149,6 +146,14 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 16,
+    width: screenWidthMain - 30,
+    fontFamily: 'raleway-regular',
+    textAlign: 'left',
+    backgroundColor: 'rgba(255, 255, 255, .2)'
+  },
+  inputG: {
+    fontSize: 16,
+    width: screenWidthMain - 30,
     fontFamily: 'raleway-regular',
     textAlign: 'left',
     backgroundColor: 'rgba(255, 255, 255, .2)'
