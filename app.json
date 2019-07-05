@@ -13,6 +13,18 @@
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
+    "web": {
+      "build": {
+        "babel": {
+          "include": [
+            "native-base",
+            "static-container",
+            "react-native-pose",
+            "react-pose-core"
+          ]
+        }
+      }
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
