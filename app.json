@@ -5,7 +5,7 @@
     "privacy": "public",
     "sdkVersion": "33.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "2.1.5",
+    "version": "2.1.6",
     "orientation": "portrait",
     "icon": "./assets/images/DNJ.png",
     "splash": {
@@ -13,12 +13,24 @@
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
+    "web": {
+      "build": {
+        "babel": {
+          "include": [
+            "native-base",
+            "static-container",
+            "react-native-pose",
+            "react-pose-core"
+          ]
+        }
+      }
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
     "android": {
-      "versionCode": 14,
+      "versionCode": 15,
       "package": "com.disnetons.googlesignin",
       "googleServicesFile": "./google-services.json"
     },
