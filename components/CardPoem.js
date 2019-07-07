@@ -35,6 +35,7 @@ import Dialog, {
 import Bookmark from './Bookmark';
 import { WebBrowser, Permissions } from 'expo';
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot';
+import { CNRichTextView } from 'react-native-cn-richtext-editor';
 // import * as Permissions from 'expo-permissions';
 import {
   StyledText,
@@ -267,9 +268,19 @@ class CardPoem extends Component {
               ) : null}
             </Col>
           </Row>
-          <PoemBodyText style={styles.body}>
-            {this.props.poem.body}
-          </PoemBodyText>
+          {this.props.poem.richText ? (
+            <View
+              style={{
+                flex: 1
+              }}
+            >
+              <CNRichTextView style={styles.body} text={this.props.poem.body} />
+            </View>
+          ) : (
+            <PoemBodyText style={styles.body}>
+              {this.props.poem.body}
+            </PoemBodyText>
+          )}
           {!this.state.reportDialog ? (
             <Row>
               <Col>
@@ -599,6 +610,7 @@ const styles = StyleSheet.create({
   },
   body: {
     // width: screenWidth,
+    fontFamily: 'raleway-regular'
   },
   icon: {
     fontSize: 14

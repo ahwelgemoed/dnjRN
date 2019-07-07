@@ -13,7 +13,8 @@ import {
   ScrollView,
   View,
   ActivityIndicator,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback
 } from 'react-native';
 import FirstPostModal from '../components/FirstPostModal';
 import {
@@ -33,7 +34,23 @@ import {
   Icon
 } from 'native-base';
 import TopNav from '../components/TopNav';
+import CNRichTextEditor, {
+  CNToolbar,
+  getInitialObject,
+  convertToHtmlString,
+  getDefaultStyles
+} from 'react-native-cn-richtext-editor';
 
+const defaultStyles = getDefaultStyles();
+let customStyles = {
+  ...defaultStyles,
+  body: { fontSize: 14 },
+  heading: { fontSize: 16 },
+  title: { fontSize: 20 },
+  ol: { fontSize: 12 },
+  ul: { fontSize: 12 },
+  fontFamily: 'raleway-regular'
+};
 class PostPoem extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: null,
@@ -45,6 +62,29 @@ class PostPoem extends Component {
       />
     )
   });
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedTag: 'body',
+      selectedStyles: [],
+      value: [getInitialObject()],
+      withInstagram: false,
+      instagram: false,
+      body: '',
+      openFirstModal: false,
+      name: '',
+      update: false,
+      bookmarkedCount: 0,
+      handle: '',
+      nsfw: false,
+      adminNotes: 'None',
+      reported: false,
+      loading: false
+    };
+
+    this.editor = null;
+  }
 
   // static navigationOptions = ({ navigation }) => ({
   //   title: 'Post a Poem',
@@ -59,20 +99,6 @@ class PostPoem extends Component {
   //     fontSize: 20
   //   }
   // });
-  state = {
-    withInstagram: false,
-    instagram: false,
-    body: '',
-    openFirstModal: false,
-    name: '',
-    update: false,
-    bookmarkedCount: 0,
-    handle: '',
-    nsfw: false,
-    adminNotes: 'None',
-    reported: false,
-    loading: false
-  };
 
   withInstagram = () => {
     this.setState({
@@ -129,24 +155,26 @@ class PostPoem extends Component {
       if (withInstagram) {
         payLoad = {
           date,
-          body,
+          body: convertToHtmlString(body),
           nsfw,
           reported,
           bookmarkedCount,
           name,
           adminNotes,
+          richText: true,
           handle: this.props.profile.Instagram,
           uid: auth.uid
         };
       } else {
         payLoad = {
           date,
-          body,
+          body: convertToHtmlString(body),
           adminNotes,
           nsfw,
           bookmarkedCount,
           name,
           reported,
+          richText: true,
           handle: '',
           uid: auth.uid
         };
@@ -186,24 +214,26 @@ class PostPoem extends Component {
       if (withInstagram) {
         payLoad = {
           date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0)),
-          body,
+          body: convertToHtmlString(body),
           nsfw,
           name,
           adminNotes,
           bookmarkedCount,
           reported,
           handle: this.props.profile.Instagram,
+          richText: true,
           uid: auth.uid
         };
       } else {
         payLoad = {
           date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0)),
           nsfw,
-          body,
+          body: convertToHtmlString(body),
           name,
           bookmarkedCount,
           reported,
           adminNotes,
+          richText: true,
           handle: '',
           uid: auth.uid
         };
@@ -277,19 +307,58 @@ class PostPoem extends Component {
       }
     }
   }
+  onStyleKeyPress = toolType => {
+    this.editor.applyToolbar(toolType);
+  };
+
+  onSelectedTagChanged = tag => {
+    this.setState({
+      selectedTag: tag
+    });
+  };
+
+  onSelectedStyleChanged = styles => {
+    this.setState({
+      selectedStyles: styles
+    });
+  };
+
+  onValueChanged = value => {
+    this.setState({
+      body: value
+    });
+    console.log(convertToHtmlString(value));
+  };
+
   render() {
     const { handle, body, firstPost } = this.state;
     const { theme } = this.props;
+
     return (
-      <ScreenBackground style={styles.container}>
+      <View
+        style={{
+          flex: 1,
+          paddingTop: 20
+        }}
+      >
         <TopNav
           pageTitle={'Post a Poem'}
           navigation={this.props.navigation}
           leftComponent={this.setLeftHeader}
         />
-        <ScrollView>
-          <Form>
-            <Item>
+        <KeyboardAvoidingView
+          behavior="padding"
+          enabled
+          keyboardVerticalOffset={0}
+          style={{
+            flex: 1,
+            backgroundColor: '#eee',
+            flexDirection: 'column',
+            justifyContent: 'flex-end'
+          }}
+        >
+          <TouchableWithoutFeedback>
+            <View style={styles.main}>
               <Input
                 style={
                   theme
@@ -310,32 +379,57 @@ class PostPoem extends Component {
                 value={this.state.name}
                 onChangeText={text => this.setState({ name: text })}
               />
-            </Item>
-            <Item>
-              <Textarea
-                style={
-                  theme
-                    ? {
-                        color: '#D8D9D9',
-                        fontSize: 16,
-                        width: screenWidth - 20,
-                        fontFamily: 'raleway-regular',
-                        textAlign: 'left'
-                      }
-                    : {
-                        color: '#2C2D2D',
-                        fontSize: 16,
-                        width: screenWidth - 20,
-                        fontFamily: 'raleway-regular',
-                        textAlign: 'left'
-                      }
-                }
-                rowSpan={5}
-                placeholder="Poem"
-                value={this.state.body}
-                onChangeText={text => this.setState({ body: text })}
+              <CNRichTextEditor
+                ref={input => (this.editor = input)}
+                onSelectedTagChanged={this.onSelectedTagChanged}
+                onSelectedStyleChanged={this.onSelectedStyleChanged}
+                value={this.state.value}
+                style={{ backgroundColor: '#fff' }}
+                styleList={customStyles}
+                onValueChanged={this.onValueChanged}
               />
-            </Item>
+            </View>
+          </TouchableWithoutFeedback>
+          <View
+            style={{
+              minHeight: 35
+            }}
+          >
+            <CNToolbar
+              size={28}
+              bold={
+                <Text style={[styles.toolbarButton, styles.boldButton]}>B</Text>
+              }
+              italic={
+                <Text style={[styles.toolbarButton, styles.italicButton]}>
+                  I
+                </Text>
+              }
+              underline={
+                <Text style={[styles.toolbarButton, styles.underlineButton]}>
+                  U
+                </Text>
+              }
+              lineThrough={
+                <Text style={[styles.toolbarButton, styles.lineThroughButton]}>
+                  S
+                </Text>
+              }
+              body={<Text style={styles.toolbarButton}>T</Text>}
+              title={<Text style={styles.toolbarButton}>h1</Text>}
+              heading={<Text style={styles.toolbarButton}>h3</Text>}
+              ul={<Text style={styles.toolbarButton}>ul</Text>}
+              ol={<Text style={styles.toolbarButton}>ol</Text>}
+              selectedTag={this.state.selectedTag}
+              selectedStyles={this.state.selectedStyles}
+              onStyleKeyPress={this.onStyleKeyPress}
+            />
+          </View>
+          <View
+            style={{
+              height: 35
+            }}
+          >
             {this.props.profile.isLoaded && this.props.profile.Instagram ? (
               <ListItem>
                 <CheckBox
@@ -382,20 +476,47 @@ class PostPoem extends Component {
             >
               <Text style={styles.button}>Cancel</Text>
             </Button>
-          </Form>
-          <FirstPostModal openFirstModal={this.state.openFirstModal} />
-        </ScrollView>
-      </ScreenBackground>
+
+            <FirstPostModal openFirstModal={this.state.openFirstModal} />
+          </View>
+        </KeyboardAvoidingView>
+      </View>
     );
   }
 }
 let screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
-  mainContent: {
+  main: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center'
+    // marginTop: 10,
+    paddingLeft: 12,
+    paddingRight: 12,
+    // paddingBottom: 1,
+    alignItems: 'stretch'
   },
+  toolbarButton: {
+    fontSize: 20,
+    width: 28,
+    height: 28,
+    textAlign: 'center'
+  },
+  italicButton: {
+    fontStyle: 'italic'
+  },
+  boldButton: {
+    fontWeight: 'bold'
+  },
+  underlineButton: {
+    textDecorationLine: 'underline'
+  },
+  lineThroughButton: {
+    textDecorationLine: 'line-through'
+  },
+  // mainContent: {
+  //   flex: 1,
+  //   flexDirection: 'row',
+  //   justifyContent: 'center'
+  // },
   container: {
     width: screenWidth,
     alignItems: 'center',
