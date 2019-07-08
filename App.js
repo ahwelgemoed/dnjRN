@@ -9,6 +9,8 @@ import { Provider } from 'react-redux';
 import { Root } from 'native-base';
 import store from './store';
 import Sentry from 'sentry-expo';
+import Maintanince from './screens/Maintanince';
+import Version from './screens/Version';
 
 Sentry.config(
   'https://36083bf90a3448a3ba1fe017613bf988@sentry.io/1457296'
@@ -42,7 +44,11 @@ export default class App extends React.Component {
         <Provider store={store}>
           <Root>
             <View style={styles.container}>
-              <Index />
+              <Version>
+                <Maintanince>
+                  <Index />
+                </Maintanince>
+              </Version>
             </View>
           </Root>
         </Provider>

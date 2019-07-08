@@ -529,7 +529,6 @@ export default compose(
 
 let screenWidth = Dimensions.get('window').width - 60;
 let screenWidths = Dimensions.get('window').width;
-let screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   selected: {
     color: '#9D9E9E',
