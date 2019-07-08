@@ -49,9 +49,10 @@ let customStyles = {
   body: { fontSize: 14 },
   heading: { fontSize: 16 },
   title: { fontSize: 20 },
-  ol: { fontSize: 12 },
+  ol: { fontSize: 14 },
   ul: { fontSize: 12 },
-  fontFamily: 'raleway-regular'
+  fontFamily: 'raleway-regular',
+  color: 'green'
 };
 class PostPoem extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -322,10 +323,21 @@ class PostPoem extends Component {
 
     return (
       <View
-        style={{
-          flex: 1,
-          paddingTop: 20
-        }}
+        style={
+          theme
+            ? {
+                flex: 1,
+                paddingTop: 20,
+                fontFamily: 'raleway-regular',
+                backgroundColor: '#232526'
+              }
+            : {
+                flex: 1,
+                paddingTop: 20,
+                fontFamily: 'raleway-regular',
+                backgroundColor: '#EAEAEA'
+              }
+        }
       >
         <TopNav
           pageTitle={'Post a Poem'}
@@ -344,7 +356,31 @@ class PostPoem extends Component {
           }}
         >
           <TouchableWithoutFeedback>
-            <View style={styles.main}>
+            <View
+              style={
+                theme
+                  ? {
+                      flex: 1,
+                      paddingLeft: 12,
+                      paddingRight: 12,
+                      alignItems: 'stretch',
+                      flex: 1,
+                      paddingTop: 20,
+                      fontFamily: 'raleway-regular',
+                      backgroundColor: '#232526'
+                    }
+                  : {
+                      flex: 1,
+                      paddingLeft: 12,
+                      paddingRight: 12,
+                      alignItems: 'stretch',
+                      flex: 1,
+                      paddingTop: 20,
+                      fontFamily: 'raleway-regular',
+                      backgroundColor: '#EAEAEA'
+                    }
+              }
+            >
               <ListItem>
                 <Input
                   style={
@@ -400,27 +436,49 @@ class PostPoem extends Component {
                 onSelectedTagChanged={this.onSelectedTagChanged}
                 onSelectedStyleChanged={this.onSelectedStyleChanged}
                 value={this.state.value}
-                style={{
-                  backgroundColor: '#fff',
-                  shadowOpacity: 0.35,
-                  shadowRadius: 10,
-                  borderTopLeftRadius: 10,
-                  borderTopRightRadius: 10,
-                  shadowColor: '#efefef',
-                  shadowOffset: {
-                    width: 5,
-                    height: 0
-                  }
-                }}
                 styleList={customStyles}
+                style={[
+                  {
+                    backgroundColor: '#fff',
+                    marginTop: 10,
+                    shadowOpacity: 0.35,
+                    shadowRadius: 10,
+                    borderTopLeftRadius: 10,
+                    borderTopRightRadius: 10,
+                    shadowColor: '#efefef',
+                    shadowOffset: {
+                      width: 5,
+                      height: 0
+                    }
+                  },
+                  theme
+                    ? {
+                        fontFamily: 'raleway-regular',
+                        backgroundColor: '#232526',
+                        color: '#D8D9D9'
+                      }
+                    : {
+                        color: '#D8D9D9',
+                        fontFamily: 'raleway-regular',
+                        backgroundColor: '#fff'
+                      }
+                ]}
                 onValueChanged={this.onValueChanged}
               />
             </View>
           </TouchableWithoutFeedback>
           <View
-            style={{
-              minHeight: 14
-            }}
+            style={
+              theme
+                ? {
+                    minHeight: 14,
+                    backgroundColor: '#232526'
+                  }
+                : {
+                    minHeight: 14,
+                    backgroundColor: '#EAEAEA'
+                  }
+            }
           >
             <CNToolbar
               size={20}
@@ -431,11 +489,13 @@ class PostPoem extends Component {
                       theme
                         ? {
                             fontSize: 20,
+                            textAlign: 'left',
                             fontFamily: 'raleway-regular',
                             color: '#D8D9D9'
                           }
                         : {
                             fontSize: 20,
+                            textAlign: 'left',
                             fontFamily: 'raleway-regular',
                             color: '#2C2D2D'
                           }
@@ -520,14 +580,40 @@ class PostPoem extends Component {
               selectedTag={this.state.selectedTag}
               selectedStyles={this.state.selectedStyles}
               onStyleKeyPress={this.onStyleKeyPress}
-              selectedBackgroundColor={'#efefef'}
+              selectedBackgroundColor={[theme ? '#2C2D2D' : '#D8D9D9']}
+              backgroundColor={[theme ? '#404142' : '#F5F6F7']}
+              color={[theme ? '#EAEAEA' : '#232526']}
+              style={
+                theme
+                  ? {
+                      fontFamily: 'raleway-regular',
+                      color: '#D8D9D9',
+                      backgroundColor: '#404142',
+                      border: 'none'
+                    }
+                  : {
+                      fontFamily: 'raleway-regular',
+                      color: '#2C2D2D',
+                      backgroundColor: '#F5F6F7',
+                      border: 'none'
+                    }
+              }
             />
           </View>
           <View
-            style={{
-              height: '15%',
-              flexDirection: 'row'
-            }}
+            style={
+              theme
+                ? {
+                    height: '15%',
+                    flexDirection: 'row',
+                    backgroundColor: '#232526'
+                  }
+                : {
+                    backgroundColor: '#EAEAEA',
+                    height: '15%',
+                    flexDirection: 'row'
+                  }
+            }
           >
             <Left>
               <Button
@@ -565,8 +651,6 @@ const styles = StyleSheet.create({
   },
   toolbarButton: {
     fontSize: 20,
-    paddingLeft: 8,
-    paddingRight: 8,
     fontFamily: 'raleway-regular',
     textAlign: 'center'
   },
