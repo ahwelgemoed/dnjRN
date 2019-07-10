@@ -35,7 +35,10 @@ import Dialog, {
 import Bookmark from './Bookmark';
 import { WebBrowser, Permissions } from 'expo';
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot';
-import { CNRichTextView } from 'react-native-cn-richtext-editor';
+import {
+  CNRichTextView,
+  getDefaultStyles
+} from 'react-native-cn-richtext-editor';
 // import * as Permissions from 'expo-permissions';
 import {
   StyledText,
@@ -46,6 +49,15 @@ import {
 } from './Styles';
 // import { ScreenBackground } from './Styles';
 
+const defaultStyles = getDefaultStyles();
+let customStyles = {
+  ...defaultStyles,
+  body: { fontSize: 14 },
+  heading: { fontSize: 16 },
+  title: { fontSize: 20 },
+  ol: { fontSize: 14 },
+  ul: { fontSize: 12 }
+};
 class CardPoem extends Component {
   state = {
     userEdit: false,
@@ -274,7 +286,23 @@ class CardPoem extends Component {
                 flex: 1
               }}
             >
-              <CNRichTextView style={styles.body} text={this.props.poem.body} />
+              <CNRichTextView
+                text={this.props.poem.body}
+                styleList={customStyles}
+                foreColor={[theme ? '#EAEAEA' : '#232526']}
+                color={[theme ? '#EAEAEA' : '#232526']}
+                style={[
+                  theme
+                    ? {
+                        fontFamily: 'raleway-regular',
+                        color: '#D8D9D9'
+                      }
+                    : {
+                        color: '#D8D9D9',
+                        fontFamily: 'raleway-regular'
+                      }
+                ]}
+              />
             </View>
           ) : (
             <PoemBodyText style={styles.body}>

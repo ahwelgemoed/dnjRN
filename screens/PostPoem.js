@@ -7,13 +7,17 @@ import AddInstagramModal from '../components/AddInstagramModal';
 import { successfullyAddedPoem } from '../actions/poemsActions';
 import { ScreenBackground } from '../components/Styles';
 import {
+  HideWithKeyboard,
+  ShowWithKeyboard
+} from 'react-native-hide-with-keyboard';
+import {
   StyleSheet,
   Dimensions,
   AsyncStorage,
-  ScrollView,
   View,
   ActivityIndicator,
   KeyboardAvoidingView,
+  Keyboard,
   TouchableWithoutFeedback
 } from 'react-native';
 import FirstPostModal from '../components/FirstPostModal';
@@ -40,7 +44,8 @@ import CNRichTextEditor, {
   CNToolbar,
   getInitialObject,
   convertToHtmlString,
-  getDefaultStyles
+  getDefaultStyles,
+  convertToObject
 } from 'react-native-cn-richtext-editor';
 
 const defaultStyles = getDefaultStyles();
@@ -50,9 +55,7 @@ let customStyles = {
   heading: { fontSize: 16 },
   title: { fontSize: 20 },
   ol: { fontSize: 14 },
-  ul: { fontSize: 12 },
-  fontFamily: 'raleway-regular',
-  color: 'green'
+  ul: { fontSize: 12 }
 };
 class PostPoem extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -71,10 +74,9 @@ class PostPoem extends Component {
     this.state = {
       selectedTag: 'body',
       selectedStyles: [],
-      value: [getInitialObject()],
+      body: [getInitialObject()],
       withInstagram: false,
       instagram: false,
-      body: '',
       openFirstModal: false,
       name: '',
       update: false,
@@ -277,12 +279,13 @@ class PostPoem extends Component {
     const body = navigation.getParam('body');
     const nsfw = navigation.getParam('nsfw');
     const date = navigation.getParam('date');
-    if (name) {
+    if (body) {
+      const convertBody = convertToObject(body);
       await this.setState({
         id,
         name,
         nsfw,
-        body,
+        body: convertBody,
         date,
         bookmarkedCount,
         update: true
@@ -319,8 +322,6 @@ class PostPoem extends Component {
   render() {
     const { handle, body, firstPost } = this.state;
     const { theme } = this.props;
-    console.log(this.state.selectedTag);
-
     return (
       <View
         style={
@@ -344,10 +345,11 @@ class PostPoem extends Component {
           navigation={this.props.navigation}
           leftComponent={this.setLeftHeader}
         />
+
         <KeyboardAvoidingView
           behavior="padding"
           enabled
-          keyboardVerticalOffset={0}
+          keyboardVerticalOffset={-50}
           style={{
             flex: 1,
             backgroundColor: '#eee',
@@ -355,7 +357,7 @@ class PostPoem extends Component {
             justifyContent: 'flex-end'
           }}
         >
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View
               style={
                 theme
@@ -381,6 +383,27 @@ class PostPoem extends Component {
                     }
               }
             >
+              <ShowWithKeyboard
+                style={{ position: 'absolute', top: 0, right: 12 }}
+              >
+                <Button
+                  rounded
+                  small
+                  onPress={Keyboard.dismiss}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 12,
+                    backgroundColor: '#91D9D9'
+                  }}
+                >
+                  <Icon
+                    type="FontAwesome"
+                    name="chevron-down"
+                    style={{ fontSize: 12 }}
+                  />
+                </Button>
+              </ShowWithKeyboard>
               <ListItem>
                 <Input
                   style={
@@ -403,49 +426,51 @@ class PostPoem extends Component {
                   onChangeText={text => this.setState({ name: text })}
                 />
               </ListItem>
-              {this.props.profile.isLoaded && this.props.profile.Instagram ? (
+              <HideWithKeyboard>
+                {this.props.profile.isLoaded && this.props.profile.Instagram ? (
+                  <ListItem>
+                    <CheckBox
+                      color={'#000'}
+                      checked={this.state.withInstagram}
+                      onPress={this.withInstagram}
+                    />
+                    <Body>
+                      <Text style={styles.check}>
+                        Post as {this.props.profile.Instagram}
+                      </Text>
+                    </Body>
+                  </ListItem>
+                ) : (
+                  <React.Fragment>
+                    <AddInstagramModal />
+                  </React.Fragment>
+                )}
                 <ListItem>
                   <CheckBox
                     color={'#000'}
-                    checked={this.state.withInstagram}
-                    onPress={this.withInstagram}
+                    checked={this.state.nsfw}
+                    onPress={this.nsfw}
                   />
                   <Body>
-                    <Text style={styles.check}>
-                      Post as {this.props.profile.Instagram}
-                    </Text>
+                    <Text style={styles.check}>NSFW</Text>
                   </Body>
                 </ListItem>
-              ) : (
-                <React.Fragment>
-                  <AddInstagramModal />
-                </React.Fragment>
-              )}
-              <ListItem>
-                <CheckBox
-                  color={'#000'}
-                  checked={this.state.nsfw}
-                  onPress={this.nsfw}
-                />
-                <Body>
-                  <Text style={styles.check}>NSFW</Text>
-                </Body>
-              </ListItem>
+              </HideWithKeyboard>
               <CNRichTextEditor
+                placeholder={'Poem...'}
                 ref={input => (this.editor = input)}
                 onSelectedTagChanged={this.onSelectedTagChanged}
                 onSelectedStyleChanged={this.onSelectedStyleChanged}
-                value={this.state.value}
+                value={this.state.body}
                 styleList={customStyles}
+                foreColor={[theme ? '#EAEAEA' : '#232526']}
                 style={[
                   {
-                    backgroundColor: '#fff',
                     marginTop: 10,
                     shadowOpacity: 0.35,
                     shadowRadius: 10,
                     borderTopLeftRadius: 10,
                     borderTopRightRadius: 10,
-                    shadowColor: '#efefef',
                     shadowOffset: {
                       width: 5,
                       height: 0
@@ -454,12 +479,14 @@ class PostPoem extends Component {
                   theme
                     ? {
                         fontFamily: 'raleway-regular',
-                        backgroundColor: '#232526',
-                        color: '#D8D9D9'
+                        backgroundColor: '#3c3e40',
+                        shadowColor: '#404142',
+                        color: '#EAEAEA'
                       }
                     : {
                         color: '#D8D9D9',
                         fontFamily: 'raleway-regular',
+                        shadowColor: '#efefef',
                         backgroundColor: '#fff'
                       }
                 ]}
@@ -488,12 +515,16 @@ class PostPoem extends Component {
                     style={
                       theme
                         ? {
+                            paddingLeft: 5,
+                            paddingRight: 5,
                             fontSize: 20,
                             textAlign: 'left',
                             fontFamily: 'raleway-regular',
                             color: '#D8D9D9'
                           }
                         : {
+                            paddingLeft: 5,
+                            paddingRight: 5,
                             fontSize: 20,
                             textAlign: 'left',
                             fontFamily: 'raleway-regular',
@@ -511,12 +542,16 @@ class PostPoem extends Component {
                     style={
                       theme
                         ? {
+                            paddingLeft: 5,
+                            paddingRight: 5,
                             fontSize: 20,
                             textAlign: 'left',
                             fontFamily: 'raleway-regular',
                             color: '#D8D9D9'
                           }
                         : {
+                            paddingLeft: 5,
+                            paddingRight: 5,
                             fontSize: 20,
                             textAlign: 'left',
                             fontFamily: 'raleway-regular',
@@ -534,12 +569,16 @@ class PostPoem extends Component {
                     style={
                       theme
                         ? {
+                            paddingLeft: 5,
+                            paddingRight: 5,
                             fontSize: 20,
                             textAlign: 'left',
                             fontFamily: 'raleway-regular',
                             color: '#D8D9D9'
                           }
                         : {
+                            paddingLeft: 5,
+                            paddingRight: 5,
                             fontSize: 20,
                             textAlign: 'left',
                             fontFamily: 'raleway-regular',
@@ -557,12 +596,16 @@ class PostPoem extends Component {
                     style={
                       theme
                         ? {
+                            paddingLeft: 5,
+                            paddingRight: 5,
                             fontSize: 20,
                             textAlign: 'left',
                             fontFamily: 'raleway-regular',
                             color: '#D8D9D9'
                           }
                         : {
+                            paddingLeft: 5,
+                            paddingRight: 5,
                             fontSize: 20,
                             textAlign: 'left',
                             fontFamily: 'raleway-regular',
@@ -574,13 +617,85 @@ class PostPoem extends Component {
                   />
                 </Text>
               }
-              title={<Text style={styles.toolbarButton}>Title</Text>}
-              heading={<Text style={styles.toolbarButton}>Heading</Text>}
-              body={<Text style={styles.toolbarButton}>Text</Text>}
+              title={
+                <Text
+                  style={
+                    theme
+                      ? {
+                          paddingLeft: 5,
+                          paddingRight: 5,
+                          fontSize: 20,
+                          textAlign: 'left',
+                          fontFamily: 'raleway-regular',
+                          color: '#D8D9D9'
+                        }
+                      : {
+                          paddingLeft: 5,
+                          paddingRight: 5,
+                          fontSize: 20,
+                          textAlign: 'left',
+                          fontFamily: 'raleway-regular',
+                          color: '#2C2D2D'
+                        }
+                  }
+                >
+                  Title
+                </Text>
+              }
+              heading={
+                <Text
+                  style={
+                    theme
+                      ? {
+                          paddingLeft: 5,
+                          paddingRight: 5,
+                          fontSize: 20,
+                          textAlign: 'left',
+                          fontFamily: 'raleway-regular',
+                          color: '#D8D9D9'
+                        }
+                      : {
+                          paddingLeft: 5,
+                          paddingRight: 5,
+                          fontSize: 20,
+                          textAlign: 'left',
+                          fontFamily: 'raleway-regular',
+                          color: '#2C2D2D'
+                        }
+                  }
+                >
+                  Heading
+                </Text>
+              }
+              body={
+                <Text
+                  style={
+                    theme
+                      ? {
+                          paddingLeft: 5,
+                          paddingRight: 5,
+                          fontSize: 20,
+                          textAlign: 'left',
+                          fontFamily: 'raleway-regular',
+                          color: '#D8D9D9'
+                        }
+                      : {
+                          paddingLeft: 5,
+                          paddingRight: 5,
+                          fontSize: 20,
+                          textAlign: 'left',
+                          fontFamily: 'raleway-regular',
+                          color: '#2C2D2D'
+                        }
+                  }
+                >
+                  Text
+                </Text>
+              }
               selectedTag={this.state.selectedTag}
               selectedStyles={this.state.selectedStyles}
               onStyleKeyPress={this.onStyleKeyPress}
-              selectedBackgroundColor={[theme ? '#2C2D2D' : '#D8D9D9']}
+              selectedBackgroundColor={[theme ? '#757575' : '#757575']}
               backgroundColor={[theme ? '#404142' : '#F5F6F7']}
               color={[theme ? '#EAEAEA' : '#232526']}
               style={
@@ -589,13 +704,13 @@ class PostPoem extends Component {
                       fontFamily: 'raleway-regular',
                       color: '#D8D9D9',
                       backgroundColor: '#404142',
-                      border: 'none'
+                      borderWidth: 0
                     }
                   : {
                       fontFamily: 'raleway-regular',
                       color: '#2C2D2D',
                       backgroundColor: '#F5F6F7',
-                      border: 'none'
+                      borderWidth: 0
                     }
               }
             />
@@ -604,14 +719,14 @@ class PostPoem extends Component {
             style={
               theme
                 ? {
-                    height: '15%',
+                    height: 50,
                     flexDirection: 'row',
                     backgroundColor: '#232526'
                   }
                 : {
-                    backgroundColor: '#EAEAEA',
-                    height: '15%',
-                    flexDirection: 'row'
+                    height: 50,
+                    flexDirection: 'row',
+                    backgroundColor: '#EAEAEA'
                   }
             }
           >
@@ -619,14 +734,20 @@ class PostPoem extends Component {
               <Button
                 style={styles.buttonItself}
                 bordered
+                small
                 warning
                 onPress={() => this.props.navigation.goBack()}
               >
-                <Text style={styles.button}>Cancel</Text>
+                <Text style={styles.button}>Back</Text>
               </Button>
             </Left>
             <Right>
-              <Button style={styles.buttonIn} light onPress={this.postToPoem}>
+              <Button
+                small
+                style={styles.buttonIn}
+                light
+                onPress={this.postToPoem}
+              >
                 {this.state.loading ? (
                   <ActivityIndicator color={'#fff'} />
                 ) : null}
@@ -680,8 +801,8 @@ const styles = StyleSheet.create({
   buttonIn: {
     fontSize: 16,
     textAlign: 'center',
-    backgroundColor: '#91D9D9',
-    marginTop: 20,
+    backgroundColor: '#757575',
+    marginTop: 5,
     padding: 16,
     width: '90%',
     // width: screenWidth - 80,
@@ -703,7 +824,7 @@ const styles = StyleSheet.create({
   buttonItself: {
     textAlign: 'center',
     fontSize: 16,
-    marginTop: 20,
+    marginTop: 5,
     width: '90%',
     // width: screenWidth - 80,
     fontFamily: 'raleway-regular',

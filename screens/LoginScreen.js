@@ -68,7 +68,12 @@ class LoginScreen extends Component {
   };
   render() {
     return (
-      <ScrollView style={styles.mainContent}>
+      <ScrollView
+        style={{
+          paddingLeft: 12,
+          paddingRight: 12
+        }}
+      >
         <Image
           style={{
             width: 100,
@@ -127,12 +132,7 @@ class LoginScreen extends Component {
 }
 let screenWidth = Dimensions.get('window').width - 20;
 const styles = StyleSheet.create({
-  mainContent: {
-    alignItems: 'center',
-    paddingLeft: 12,
-    paddingRight: 12,
-    justifyContent: 'space-around'
-  },
+  mainContent: {},
   label: {
     fontSize: 16,
     fontFamily: 'raleway-regular',
