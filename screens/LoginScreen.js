@@ -1,23 +1,12 @@
 import React, { Component } from 'react';
 import { Font } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import { Fumi } from 'react-native-textinput-effects';
 import moment from 'moment';
-import {
-  Content,
-  Form,
-  Item,
-  Input,
-  Label,
-  Container,
-  Button,
-  Text,
-  Icon,
-  Toast,
-  Spinner
-} from 'native-base';
+import { Button, Text, Toast } from 'native-base';
 import {
   AsyncStorage,
   StyleSheet,
@@ -31,6 +20,7 @@ import { GoogleSignIn } from 'expo';
 import FacebookLogin from '../components/FacebookLogin';
 import ForgotPassword from '../components/ForgotPassword';
 import GoolgeLogin from '../components/GoolgeLogin';
+import { ScrollView } from 'react-native-gesture-handler';
 const background = require('../assets/images/background.png');
 class LoginScreen extends Component {
   state = {
@@ -78,70 +68,71 @@ class LoginScreen extends Component {
   };
   render() {
     return (
-      <Container>
-        <Content>
-          <View style={styles.mainContent}>
-            <Image
-              style={{
-                width: 100,
-                height: 100,
-                borderRadius: 40,
-                marginTop: 20
-              }}
-              source={require('../assets/images/DNJ.png')}
-            />
-            <Form>
-              <Item floatingLabel>
-                <Label style={styles.label}>Email Address</Label>
-                <Input
-                  style={styles.input}
-                  keyboardType="email-address"
-                  onChangeText={text => this.setState({ username: text })}
-                />
-              </Item>
-              <Item floatingLabel last>
-                <Label style={styles.label}>Password</Label>
-                <Input
-                  style={styles.input}
-                  secureTextEntry={true}
-                  onChangeText={text => this.setState({ password: text })}
-                />
-              </Item>
-              <Button block light onPress={this.signIn} style={styles.buttonIn}>
-                {this.state.loading ? (
-                  <ActivityIndicator color={'#fff'} />
-                ) : null}
-                <Text style={styles.labelIn}>Sign In</Text>
-              </Button>
-            </Form>
-            <Button
-              style={styles.buttonUp}
-              block
-              bordered
-              light
-              onPress={() => this.props.navigation.navigate('SignupScreen')}
-            >
-              <Text style={styles.labelSignUp}>Sign Up</Text>
-            </Button>
-            <Text style={styles.name}>- or use Facebook -</Text>
-            <FacebookLogin navigation={this.props.navigation} />
-            <ForgotPassword />
-            {/* <GoolgeLogin /> */}
-          </View>
-        </Content>
-      </Container>
+      <ScrollView
+        style={{
+          paddingLeft: 12,
+          paddingRight: 12
+        }}
+      >
+        <Image
+          style={{
+            width: 100,
+            height: 100,
+            borderRadius: 40,
+            marginTop: 20,
+            textAlign: 'center'
+          }}
+          source={require('../assets/images/DNJ.png')}
+        />
+        <Fumi
+          label={'Email'}
+          iconClass={FontAwesome}
+          iconName={'envelope'}
+          iconColor={'#91D9D9'}
+          iconSize={20}
+          iconWidth={40}
+          inputPadding={16}
+          style={styles.input}
+          onChangeText={text => this.setState({ username: text })}
+        />
+        <Fumi
+          label={'Password'}
+          iconClass={FontAwesome}
+          iconName={'lock'}
+          iconColor={'#91D9D9'}
+          iconSize={20}
+          iconWidth={40}
+          inputPadding={16}
+          style={styles.input}
+          secureTextEntry={true}
+          onChangeText={text => this.setState({ password: text })}
+        />
+
+        <Button block light onPress={this.signIn} style={styles.buttonIn}>
+          {this.state.loading ? <ActivityIndicator color={'#fff'} /> : null}
+          <Text style={styles.labelIn}>Sign In</Text>
+        </Button>
+
+        <Button
+          style={styles.buttonUp}
+          block
+          bordered
+          light
+          onPress={() => this.props.navigation.navigate('SignupScreen')}
+        >
+          <Text style={styles.labelSignUp}>Sign Up</Text>
+        </Button>
+        <Text style={styles.name}>- or use Facebook -</Text>
+        <FacebookLogin navigation={this.props.navigation} />
+        <ForgotPassword />
+        {/* <GoolgeLogin /> */}
+      </ScrollView>
     );
   }
 }
 let screenWidth = Dimensions.get('window').width - 20;
 const styles = StyleSheet.create({
-  mainContent: {
-    flex: 1,
-    alignItems: 'center',
-    paddingLeft: 12,
-    paddingRight: 12,
-    justifyContent: 'space-around'
-  },
+  mainContent: {},
   label: {
     fontSize: 16,
     fontFamily: 'raleway-regular',
@@ -149,9 +140,9 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 16,
+    width: screenWidth,
     fontFamily: 'raleway-regular',
-    textAlign: 'left',
-    backgroundColor: 'rgba(255, 255, 255, .2)'
+    textAlign: 'left'
   },
   name: {
     fontSize: 12,
