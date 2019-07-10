@@ -32,14 +32,14 @@ import MorningModal from '../components/MorningModal';
 class HomeScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: null,
-    // headerTransparent: true,
     headerTitle: (
       <TopNav
-        pageTitle={'Dis Net Jy'}
+        pageTitle={'DNJ'}
         navigation={navigation}
         leftComponent={this.setLeftHeader}
       />
     )
+    // headerTransparent: true,
   });
 
   state = {
@@ -60,13 +60,10 @@ class HomeScreen extends React.PureComponent {
       random: !this.state.random
     });
     if (this.state.random) {
-      this.setLeftHeader();
       const options = ['body', 'date', 'id', 'name'];
       const orders = ['asc', 'desc'];
-
       const rand = options[Math.floor(Math.random() * options.length)];
       const randorders = orders[Math.floor(Math.random() * orders.length)];
-
       await this.setState({
         isFetching: true,
         orderBy: rand,
@@ -76,7 +73,6 @@ class HomeScreen extends React.PureComponent {
       });
       await this.initalFirebaseLoad();
     } else {
-      this.setLeftHeader();
       await this.setState({
         isFetching: true,
         orderBy: 'date',
@@ -139,7 +135,6 @@ class HomeScreen extends React.PureComponent {
   };
   async componentDidMount() {
     // AsyncStorage.removeItem('firstPost');
-    await this.setLeftHeader();
     await this.initalFirebaseLoad();
     await this.getGrantedToken();
     await setTimeout(() => {
@@ -243,9 +238,23 @@ class HomeScreen extends React.PureComponent {
     return (
       <ScreenBackground style={styles.container}>
         <TopNav
-          pageTitle={'Dis Net Jy'}
+          pageTitle={'DIS NET JY'}
           navigation={this.props.navigation}
-          leftComponent={this.setLeftHeader}
+          leftComponent={
+            <Button transparent onPress={() => this._reload()}>
+              {this.state.random ? (
+                <Icon
+                  name="refresh"
+                  style={{ color: '#999', paddingBottom: 20 }}
+                />
+              ) : (
+                <Icon
+                  name="shuffle"
+                  style={{ color: '#999', paddingBottom: 20 }}
+                />
+              )}
+            </Button>
+          }
         />
         <MorningModal navigation={this.props.navigation} />
         <UpdateUserInfo />

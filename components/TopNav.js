@@ -43,13 +43,14 @@ class TopNav extends Component {
         <Col>
           <NavBarHeaderText> {this.props.pageTitle} </NavBarHeaderText>
         </Col>
-        <Col
+        {/* <Col
           style={{
-            width: '10%'
+            width: '10%',
+            marginRight: 10
           }}
-        >
-          {this.props.leftComponent}
-        </Col>
+        > */}
+        {this.props.leftComponent}
+        {/* </Col> */}
       </NavBarView>
     );
   }
