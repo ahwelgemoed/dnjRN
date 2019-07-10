@@ -11,6 +11,7 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
+import { firestoreConnect } from 'react-redux-firebase';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { DangerZone } from 'expo';
 import wiggly from '../components/data.json';
@@ -19,12 +20,23 @@ import { ScreenBackground, PoemName } from '../components/Styles';
 class AuthLoadingScreen extends React.Component {
   state = { firstVisit: null, animation: null, speed: 1, modalVisible: false };
 
+  componentDidMount() {
+    const { firestore } = this.props;
+    firestore
+      .get({
+        collection: 'appStatus'
+      })
+      .then(() => {
+        this.setState({
+          appStatus: this.props.appStatus,
+          isFetching: false,
+          loading: false
+        });
+      });
+  }
   constructor(props) {
     super(props);
   }
-  // componentDidMount() {
-  //   // this._bootstrapAsync();
-  // }
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('userToke');
@@ -44,6 +56,8 @@ class AuthLoadingScreen extends React.Component {
   }
 
   render() {
+    console.log(this.props.appStatus);
+
     const { auth } = this.props;
     if (!isLoaded(auth)) {
       return <ScreenBackground style={styles.mainContent} />;
@@ -89,6 +103,15 @@ const styles = StyleSheet.create({
 });
 
 export default compose(
-  withFirebase,
-  connect(({ firebase: { auth } }) => ({ auth }))
+  firestoreConnect(),
+  connect(
+    state => ({
+      appStatus: state.firestore.ordered.appStatus,
+      profile: state.firebase.profile,
+      auth: state.firebase.auth,
+      addedPoem: state.poems.addedPoem,
+      theme: state.theme.isThemeDark
+    }),
+    {}
+  )
 )(AuthLoadingScreen);
