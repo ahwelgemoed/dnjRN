@@ -20,6 +20,7 @@ import RefreshButton from '../components/RefreshButton';
 import { firestoreConnect } from 'react-redux-firebase';
 // import { MonoText } from '../components/StyledText';
 import CardPoem from '../components/CardPoem';
+import NewCardPoem from '../components/NewCardPoem';
 import TandC from '../components/TandC';
 import Loading from '../components/Loading';
 import { Icon, Button } from 'native-base';

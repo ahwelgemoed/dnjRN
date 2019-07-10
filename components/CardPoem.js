@@ -35,6 +35,10 @@ import Dialog, {
 import Bookmark from './Bookmark';
 import { WebBrowser, Permissions } from 'expo';
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot';
+import {
+  CNRichTextView,
+  getDefaultStyles
+} from 'react-native-cn-richtext-editor';
 // import * as Permissions from 'expo-permissions';
 import {
   StyledText,
@@ -45,6 +49,15 @@ import {
 } from './Styles';
 // import { ScreenBackground } from './Styles';
 
+const defaultStyles = getDefaultStyles();
+let customStyles = {
+  ...defaultStyles,
+  body: { fontSize: 14 },
+  heading: { fontSize: 16 },
+  title: { fontSize: 20 },
+  ol: { fontSize: 14 },
+  ul: { fontSize: 12 }
+};
 class CardPoem extends Component {
   state = {
     userEdit: false,
@@ -267,9 +280,35 @@ class CardPoem extends Component {
               ) : null}
             </Col>
           </Row>
-          <PoemBodyText style={styles.body}>
-            {this.props.poem.body}
-          </PoemBodyText>
+          {this.props.poem.richText ? (
+            <View
+              style={{
+                flex: 1
+              }}
+            >
+              <CNRichTextView
+                text={this.props.poem.body}
+                styleList={customStyles}
+                foreColor={[theme ? '#EAEAEA' : '#232526']}
+                color={[theme ? '#EAEAEA' : '#232526']}
+                style={[
+                  theme
+                    ? {
+                        fontFamily: 'raleway-regular',
+                        color: '#D8D9D9'
+                      }
+                    : {
+                        color: '#D8D9D9',
+                        fontFamily: 'raleway-regular'
+                      }
+                ]}
+              />
+            </View>
+          ) : (
+            <PoemBodyText style={styles.body}>
+              {this.props.poem.body}
+            </PoemBodyText>
+          )}
           {!this.state.reportDialog ? (
             <Row>
               <Col>
@@ -599,6 +638,7 @@ const styles = StyleSheet.create({
   },
   body: {
     // width: screenWidth,
+    fontFamily: 'raleway-regular'
   },
   icon: {
     fontSize: 14

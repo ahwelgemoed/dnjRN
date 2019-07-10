@@ -7,13 +7,18 @@ import AddInstagramModal from '../components/AddInstagramModal';
 import { successfullyAddedPoem } from '../actions/poemsActions';
 import { ScreenBackground } from '../components/Styles';
 import {
+  HideWithKeyboard,
+  ShowWithKeyboard
+} from 'react-native-hide-with-keyboard';
+import {
   StyleSheet,
   Dimensions,
   AsyncStorage,
-  ScrollView,
   View,
   ActivityIndicator,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback
 } from 'react-native';
 import FirstPostModal from '../components/FirstPostModal';
 import {
@@ -23,6 +28,8 @@ import {
   Input,
   Label,
   Container,
+  Right,
+  Left,
   Textarea,
   Button,
   Text,
@@ -33,7 +40,23 @@ import {
   Icon
 } from 'native-base';
 import TopNav from '../components/TopNav';
+import CNRichTextEditor, {
+  CNToolbar,
+  getInitialObject,
+  convertToHtmlString,
+  getDefaultStyles,
+  convertToObject
+} from 'react-native-cn-richtext-editor';
 
+const defaultStyles = getDefaultStyles();
+let customStyles = {
+  ...defaultStyles,
+  body: { fontSize: 14 },
+  heading: { fontSize: 16 },
+  title: { fontSize: 20 },
+  ol: { fontSize: 14 },
+  ul: { fontSize: 12 }
+};
 class PostPoem extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: null,
@@ -45,35 +68,28 @@ class PostPoem extends Component {
       />
     )
   });
+  constructor(props) {
+    super(props);
 
-  // static navigationOptions = ({ navigation }) => ({
-  //   title: 'Post a Poem',
-  //   headerLeft: null,
-  //   headerRight: (
-  //     <Button transparent onPress={() => navigation.toggleDrawer()}>
-  //       <Icon name="menu" style={{ color: '#999' }} />
-  //     </Button>
-  //   ),
-  //   headerTitleStyle: {
-  //     fontFamily: 'raleway-boldI',
-  //     fontSize: 20
-  //   }
-  // });
-  state = {
-    withInstagram: false,
-    instagram: false,
-    body: '',
-    openFirstModal: false,
-    name: '',
-    update: false,
-    bookmarkedCount: 0,
-    handle: '',
-    nsfw: false,
-    adminNotes: 'None',
-    reported: false,
-    loading: false
-  };
+    this.state = {
+      selectedTag: 'body',
+      selectedStyles: [],
+      body: [getInitialObject()],
+      withInstagram: false,
+      instagram: false,
+      openFirstModal: false,
+      name: '',
+      update: false,
+      bookmarkedCount: 0,
+      handle: '',
+      nsfw: false,
+      adminNotes: 'None',
+      reported: false,
+      loading: false
+    };
 
+    this.editor = null;
+  }
   withInstagram = () => {
     this.setState({
       withInstagram: !this.state.withInstagram
@@ -129,24 +145,26 @@ class PostPoem extends Component {
       if (withInstagram) {
         payLoad = {
           date,
-          body,
+          body: convertToHtmlString(body),
           nsfw,
           reported,
           bookmarkedCount,
           name,
           adminNotes,
+          richText: true,
           handle: this.props.profile.Instagram,
           uid: auth.uid
         };
       } else {
         payLoad = {
           date,
-          body,
+          body: convertToHtmlString(body),
           adminNotes,
           nsfw,
           bookmarkedCount,
           name,
           reported,
+          richText: true,
           handle: '',
           uid: auth.uid
         };
@@ -186,24 +204,26 @@ class PostPoem extends Component {
       if (withInstagram) {
         payLoad = {
           date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0)),
-          body,
+          body: convertToHtmlString(body),
           nsfw,
           name,
           adminNotes,
           bookmarkedCount,
           reported,
           handle: this.props.profile.Instagram,
+          richText: true,
           uid: auth.uid
         };
       } else {
         payLoad = {
           date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0)),
           nsfw,
-          body,
+          body: convertToHtmlString(body),
           name,
           bookmarkedCount,
           reported,
           adminNotes,
+          richText: true,
           handle: '',
           uid: auth.uid
         };
@@ -225,7 +245,6 @@ class PostPoem extends Component {
               { id: docRef.id }
             )
             .then(() => {
-              console.log('2');
               this.props.navigation.navigate('Home');
               this.props.successfullyAddedPoem(true);
             })
@@ -260,12 +279,13 @@ class PostPoem extends Component {
     const body = navigation.getParam('body');
     const nsfw = navigation.getParam('nsfw');
     const date = navigation.getParam('date');
-    if (name) {
+    if (body) {
+      const convertBody = convertToObject(body);
       await this.setState({
         id,
         name,
         nsfw,
-        body,
+        body: convertBody,
         date,
         bookmarkedCount,
         update: true
@@ -277,124 +297,495 @@ class PostPoem extends Component {
       }
     }
   }
+  onStyleKeyPress = toolType => {
+    this.editor.applyToolbar(toolType);
+  };
+
+  onSelectedTagChanged = tag => {
+    this.setState({
+      selectedTag: tag
+    });
+  };
+
+  onSelectedStyleChanged = styles => {
+    this.setState({
+      selectedStyles: styles
+    });
+  };
+
+  onValueChanged = value => {
+    this.setState({
+      body: value
+    });
+  };
+
   render() {
     const { handle, body, firstPost } = this.state;
     const { theme } = this.props;
     return (
-      <ScreenBackground style={styles.container}>
+      <View
+        style={
+          theme
+            ? {
+                flex: 1,
+                paddingTop: 20,
+                fontFamily: 'raleway-regular',
+                backgroundColor: '#232526'
+              }
+            : {
+                flex: 1,
+                paddingTop: 20,
+                fontFamily: 'raleway-regular',
+                backgroundColor: '#EAEAEA'
+              }
+        }
+      >
         <TopNav
           pageTitle={'Post a Poem'}
           navigation={this.props.navigation}
           leftComponent={this.setLeftHeader}
         />
-        <ScrollView>
-          <Form>
-            <Item>
-              <Input
-                style={
-                  theme
-                    ? {
-                        color: '#D8D9D9',
-                        fontSize: 16,
-                        fontFamily: 'raleway-regular',
-                        textAlign: 'left'
-                      }
-                    : {
-                        color: '#2C2D2D',
-                        fontSize: 16,
-                        fontFamily: 'raleway-regular',
-                        textAlign: 'left'
-                      }
-                }
-                placeholder="Poem Title"
-                value={this.state.name}
-                onChangeText={text => this.setState({ name: text })}
-              />
-            </Item>
-            <Item>
-              <Textarea
-                style={
-                  theme
-                    ? {
-                        color: '#D8D9D9',
-                        fontSize: 16,
-                        width: screenWidth - 20,
-                        fontFamily: 'raleway-regular',
-                        textAlign: 'left'
-                      }
-                    : {
-                        color: '#2C2D2D',
-                        fontSize: 16,
-                        width: screenWidth - 20,
-                        fontFamily: 'raleway-regular',
-                        textAlign: 'left'
-                      }
-                }
-                rowSpan={5}
-                placeholder="Poem"
-                value={this.state.body}
-                onChangeText={text => this.setState({ body: text })}
-              />
-            </Item>
-            {this.props.profile.isLoaded && this.props.profile.Instagram ? (
+
+        <KeyboardAvoidingView
+          behavior="padding"
+          enabled
+          keyboardVerticalOffset={-50}
+          style={{
+            flex: 1,
+            backgroundColor: '#eee',
+            flexDirection: 'column',
+            justifyContent: 'flex-end'
+          }}
+        >
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View
+              style={
+                theme
+                  ? {
+                      flex: 1,
+                      paddingLeft: 12,
+                      paddingRight: 12,
+                      alignItems: 'stretch',
+                      flex: 1,
+                      paddingTop: 20,
+                      fontFamily: 'raleway-regular',
+                      backgroundColor: '#232526'
+                    }
+                  : {
+                      flex: 1,
+                      paddingLeft: 12,
+                      paddingRight: 12,
+                      alignItems: 'stretch',
+                      flex: 1,
+                      paddingTop: 20,
+                      fontFamily: 'raleway-regular',
+                      backgroundColor: '#EAEAEA'
+                    }
+              }
+            >
+              <ShowWithKeyboard
+                style={{ position: 'absolute', top: 0, right: 12 }}
+              >
+                <Button
+                  rounded
+                  small
+                  onPress={Keyboard.dismiss}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 12,
+                    backgroundColor: '#91D9D9'
+                  }}
+                >
+                  <Icon
+                    type="FontAwesome"
+                    name="chevron-down"
+                    style={{ fontSize: 12 }}
+                  />
+                </Button>
+              </ShowWithKeyboard>
               <ListItem>
-                <CheckBox
-                  color={'#000'}
-                  checked={this.state.withInstagram}
-                  onPress={this.withInstagram}
+                <Input
+                  style={
+                    theme
+                      ? {
+                          color: '#D8D9D9',
+                          fontSize: 16,
+                          fontFamily: 'raleway-regular',
+                          textAlign: 'left'
+                        }
+                      : {
+                          color: '#2C2D2D',
+                          fontSize: 16,
+                          fontFamily: 'raleway-regular',
+                          textAlign: 'left'
+                        }
+                  }
+                  placeholder="Poem Name"
+                  value={this.state.name}
+                  onChangeText={text => this.setState({ name: text })}
                 />
-                <Body>
-                  <Text style={styles.check}>
-                    Post as {this.props.profile.Instagram}
-                  </Text>
-                </Body>
               </ListItem>
-            ) : (
-              <React.Fragment>
-                <AddInstagramModal />
-              </React.Fragment>
-            )}
-            <ListItem>
-              <CheckBox
-                color={'#000'}
-                checked={this.state.nsfw}
-                onPress={this.nsfw}
+              <HideWithKeyboard>
+                {this.props.profile.isLoaded && this.props.profile.Instagram ? (
+                  <ListItem>
+                    <CheckBox
+                      color={'#000'}
+                      checked={this.state.withInstagram}
+                      onPress={this.withInstagram}
+                    />
+                    <Body>
+                      <Text style={styles.check}>
+                        Post as {this.props.profile.Instagram}
+                      </Text>
+                    </Body>
+                  </ListItem>
+                ) : (
+                  <React.Fragment>
+                    <AddInstagramModal />
+                  </React.Fragment>
+                )}
+                <ListItem>
+                  <CheckBox
+                    color={'#000'}
+                    checked={this.state.nsfw}
+                    onPress={this.nsfw}
+                  />
+                  <Body>
+                    <Text style={styles.check}>NSFW</Text>
+                  </Body>
+                </ListItem>
+              </HideWithKeyboard>
+              <CNRichTextEditor
+                placeholder={'Poem...'}
+                ref={input => (this.editor = input)}
+                onSelectedTagChanged={this.onSelectedTagChanged}
+                onSelectedStyleChanged={this.onSelectedStyleChanged}
+                value={this.state.body}
+                styleList={customStyles}
+                foreColor={[theme ? '#EAEAEA' : '#232526']}
+                style={[
+                  {
+                    marginTop: 10,
+                    shadowOpacity: 0.35,
+                    shadowRadius: 10,
+                    borderTopLeftRadius: 10,
+                    borderTopRightRadius: 10,
+                    shadowOffset: {
+                      width: 5,
+                      height: 0
+                    }
+                  },
+                  theme
+                    ? {
+                        fontFamily: 'raleway-regular',
+                        backgroundColor: '#3c3e40',
+                        shadowColor: '#404142',
+                        color: '#EAEAEA'
+                      }
+                    : {
+                        color: '#D8D9D9',
+                        fontFamily: 'raleway-regular',
+                        shadowColor: '#efefef',
+                        backgroundColor: '#fff'
+                      }
+                ]}
+                onValueChanged={this.onValueChanged}
               />
-              <Body>
-                <Text style={styles.check}>NSFW</Text>
-              </Body>
-            </ListItem>
-            <Button
-              style={styles.buttonIn}
-              block
-              light
-              onPress={this.postToPoem}
-            >
-              {this.state.loading ? <ActivityIndicator color={'#fff'} /> : null}
-              <Text style={styles.labelIn}>Post Poem</Text>
-            </Button>
-            <Button
-              block
-              style={styles.buttonItself}
-              bordered
-              warning
-              onPress={() => this.props.navigation.goBack()}
-            >
-              <Text style={styles.button}>Cancel</Text>
-            </Button>
-          </Form>
-          <FirstPostModal openFirstModal={this.state.openFirstModal} />
-        </ScrollView>
-      </ScreenBackground>
+            </View>
+          </TouchableWithoutFeedback>
+          <View
+            style={
+              theme
+                ? {
+                    minHeight: 14,
+                    backgroundColor: '#232526'
+                  }
+                : {
+                    minHeight: 14,
+                    backgroundColor: '#EAEAEA'
+                  }
+            }
+          >
+            <CNToolbar
+              size={20}
+              bold={
+                <Text style={[styles.toolbarButton, styles.boldButton]}>
+                  <Icon
+                    style={
+                      theme
+                        ? {
+                            paddingLeft: 5,
+                            paddingRight: 5,
+                            fontSize: 20,
+                            textAlign: 'left',
+                            fontFamily: 'raleway-regular',
+                            color: '#D8D9D9'
+                          }
+                        : {
+                            paddingLeft: 5,
+                            paddingRight: 5,
+                            fontSize: 20,
+                            textAlign: 'left',
+                            fontFamily: 'raleway-regular',
+                            color: '#2C2D2D'
+                          }
+                    }
+                    type="FontAwesome"
+                    name="bold"
+                  />
+                </Text>
+              }
+              italic={
+                <Text style={[styles.toolbarButton, styles.italicButton]}>
+                  <Icon
+                    style={
+                      theme
+                        ? {
+                            paddingLeft: 5,
+                            paddingRight: 5,
+                            fontSize: 20,
+                            textAlign: 'left',
+                            fontFamily: 'raleway-regular',
+                            color: '#D8D9D9'
+                          }
+                        : {
+                            paddingLeft: 5,
+                            paddingRight: 5,
+                            fontSize: 20,
+                            textAlign: 'left',
+                            fontFamily: 'raleway-regular',
+                            color: '#2C2D2D'
+                          }
+                    }
+                    type="FontAwesome"
+                    name="italic"
+                  />
+                </Text>
+              }
+              underline={
+                <Text style={[styles.toolbarButton, styles.underlineButton]}>
+                  <Icon
+                    style={
+                      theme
+                        ? {
+                            paddingLeft: 5,
+                            paddingRight: 5,
+                            fontSize: 20,
+                            textAlign: 'left',
+                            fontFamily: 'raleway-regular',
+                            color: '#D8D9D9'
+                          }
+                        : {
+                            paddingLeft: 5,
+                            paddingRight: 5,
+                            fontSize: 20,
+                            textAlign: 'left',
+                            fontFamily: 'raleway-regular',
+                            color: '#2C2D2D'
+                          }
+                    }
+                    type="FontAwesome"
+                    name="underline"
+                  />
+                </Text>
+              }
+              lineThrough={
+                <Text style={[styles.toolbarButton, styles.lineThroughButton]}>
+                  <Icon
+                    style={
+                      theme
+                        ? {
+                            paddingLeft: 5,
+                            paddingRight: 5,
+                            fontSize: 20,
+                            textAlign: 'left',
+                            fontFamily: 'raleway-regular',
+                            color: '#D8D9D9'
+                          }
+                        : {
+                            paddingLeft: 5,
+                            paddingRight: 5,
+                            fontSize: 20,
+                            textAlign: 'left',
+                            fontFamily: 'raleway-regular',
+                            color: '#2C2D2D'
+                          }
+                    }
+                    type="FontAwesome"
+                    name="strikethrough"
+                  />
+                </Text>
+              }
+              title={
+                <Text
+                  style={
+                    theme
+                      ? {
+                          paddingLeft: 5,
+                          paddingRight: 5,
+                          fontSize: 20,
+                          textAlign: 'left',
+                          fontFamily: 'raleway-regular',
+                          color: '#D8D9D9'
+                        }
+                      : {
+                          paddingLeft: 5,
+                          paddingRight: 5,
+                          fontSize: 20,
+                          textAlign: 'left',
+                          fontFamily: 'raleway-regular',
+                          color: '#2C2D2D'
+                        }
+                  }
+                >
+                  Title
+                </Text>
+              }
+              heading={
+                <Text
+                  style={
+                    theme
+                      ? {
+                          paddingLeft: 5,
+                          paddingRight: 5,
+                          fontSize: 20,
+                          textAlign: 'left',
+                          fontFamily: 'raleway-regular',
+                          color: '#D8D9D9'
+                        }
+                      : {
+                          paddingLeft: 5,
+                          paddingRight: 5,
+                          fontSize: 20,
+                          textAlign: 'left',
+                          fontFamily: 'raleway-regular',
+                          color: '#2C2D2D'
+                        }
+                  }
+                >
+                  Heading
+                </Text>
+              }
+              body={
+                <Text
+                  style={
+                    theme
+                      ? {
+                          paddingLeft: 5,
+                          paddingRight: 5,
+                          fontSize: 20,
+                          textAlign: 'left',
+                          fontFamily: 'raleway-regular',
+                          color: '#D8D9D9'
+                        }
+                      : {
+                          paddingLeft: 5,
+                          paddingRight: 5,
+                          fontSize: 20,
+                          textAlign: 'left',
+                          fontFamily: 'raleway-regular',
+                          color: '#2C2D2D'
+                        }
+                  }
+                >
+                  Text
+                </Text>
+              }
+              selectedTag={this.state.selectedTag}
+              selectedStyles={this.state.selectedStyles}
+              onStyleKeyPress={this.onStyleKeyPress}
+              selectedBackgroundColor={[theme ? '#757575' : '#757575']}
+              backgroundColor={[theme ? '#404142' : '#F5F6F7']}
+              color={[theme ? '#EAEAEA' : '#232526']}
+              style={
+                theme
+                  ? {
+                      fontFamily: 'raleway-regular',
+                      color: '#D8D9D9',
+                      backgroundColor: '#404142',
+                      borderWidth: 0
+                    }
+                  : {
+                      fontFamily: 'raleway-regular',
+                      color: '#2C2D2D',
+                      backgroundColor: '#F5F6F7',
+                      borderWidth: 0
+                    }
+              }
+            />
+          </View>
+          <View
+            style={
+              theme
+                ? {
+                    height: 50,
+                    flexDirection: 'row',
+                    backgroundColor: '#232526'
+                  }
+                : {
+                    height: 50,
+                    flexDirection: 'row',
+                    backgroundColor: '#EAEAEA'
+                  }
+            }
+          >
+            <Left>
+              <Button
+                style={styles.buttonItself}
+                bordered
+                small
+                warning
+                onPress={() => this.props.navigation.goBack()}
+              >
+                <Text style={styles.button}>Back</Text>
+              </Button>
+            </Left>
+            <Right>
+              <Button
+                small
+                style={styles.buttonIn}
+                light
+                onPress={this.postToPoem}
+              >
+                {this.state.loading ? (
+                  <ActivityIndicator color={'#fff'} />
+                ) : null}
+                <Text style={styles.labelIn}>Post Poem</Text>
+              </Button>
+            </Right>
+
+            <FirstPostModal openFirstModal={this.state.openFirstModal} />
+          </View>
+        </KeyboardAvoidingView>
+      </View>
     );
   }
 }
 let screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
-  mainContent: {
+  main: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center'
+    paddingLeft: 12,
+    paddingRight: 12,
+    alignItems: 'stretch'
+  },
+  toolbarButton: {
+    fontSize: 20,
+    fontFamily: 'raleway-regular',
+    textAlign: 'center'
+  },
+  italicButton: {
+    fontStyle: 'italic'
+  },
+  boldButton: {
+    fontWeight: 'bold'
+  },
+  underlineButton: {
+    textDecorationLine: 'underline'
+  },
+  lineThroughButton: {
+    textDecorationLine: 'line-through'
   },
   container: {
     width: screenWidth,
@@ -404,13 +795,17 @@ const styles = StyleSheet.create({
   labelIn: {
     color: '#fff',
     fontFamily: 'raleway-regular',
-    fontSize: 16
+    fontSize: 16,
+    textAlign: 'center'
   },
   buttonIn: {
     fontSize: 16,
-    backgroundColor: '#91D9D9',
-    marginTop: 20,
-    width: screenWidth - 80,
+    textAlign: 'center',
+    backgroundColor: '#757575',
+    marginTop: 5,
+    padding: 16,
+    width: '90%',
+    // width: screenWidth - 80,
     fontFamily: 'raleway-regular',
     alignSelf: 'center',
     textAlign: 'center'
@@ -427,9 +822,11 @@ const styles = StyleSheet.create({
     textAlign: 'left'
   },
   buttonItself: {
+    textAlign: 'center',
     fontSize: 16,
-    marginTop: 20,
-    width: screenWidth - 80,
+    marginTop: 5,
+    width: '90%',
+    // width: screenWidth - 80,
     fontFamily: 'raleway-regular',
     alignSelf: 'center',
     textAlign: 'center'
