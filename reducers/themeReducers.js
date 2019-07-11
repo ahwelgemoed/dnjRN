@@ -1,5 +1,6 @@
 const initialState = {
-  isThemeDark: false
+  isThemeDark: false,
+  toggleSwipeMode: false
 };
 
 export default function(state = initialState, action) {
@@ -8,6 +9,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isThemeDark: action.payload
+      };
+    case 'TOGGLE_SWIPEMODE':
+      return {
+        ...state,
+        toggleSwipeMode: action.payload
       };
 
     default:

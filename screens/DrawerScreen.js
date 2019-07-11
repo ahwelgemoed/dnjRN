@@ -153,7 +153,35 @@ class DrawerScreen extends Component {
             />
           </Right>
         </ListItem>
-
+        <ListItem onPress={this.changeTab.bind(this, 'YourPoems')}>
+          <Left>
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="person"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              Your Poems
+            </Text>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+            />
+          </Right>
+        </ListItem>
         <ListItem
           onPress={() => WebBrowser.openBrowserAsync('https://klyntji.com/')}
         >
@@ -296,24 +324,7 @@ class DrawerScreen extends Component {
                 ADMIN ONLY
               </Text>
             </ListItem>
-            <ListItem onPress={this.changeTab.bind(this, 'YourPoems')}>
-              <Icon
-                style={[
-                  theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
-                  styles.icons
-                ]}
-                name="person"
-              />
-              <Text
-                style={[
-                  theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
-                  styles.label
-                ]}
-              >
-                {' '}
-                Your Poems
-              </Text>
-            </ListItem>
+
             <ListItem onPress={this.activateDeleteAction}>
               <Icon
                 style={[
