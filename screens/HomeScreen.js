@@ -47,6 +47,7 @@ class HomeScreen extends React.PureComponent {
   state = {
     scrollPosition: '',
     name: '',
+    swipeForPoem: '',
     body: '',
     limit: 10,
     random: false,
@@ -136,7 +137,12 @@ class HomeScreen extends React.PureComponent {
       });
   };
   async componentDidMount() {
-    // AsyncStorage.removeItem('firstPost');
+    // await AsyncStorage.removeItem('swipeForPoem');
+    const swipeForPoem = JSON.parse(await AsyncStorage.getItem('swipeForPoem'));
+    await this.setState({
+      swipeForPoem
+    });
+
     await this.initalFirebaseLoad();
     await this.getGrantedToken();
     await setTimeout(() => {
@@ -157,6 +163,14 @@ class HomeScreen extends React.PureComponent {
     });
   };
   async componentDidUpdate(prevProps, prevState) {
+    // if (prevProps.swipeMode !== this.props.swipeMode) {
+    //   const swipeForPoem = JSON.parse(
+    //     await AsyncStorage.getItem('swipeForPoem')
+    //   );
+    //   await this.setState({
+    //     swipeForPoem
+    //   });
+    // }
     if (prevProps.addedPoem === false && this.props.addedPoem === true) {
       await this.initalFirebaseLoad();
       await this.props.successfullyAddedPoem(false);
@@ -230,16 +244,24 @@ class HomeScreen extends React.PureComponent {
     this.initalFirebaseLoad();
     this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
   };
-  _renderHeader = () => (
-    <View
-      style={{
-        width: screenWidth,
-        flex: 1
-      }}
-    >
-      <SwipeLottie />
-    </View>
-  );
+  // _renderHeader = () => {
+  //   if (!this.state.swipeForPoem) {
+  //     AsyncStorage.setItem('swipeForPoem', JSON.stringify('true'));
+  //     return (
+  //       <ScreenBackground
+  //         style={{
+  //           width: width,
+  //           height: height,
+  //           flex: 1
+  //         }}
+  //       >
+  //         <SwipeLottie />
+  //       </ScreenBackground>
+  //     );
+  //   } else {
+  //     return null;
+  //   }
+  // };
 
   render() {
     const { loading, poems } = this.state;
@@ -279,10 +301,12 @@ class HomeScreen extends React.PureComponent {
                 <View
                   style={{
                     paddingLeft: 20,
+                    height: height,
                     flex: 1
                   }}
                 >
                   <HZScroll
+                    style={{ height: height }}
                     scrollEventThrottle={160}
                     keyExtractor={(item, index) => index.toString()}
                     onScroll={this.handleScroll}
@@ -293,22 +317,25 @@ class HomeScreen extends React.PureComponent {
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
                     ListFooterComponent={() => (
-                      <View
+                      <ScreenBackground
                         style={{
-                          width: screenWidth,
-                          paddingLeft: 20,
-                          flex: 1
+                          flex: 1,
+                          alignItems: 'center',
+                          justifyContent: 'space-around',
+                          width: width,
+                          height: height
                         }}
                       >
                         <ActivityIndicator
                           style={{
-                            flex: 1
+                            flex: 1,
+                            height: height
                           }}
                           color={theme ? '#D8D9D9' : '#2C2D2D'}
                         />
-                      </View>
+                      </ScreenBackground>
                     )}
-                    ListHeaderComponent={this._renderHeader}
+                    // ListHeaderComponent={this._renderHeader}
                     ref={ref => {
                       this.flatListRef = ref;
                     }}
@@ -324,31 +351,37 @@ class HomeScreen extends React.PureComponent {
                 </View>
               </React.Fragment>
             ) : (
-              <FlatList
-                scrollEventThrottle={160}
-                onScroll={this.handleScroll}
-                onEndReached={this.onRefresh}
-                onEndReachedThreshold={0.5}
-                onRefresh={this.initalFirebaseLoad}
-                refreshing={this.state.isFetching}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={(item, index) => index.toString()}
-                ListHeaderComponent={this._renderHeader}
-                ListFooterComponent={() => (
-                  <ActivityIndicator color={theme ? '#D8D9D9' : '#2C2D2D'} />
-                )}
-                data={poems}
-                ref={ref => {
-                  this.flatListRef = ref;
+              <View
+                style={{
+                  // paddingLeft: 10,
+                  flex: 1
                 }}
-                renderItem={({ item, i }) => (
-                  <CardPoem
-                    poem={item}
-                    auth={this.props.auth}
-                    navigation={this.props.navigation}
-                  />
-                )}
-              />
+              >
+                <FlatList
+                  scrollEventThrottle={160}
+                  onScroll={this.handleScroll}
+                  onEndReached={this.onRefresh}
+                  onEndReachedThreshold={0.5}
+                  onRefresh={this.initalFirebaseLoad}
+                  refreshing={this.state.isFetching}
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={(item, index) => index.toString()}
+                  ListFooterComponent={() => (
+                    <ActivityIndicator color={theme ? '#D8D9D9' : '#2C2D2D'} />
+                  )}
+                  data={poems}
+                  ref={ref => {
+                    this.flatListRef = ref;
+                  }}
+                  renderItem={({ item, i }) => (
+                    <CardPoem
+                      poem={item}
+                      auth={this.props.auth}
+                      navigation={this.props.navigation}
+                    />
+                  )}
+                />
+              </View>
             )}
           </React.Fragment>
         ) : (
@@ -373,16 +406,13 @@ export default compose(
   )
 )(HomeScreen);
 
-let screenWidth = Dimensions.get('window').width;
+var { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
-    width: screenWidth,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+    flex: 1,
+    width: width
   },
   flatlist: {
     flex: 1,

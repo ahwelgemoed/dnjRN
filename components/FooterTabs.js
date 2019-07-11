@@ -81,14 +81,14 @@ class FooterTabs extends Component {
             <Icon name="add" style={{ color: '#999' }} />
             <Text style={{ color: '#999' }}>Post</Text>
           </Button>
-          <Button
+          {/* <Button
             style={{ color: '#999' }}
             vertical
             onPress={this.changeTab.bind(this, 'Settings')}
           >
             <Icon name="settings" style={{ color: '#999' }} />
             <Text style={{ color: '#999' }}>Settings</Text>
-          </Button>
+          </Button> */}
         </FooterTab>
       </Footer>
       // </Grid>

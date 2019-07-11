@@ -23,7 +23,7 @@ import { connect } from 'react-redux';
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 import { WebBrowser } from 'expo';
 import { activateDeleteAction } from '../actions/poemsActions';
-import { changePoem } from '../actions/themeActions';
+import { changePoem, toggleSwipeMode } from '../actions/themeActions';
 import OnlineUsers from '../components/OnlineUsers';
 import { ScreenBackground } from '../components/Styles';
 const { manifest } = Constants;
@@ -48,6 +48,9 @@ class DrawerScreen extends Component {
   };
   toggleDarkMode = () => {
     this.props.changePoem(!this.props.theme);
+  };
+  toggleSwipeMode = () => {
+    this.props.toggleSwipeMode(!this.props.swipeMode);
   };
 
   signOut = () => {
@@ -390,6 +393,37 @@ class DrawerScreen extends Component {
               />
             </Right>
           </ListItem>
+          <ListItem>
+            <Left>
+              <Icon
+                style={[
+                  theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                  styles.icons
+                ]}
+                name="fastforward"
+              />
+              <Text
+                style={[
+                  theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                  styles.label
+                ]}
+              >
+                {' '}
+                Swipe Mode
+              </Text>
+            </Left>
+            <Right>
+              <Switch
+                trackColor={{
+                  true: '#000',
+                  false: '#ddd'
+                }}
+                value={this.props.swipeMode}
+                style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
+                onValueChange={this.toggleSwipeMode}
+              />
+            </Right>
+          </ListItem>
           <ListItem
             onPress={this.signOut}
             style={{ borderBottomWidth: 0, borderTopWidth: 0 }}
@@ -465,8 +499,9 @@ export default compose(
       profile: state.firebase.profile,
       addedPoem: state.poems.addedPoem,
       activateDelete: state.poems.activateDelete,
-      theme: state.theme.isThemeDark
+      theme: state.theme.isThemeDark,
+      swipeMode: state.theme.toggleSwipeMode
     }),
-    { activateDeleteAction, changePoem }
+    { activateDeleteAction, changePoem, toggleSwipeMode }
   )
 )(DrawerScreen);

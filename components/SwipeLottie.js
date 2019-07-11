@@ -4,8 +4,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { successfullyAddedPoem } from '../actions/poemsActions';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { ScreenBackground, PoemName } from '../components/Styles';
 import { firestoreConnect } from 'react-redux-firebase';
+import { ScreenBackground } from './Styles';
 import { DangerZone } from 'expo';
 import { Button } from 'native-base';
 import wiggly from './swipe.json';
@@ -49,7 +49,7 @@ class SwipeLottie extends React.PureComponent {
 
   render() {
     return (
-      <View style={styles.mainContent}>
+      <ScreenBackground style={styles.mainContent}>
         {this.state.animation && (
           <Lottie
             ref={animation => {
@@ -75,7 +75,7 @@ class SwipeLottie extends React.PureComponent {
         >
           Swipe for Poems
         </Text>
-      </View>
+      </ScreenBackground>
     );
   }
 }
@@ -93,7 +93,6 @@ export default compose(
 const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
-    backgroundColor: '#EAEAEA',
     alignItems: 'center',
     justifyContent: 'space-around',
     paddingLeft: 12,
