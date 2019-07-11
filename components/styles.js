@@ -50,7 +50,7 @@ export const NavBarView = styled.View`
 `;
 export const NavBarHeaderText = styled.Text`
   font-family: 'raleway-boldI';
-  font-size: 20;
+  font-size: 22;
   width: 100%;
   text-align: center;
   color: ${props => props.theme.FONT_COLOR};

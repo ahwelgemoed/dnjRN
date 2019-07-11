@@ -51,6 +51,8 @@ class RefreshButton extends Component {
   }
 
   render() {
+    console.log(this.props.presence);
+
     return (
       <Box
         style={{

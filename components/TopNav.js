@@ -32,7 +32,7 @@ class TopNav extends Component {
       >
         <Col
           style={{
-            width: '10%',
+            width: '15%',
             marginLeft: 10
           }}
         >
@@ -43,9 +43,16 @@ class TopNav extends Component {
         <Col>
           <NavBarHeaderText> {this.props.pageTitle} </NavBarHeaderText>
         </Col>
+        {/* <Col
+          style={{
+            width: '10%',
+            marginRight: 10
+          }}
+        > */}
         <Col
           style={{
-            width: '10%'
+            width: '15%',
+            marginRight: 10
           }}
         >
           {this.props.leftComponent}
