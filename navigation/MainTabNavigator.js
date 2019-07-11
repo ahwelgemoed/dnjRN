@@ -18,11 +18,11 @@ import FooterTabs from '../components/FooterTabs';
 
 const HomeStack = createStackNavigator(
   {
-    Settings: {
-      screen: Settings
-    },
     Home: {
       screen: HomeScreen
+    },
+    Settings: {
+      screen: Settings
     },
     Post: {
       screen: PostPoem
