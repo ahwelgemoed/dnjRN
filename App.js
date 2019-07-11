@@ -44,11 +44,11 @@ export default class App extends React.Component {
         <Provider store={store}>
           <Root>
             <View style={styles.container}>
-              {/* <Version> */}
-              <Maintanince>
-                <Index />
-              </Maintanince>
-              {/* </Version> */}
+              <Version>
+                <Maintanince>
+                  <Index />
+                </Maintanince>
+              </Version>
             </View>
           </Root>
         </Provider>
