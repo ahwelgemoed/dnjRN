@@ -510,111 +510,71 @@ class PostPoem extends Component {
             <CNToolbar
               size={20}
               bold={
-                <Text style={[styles.toolbarButton, styles.boldButton]}>
-                  <Icon
-                    style={
-                      theme
-                        ? {
-                            paddingLeft: 5,
-                            paddingRight: 5,
-                            fontSize: 20,
-                            textAlign: 'left',
-                            fontFamily: 'raleway-regular',
-                            color: '#D8D9D9'
-                          }
-                        : {
-                            paddingLeft: 5,
-                            paddingRight: 5,
-                            fontSize: 20,
-                            textAlign: 'left',
-                            fontFamily: 'raleway-regular',
-                            color: '#2C2D2D'
-                          }
-                    }
-                    type="FontAwesome"
-                    name="bold"
-                  />
+                <Text
+                  style={[
+                    styles.toolbarButton,
+                    styles.boldButton,
+                    theme
+                      ? {
+                          color: '#D8D9D9'
+                        }
+                      : {
+                          color: '#2C2D2D'
+                        }
+                  ]}
+                >
+                  B
                 </Text>
               }
               italic={
-                <Text style={[styles.toolbarButton, styles.italicButton]}>
-                  <Icon
-                    style={
-                      theme
-                        ? {
-                            paddingLeft: 5,
-                            paddingRight: 5,
-                            fontSize: 20,
-                            textAlign: 'left',
-                            fontFamily: 'raleway-regular',
-                            color: '#D8D9D9'
-                          }
-                        : {
-                            paddingLeft: 5,
-                            paddingRight: 5,
-                            fontSize: 20,
-                            textAlign: 'left',
-                            fontFamily: 'raleway-regular',
-                            color: '#2C2D2D'
-                          }
-                    }
-                    type="FontAwesome"
-                    name="italic"
-                  />
+                <Text
+                  style={[
+                    styles.toolbarButton,
+                    styles.italicButton,
+                    theme
+                      ? {
+                          color: '#D8D9D9'
+                        }
+                      : {
+                          color: '#2C2D2D'
+                        }
+                  ]}
+                >
+                  I
                 </Text>
               }
               underline={
-                <Text style={[styles.toolbarButton, styles.underlineButton]}>
-                  <Icon
-                    style={
-                      theme
-                        ? {
-                            paddingLeft: 5,
-                            paddingRight: 5,
-                            fontSize: 20,
-                            textAlign: 'left',
-                            fontFamily: 'raleway-regular',
-                            color: '#D8D9D9'
-                          }
-                        : {
-                            paddingLeft: 5,
-                            paddingRight: 5,
-                            fontSize: 20,
-                            textAlign: 'left',
-                            fontFamily: 'raleway-regular',
-                            color: '#2C2D2D'
-                          }
-                    }
-                    type="FontAwesome"
-                    name="underline"
-                  />
+                <Text
+                  style={[
+                    styles.toolbarButton,
+                    styles.underlineButton,
+                    theme
+                      ? {
+                          color: '#D8D9D9'
+                        }
+                      : {
+                          color: '#2C2D2D'
+                        }
+                  ]}
+                >
+                  U
                 </Text>
               }
               lineThrough={
-                <Text style={[styles.toolbarButton, styles.lineThroughButton]}>
-                  <Icon
-                    style={
-                      theme
-                        ? {
-                            paddingLeft: 5,
-                            paddingRight: 5,
-                            fontSize: 20,
-                            textAlign: 'left',
-                            fontFamily: 'raleway-regular',
-                            color: '#D8D9D9'
-                          }
-                        : {
-                            paddingLeft: 5,
-                            paddingRight: 5,
-                            fontSize: 20,
-                            textAlign: 'left',
-                            fontFamily: 'raleway-regular',
-                            color: '#2C2D2D'
-                          }
-                    }
-                    type="FontAwesome"
-                    name="strikethrough"
-                  />
+                <Text
+                  style={[
+                    styles.toolbarButton,
+                    styles.lineThroughButton,
+                    theme
+                      ? {
+                          color: '#D8D9D9'
+                        }
+                      : {
+                          color: '#2C2D2D'
+                        }
+                  ]}
+                >
+                  S
                 </Text>
               }
               title={
@@ -622,16 +582,14 @@ class PostPoem extends Component {
                   style={
                     theme
                       ? {
-                          paddingLeft: 5,
-                          paddingRight: 5,
+                          padding: 5,
                           fontSize: 20,
                           textAlign: 'left',
                           fontFamily: 'raleway-regular',
                           color: '#D8D9D9'
                         }
                       : {
-                          paddingLeft: 5,
-                          paddingRight: 5,
+                          padding: 5,
                           fontSize: 20,
                           textAlign: 'left',
                           fontFamily: 'raleway-regular',
@@ -647,16 +605,14 @@ class PostPoem extends Component {
                   style={
                     theme
                       ? {
-                          paddingLeft: 5,
-                          paddingRight: 5,
+                          padding: 5,
                           fontSize: 20,
                           textAlign: 'left',
                           fontFamily: 'raleway-regular',
                           color: '#D8D9D9'
                         }
                       : {
-                          paddingLeft: 5,
-                          paddingRight: 5,
+                          padding: 5,
                           fontSize: 20,
                           textAlign: 'left',
                           fontFamily: 'raleway-regular',
@@ -672,16 +628,14 @@ class PostPoem extends Component {
                   style={
                     theme
                       ? {
-                          paddingLeft: 5,
-                          paddingRight: 5,
+                          padding: 5,
                           fontSize: 20,
                           textAlign: 'left',
                           fontFamily: 'raleway-regular',
                           color: '#D8D9D9'
                         }
                       : {
-                          paddingLeft: 5,
-                          paddingRight: 5,
+                          padding: 5,
                           fontSize: 20,
                           textAlign: 'left',
                           fontFamily: 'raleway-regular',
@@ -695,7 +649,7 @@ class PostPoem extends Component {
               selectedTag={this.state.selectedTag}
               selectedStyles={this.state.selectedStyles}
               onStyleKeyPress={this.onStyleKeyPress}
-              selectedBackgroundColor={[theme ? '#757575' : '#757575']}
+              selectedBackgroundColor={[theme ? '#757575' : '#e7e9ec']}
               backgroundColor={[theme ? '#404142' : '#F5F6F7']}
               color={[theme ? '#EAEAEA' : '#232526']}
               style={
@@ -772,6 +726,8 @@ const styles = StyleSheet.create({
   },
   toolbarButton: {
     fontSize: 20,
+    padding: 5,
+
     fontFamily: 'raleway-regular',
     textAlign: 'center'
   },
@@ -801,7 +757,7 @@ const styles = StyleSheet.create({
   buttonIn: {
     fontSize: 16,
     textAlign: 'center',
-    backgroundColor: '#757575',
+    backgroundColor: '#91D9D9',
     marginTop: 5,
     padding: 16,
     width: '90%',

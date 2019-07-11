@@ -238,19 +238,19 @@ class HomeScreen extends React.PureComponent {
     return (
       <ScreenBackground style={styles.container}>
         <TopNav
-          pageTitle={'DIS NET JY'}
+          pageTitle={'DNJ'}
           navigation={this.props.navigation}
           leftComponent={
             <Button transparent onPress={() => this._reload()}>
               {this.state.random ? (
                 <Icon
                   name="refresh"
-                  style={{ color: '#999', paddingBottom: 20 }}
+                  style={{ color: '#999', paddingBottom: 40 }}
                 />
               ) : (
                 <Icon
                   name="shuffle"
-                  style={{ color: '#999', paddingBottom: 20 }}
+                  style={{ color: '#999', paddingBottom: 40 }}
                 />
               )}
             </Button>
