@@ -1,4 +1,6 @@
 import styled from 'styled-components/native';
+import { Dimensions } from 'react-native';
+var { height, width } = Dimensions.get('window');
 export const StyledText = styled.View`
   shadow-opacity: 0.35;
   shadow-radius: 10px;
@@ -36,9 +38,9 @@ export const InstagramText = styled.Text`
 `;
 export const ScreenBackground = styled.SafeAreaView`
   flex: 1;
-  /* padding-top: 160; */
   background-color: ${props => props.theme.SCREEN_BACKGROUND};
   justify-content: center;
+  height: ${height};
   align-items: center;
   padding-left: 15;
   padding-right: 15;
