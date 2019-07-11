@@ -12,6 +12,7 @@ import {
   Text
 } from 'react-native';
 import { Notifications } from 'expo';
+import { HZScroll } from 'horizontaltextscroll';
 import * as Permissions from 'expo-permissions';
 import { successfullyAddedPoem } from '../actions/poemsActions';
 import { connect } from 'react-redux';
@@ -28,6 +29,7 @@ import UpdateUserInfo from '../components/UpdateUserInfo';
 import { ScreenBackground } from '../components/Styles';
 import TopNav from '../components/TopNav';
 import MorningModal from '../components/MorningModal';
+import SwipeLottie from '../components/SwipeLottie';
 
 class HomeScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
@@ -45,6 +47,7 @@ class HomeScreen extends React.PureComponent {
   state = {
     scrollPosition: '',
     name: '',
+    swipeForPoem: '',
     body: '',
     limit: 10,
     random: false,
@@ -134,7 +137,12 @@ class HomeScreen extends React.PureComponent {
       });
   };
   async componentDidMount() {
-    // AsyncStorage.removeItem('firstPost');
+    // await AsyncStorage.removeItem('swipeForPoem');
+    const swipeForPoem = JSON.parse(await AsyncStorage.getItem('swipeForPoem'));
+    await this.setState({
+      swipeForPoem
+    });
+
     await this.initalFirebaseLoad();
     await this.getGrantedToken();
     await setTimeout(() => {
@@ -155,6 +163,14 @@ class HomeScreen extends React.PureComponent {
     });
   };
   async componentDidUpdate(prevProps, prevState) {
+    // if (prevProps.swipeMode !== this.props.swipeMode) {
+    //   const swipeForPoem = JSON.parse(
+    //     await AsyncStorage.getItem('swipeForPoem')
+    //   );
+    //   await this.setState({
+    //     swipeForPoem
+    //   });
+    // }
     if (prevProps.addedPoem === false && this.props.addedPoem === true) {
       await this.initalFirebaseLoad();
       await this.props.successfullyAddedPoem(false);
@@ -224,17 +240,33 @@ class HomeScreen extends React.PureComponent {
         });
     });
   };
-  // componentWillMount() {
-  // }
-
   clickedRefreshButton = () => {
     this.initalFirebaseLoad();
     this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
   };
+  // _renderHeader = () => {
+  //   if (!this.state.swipeForPoem) {
+  //     AsyncStorage.setItem('swipeForPoem', JSON.stringify('true'));
+  //     return (
+  //       <ScreenBackground
+  //         style={{
+  //           width: width,
+  //           height: height,
+  //           flex: 1
+  //         }}
+  //       >
+  //         <SwipeLottie />
+  //       </ScreenBackground>
+  //     );
+  //   } else {
+  //     return null;
+  //   }
+  // };
 
   render() {
     const { loading, poems } = this.state;
-    const { theme } = this.props;
+    const { theme, swipeMode } = this.props;
+
     return (
       <ScreenBackground style={styles.container}>
         <TopNav
@@ -258,39 +290,99 @@ class HomeScreen extends React.PureComponent {
         />
         <MorningModal navigation={this.props.navigation} />
         <UpdateUserInfo />
-
-        {/* <TandC /> */}
         {poems ? (
           <React.Fragment>
-            {/* <Text>{poems.length}</Text> */}
             <RefreshButton
               scroll={this.state.scrollPosition}
               clickedRefreshButton={this.clickedRefreshButton}
             />
-            <FlatList
-              scrollEventThrottle={160}
-              onScroll={this.handleScroll}
-              onEndReached={this.onRefresh}
-              onEndReachedThreshold={0.5}
-              onRefresh={this.initalFirebaseLoad}
-              refreshing={this.state.isFetching}
-              showsVerticalScrollIndicator={false}
-              keyExtractor={(item, index) => index.toString()}
-              ListFooterComponent={() => (
-                <ActivityIndicator color={theme ? '#D8D9D9' : '#2C2D2D'} />
-              )}
-              data={poems}
-              ref={ref => {
-                this.flatListRef = ref;
-              }}
-              renderItem={({ item, i }) => (
-                <CardPoem
-                  poem={item}
-                  auth={this.props.auth}
-                  navigation={this.props.navigation}
+            {swipeMode ? (
+              <React.Fragment>
+                <View
+                  style={{
+                    paddingLeft: 20,
+                    height: height,
+                    flex: 1
+                  }}
+                >
+                  <HZScroll
+                    style={{ height: height }}
+                    scrollEventThrottle={160}
+                    keyExtractor={(item, index) => index.toString()}
+                    onScroll={this.handleScroll}
+                    onEndReached={this.onRefresh}
+                    onEndReachedThreshold={0.5}
+                    onRefresh={this.initalFirebaseLoad}
+                    refreshing={this.state.isFetching}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    ListFooterComponent={() => (
+                      <ScreenBackground
+                        style={{
+                          flex: 1,
+                          alignItems: 'center',
+                          justifyContent: 'space-around',
+                          width: width,
+                          height: height
+                        }}
+                      >
+                        <ActivityIndicator
+                          style={{
+                            flex: 1,
+                            height: height
+                          }}
+                          color={theme ? '#D8D9D9' : '#2C2D2D'}
+                        />
+                      </ScreenBackground>
+                    )}
+                    // ListHeaderComponent={this._renderHeader}
+                    ref={ref => {
+                      this.flatListRef = ref;
+                    }}
+                    data={poems}
+                    components={item => (
+                      <CardPoem
+                        poem={item}
+                        auth={this.props.auth}
+                        navigation={this.props.navigation}
+                      />
+                    )}
+                  />
+                </View>
+              </React.Fragment>
+            ) : (
+              <View
+                style={{
+                  // paddingLeft: 10,
+                  flex: 1
+                }}
+              >
+                <FlatList
+                  scrollEventThrottle={160}
+                  onScroll={this.handleScroll}
+                  onEndReached={this.onRefresh}
+                  onEndReachedThreshold={0.5}
+                  onRefresh={this.initalFirebaseLoad}
+                  refreshing={this.state.isFetching}
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={(item, index) => index.toString()}
+                  ListFooterComponent={() => (
+                    <ActivityIndicator color={theme ? '#D8D9D9' : '#2C2D2D'} />
+                  )}
+                  data={poems}
+                  ref={ref => {
+                    this.flatListRef = ref;
+                  }}
+                  renderItem={({ item, i }) => (
+                    <CardPoem
+                      poem={item}
+                      auth={this.props.auth}
+                      navigation={this.props.navigation}
+                    />
+                  )}
                 />
-              )}
-            />
+              </View>
+            )}
           </React.Fragment>
         ) : (
           <ActivityIndicator color={theme ? '#D8D9D9' : '#2C2D2D'} />
@@ -307,17 +399,20 @@ export default compose(
       profile: state.firebase.profile,
       auth: state.firebase.auth,
       addedPoem: state.poems.addedPoem,
-      theme: state.theme.isThemeDark
+      theme: state.theme.isThemeDark,
+      swipeMode: state.theme.toggleSwipeMode
     }),
     { successfullyAddedPoem }
   )
 )(HomeScreen);
 
-let screenWidth = Dimensions.get('window').width;
+var { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
-    width: screenWidth
+    justifyContent: 'center',
+    flex: 1,
+    width: width
   },
   flatlist: {
     flex: 1,

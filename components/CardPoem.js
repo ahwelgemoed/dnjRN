@@ -566,7 +566,7 @@ export default compose(
   )
 )(CardPoem);
 
-let screenWidth = Dimensions.get('window').width - 60;
+let screenWidth = Dimensions.get('window').width - 20;
 let screenWidths = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   selected: {

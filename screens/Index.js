@@ -12,12 +12,15 @@ import styled, { ThemeProvider } from 'styled-components';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { darkTheme, lightTheme } from '../components/theme';
-import { changePoem } from '../actions/themeActions';
+import { changePoem, toggleSwipeMode } from '../actions/themeActions';
+import { ScreenBackground } from '../components/Styles';
 
 class Index extends Component {
   async componentDidMount() {
     const theme = JSON.parse(await AsyncStorage.getItem('theme'));
+    const swipe = JSON.parse(await AsyncStorage.getItem('swipe'));
     await this.props.changePoem(theme);
+    await this.props.toggleSwipeMode(swipe);
   }
   render() {
     const { theme } = this.props;
@@ -29,7 +32,6 @@ class Index extends Component {
           ) : (
             <StatusBar translucent barStyle="dark-content" />
           )}
-
           <AppNavigator />
         </React.Fragment>
       </ThemeProvider>
@@ -64,6 +66,6 @@ export default compose(
       addedPoem: state.poems.addedPoem,
       theme: state.theme.isThemeDark
     }),
-    { changePoem }
+    { changePoem, toggleSwipeMode }
   )
 )(Index);

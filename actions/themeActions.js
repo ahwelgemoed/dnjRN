@@ -6,3 +6,10 @@ export const changePoem = payLoad => async dispatch => {
     payload: payLoad
   });
 };
+export const toggleSwipeMode = payLoad => async dispatch => {
+  await AsyncStorage.setItem('swipe', JSON.stringify(payLoad));
+  dispatch({
+    type: 'TOGGLE_SWIPEMODE',
+    payload: payLoad
+  });
+};
