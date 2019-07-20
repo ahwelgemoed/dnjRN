@@ -52,8 +52,8 @@ import {
 const defaultStyles = getDefaultStyles();
 let customStyles = {
   ...defaultStyles,
-  body: { fontSize: 14 },
-  heading: { fontSize: 16 },
+  body: { fontSize: 16, fontFamily: 'raleway-regular' },
+  heading: { fontSize: 18 },
   title: { fontSize: 20 },
   ol: { fontSize: 14 },
   ul: { fontSize: 12 }
@@ -217,18 +217,18 @@ class CardPoem extends Component {
         ref={ref => {
           this[`${this.props.poem.id}`] = ref;
         }}
-        style={
-          !this.props.profile.seensfw && this.props.poem.nsfw
-            ? { display: 'none', width: screenWidth }
-            : { width: screenWidth }
-        }
+        // style={
+        //   !this.props.profile.seensfw && this.props.poem.nsfw
+        //     ? { display: 'none', width: screenWidth }
+        //     : { width: screenWidth }
+        // }
       >
         <View
           style={{
             paddingLeft: 20,
             paddingBottom: 20,
             paddingRight: 20,
-            width: '100%'
+            width: '80%'
           }}
         >
           {this.state.bookmarked ? (
@@ -566,7 +566,7 @@ export default compose(
   )
 )(CardPoem);
 
-let screenWidth = Dimensions.get('window').width - 20;
+let screenWidth = Dimensions.get('window').width ;
 let screenWidths = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   selected: {
@@ -576,7 +576,7 @@ const styles = StyleSheet.create({
     width: 10
   },
   mainContent: {
-    width: screenWidth,
+    // width: screenWidth,
     alignItems: 'center',
     paddingTop: 20,
     paddingLeft: 12,

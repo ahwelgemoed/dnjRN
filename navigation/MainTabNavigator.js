@@ -21,11 +21,11 @@ const HomeStack = createStackNavigator(
     Home: {
       screen: HomeScreen
     },
-    Settings: {
-      screen: Settings
-    },
     Post: {
       screen: PostPoem
+    },
+    Settings: {
+      screen: Settings
     },
     YourPoems: {
       screen: YourPoems

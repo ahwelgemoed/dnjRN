@@ -12,7 +12,7 @@ import {
   Text
 } from 'react-native';
 import { Notifications } from 'expo';
-import { HZScroll } from 'horizontaltextscroll';
+// import { HZScroll } from 'horizontaltextscroll';
 import * as Permissions from 'expo-permissions';
 import { successfullyAddedPoem } from '../actions/poemsActions';
 import { connect } from 'react-redux';
@@ -21,6 +21,7 @@ import RefreshButton from '../components/RefreshButton';
 import { firestoreConnect } from 'react-redux-firebase';
 // import { MonoText } from '../components/StyledText';
 import CardPoem from '../components/CardPoem';
+import NewPoem from '../components/NewPoem';
 import NewCardPoem from '../components/NewCardPoem';
 import TandC from '../components/TandC';
 import Loading from '../components/Loading';
@@ -305,7 +306,7 @@ class HomeScreen extends React.PureComponent {
                     flex: 1
                   }}
                 >
-                  <HZScroll
+                  {/* <HZScroll
                     style={{ height: height }}
                     scrollEventThrottle={160}
                     keyExtractor={(item, index) => index.toString()}
@@ -347,17 +348,24 @@ class HomeScreen extends React.PureComponent {
                         navigation={this.props.navigation}
                       />
                     )}
-                  />
+                  /> */}
                 </View>
               </React.Fragment>
             ) : (
               <View
                 style={{
-                  // paddingLeft: 10,
+                  width: width,
+                  justifyContent: 'center',
+                  alignItems: 'center',
                   flex: 1
                 }}
               >
                 <FlatList
+                  contentContainerStyle={{
+                    width: width,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
                   scrollEventThrottle={160}
                   onScroll={this.handleScroll}
                   onEndReached={this.onRefresh}
@@ -374,11 +382,16 @@ class HomeScreen extends React.PureComponent {
                     this.flatListRef = ref;
                   }}
                   renderItem={({ item, i }) => (
-                    <CardPoem
+                    <NewPoem
                       poem={item}
                       auth={this.props.auth}
                       navigation={this.props.navigation}
                     />
+                    // <CardPoem
+                    //   poem={item}
+                    //   auth={this.props.auth}
+                    //   navigation={this.props.navigation}
+                    // />
                   )}
                 />
               </View>
@@ -412,6 +425,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     flex: 1,
+    alignItems: 'center',
     width: width
   },
   flatlist: {

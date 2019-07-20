@@ -1,8 +1,8 @@
 export const lightTheme = {
   CARD_BACKGROUND: '#ffffff',
-  CARD_FONT_COLOR: '#2C2D2D',
-  FONT_COLOR: '#2C2D2D',
-  SCREEN_BACKGROUND: '#EAEAEA'
+  CARD_FONT_COLOR: '#474554',
+  FONT_COLOR: '#474554',
+  SCREEN_BACKGROUND: '#fafafa'
 };
 export const darkTheme = {
   CARD_BACKGROUND: '#2C2D2D',

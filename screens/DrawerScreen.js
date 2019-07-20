@@ -62,7 +62,7 @@ class DrawerScreen extends Component {
     const { profile, theme } = this.props;
     // const { theme } = this.props;
     return (
-      <ScreenBackground style={styles.container}>
+      <View style={styles.container}>
         {/* <Content> */}
         <ListItem>
           <Text style={styles.label}>
@@ -456,7 +456,7 @@ class DrawerScreen extends Component {
             </Text>
           </ListItem>
         </View>
-      </ScreenBackground>
+      </View>
     );
   }
 }

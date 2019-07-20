@@ -2,18 +2,16 @@ import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 var { height, width } = Dimensions.get('window');
 export const StyledText = styled.View`
-  shadow-opacity: 0.35;
-  shadow-radius: 10px;
+  shadow-radius: 20px;
   border-radius: 10px;
-  shadow-color: rgba(0, 0, 0, 0.2);
-  shadow-offset: 1px 1px;
+  shadow-color: rgba(0, 0, 0, 0.1);
+  shadow-offset: 0px 0px;
   background: ${props => props.theme.CARD_BACKGROUND};
   color: ${props => props.theme.CARD_FONT_COLOR};
-  /* margin: 10px;
-  padding: 10px; */
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
+  margin-top: 30px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  width: ${width - 40};
+  padding: 20px;
 `;
 export const PoemName = styled.Text`
   color: ${props => props.theme.CARD_FONT_COLOR};
@@ -41,6 +39,7 @@ export const ScreenBackground = styled.SafeAreaView`
   background-color: ${props => props.theme.SCREEN_BACKGROUND};
   justify-content: center;
   height: ${height};
+  width: ${width};
   align-items: center;
   padding-left: 15;
   padding-right: 15;
@@ -52,9 +51,7 @@ export const NavBarView = styled.View`
 `;
 export const NavBarHeaderText = styled.Text`
   font-family: 'raleway-boldI';
-  font-size: 22;
-  width: 100%;
-  text-align: center;
+  font-size: 40;
   color: ${props => props.theme.FONT_COLOR};
 `;
 export const DrawerText = styled.Text`
