@@ -20,7 +20,8 @@
             "native-base",
             "static-container",
             "react-native-pose",
-            "react-pose-core"
+            "react-pose-core",
+            "styled-components"
           ]
         }
       }

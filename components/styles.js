@@ -18,7 +18,7 @@ export const PoemName = styled.Text`
   font-size: 22;
   padding-top: 10;
   width: 90%;
-  font-family: 'raleway-bold';
+  font-family: 'PTSansCaptionBold';
   text-align: left;
 `;
 export const PoemBodyText = styled.Text`
@@ -28,11 +28,39 @@ export const PoemBodyText = styled.Text`
   padding-bottom: 10;
   padding-top: 10;
 `;
+export const Pills = styled.View`
+  background: ${props => props.theme.SECOND_COLOR};
+  width: 80px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 10px;
+  position: absolute;
+  right: 1;
+  bottom: 1;
+`;
+export const PillsText = styled.Text`
+  color: #fff;
+  font-family: 'PTSansCaptionRegular';
+  font-size: 14;
+`;
+export const StaticPills = styled.View`
+  width: 150px;
+  padding-top: 10px;
+  position: absolute;
+  left: 0;
+  bottom: 1;
+`;
+export const StaticPillsText = styled.Text`
+  color: ${props => props.theme.SECOND_COLOR};
+  font-family: 'PTSansCaptionRegular';
+  font-size: 14;
+`;
 export const InstagramText = styled.Text`
-  color: ${props => props.theme.CARD_FONT_COLOR};
-  font-family: 'raleway-regular';
+  color: ${props => props.theme.SECOND_COLOR};
+  font-family: 'PTSansCaptionRegular';
   font-size: 14;
   text-align: left;
+  margin-bottom: 5px;
 `;
 export const ScreenBackground = styled.SafeAreaView`
   flex: 1;
@@ -59,5 +87,17 @@ export const DrawerText = styled.Text`
   font-size: 20;
   text-align: right;
   padding-right: 20;
+  color: ${props => props.theme.FONT_COLOR};
+`;
+export const OptionsListView = styled.View`
+  padding-top: 10px;
+  text-align: center;
+`;
+export const OptionsListText = styled.Text`
+  font-family: 'raleway-extralight';
+  font-size: 20;
+  text-align: left;
+  padding-right: 20;
+  padding-top: 20;
   color: ${props => props.theme.FONT_COLOR};
 `;

@@ -64,6 +64,8 @@ export default class App extends React.Component {
       'raleway-regular': require('./assets/fonts/Raleway-Regular.ttf'),
       'raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
       'raleway-extralight': require('./assets/fonts/Raleway-ExtraLight.ttf'),
+      PTSansCaptionBold: require('./assets/fonts/PTSansCaption-Bold.ttf'),
+      PTSansCaptionRegular: require('./assets/fonts/PTSansCaption-Regular.ttf'),
       ...Ionicons.font
     });
 

@@ -10,7 +10,7 @@ class TopNav extends Component {
   render() {
     return (
       <Row style={{ height: 50 }}>
-        <Col>
+        <Col style={{ width: '80%' }}>
           <NavBarHeaderText> {this.props.pageTitle} </NavBarHeaderText>
         </Col>
         <Col>

@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, CameraRoll, PixelRatio } from 'react-native';
+import { WebBrowser, Permissions } from 'expo';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { successfullyAddedPoem } from '../actions/poemsActions';
-import { Icon, Button } from 'native-base';
-import { StyledText, PoemName, PoemBodyText } from './Styles';
+import { captureRef as takeSnapshotAsync } from 'react-native-view-shot';
+import {
+  StyledText,
+  PoemName,
+  PoemBodyText,
+  Pills,
+  PillsText,
+  StaticPills,
+  StaticPillsText,
+  InstagramText,
+  OptionsListText
+} from './Styles';
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import OptionsComponents from './OptionsComponents';
+import moment from 'moment';
 import {
   CNRichTextView,
   getDefaultStyles
@@ -47,66 +60,152 @@ class NewPoem extends Component {
       bookmarked: !this.state.bookmarked
     });
   };
+  snapshot = async id => {
+    const targetPixelCount = 1080;
+    const pixelRatio = PixelRatio.get();
+    const pixels = targetPixelCount / pixelRatio;
+    const permission = await Permissions.getAsync(Permissions.CAMERA_ROLL);
+    if (permission.status !== 'granted') {
+      const newPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (newPermission.status === 'granted') {
+        let result = await takeSnapshotAsync(this[id], {
+          format: 'png',
+          width: pixels,
+          height: '100%',
+          quality: 1,
+          result: 'tmpfile',
+          snapshotContentContainer: false
+        });
+        let saveResult = await CameraRoll.saveToCameraRoll(
+          result,
+          'photo'
+        ).then(() => {
+          Toast.show({
+            text: 'Saved!',
+            buttonText: 'Okay',
+            position: 'top'
+          });
+        });
+        this.setState({ cameraRollUri: saveResult });
+      }
+    } else {
+      let result = await takeSnapshotAsync(this[id], {
+        format: 'png',
+        width: pixels,
+        height: '100%',
+        quality: 1,
+        result: 'tmpfile',
+        snapshotContentContainer: false
+      });
+      let saveResult = await CameraRoll.saveToCameraRoll(result, 'photo').then(
+        () => {
+          this.setState({ modalVisible: !this.state.modalVisible });
+          Toast.show({
+            text: 'Saved!',
+            buttonText: 'Okay',
+            position: 'top'
+          });
+        }
+      );
+      this.setState({ cameraRollUri: saveResult });
+    }
+  };
   render() {
-    return (
-      <StyledText
-        ref={ref => {
-          this[`${this.props.poem.id}`] = ref;
-        }}
-      >
-        <Row>
-          <Col>
-            <NewBookmark
-              poemId={this.props.poem.id}
-              bookmarkedCount={this.props.poem.bookmarkedCount}
-              bookmarked={this.state.bookmarked}
-              toggleBookMark={this.toggleBookMark}
-            />
+    console.log(this.props.theme);
 
-            <PoemName>{this.props.poem.name}</PoemName>
-            {this.props.poem.richText ? (
-              <View
-                style={{
-                  flex: 1
-                }}
-              >
-                <CNRichTextView
-                  text={this.props.poem.body}
-                  styleList={customStyles}
-                  foreColor={'#474554'}
-                  color={'#474554'}
-                />
-              </View>
-            ) : (
-              <PoemBodyText>{this.props.poem.body}</PoemBodyText>
-            )}
-          </Col>
-        </Row>
-        {/* <Button
-          onPress={() =>
-            this.setState({
-              open: !this.state.open
-            })
-          }
+    return (
+      <React.Fragment>
+        <StyledText
+          ref={ref => {
+            this[`${this.props.poem.id}`] = ref;
+          }}
         >
-          <Text>Open</Text>
-        </Button> */}
-        <Row style={!this.state.open ? { display: 'none' } : {}}>
-          <Col>
-            <PoemName>Options</PoemName>
-            <Text>Bookmark</Text>
-            <Text>Report</Text>
-          </Col>
-        </Row>
-      </StyledText>
+          <Row>
+            <Col>
+              <NewBookmark
+                poemId={this.props.poem.id}
+                bookmarkedCount={this.props.poem.bookmarkedCount}
+                bookmarked={this.state.bookmarked}
+                toggleBookMark={this.toggleBookMark}
+              />
+
+              <PoemName>{this.props.poem.name}</PoemName>
+              {this.props.poem.handle ? (
+                <InstagramText
+                  onPress={() =>
+                    WebBrowser.openBrowserAsync(
+                      `https://www.instagram.com/${this.props.poem.handle}`
+                    )
+                  }
+                >
+                  - {this.props.poem.handle}
+                </InstagramText>
+              ) : (
+                <InstagramText>- ANON</InstagramText>
+              )}
+              {this.props.poem.richText ? (
+                <View
+                  style={{
+                    flex: 1
+                  }}
+                >
+                  <CNRichTextView
+                    text={this.props.poem.body}
+                    styleList={customStyles}
+                    foreColor={'#474554'}
+                    color={'#474554'}
+                  />
+                </View>
+              ) : (
+                <PoemBodyText>{this.props.poem.body}</PoemBodyText>
+              )}
+            </Col>
+          </Row>
+          <Row style={{ marginTop: 40 }}>
+            <Col>
+              <StaticPills>
+                <StaticPillsText>
+                  {moment.unix(this.props.poem.date).fromNow()}
+                </StaticPillsText>
+              </StaticPills>
+            </Col>
+            <Col>
+              <Pills
+                onPress={() =>
+                  this.setState({
+                    open: !this.state.open
+                  })
+                }
+              >
+                <PillsText
+                  onPress={() =>
+                    this.setState({
+                      open: !this.state.open
+                    })
+                  }
+                >
+                  Options
+                </PillsText>
+              </Pills>
+            </Col>
+          </Row>
+          <OptionsComponents open={this.state.open} poem={this.props.poem}>
+            <OptionsListText
+              onPress={() => this.snapshot(`${this.props.poem.id}`)}
+            >
+              Save as Image
+            </OptionsListText>
+          </OptionsComponents>
+        </StyledText>
+      </React.Fragment>
     );
   }
 }
 const mapStateToProps = state => ({
   auth: state.firebase.auth,
   profile: state.firebase.profile,
-  admin: state.poems.activateDelete,
-  theme: state.theme.isThemeDark
+  admin: state.poems.activateDelete
+  // theme: state.theme.isThemeDark
 });
 export default compose(
   firestoreConnect(),
