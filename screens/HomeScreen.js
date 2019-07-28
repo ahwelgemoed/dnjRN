@@ -206,12 +206,8 @@ class HomeScreen extends React.PureComponent {
     };
     await firestore
       .update({ collection: 'users', doc: this.props.auth.uid }, payLoad)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+      .then(res => {})
+      .catch(err => {});
   };
 
   getGrantedToken = () => {
@@ -228,16 +224,12 @@ class HomeScreen extends React.PureComponent {
                 { collection: 'users', doc: this.props.auth.uid },
                 payLoad
               )
-              .then(res => {
-                console.log(res);
-              })
-              .catch(err => {
-                console.log(err);
-              });
+              .then(res => {})
+              .catch(err => {});
           }
         })
         .catch(err => {
-          console.log(err);
+
         });
     });
   };

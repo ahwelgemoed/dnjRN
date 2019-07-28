@@ -29,12 +29,6 @@ class OptionsComponents extends Component {
               )
               .then(res => {
                 this.setState({ modalVisible: !this.state.modalVisible });
-                Toast.show({
-                  text: 'Poem Reported to Admin',
-                  buttonText: 'Okay',
-                  position: 'top',
-                  type: 'danger'
-                });
               })
         },
         {
@@ -48,7 +42,7 @@ class OptionsComponents extends Component {
   };
   render() {
     return (
-      <StyledText style={!this.props.open ? { display: 'none' } : {}}>
+      <View style={!this.props.open ? { display: 'none' } : {}}>
         <Row>
           <Col>
             <PoemName>Options</PoemName>
@@ -61,7 +55,7 @@ class OptionsComponents extends Component {
             </OptionsListView>
           </Col>
         </Row>
-      </StyledText>
+      </View>
     );
   }
 }

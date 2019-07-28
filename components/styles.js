@@ -95,7 +95,7 @@ export const OptionsListView = styled.View`
 `;
 export const OptionsListText = styled.Text`
   font-family: 'raleway-extralight';
-  font-size: 20;
+  font-size: 18;
   text-align: left;
   padding-right: 20;
   padding-top: 20;

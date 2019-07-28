@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, CameraRoll, PixelRatio } from 'react-native';
+import {
+  Text,
+  View,
+  CameraRoll,
+  PixelRatio,
+  Vibration,
+  Image,
+  StyleSheet
+} from 'react-native';
 import { WebBrowser, Permissions } from 'expo';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -20,6 +28,7 @@ import {
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import OptionsComponents from './OptionsComponents';
 import moment from 'moment';
+import { BlurView } from 'expo';
 import {
   CNRichTextView,
   getDefaultStyles
@@ -40,7 +49,8 @@ class NewPoem extends Component {
     userEdit: false,
     bookmarked: false,
     reportDialog: false,
-    modalVisible: false
+    modalVisible: false,
+    hideOptions: false
   };
   componentDidMount() {
     const { id } = this.props.poem;
@@ -61,6 +71,10 @@ class NewPoem extends Component {
     });
   };
   snapshot = async id => {
+    await this.setState({
+      open: false,
+      hideOptions: true
+    });
     const targetPixelCount = 1080;
     const pixelRatio = PixelRatio.get();
     const pixels = targetPixelCount / pixelRatio;
@@ -80,13 +94,9 @@ class NewPoem extends Component {
           result,
           'photo'
         ).then(() => {
-          Toast.show({
-            text: 'Saved!',
-            buttonText: 'Okay',
-            position: 'top'
-          });
+          Vibration.vibrate(500);
+          this.setState({ cameraRollUri: saveResult, hideOptions: false });
         });
-        this.setState({ cameraRollUri: saveResult });
       }
     } else {
       let result = await takeSnapshotAsync(this[id], {
@@ -99,20 +109,17 @@ class NewPoem extends Component {
       });
       let saveResult = await CameraRoll.saveToCameraRoll(result, 'photo').then(
         () => {
-          this.setState({ modalVisible: !this.state.modalVisible });
-          Toast.show({
-            text: 'Saved!',
-            buttonText: 'Okay',
-            position: 'top'
-          });
+          this.setState({ hideOptions: false });
+          Vibration.vibrate(500);
         }
       );
-      this.setState({ cameraRollUri: saveResult });
+      this.setState({ cameraRollUri: saveResult, hideOptions: false });
     }
   };
   render() {
-    console.log(this.props.theme);
-
+    // console.log(this.props.theme);
+    const { hideOptions } = this.state;
+    const { theme } = this.props;
     return (
       <React.Fragment>
         <StyledText
@@ -122,12 +129,14 @@ class NewPoem extends Component {
         >
           <Row>
             <Col>
-              <NewBookmark
-                poemId={this.props.poem.id}
-                bookmarkedCount={this.props.poem.bookmarkedCount}
-                bookmarked={this.state.bookmarked}
-                toggleBookMark={this.toggleBookMark}
-              />
+              {hideOptions ? null : (
+                <NewBookmark
+                  poemId={this.props.poem.id}
+                  bookmarkedCount={this.props.poem.bookmarkedCount}
+                  bookmarked={this.state.bookmarked}
+                  toggleBookMark={this.toggleBookMark}
+                />
+              )}
 
               <PoemName>{this.props.poem.name}</PoemName>
               {this.props.poem.handle ? (
@@ -153,7 +162,7 @@ class NewPoem extends Component {
                     text={this.props.poem.body}
                     styleList={customStyles}
                     foreColor={'#474554'}
-                    color={'#474554'}
+                    color={theme ? '#fff' : '#474554'}
                   />
                 </View>
               ) : (
@@ -162,32 +171,44 @@ class NewPoem extends Component {
             </Col>
           </Row>
           <Row style={{ marginTop: 40 }}>
-            <Col>
-              <StaticPills>
-                <StaticPillsText>
-                  {moment.unix(this.props.poem.date).fromNow()}
-                </StaticPillsText>
-              </StaticPills>
-            </Col>
-            <Col>
-              <Pills
-                onPress={() =>
-                  this.setState({
-                    open: !this.state.open
-                  })
-                }
-              >
-                <PillsText
-                  onPress={() =>
-                    this.setState({
-                      open: !this.state.open
-                    })
-                  }
-                >
-                  Options
-                </PillsText>
-              </Pills>
-            </Col>
+            {hideOptions ? (
+              <React.Fragment>
+                <Col>
+                  <StaticPills>
+                    <StaticPillsText>DisNetJy.com</StaticPillsText>
+                  </StaticPills>
+                </Col>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <Col>
+                  <StaticPills>
+                    <StaticPillsText>
+                      {moment.unix(this.props.poem.date).fromNow()}
+                    </StaticPillsText>
+                  </StaticPills>
+                </Col>
+                <Col>
+                  <Pills
+                    onPress={() =>
+                      this.setState({
+                        open: !this.state.open
+                      })
+                    }
+                  >
+                    <PillsText
+                      onPress={() =>
+                        this.setState({
+                          open: !this.state.open
+                        })
+                      }
+                    >
+                      Options
+                    </PillsText>
+                  </Pills>
+                </Col>
+              </React.Fragment>
+            )}
           </Row>
           <OptionsComponents open={this.state.open} poem={this.props.poem}>
             <OptionsListText
@@ -204,8 +225,8 @@ class NewPoem extends Component {
 const mapStateToProps = state => ({
   auth: state.firebase.auth,
   profile: state.firebase.profile,
-  admin: state.poems.activateDelete
-  // theme: state.theme.isThemeDark
+  admin: state.poems.activateDelete,
+  theme: state.theme.isThemeDark
 });
 export default compose(
   firestoreConnect(),
