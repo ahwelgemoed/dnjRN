@@ -43,6 +43,21 @@ export const PillsText = styled.Text`
   font-family: 'PTSansCaptionRegular';
   font-size: 14;
 `;
+export const NSFWPills = styled.View`
+  background: ${props => props.theme.CARD_FONT_COLOR};
+  width: 60px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 10px;
+  position: absolute;
+  left: -30;
+  top: -30;
+`;
+export const NSFWPillsText = styled.Text`
+  color: ${props => props.theme.SECOND_COLOR};
+  font-family: 'PTSansCaptionRegular';
+  font-size: 14;
+`;
 export const StaticPills = styled.View`
   width: 150px;
   padding-top: 10px;
@@ -54,6 +69,21 @@ export const StaticPillsText = styled.Text`
   color: ${props => props.theme.SECOND_COLOR};
   font-family: 'PTSansCaptionRegular';
   font-size: 14;
+`;
+export const OnlinePills = styled.View`
+  background: ${props => props.theme.CARD_FONT_COLOR};
+  width: 80px;
+  border-radius: 10px;
+  align-self: center;
+  text-align: center;
+  /* width: 150px; */
+  /* padding-top: 10px; */
+`;
+export const OnlinePillsText = styled.Text`
+  color: ${props => props.theme.CARD_BACKGROUND};
+  text-align: center;
+  font-family: 'PTSansCaptionRegular';
+  font-size: 12;
 `;
 export const InstagramText = styled.Text`
   color: ${props => props.theme.SECOND_COLOR};
@@ -71,6 +101,18 @@ export const ScreenBackground = styled.SafeAreaView`
   align-items: center;
   padding-left: 15;
   padding-right: 15;
+`;
+export const PostPoemBackGround = styled.View`
+  flex: 1;
+  background-color: ${props => props.theme.SCREEN_BACKGROUND};
+  justify-content: center;
+  height: ${height};
+  width: ${width};
+  align-items: center;
+`;
+export const JustColorBack = styled.View`
+  /* flex: 1; */
+  background-color: ${props => props.theme.SCREEN_BACKGROUND};
 `;
 export const NavBarView = styled.View`
   background-color: ${props => props.theme.SCREEN_BACKGROUND};
@@ -100,4 +142,24 @@ export const OptionsListText = styled.Text`
   padding-right: 20;
   padding-top: 20;
   color: ${props => props.theme.FONT_COLOR};
+`;
+export const Footer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background: #efefef;
+  height: 7%;
+  padding-bottom: 10px;
+  background-color: ${props => props.theme.SCREEN_BACKGROUND};
+`;
+export const FooterTab = styled.Text`
+  text-align: center;
+  color: #999;
+  flex-wrap: wrap;
+  font-size: 18px;
+  padding-top: 10px;
+  font-family: 'raleway-bold';
+  color: ${props => props.theme.CARD_FONT_COLOR};
+
+  /* margin-bottom: 10px; */
 `;

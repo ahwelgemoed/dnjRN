@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   FlatList,
   StyleSheet,
+  View,
   Dimensions,
   Image,
   ScrollView
@@ -16,6 +17,7 @@ import CardPoem from '../components/CardPoem';
 import { Button, Icon } from 'native-base';
 import { ScreenBackground } from '../components/Styles';
 import TopNav from '../components/TopNav';
+import NewPoem from '../components/NewPoem';
 
 class BookmarkScreen extends Component {
   state = {
@@ -89,13 +91,30 @@ class BookmarkScreen extends Component {
             navigation={this.props.navigation}
             leftComponent={this.setLeftHeader}
           />
-          <ScrollView>
+          <View
+            style={{
+              width: width,
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1
+            }}
+          >
             {loading ? (
               <ActivityIndicator color={theme ? '#D8D9D9' : '#2C2D2D'} />
             ) : (
               <React.Fragment>
                 <FlatList
-                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={{
+                    width: width,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                  scrollEventThrottle={160}
+                  onScroll={this.handleScroll}
+                  onEndReached={this.onRefresh}
+                  onEndReachedThreshold={0.5}
+                  onRefresh={this.initalFirebaseLoad}
+                  refreshing={this.state.isFetching}
                   showsVerticalScrollIndicator={false}
                   keyExtractor={(item, index) => index.toString()}
                   data={poems}
@@ -103,31 +122,34 @@ class BookmarkScreen extends Component {
                     this.flatListRef = ref;
                   }}
                   renderItem={({ item, i }) => (
-                    <CardPoem
+                    <NewPoem
                       poem={item}
                       auth={this.props.auth}
                       navigation={this.props.navigation}
                     />
+                    // <CardPoem
+                    //   poem={item}
+                    //   auth={this.props.auth}
+                    //   navigation={this.props.navigation}
+                    // />
                   )}
                 />
               </React.Fragment>
             )}
-          </ScrollView>
+          </View>
         </ScreenBackground>
       );
     }
   }
 }
+var { height, width } = Dimensions.get('window');
 let screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // backgroundColor: '#f9f9f9',
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // paddingLeft: 15,
-    // paddingRight: 15,
-    // width: '100%'
+    justifyContent: 'center',
+    flex: 1,
+    alignItems: 'center',
+    width: width
   },
   name: {
     fontSize: 22,

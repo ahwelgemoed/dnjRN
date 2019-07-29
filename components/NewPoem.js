@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { WebBrowser, Permissions } from 'expo';
 import { compose } from 'redux';
+import AdminModal from './AdminModal';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { successfullyAddedPoem } from '../actions/poemsActions';
@@ -23,7 +24,9 @@ import {
   StaticPills,
   StaticPillsText,
   InstagramText,
-  OptionsListText
+  OptionsListText,
+  NSFWPills,
+  NSFWPillsText
 } from './Styles';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import OptionsComponents from './OptionsComponents';
@@ -69,6 +72,24 @@ class NewPoem extends Component {
     this.setState({
       bookmarked: !this.state.bookmarked
     });
+  };
+  canIEdit = () => {
+    const now = moment();
+    const posted = moment.unix(this.props.poem.date);
+    const differ = now.diff(posted, 'minutes');
+    if (this.props.profile.user === this.props.poem.uid && differ < 5) {
+      return (
+        <Pills>
+          <PillsText
+            onPress={() => {
+              this.props.navigation.navigate('Post', this.props.poem);
+            }}
+          >
+            Edit Poem
+          </PillsText>
+        </Pills>
+      );
+    }
   };
   snapshot = async id => {
     await this.setState({
@@ -119,16 +140,22 @@ class NewPoem extends Component {
   render() {
     // console.log(this.props.theme);
     const { hideOptions } = this.state;
-    const { theme } = this.props;
+    const { theme, swipeMode } = this.props;
     return (
       <React.Fragment>
         <StyledText
+          style={swipeMode ? { marginLeft: 20 } : null}
           ref={ref => {
             this[`${this.props.poem.id}`] = ref;
           }}
         >
           <Row>
             <Col>
+              {hideOptions ? null : this.props.poem.nsfw ? (
+                <NSFWPills>
+                  <NSFWPillsText>NSFW</NSFWPillsText>
+                </NSFWPills>
+              ) : null}
               {hideOptions ? null : (
                 <NewBookmark
                   poemId={this.props.poem.id}
@@ -137,8 +164,9 @@ class NewPoem extends Component {
                   toggleBookMark={this.toggleBookMark}
                 />
               )}
-
-              <PoemName>{this.props.poem.name}</PoemName>
+              {this.props.poem.name.replace(/\s/g, '') ? (
+                <PoemName>{this.props.poem.name}</PoemName>
+              ) : null}
               {this.props.poem.handle ? (
                 <InstagramText
                   onPress={() =>
@@ -188,6 +216,7 @@ class NewPoem extends Component {
                     </StaticPillsText>
                   </StaticPills>
                 </Col>
+                {this.canIEdit()}
                 <Col>
                   <Pills
                     onPress={() =>
@@ -210,7 +239,9 @@ class NewPoem extends Component {
               </React.Fragment>
             )}
           </Row>
+
           <OptionsComponents open={this.state.open} poem={this.props.poem}>
+            <AdminModal poem={this.props.poem} />
             <OptionsListText
               onPress={() => this.snapshot(`${this.props.poem.id}`)}
             >
@@ -226,7 +257,8 @@ const mapStateToProps = state => ({
   auth: state.firebase.auth,
   profile: state.firebase.profile,
   admin: state.poems.activateDelete,
-  theme: state.theme.isThemeDark
+  theme: state.theme.isThemeDark,
+  swipeMode: state.theme.toggleSwipeMode
 });
 export default compose(
   firestoreConnect(),

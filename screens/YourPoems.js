@@ -13,7 +13,7 @@ import {
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import CardPoem from '../components/CardPoem';
+import NewPoem from '../components/NewPoem';
 import { Button, Icon } from 'native-base';
 import UpdateUserInfo from '../components/UpdateUserInfo';
 import { ScreenBackground } from '../components/Styles';
@@ -75,22 +75,51 @@ class YourPoems extends Component {
               {poems.length ? (
                 <ScrollView>
                   <Text style={styles.names}>Only You Can See This</Text>
-                  <FlatList
-                    showsVerticalScrollIndicator={false}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={(item, index) => index.toString()}
-                    data={poems}
-                    ref={ref => {
-                      this.flatListRef = ref;
+                  <View
+                    style={{
+                      width: width,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      flex: 1
                     }}
-                    renderItem={({ item, i }) => (
-                      <CardPoem
-                        poem={item}
-                        auth={this.props.auth}
-                        navigation={this.props.navigation}
-                      />
-                    )}
-                  />
+                  >
+                    <FlatList
+                      contentContainerStyle={{
+                        width: width,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }}
+                      scrollEventThrottle={160}
+                      onScroll={this.handleScroll}
+                      onEndReached={this.onRefresh}
+                      onEndReachedThreshold={0.5}
+                      onRefresh={this.initalFirebaseLoad}
+                      refreshing={this.state.isFetching}
+                      showsVerticalScrollIndicator={false}
+                      keyExtractor={(item, index) => index.toString()}
+                      ListFooterComponent={() => (
+                        <ActivityIndicator
+                          color={theme ? '#D8D9D9' : '#2C2D2D'}
+                        />
+                      )}
+                      data={poems}
+                      ref={ref => {
+                        this.flatListRef = ref;
+                      }}
+                      renderItem={({ item, i }) => (
+                        <NewPoem
+                          poem={item}
+                          auth={this.props.auth}
+                          navigation={this.props.navigation}
+                        />
+                        // <CardPoem
+                        //   poem={item}
+                        //   auth={this.props.auth}
+                        //   navigation={this.props.navigation}
+                        // />
+                      )}
+                    />
+                  </View>
                 </ScrollView>
               ) : (
                 <View>
@@ -105,6 +134,7 @@ class YourPoems extends Component {
     );
   }
 }
+var { height, width } = Dimensions.get('window');
 let screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {

@@ -12,6 +12,7 @@ import {
   Input,
   Switch
 } from 'native-base';
+import { OptionsListText } from './Styles';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
@@ -181,15 +182,13 @@ class AdminModal extends Component {
           </View>
         </Modal>
         {this.props.admin ? (
-          <Button
-            block
-            transparent
+          <OptionsListText
             onPress={() => {
               this.setModalVisible(true);
             }}
           >
-            <Text style={styles.button}>Open Admin Panel</Text>
-          </Button>
+            Open Admin Panel
+          </OptionsListText>
         ) : null}
       </View>
     );

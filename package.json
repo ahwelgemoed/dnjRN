@@ -45,7 +45,8 @@
     "styled-components": "^5.0.0-beta.5",
     "react-native-cn-richtext-editor": "1.0.40",
     "react-native-textinput-effects": "0.5.1",
-    "react-native-hide-with-keyboard": "1.2.0"
+    "react-native-hide-with-keyboard": "1.2.0",
+    "horizontaltextscroll": "1.0.8"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",

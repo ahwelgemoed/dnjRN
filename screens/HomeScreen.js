@@ -9,10 +9,10 @@ import {
   SafeAreaView,
   ActivityIndicator,
   AsyncStorage,
-  Text
+  Platform
 } from 'react-native';
 import { Notifications } from 'expo';
-// import { HZScroll } from 'horizontaltextscroll';
+import { HZScroll } from 'horizontaltextscroll';
 import * as Permissions from 'expo-permissions';
 import { successfullyAddedPoem } from '../actions/poemsActions';
 import { connect } from 'react-redux';
@@ -20,9 +20,9 @@ import { compose } from 'redux';
 import RefreshButton from '../components/RefreshButton';
 import { firestoreConnect } from 'react-redux-firebase';
 // import { MonoText } from '../components/StyledText';
-import CardPoem from '../components/CardPoem';
+// import CardPoem from '../components/CardPoem';
 import NewPoem from '../components/NewPoem';
-import NewCardPoem from '../components/NewCardPoem';
+// import NewCardPoem from '../components/NewCardPoem';
 import TandC from '../components/TandC';
 import Loading from '../components/Loading';
 import { Icon, Button } from 'native-base';
@@ -149,6 +149,7 @@ class HomeScreen extends React.PureComponent {
     await setTimeout(() => {
       this.registerForPushNotificationsAsync();
     }, 2000);
+    await this.updateNewProfile();
   }
   setLeftHeader = () => {
     this.props.navigation.setParams({
@@ -209,6 +210,23 @@ class HomeScreen extends React.PureComponent {
       .then(res => {})
       .catch(err => {});
   };
+  updateNewProfile = async () => {
+    console.log('IRAN');
+
+    const hand = this.props.profile.Instagram;
+    const res = hand.replace('@', '');
+    const payLoad = {
+      lastLogin: Date.now(),
+      Instagram: res,
+      Platform: Platform.OS
+    };
+    const { firestore } = this.props;
+    console.log('IRAN');
+    await firestore
+      .update({ collection: 'users', doc: this.props.auth.uid }, payLoad)
+      .then(res => {})
+      .catch(err => {});
+  };
 
   getGrantedToken = () => {
     const { firestore } = this.props;
@@ -228,9 +246,7 @@ class HomeScreen extends React.PureComponent {
               .catch(err => {});
           }
         })
-        .catch(err => {
-
-        });
+        .catch(err => {});
     });
   };
   clickedRefreshButton = () => {
@@ -293,12 +309,13 @@ class HomeScreen extends React.PureComponent {
               <React.Fragment>
                 <View
                   style={{
-                    paddingLeft: 20,
-                    height: height,
+                    width: width,
+                    justifyContent: 'center',
+                    alignItems: 'center',
                     flex: 1
                   }}
                 >
-                  {/* <HZScroll
+                  <HZScroll
                     style={{ height: height }}
                     scrollEventThrottle={160}
                     keyExtractor={(item, index) => index.toString()}
@@ -334,13 +351,18 @@ class HomeScreen extends React.PureComponent {
                     }}
                     data={poems}
                     components={item => (
-                      <CardPoem
+                      <NewPoem
                         poem={item}
                         auth={this.props.auth}
                         navigation={this.props.navigation}
                       />
+                      // <CardPoem
+                      //   poem={item}
+                      //   auth={this.props.auth}
+                      //   navigation={this.props.navigation}
+                      // />
                     )}
-                  /> */}
+                  />
                 </View>
               </React.Fragment>
             ) : (

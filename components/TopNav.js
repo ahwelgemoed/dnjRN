@@ -9,11 +9,14 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 class TopNav extends Component {
   render() {
     return (
-      <Row style={{ height: 50 }}>
-        <Col style={{ width: '80%' }}>
+      <Row
+        style={{ height: 50, marginTop: Platform.OS === 'android' ? 40 : 0 }}
+      >
+        <Col style={{ width: '70%' }}>
           <NavBarHeaderText> {this.props.pageTitle} </NavBarHeaderText>
         </Col>
-        <Col>
+        <Col style={{ width: '15%' }}>{this.props.leftComponent}</Col>
+        <Col style={{ width: '15%' }}>
           <DrawerText onPress={() => this.props.navigation.toggleDrawer()}>
             <Icon name="menu" style={{ color: '#999' }} />
           </DrawerText>
