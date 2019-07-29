@@ -211,8 +211,6 @@ class HomeScreen extends React.PureComponent {
       .catch(err => {});
   };
   updateNewProfile = async () => {
-    console.log('IRAN');
-
     const hand = this.props.profile.Instagram;
     const res = hand.replace('@', '');
     const payLoad = {
@@ -221,7 +219,6 @@ class HomeScreen extends React.PureComponent {
       Platform: Platform.OS
     };
     const { firestore } = this.props;
-    console.log('IRAN');
     await firestore
       .update({ collection: 'users', doc: this.props.auth.uid }, payLoad)
       .then(res => {})

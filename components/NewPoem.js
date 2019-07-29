@@ -6,7 +6,10 @@ import {
   PixelRatio,
   Vibration,
   Image,
-  StyleSheet
+  Linking,
+  StyleSheet,
+  Platform,
+  Share
 } from 'react-native';
 import { WebBrowser, Permissions } from 'expo';
 import { compose } from 'redux';
@@ -91,6 +94,83 @@ class NewPoem extends Component {
       );
     }
   };
+  shareToInstagram = async id => {
+    await this.setState({
+      open: false,
+      hideOptions: true
+    });
+    const targetPixelCount = 1080;
+    const pixelRatio = PixelRatio.get();
+    const pixels = targetPixelCount / pixelRatio;
+    let result = await takeSnapshotAsync(this[id], {
+      format: 'png',
+      width: pixels,
+      height: '100%',
+      quality: 1,
+      result: 'tmpfile',
+      snapshotContentContainer: false
+    });
+    const instagramURL = `instagram://library?AssetPath=${result}`;
+    return Linking.openURL(instagramURL)
+      .then(url => {
+        this.setState({ hideOptions: false });
+      })
+      .catch(err => this.setState({ hideOptions: false }));
+  };
+
+  share = async id => {
+    await this.setState({
+      open: false,
+      hideOptions: true
+    });
+    const targetPixelCount = 1080;
+    const pixelRatio = PixelRatio.get();
+    const pixels = targetPixelCount / pixelRatio;
+    let result = await takeSnapshotAsync(this[id], {
+      format: 'png',
+      width: pixels,
+      height: '100%',
+      quality: 1,
+      result: 'tmpfile',
+      snapshotContentContainer: false
+    });
+    Share.share(
+      {
+        message: 'Dis Net JY',
+        title: 'Dis Net Jy',
+        url: result
+      },
+      {
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToWeibo',
+          'com.apple.UIKit.activity.Print',
+          'com.apple.UIKit.activity.CopyToPasteboard',
+          'com.apple.UIKit.activity.AssignToContact',
+          'com.apple.UIKit.activity.SaveToCameraRoll',
+          'com.apple.UIKit.activity.AddToReadingList',
+          'com.apple.UIKit.activity.PostToFlickr',
+          'com.apple.UIKit.activity.PostToVimeo',
+          'com.apple.UIKit.activity.PostToTencentWeibo',
+          'com.apple.UIKit.activity.AirDrop',
+          'com.apple.UIKit.activity.OpenInIBooks',
+          'com.apple.UIKit.activity.MarkupAsPDF',
+          'com.apple.reminders.RemindersEditorExtension',
+          'com.apple.mobilenotes.SharingExtension',
+          'com.apple.mobileslideshow.StreamShareService',
+          'com.linkedin.LinkedIn.ShareExtension',
+          'pinterest.ShareExtension',
+          'com.google.GooglePlus.ShareExtension',
+          'com.tumblr.tumblr.Share-With-Tumblr',
+          'net.whatsapp.WhatsApp.ShareExtension' //WhatsApp
+        ]
+      }
+    ).then(({ action, activityType }) => {
+      if (action === Share.dismissedAction)
+        this.setState({ hideOptions: false });
+      else this.setState({ hideOptions: false });
+    });
+  };
+
   snapshot = async id => {
     await this.setState({
       open: false,
@@ -138,7 +218,6 @@ class NewPoem extends Component {
     }
   };
   render() {
-    // console.log(this.props.theme);
     const { hideOptions } = this.state;
     const { theme, swipeMode } = this.props;
     return (
@@ -242,6 +321,20 @@ class NewPoem extends Component {
 
           <OptionsComponents open={this.state.open} poem={this.props.poem}>
             <AdminModal poem={this.props.poem} />
+            {Platform.OS !== 'android' ? (
+              <React.Fragment>
+                <OptionsListText
+                  onPress={() => this.share(`${this.props.poem.id}`)}
+                >
+                  Share
+                </OptionsListText>
+                <OptionsListText
+                  onPress={() => this.shareToInstagram(`${this.props.poem.id}`)}
+                >
+                  Share To Instagram
+                </OptionsListText>
+              </React.Fragment>
+            ) : null}
             <OptionsListText
               onPress={() => this.snapshot(`${this.props.poem.id}`)}
             >

@@ -48,7 +48,7 @@ class OptionsComponents extends Component {
             <PoemName>Options</PoemName>
             <OptionsListView>
               {this.props.children}
-              <OptionsListText>Share</OptionsListText>
+
               <OptionsListText onPress={() => this.reportPoem()}>
                 Report Poem as Inappropriate
               </OptionsListText>
