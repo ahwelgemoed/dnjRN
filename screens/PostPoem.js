@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import moment from 'moment';
 import AddInstagramModal from '../components/AddInstagramModal';
 import { successfullyAddedPoem } from '../actions/poemsActions';
-import { ScreenBackground } from '../components/Styles';
+import { PostPoemBackGround, JustColorBack } from '../components/Styles';
 import {
   HideWithKeyboard,
   ShowWithKeyboard
@@ -51,8 +51,8 @@ import CNRichTextEditor, {
 const defaultStyles = getDefaultStyles();
 let customStyles = {
   ...defaultStyles,
-  body: { fontSize: 14 },
-  heading: { fontSize: 16 },
+  body: { fontSize: 16, fontFamily: 'raleway-regular' },
+  heading: { fontSize: 18 },
   title: { fontSize: 20 },
   ol: { fontSize: 14 },
   ul: { fontSize: 12 }
@@ -323,20 +323,20 @@ class PostPoem extends Component {
     const { handle, body, firstPost } = this.state;
     const { theme } = this.props;
     return (
-      <View
+      <PostPoemBackGround
         style={
           theme
             ? {
                 flex: 1,
-                paddingTop: 20,
-                fontFamily: 'raleway-regular',
-                backgroundColor: '#232526'
+                paddingTop: 40,
+                fontFamily: 'raleway-regular'
+                // backgroundColor: '#232526'
               }
             : {
                 flex: 1,
-                paddingTop: 20,
-                fontFamily: 'raleway-regular',
-                backgroundColor: '#EAEAEA'
+                paddingTop: 40,
+                fontFamily: 'raleway-regular'
+                // backgroundColor: '#EAEAEA'
               }
         }
       >
@@ -358,7 +358,7 @@ class PostPoem extends Component {
           }}
         >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View
+            <PostPoemBackGround
               style={
                 theme
                   ? {
@@ -368,8 +368,8 @@ class PostPoem extends Component {
                       alignItems: 'stretch',
                       flex: 1,
                       paddingTop: 20,
-                      fontFamily: 'raleway-regular',
-                      backgroundColor: '#232526'
+                      fontFamily: 'raleway-regular'
+                      // backgroundColor: '#232526'
                     }
                   : {
                       flex: 1,
@@ -378,8 +378,8 @@ class PostPoem extends Component {
                       alignItems: 'stretch',
                       flex: 1,
                       paddingTop: 20,
-                      fontFamily: 'raleway-regular',
-                      backgroundColor: '#EAEAEA'
+                      fontFamily: 'raleway-regular'
+                      // backgroundColor: '#EAEAEA'
                     }
               }
             >
@@ -492,18 +492,18 @@ class PostPoem extends Component {
                 ]}
                 onValueChanged={this.onValueChanged}
               />
-            </View>
+            </PostPoemBackGround>
           </TouchableWithoutFeedback>
-          <View
+          <JustColorBack
             style={
               theme
                 ? {
-                    minHeight: 14,
-                    backgroundColor: '#232526'
+                    minHeight: 14
+                    // backgroundColor: '#232526'
                   }
                 : {
-                    minHeight: 14,
-                    backgroundColor: '#EAEAEA'
+                    minHeight: 14
+                    // backgroundColor: '#EAEAEA'
                   }
             }
           >
@@ -668,19 +668,19 @@ class PostPoem extends Component {
                     }
               }
             />
-          </View>
-          <View
+          </JustColorBack>
+          <JustColorBack
             style={
               theme
                 ? {
                     height: 50,
-                    flexDirection: 'row',
-                    backgroundColor: '#232526'
+                    flexDirection: 'row'
+                    // backgroundColor: '#232526'
                   }
                 : {
                     height: 50,
-                    flexDirection: 'row',
-                    backgroundColor: '#EAEAEA'
+                    flexDirection: 'row'
+                    // backgroundColor: '#EAEAEA'
                   }
             }
           >
@@ -710,9 +710,9 @@ class PostPoem extends Component {
             </Right>
 
             <FirstPostModal openFirstModal={this.state.openFirstModal} />
-          </View>
+          </JustColorBack>
         </KeyboardAvoidingView>
-      </View>
+      </PostPoemBackGround>
     );
   }
 }
@@ -720,6 +720,7 @@ let screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   main: {
     flex: 1,
+    paddingTop: 40,
     paddingLeft: 12,
     paddingRight: 12,
     alignItems: 'stretch'

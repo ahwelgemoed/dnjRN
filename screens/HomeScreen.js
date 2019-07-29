@@ -9,7 +9,7 @@ import {
   SafeAreaView,
   ActivityIndicator,
   AsyncStorage,
-  Text
+  Platform
 } from 'react-native';
 import { Notifications } from 'expo';
 import { HZScroll } from 'horizontaltextscroll';
@@ -20,8 +20,9 @@ import { compose } from 'redux';
 import RefreshButton from '../components/RefreshButton';
 import { firestoreConnect } from 'react-redux-firebase';
 // import { MonoText } from '../components/StyledText';
-import CardPoem from '../components/CardPoem';
-import NewCardPoem from '../components/NewCardPoem';
+// import CardPoem from '../components/CardPoem';
+import NewPoem from '../components/NewPoem';
+// import NewCardPoem from '../components/NewCardPoem';
 import TandC from '../components/TandC';
 import Loading from '../components/Loading';
 import { Icon, Button } from 'native-base';
@@ -148,6 +149,7 @@ class HomeScreen extends React.PureComponent {
     await setTimeout(() => {
       this.registerForPushNotificationsAsync();
     }, 2000);
+    await this.updateNewProfile();
   }
   setLeftHeader = () => {
     this.props.navigation.setParams({
@@ -205,12 +207,22 @@ class HomeScreen extends React.PureComponent {
     };
     await firestore
       .update({ collection: 'users', doc: this.props.auth.uid }, payLoad)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+      .then(res => {})
+      .catch(err => {});
+  };
+  updateNewProfile = async () => {
+    const hand = this.props.profile.Instagram;
+    const res = hand.replace('@', '');
+    const payLoad = {
+      lastLogin: Date.now(),
+      Instagram: res,
+      Platform: Platform.OS
+    };
+    const { firestore } = this.props;
+    await firestore
+      .update({ collection: 'users', doc: this.props.auth.uid }, payLoad)
+      .then(res => {})
+      .catch(err => {});
   };
 
   getGrantedToken = () => {
@@ -227,17 +239,11 @@ class HomeScreen extends React.PureComponent {
                 { collection: 'users', doc: this.props.auth.uid },
                 payLoad
               )
-              .then(res => {
-                console.log(res);
-              })
-              .catch(err => {
-                console.log(err);
-              });
+              .then(res => {})
+              .catch(err => {});
           }
         })
-        .catch(err => {
-          console.log(err);
-        });
+        .catch(err => {});
     });
   };
   clickedRefreshButton = () => {
@@ -300,8 +306,9 @@ class HomeScreen extends React.PureComponent {
               <React.Fragment>
                 <View
                   style={{
-                    paddingLeft: 20,
-                    height: height,
+                    width: width,
+                    justifyContent: 'center',
+                    alignItems: 'center',
                     flex: 1
                   }}
                 >
@@ -341,11 +348,16 @@ class HomeScreen extends React.PureComponent {
                     }}
                     data={poems}
                     components={item => (
-                      <CardPoem
+                      <NewPoem
                         poem={item}
                         auth={this.props.auth}
                         navigation={this.props.navigation}
                       />
+                      // <CardPoem
+                      //   poem={item}
+                      //   auth={this.props.auth}
+                      //   navigation={this.props.navigation}
+                      // />
                     )}
                   />
                 </View>
@@ -353,11 +365,18 @@ class HomeScreen extends React.PureComponent {
             ) : (
               <View
                 style={{
-                  // paddingLeft: 10,
+                  width: width,
+                  justifyContent: 'center',
+                  alignItems: 'center',
                   flex: 1
                 }}
               >
                 <FlatList
+                  contentContainerStyle={{
+                    width: width,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
                   scrollEventThrottle={160}
                   onScroll={this.handleScroll}
                   onEndReached={this.onRefresh}
@@ -374,11 +393,16 @@ class HomeScreen extends React.PureComponent {
                     this.flatListRef = ref;
                   }}
                   renderItem={({ item, i }) => (
-                    <CardPoem
+                    <NewPoem
                       poem={item}
                       auth={this.props.auth}
                       navigation={this.props.navigation}
                     />
+                    // <CardPoem
+                    //   poem={item}
+                    //   auth={this.props.auth}
+                    //   navigation={this.props.navigation}
+                    // />
                   )}
                 />
               </View>
@@ -412,6 +436,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     flex: 1,
+    alignItems: 'center',
     width: width
   },
   flatlist: {

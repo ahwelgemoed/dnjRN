@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions, Text, View } from 'react-native';
+import { StyleSheet, Dimensions, Text, View, AsyncStorage } from 'react-native';
 import {
   Content,
   Container,
@@ -35,6 +35,11 @@ class Settings extends React.PureComponent {
   };
   toggleSwipeMode = () => {
     this.props.toggleSwipeMode(!this.props.swipeMode);
+  };
+  signOut = () => {
+    this.props.firebase.logout().then(res => {
+      this.props.navigation.navigate('Auth'), AsyncStorage.clear();
+    });
   };
 
   render() {
@@ -136,6 +141,27 @@ class Settings extends React.PureComponent {
                 ]}
               />
             </Right>
+          </ListItem>
+          <ListItem
+            onPress={this.signOut}
+            style={{ borderBottomWidth: 0, borderTopWidth: 0 }}
+          >
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="log-out"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              Sign Out
+            </Text>
           </ListItem>
         </View>
       </ScreenBackground>

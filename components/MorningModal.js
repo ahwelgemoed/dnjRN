@@ -18,7 +18,7 @@ export default class MorningModal extends React.Component {
   componentWillMount() {
     if (
       moment().format('HH:mm') > '02:00' &&
-      moment().format('HH:mm') < '04:00'
+      moment().format('HH:mm') < '04:30'
     ) {
       setTimeout(() => {
         this.setModalVisible(true);
@@ -70,15 +70,14 @@ export default class MorningModal extends React.Component {
             <Grid style={{ paddingLeft: 12, paddingRight: 12 }}>
               <Col>
                 <Button
-                  style={styles.mwhatapp}
+                  style={styles.buttonIn}
                   block
-                  bordered
                   onPress={() => {
                     this.setModalVisible(!this.state.modalVisible);
                     Linking.openURL('http://api.whatsapp.com');
                   }}
                 >
-                  <Text style={styles.mwhatappText}>Chat</Text>
+                  <Text style={styles.mwhatappText}>Whatsapp</Text>
                 </Button>
               </Col>
               <Col>
@@ -91,19 +90,19 @@ export default class MorningModal extends React.Component {
                     this.props.navigation.navigate('Post');
                   }}
                 >
-                  <Text>Post</Text>
+                  <Text style={styles.mwhatappText}>Post Poem</Text>
                 </Button>
               </Col>
               <Col>
                 <Button
-                  style={styles.mainButton}
+                  style={styles.buttonIn}
                   block
                   warning
                   onPress={() => {
                     this.setModalVisible(!this.state.modalVisible);
                   }}
                 >
-                  <Text>Read </Text>
+                  <Text style={styles.mwhatappText}>Read Poems </Text>
                 </Button>
               </Col>
             </Grid>
@@ -156,7 +155,7 @@ const styles = StyleSheet.create({
   },
   buttonIn: {
     fontSize: 16,
-    backgroundColor: '#91D9D9',
+    backgroundColor: '#474554',
     marginTop: 20,
     marginRight: 5,
     fontFamily: 'raleway-regular',
@@ -179,7 +178,7 @@ const styles = StyleSheet.create({
     textAlign: 'left'
   },
   mwhatappText: {
-    // color: '#25D366',
+    color: '#C2C2C2',
     fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
