@@ -268,6 +268,12 @@ class HomeScreen extends React.PureComponent {
   //     return null;
   //   }
   // };
+  scrollDown = () => {
+    this.flatListRef.scrollToOffset({
+      animated: true,
+      offset: this.state.scrollPosition + 60
+    });
+  };
 
   render() {
     const { loading, poems } = this.state;
@@ -349,6 +355,7 @@ class HomeScreen extends React.PureComponent {
                     data={poems}
                     components={item => (
                       <NewPoem
+                        scrollPosition={this.statescrollPosition}
                         poem={item}
                         auth={this.props.auth}
                         navigation={this.props.navigation}
@@ -394,6 +401,7 @@ class HomeScreen extends React.PureComponent {
                   }}
                   renderItem={({ item, i }) => (
                     <NewPoem
+                      scrollDown={this.scrollDown}
                       poem={item}
                       auth={this.props.auth}
                       navigation={this.props.navigation}

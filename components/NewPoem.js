@@ -56,9 +56,15 @@ class NewPoem extends Component {
     bookmarked: false,
     reportDialog: false,
     modalVisible: false,
+    elem: false,
     hideOptions: false
   };
   componentDidMount() {
+    getParentRef = () => {
+      this.setState({
+        elem: this.props.getParentElem()
+      });
+    };
     const { id } = this.props.poem;
     if (this.props.profile.bookmarks) {
       const found = this.props.profile.bookmarks.find(function(element) {
@@ -95,6 +101,7 @@ class NewPoem extends Component {
     }
   };
   shareToInstagram = async id => {
+    // await this.snapshot(id);
     await this.setState({
       open: false,
       hideOptions: true
@@ -111,7 +118,7 @@ class NewPoem extends Component {
       snapshotContentContainer: false
     });
     const instagramURL = await `instagram://library?AssetPath=${result}`;
-    return Linking.openURL(instagramURL)
+    return await Linking.openURL(instagramURL)
       .then(url => {
         this.setState({ hideOptions: false });
       })
@@ -134,10 +141,10 @@ class NewPoem extends Component {
       result: 'tmpfile',
       snapshotContentContainer: false
     });
-    Share.share(
+    await Share.share(
       {
-        message: 'Dis Net JY',
-        title: 'Dis Net Jy',
+        message: `${this.props.poem.name} - Dis Net Jy`,
+        title: `${this.props.poem.name} - Dis Net Jy`,
         url: result
       },
       {
@@ -218,7 +225,7 @@ class NewPoem extends Component {
     }
   };
   render() {
-    const { hideOptions } = this.state;
+    const { hideOptions, elem } = this.state;
     const { theme, swipeMode } = this.props;
     return (
       <React.Fragment>
@@ -305,11 +312,12 @@ class NewPoem extends Component {
                     }
                   >
                     <PillsText
-                      onPress={() =>
+                      onPress={() => {
+                        this.props.scrollDown();
                         this.setState({
                           open: !this.state.open
-                        })
-                      }
+                        });
+                      }}
                     >
                       Options
                     </PillsText>
@@ -318,30 +326,29 @@ class NewPoem extends Component {
               </React.Fragment>
             )}
           </Row>
-
-          <OptionsComponents open={this.state.open} poem={this.props.poem}>
-            <AdminModal poem={this.props.poem} />
-            {Platform.OS !== 'android' ? (
-              <React.Fragment>
-                <OptionsListText
-                  onPress={() => this.share(`${this.props.poem.id}`)}
-                >
-                  Share
-                </OptionsListText>
-                {/* <OptionsListText
-                  onPress={() => this.shareToInstagram(`${this.props.poem.id}`)}
-                >
-                  Share To Instagram
-                </OptionsListText> */}
-              </React.Fragment>
-            ) : null}
-            <OptionsListText
-              onPress={() => this.snapshot(`${this.props.poem.id}`)}
-            >
-              Save as Image
-            </OptionsListText>
-          </OptionsComponents>
         </StyledText>
+        <OptionsComponents open={this.state.open} poem={this.props.poem}>
+          <AdminModal poem={this.props.poem} />
+          {Platform.OS !== 'android' ? (
+            <React.Fragment>
+              <OptionsListText
+                onPress={() => this.share(`${this.props.poem.id}`)}
+              >
+                Share
+              </OptionsListText>
+              {/* <OptionsListText
+                onPress={() => this.shareToInstagram(`${this.props.poem.id}`)}
+              >
+                Share To Instagram
+              </OptionsListText> */}
+            </React.Fragment>
+          ) : null}
+          <OptionsListText
+            onPress={() => this.snapshot(`${this.props.poem.id}`)}
+          >
+            Save as Image
+          </OptionsListText>
+        </OptionsComponents>
       </React.Fragment>
     );
   }

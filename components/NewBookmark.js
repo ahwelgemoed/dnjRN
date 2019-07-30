@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ActivityIndicator,
+  Vibration
+} from 'react-native';
 import { Icon, Toast } from 'native-base';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -12,7 +18,7 @@ class NewBookmark extends Component {
     await this.setState({
       loading: true
     });
-
+    Vibration.vibrate(500);
     const payLoad = {
       bookmarks: [...this.props.profile.bookmarks, bookmark]
     };
@@ -22,7 +28,7 @@ class NewBookmark extends Component {
         Toast.show({
           text: 'Added Bookmark',
           buttonText: 'Okay',
-          position: 'top'
+          position: 'bottom'
         });
         this.props.toggleBookMark();
         this.setState({
@@ -45,6 +51,7 @@ class NewBookmark extends Component {
     await this.setState({
       loading: true
     });
+    Vibration.vibrate(500);
     const array = this.props.profile.bookmarks;
     let index = array.indexOf(bookmark);
     if (index !== -1) array.splice(index, 1);
@@ -58,7 +65,7 @@ class NewBookmark extends Component {
         Toast.show({
           text: 'Removed Bookmark',
           buttonText: 'Okay',
-          position: 'top'
+          position: 'bottom'
         });
         this.props.toggleBookMark();
         this.setState({

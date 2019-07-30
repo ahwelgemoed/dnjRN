@@ -42,7 +42,7 @@ class OptionsComponents extends Component {
   };
   render() {
     return (
-      <View style={!this.props.open ? { display: 'none' } : {}}>
+      <StyledText style={!this.props.open ? { display: 'none' } : {}}>
         <Row>
           <Col>
             <PoemName>Options</PoemName>
@@ -55,7 +55,7 @@ class OptionsComponents extends Component {
             </OptionsListView>
           </Col>
         </Row>
-      </View>
+      </StyledText>
     );
   }
 }
