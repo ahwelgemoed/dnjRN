@@ -110,7 +110,7 @@ class NewPoem extends Component {
       result: 'tmpfile',
       snapshotContentContainer: false
     });
-    const instagramURL = `instagram://library?AssetPath=${result}`;
+    const instagramURL = await `instagram://library?AssetPath=${result}`;
     return Linking.openURL(instagramURL)
       .then(url => {
         this.setState({ hideOptions: false });
@@ -328,11 +328,11 @@ class NewPoem extends Component {
                 >
                   Share
                 </OptionsListText>
-                <OptionsListText
+                {/* <OptionsListText
                   onPress={() => this.shareToInstagram(`${this.props.poem.id}`)}
                 >
                   Share To Instagram
-                </OptionsListText>
+                </OptionsListText> */}
               </React.Fragment>
             ) : null}
             <OptionsListText
