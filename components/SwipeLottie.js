@@ -6,10 +6,9 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { ScreenBackground } from './Styles';
-import { DangerZone } from 'expo';
 import { Button } from 'native-base';
 import wiggly from './swipe.json';
-const { Lottie } = DangerZone;
+import Lottie from 'lottie-react-native';
 const { manifest } = Constants;
 
 class SwipeLottie extends React.PureComponent {

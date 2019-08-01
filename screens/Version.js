@@ -6,10 +6,10 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { ScreenBackground, PoemName } from '../components/Styles';
 import { firestoreConnect } from 'react-redux-firebase';
-import { DangerZone } from 'expo';
+import Lottie from 'lottie-react-native';
 import { Button } from 'native-base';
 import wiggly from './error.json';
-const { Lottie } = DangerZone;
+
 const { manifest } = Constants;
 
 class Version extends React.PureComponent {

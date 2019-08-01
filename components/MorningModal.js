@@ -1,12 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Modal, Text, Linking } from 'react-native';
-import { DangerZone } from 'expo';
+import Lottie from 'lottie-react-native';
 import wiggly from './data.json';
 import { Button, Grid, Col } from 'native-base';
 import { ScreenBackground, PoemName } from './Styles';
 import moment from 'moment';
-
-const { Lottie } = DangerZone;
 
 export default class MorningModal extends React.Component {
   state = {

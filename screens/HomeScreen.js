@@ -250,29 +250,14 @@ class HomeScreen extends React.PureComponent {
     this.initalFirebaseLoad();
     this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
   };
-  // _renderHeader = () => {
-  //   if (!this.state.swipeForPoem) {
-  //     AsyncStorage.setItem('swipeForPoem', JSON.stringify('true'));
-  //     return (
-  //       <ScreenBackground
-  //         style={{
-  //           width: width,
-  //           height: height,
-  //           flex: 1
-  //         }}
-  //       >
-  //         <SwipeLottie />
-  //       </ScreenBackground>
-  //     );
-  //   } else {
-  //     return null;
-  //   }
-  // };
+
   scrollDown = () => {
-    this.flatListRef.scrollToOffset({
-      animated: true,
-      offset: this.state.scrollPosition + 60
-    });
+    if (!this.props.swipeMode) {
+      this.flatListRef.scrollToOffset({
+        animated: true,
+        offset: this.state.scrollPosition + 100
+      });
+    }
   };
 
   render() {
@@ -355,7 +340,7 @@ class HomeScreen extends React.PureComponent {
                     data={poems}
                     components={item => (
                       <NewPoem
-                        scrollPosition={this.statescrollPosition}
+                        scrollDown={this.scrollDown}
                         poem={item}
                         auth={this.props.auth}
                         navigation={this.props.navigation}

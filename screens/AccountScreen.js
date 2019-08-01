@@ -156,7 +156,7 @@ class AccountScreen extends Component {
     return (
       <ScreenBackground style={styles.mainContent}>
         <TopNav
-          pageTitle={'You Account'}
+          pageTitle={'Your Account'}
           navigation={this.props.navigation}
           leftComponent={this.setLeftHeader}
         />

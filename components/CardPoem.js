@@ -33,7 +33,8 @@ import Dialog, {
   DialogContent
 } from 'react-native-popup-dialog';
 import Bookmark from './Bookmark';
-import { WebBrowser, Permissions } from 'expo';
+import { Permissions } from 'expo';
+
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot';
 import {
   CNRichTextView,
@@ -566,7 +567,7 @@ export default compose(
   )
 )(CardPoem);
 
-let screenWidth = Dimensions.get('window').width ;
+let screenWidth = Dimensions.get('window').width;
 let screenWidths = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   selected: {

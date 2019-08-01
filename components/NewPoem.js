@@ -11,7 +11,8 @@ import {
   Platform,
   Share
 } from 'react-native';
-import { WebBrowser, Permissions } from 'expo';
+import * as WebBrowser from 'expo-web-browser';
+import { Permissions } from 'expo';
 import { compose } from 'redux';
 import AdminModal from './AdminModal';
 import { connect } from 'react-redux';
@@ -21,6 +22,7 @@ import { captureRef as takeSnapshotAsync } from 'react-native-view-shot';
 import {
   StyledText,
   PoemName,
+  ScreenShotMode,
   PoemBodyText,
   Pills,
   PillsText,
@@ -133,49 +135,51 @@ class NewPoem extends Component {
     const targetPixelCount = 1080;
     const pixelRatio = PixelRatio.get();
     const pixels = targetPixelCount / pixelRatio;
-    let result = await takeSnapshotAsync(this[id], {
-      format: 'png',
-      width: pixels,
-      height: '100%',
-      quality: 1,
-      result: 'tmpfile',
-      snapshotContentContainer: false
-    });
-    await Share.share(
-      {
-        message: `${this.props.poem.name} - Dis Net Jy`,
-        title: `${this.props.poem.name} - Dis Net Jy`,
-        url: result
-      },
-      {
-        excludedActivityTypes: [
-          'com.apple.UIKit.activity.PostToWeibo',
-          'com.apple.UIKit.activity.Print',
-          'com.apple.UIKit.activity.CopyToPasteboard',
-          'com.apple.UIKit.activity.AssignToContact',
-          'com.apple.UIKit.activity.SaveToCameraRoll',
-          'com.apple.UIKit.activity.AddToReadingList',
-          'com.apple.UIKit.activity.PostToFlickr',
-          'com.apple.UIKit.activity.PostToVimeo',
-          'com.apple.UIKit.activity.PostToTencentWeibo',
-          'com.apple.UIKit.activity.AirDrop',
-          'com.apple.UIKit.activity.OpenInIBooks',
-          'com.apple.UIKit.activity.MarkupAsPDF',
-          'com.apple.reminders.RemindersEditorExtension',
-          'com.apple.mobilenotes.SharingExtension',
-          'com.apple.mobileslideshow.StreamShareService',
-          'com.linkedin.LinkedIn.ShareExtension',
-          'pinterest.ShareExtension',
-          'com.google.GooglePlus.ShareExtension',
-          'com.tumblr.tumblr.Share-With-Tumblr',
-          'net.whatsapp.WhatsApp.ShareExtension' //WhatsApp
-        ]
-      }
-    ).then(({ action, activityType }) => {
-      if (action === Share.dismissedAction)
-        this.setState({ hideOptions: false });
-      else this.setState({ hideOptions: false });
-    });
+    setTimeout(async () => {
+      let result = await takeSnapshotAsync(this[id], {
+        format: 'png',
+        width: pixels,
+        height: '100%',
+        quality: 1,
+        result: 'tmpfile',
+        snapshotContentContainer: false
+      });
+      await Share.share(
+        {
+          message: `${this.props.poem.name} - Dis Net Jy`,
+          title: `${this.props.poem.name} - Dis Net Jy`,
+          url: result
+        },
+        {
+          excludedActivityTypes: [
+            'com.apple.UIKit.activity.PostToWeibo',
+            'com.apple.UIKit.activity.Print',
+            'com.apple.UIKit.activity.CopyToPasteboard',
+            'com.apple.UIKit.activity.AssignToContact',
+            'com.apple.UIKit.activity.SaveToCameraRoll',
+            'com.apple.UIKit.activity.AddToReadingList',
+            'com.apple.UIKit.activity.PostToFlickr',
+            'com.apple.UIKit.activity.PostToVimeo',
+            'com.apple.UIKit.activity.PostToTencentWeibo',
+            'com.apple.UIKit.activity.AirDrop',
+            'com.apple.UIKit.activity.OpenInIBooks',
+            'com.apple.UIKit.activity.MarkupAsPDF',
+            'com.apple.reminders.RemindersEditorExtension',
+            'com.apple.mobilenotes.SharingExtension',
+            'com.apple.mobileslideshow.StreamShareService',
+            'com.linkedin.LinkedIn.ShareExtension',
+            'pinterest.ShareExtension',
+            'com.google.GooglePlus.ShareExtension',
+            'com.tumblr.tumblr.Share-With-Tumblr',
+            'net.whatsapp.WhatsApp.ShareExtension' //WhatsApp
+          ]
+        }
+      ).then(({ action, activityType }) => {
+        if (action === Share.dismissedAction)
+          this.setState({ hideOptions: false });
+        else this.setState({ hideOptions: false });
+      });
+    }, 500);
   };
 
   snapshot = async id => {
@@ -224,6 +228,7 @@ class NewPoem extends Component {
       this.setState({ cameraRollUri: saveResult, hideOptions: false });
     }
   };
+  // <ScreenShotMode>
   render() {
     const { hideOptions, elem } = this.state;
     const { theme, swipeMode } = this.props;
@@ -235,98 +240,206 @@ class NewPoem extends Component {
             this[`${this.props.poem.id}`] = ref;
           }}
         >
-          <Row>
-            <Col>
-              {hideOptions ? null : this.props.poem.nsfw ? (
-                <NSFWPills>
-                  <NSFWPillsText>NSFW</NSFWPillsText>
-                </NSFWPills>
-              ) : null}
-              {hideOptions ? null : (
-                <NewBookmark
-                  poemId={this.props.poem.id}
-                  bookmarkedCount={this.props.poem.bookmarkedCount}
-                  bookmarked={this.state.bookmarked}
-                  toggleBookMark={this.toggleBookMark}
-                />
-              )}
-              {this.props.poem.name.replace(/\s/g, '') ? (
-                <PoemName>{this.props.poem.name}</PoemName>
-              ) : null}
-              {this.props.poem.handle ? (
-                <InstagramText
-                  onPress={() =>
-                    WebBrowser.openBrowserAsync(
-                      `https://www.instagram.com/${this.props.poem.handle}`
-                    )
-                  }
-                >
-                  - {this.props.poem.handle}
-                </InstagramText>
-              ) : (
-                <InstagramText>- ANON</InstagramText>
-              )}
-              {this.props.poem.richText ? (
-                <View
-                  style={{
-                    flex: 1
-                  }}
-                >
-                  <CNRichTextView
-                    text={this.props.poem.body}
-                    styleList={customStyles}
-                    foreColor={'#474554'}
-                    color={theme ? '#fff' : '#474554'}
-                  />
-                </View>
-              ) : (
-                <PoemBodyText>{this.props.poem.body}</PoemBodyText>
-              )}
-            </Col>
-          </Row>
-          <Row style={{ marginTop: 40 }}>
-            {hideOptions ? (
-              <React.Fragment>
+          {hideOptions ? (
+            <React.Fragment>
+              <ScreenShotMode>
+                <Row>
+                  <Col>
+                    {hideOptions ? null : this.props.poem.nsfw ? (
+                      <NSFWPills>
+                        <NSFWPillsText>NSFW</NSFWPillsText>
+                      </NSFWPills>
+                    ) : null}
+                    {hideOptions ? null : (
+                      <NewBookmark
+                        poemId={this.props.poem.id}
+                        bookmarkedCount={this.props.poem.bookmarkedCount}
+                        bookmarked={this.state.bookmarked}
+                        toggleBookMark={this.toggleBookMark}
+                      />
+                    )}
+                    {this.props.poem.name.replace(/\s/g, '') ? (
+                      <PoemName>{this.props.poem.name}</PoemName>
+                    ) : null}
+                    {this.props.poem.handle ? (
+                      <InstagramText
+                        onPress={async () =>
+                          await WebBrowser.openBrowserAsync(
+                            `https://www.instagram.com/${
+                              this.props.poem.handle
+                            }`
+                          )
+                        }
+                      >
+                        - {this.props.poem.handle}
+                      </InstagramText>
+                    ) : (
+                      <InstagramText>- ANON</InstagramText>
+                    )}
+                    {this.props.poem.richText ? (
+                      <View
+                        style={{
+                          flex: 1
+                        }}
+                      >
+                        <CNRichTextView
+                          text={this.props.poem.body}
+                          styleList={customStyles}
+                          foreColor={'#474554'}
+                          color={theme ? '#fff' : '#474554'}
+                        />
+                      </View>
+                    ) : (
+                      <PoemBodyText>{this.props.poem.body}</PoemBodyText>
+                    )}
+                  </Col>
+                </Row>
+                <Row style={{ marginTop: 40 }}>
+                  {hideOptions ? (
+                    <React.Fragment>
+                      <Col>
+                        <StaticPills>
+                          <StaticPillsText>
+                            {moment
+                              .unix(this.props.poem.date)
+                              .format('MMM `YY')}
+                          </StaticPillsText>
+                          <StaticPillsText>DisNetJy.com</StaticPillsText>
+                        </StaticPills>
+                      </Col>
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      <Col>
+                        <StaticPills>
+                          <StaticPillsText>
+                            {moment.unix(this.props.poem.date).fromNow()}
+                          </StaticPillsText>
+                        </StaticPills>
+                      </Col>
+                      {this.canIEdit()}
+                      <Col>
+                        <Pills
+                          onPress={() =>
+                            this.setState({
+                              open: !this.state.open
+                            })
+                          }
+                        >
+                          <PillsText
+                            onPress={() => {
+                              this.props.scrollDown();
+                              this.setState({
+                                open: !this.state.open
+                              });
+                            }}
+                          >
+                            Options
+                          </PillsText>
+                        </Pills>
+                      </Col>
+                    </React.Fragment>
+                  )}
+                </Row>
+              </ScreenShotMode>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Row>
                 <Col>
-                  <StaticPills>
-                    <StaticPillsText>DisNetJy.com</StaticPillsText>
-                  </StaticPills>
-                </Col>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <Col>
-                  <StaticPills>
-                    <StaticPillsText>
-                      {moment.unix(this.props.poem.date).fromNow()}
-                    </StaticPillsText>
-                  </StaticPills>
-                </Col>
-                {this.canIEdit()}
-                <Col>
-                  <Pills
-                    onPress={() =>
-                      this.setState({
-                        open: !this.state.open
-                      })
-                    }
-                  >
-                    <PillsText
-                      onPress={() => {
-                        this.props.scrollDown();
-                        this.setState({
-                          open: !this.state.open
-                        });
+                  {hideOptions ? null : this.props.poem.nsfw ? (
+                    <NSFWPills>
+                      <NSFWPillsText>NSFW</NSFWPillsText>
+                    </NSFWPills>
+                  ) : null}
+                  {hideOptions ? null : (
+                    <NewBookmark
+                      poemId={this.props.poem.id}
+                      bookmarkedCount={this.props.poem.bookmarkedCount}
+                      bookmarked={this.state.bookmarked}
+                      toggleBookMark={this.toggleBookMark}
+                    />
+                  )}
+                  {this.props.poem.name.replace(/\s/g, '') ? (
+                    <PoemName>{this.props.poem.name}</PoemName>
+                  ) : null}
+                  {this.props.poem.handle ? (
+                    <InstagramText
+                      onPress={async () =>
+                        await WebBrowser.openBrowserAsync(
+                          `https://www.instagram.com/${this.props.poem.handle}`
+                        )
+                      }
+                    >
+                      - {this.props.poem.handle}
+                    </InstagramText>
+                  ) : (
+                    <InstagramText>- ANON</InstagramText>
+                  )}
+                  {this.props.poem.richText ? (
+                    <View
+                      style={{
+                        flex: 1
                       }}
                     >
-                      Options
-                    </PillsText>
-                  </Pills>
+                      <CNRichTextView
+                        text={this.props.poem.body}
+                        styleList={customStyles}
+                        foreColor={'#474554'}
+                        color={theme ? '#fff' : '#474554'}
+                      />
+                    </View>
+                  ) : (
+                    <PoemBodyText>{this.props.poem.body}</PoemBodyText>
+                  )}
                 </Col>
-              </React.Fragment>
-            )}
-          </Row>
+              </Row>
+              <Row style={{ marginTop: 40 }}>
+                {hideOptions ? (
+                  <React.Fragment>
+                    <Col>
+                      <StaticPills>
+                        <StaticPillsText>DisNetJy.com</StaticPillsText>
+                      </StaticPills>
+                    </Col>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <Col>
+                      <StaticPills>
+                        <StaticPillsText>
+                          {moment.unix(this.props.poem.date).fromNow()}
+                        </StaticPillsText>
+                      </StaticPills>
+                    </Col>
+                    {this.canIEdit()}
+                    <Col>
+                      <Pills
+                        onPress={() =>
+                          this.setState({
+                            open: !this.state.open
+                          })
+                        }
+                      >
+                        <PillsText
+                          onPress={() => {
+                            // this.props.scrollDown();
+                            this.setState({
+                              open: !this.state.open
+                            });
+                          }}
+                        >
+                          Options
+                        </PillsText>
+                      </Pills>
+                    </Col>
+                  </React.Fragment>
+                )}
+              </Row>
+            </React.Fragment>
+          )}
         </StyledText>
+
         <OptionsComponents open={this.state.open} poem={this.props.poem}>
           <AdminModal poem={this.props.poem} />
           {Platform.OS !== 'android' ? (

@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { NavBarHeaderText, NavBarView, DrawerText } from './Styles';
+import {
+  NavBarHeaderText,
+  NavBarView,
+  DrawerText,
+  NavBarHeaderTextBig
+} from './Styles';
 import { View, Text, Platform } from 'react-native';
 import { Icon, Button } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -13,7 +18,11 @@ class TopNav extends Component {
         style={{ height: 50, marginTop: Platform.OS === 'android' ? 40 : 0 }}
       >
         <Col style={{ width: '70%' }}>
-          <NavBarHeaderText> {this.props.pageTitle} </NavBarHeaderText>
+          {this.props.pageTitle == 'DNJ' ? (
+            <NavBarHeaderTextBig> {this.props.pageTitle} </NavBarHeaderTextBig>
+          ) : (
+            <NavBarHeaderText> {this.props.pageTitle} </NavBarHeaderText>
+          )}
         </Col>
         <Col style={{ width: '15%' }}>{this.props.leftComponent}</Col>
         <Col style={{ width: '15%' }}>

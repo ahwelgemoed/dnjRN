@@ -3,14 +3,16 @@ export const lightTheme = {
   CARD_FONT_COLOR: '#474554',
   FONT_COLOR: '#474554',
   SECOND_COLOR: '#C2C2C2',
-  SCREEN_BACKGROUND: '#fafafa'
+  SCREEN_BACKGROUND: '#fafafa',
+  CARD_SHADOW: 'rgba(0, 0, 0, 0.2)'
 };
 export const darkTheme = {
   CARD_BACKGROUND: '#121212',
   CARD_FONT_COLOR: '#fff',
   FONT_COLOR: '#fff',
   SECOND_COLOR: '#5D5D5D',
-  SCREEN_BACKGROUND: '#000'
+  SCREEN_BACKGROUND: '#000',
+  CARD_SHADOW: 'rgba(255, 255, 255, 0.05)'
 };
 // export const darkTheme = {
 //   CARD_BACKGROUND: '#2C2D2D',

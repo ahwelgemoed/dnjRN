@@ -4,14 +4,40 @@ var { height, width } = Dimensions.get('window');
 export const StyledText = styled.View`
   shadow-radius: 20px;
   border-radius: 10px;
-  shadow-color: rgba(0, 0, 0, 0.1);
+  shadow-color: ${props => props.theme.CARD_SHADOW};
   shadow-offset: 0px 0px;
   background: ${props => props.theme.CARD_BACKGROUND};
   color: ${props => props.theme.CARD_FONT_COLOR};
   margin-top: 30px;
+  box-shadow: 0px 0px 20px ${props => props.theme.CARD_SHADOW};
+  width: ${width - 40};
+  padding: 20px;
+`;
+export const StyledOptions = styled.View`
+  shadow-radius: 20px;
+  /* border-radius: 10px, 10px, 10px; */
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+  shadow-color: rgba(0, 0, 0, 0.1);
+  shadow-offset: 0px 0px;
+  background: ${props => props.theme.SCREEN_BACKGROUND};
+  color: ${props => props.theme.CARD_FONT_COLOR};
+  margin-top: 10px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
   width: ${width - 40};
   padding: 20px;
+`;
+export const ScreenShotMode = styled.View`
+  shadow-radius: 20px;
+  border-radius: 10px;
+  shadow-color: rgba(0, 0, 0, 0.1);
+  shadow-offset: 0px 0px;
+  background: ${props => props.theme.CARD_BACKGROUND};
+  color: ${props => props.theme.CARD_FONT_COLOR};
+padding:20px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  /* width: ${width - 60}; */
 `;
 export const PoemName = styled.Text`
   color: ${props => props.theme.CARD_FONT_COLOR};
@@ -120,6 +146,11 @@ export const NavBarView = styled.View`
   text-align: center;
 `;
 export const NavBarHeaderText = styled.Text`
+  font-family: 'raleway-boldI';
+  font-size: 30;
+  color: ${props => props.theme.FONT_COLOR};
+`;
+export const NavBarHeaderTextBig = styled.Text`
   font-family: 'raleway-boldI';
   font-size: 40;
   color: ${props => props.theme.FONT_COLOR};

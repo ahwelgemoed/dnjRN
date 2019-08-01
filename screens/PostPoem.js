@@ -479,7 +479,7 @@ class PostPoem extends Component {
                   theme
                     ? {
                         fontFamily: 'raleway-regular',
-                        backgroundColor: '#3c3e40',
+                        backgroundColor: '#121212',
                         shadowColor: '#404142',
                         color: '#EAEAEA'
                       }
@@ -650,14 +650,14 @@ class PostPoem extends Component {
               selectedStyles={this.state.selectedStyles}
               onStyleKeyPress={this.onStyleKeyPress}
               selectedBackgroundColor={[theme ? '#757575' : '#e7e9ec']}
-              backgroundColor={[theme ? '#404142' : '#F5F6F7']}
+              backgroundColor={[theme ? '#000' : '#F5F6F7']}
               color={[theme ? '#EAEAEA' : '#232526']}
               style={
                 theme
                   ? {
                       fontFamily: 'raleway-regular',
                       color: '#D8D9D9',
-                      backgroundColor: '#404142',
+                      backgroundColor: '#000',
                       borderWidth: 0
                     }
                   : {
