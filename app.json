@@ -3,7 +3,7 @@
     "name": "Dis Net Jy",
     "slug": "klyntjidnj",
     "privacy": "public",
-    "sdkVersion": "33.0.0",
+    "sdkVersion": "34.0.0",
     "platforms": ["ios", "android", "web"],
     "version": "2.3.6",
     "orientation": "portrait",
@@ -21,6 +21,7 @@
             "static-container",
             "react-native-pose",
             "react-pose-core",
+            "horizontaltextscroll",
             "styled-components"
           ]
         }
