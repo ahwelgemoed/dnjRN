@@ -45,7 +45,7 @@ const HomeStack = createStackNavigator(
   }
 );
 
-const Tabs = createBottomTabNavigator(
+export default createBottomTabNavigator(
   {
     HomeStack
   },
@@ -63,17 +63,17 @@ const Tabs = createBottomTabNavigator(
   }
 );
 
-export default (Drawer = createDrawerNavigator(
-  {
-    Home: {
-      screen: Tabs
-    }
-  },
-  {
-    // drawerLockMode: 'locked-closed',
-    contentComponent: DrawerScreen,
-    initialRouteName: 'Home',
-    transitionConfig: () => fadeIn(),
-    drawerWidth: 250
-  }
-));
+// export default (Drawer = createDrawerNavigator(
+//   {
+//     Home: {
+//       screen: Tabs
+//     }
+//   },
+//   {
+//     // drawerLockMode: 'locked-closed',
+//     contentComponent: DrawerScreen,
+//     initialRouteName: 'Home',
+//     transitionConfig: () => fadeIn(),
+//     drawerWidth: 250
+//   }
+// ));

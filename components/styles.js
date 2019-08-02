@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import styled from 'styled-components';
 import { Dimensions } from 'react-native';
 var { height, width } = Dimensions.get('window');
 export const StyledText = styled.View`

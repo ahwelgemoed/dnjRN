@@ -50,9 +50,9 @@ export default class WelcomeScreen extends Component {
     showRealApp: false
   };
   componentWillMount() {
-    Font.loadAsync({
-      'raleway-boldI': require('../assets/fonts/Raleway-BoldItalic.ttf')
-    });
+    // Font.loadAsync({
+    //   'raleway-boldI': require('../assets/fonts/Raleway-BoldItalic.ttf')
+    // });
   }
   _renderItem = item => {
     return (
