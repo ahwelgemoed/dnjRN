@@ -49,6 +49,7 @@ let customStyles = {
   heading: { fontSize: 18 },
   title: { fontSize: 20 },
   ol: { fontSize: 14 },
+  bold: { fontSize: 16, fontFamily: 'raleway-bold' },
   ul: { fontSize: 12 }
 };
 class NewPoem extends Component {
