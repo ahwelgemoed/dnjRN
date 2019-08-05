@@ -12,7 +12,7 @@ import {
   Share
 } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
-import { Permissions } from 'expo';
+import * as Permissions from 'expo-permissions';
 import { compose } from 'redux';
 import AdminModal from './AdminModal';
 import { connect } from 'react-redux';
@@ -49,6 +49,7 @@ let customStyles = {
   heading: { fontSize: 18 },
   title: { fontSize: 20 },
   ol: { fontSize: 14 },
+  bold: { fontSize: 16, fontFamily: 'raleway-bold' },
   ul: { fontSize: 12 }
 };
 class NewPoem extends Component {

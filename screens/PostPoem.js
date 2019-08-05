@@ -51,7 +51,8 @@ import CNRichTextEditor, {
 const defaultStyles = getDefaultStyles();
 let customStyles = {
   ...defaultStyles,
-  body: { fontSize: 16, fontFamily: 'raleway-regular' },
+  body: { fontSize: 16, fontFamily: 'raleway-medium' },
+  bold: { fontSize: 16, fontFamily: 'raleway-bold' },
   heading: { fontSize: 18 },
   title: { fontSize: 20 },
   ol: { fontSize: 14 },

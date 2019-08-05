@@ -12,7 +12,7 @@ import {
   Platform
 } from 'react-native';
 import { Notifications } from 'expo';
-// import { HZScroll } from 'horizontaltextscroll';
+import { HZScroll } from 'horizontaltextscroll';
 import * as Permissions from 'expo-permissions';
 import { successfullyAddedPoem } from '../actions/poemsActions';
 import { connect } from 'react-redux';
@@ -303,7 +303,7 @@ class HomeScreen extends React.PureComponent {
                     flex: 1
                   }}
                 >
-                  {/* <HZScroll
+                  <HZScroll
                     style={{ height: height }}
                     scrollEventThrottle={160}
                     keyExtractor={(item, index) => index.toString()}
@@ -351,7 +351,7 @@ class HomeScreen extends React.PureComponent {
                       //   navigation={this.props.navigation}
                       // />
                     )}
-                  /> */}
+                  />
                 </View>
               </React.Fragment>
             ) : (
