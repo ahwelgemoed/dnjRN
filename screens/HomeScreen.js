@@ -211,12 +211,14 @@ class HomeScreen extends React.PureComponent {
       .catch(err => {});
   };
   updateNewProfile = async () => {
+    const { visits } = this.props.profile;
     const hand = this.props.profile.Instagram;
     const res = hand.replace('@', '');
     const payLoad = {
       lastLogin: Date.now(),
       Instagram: res,
-      Platform: Platform.OS
+      Platform: Platform.OS,
+      visits: visits ? visits + 1 : 1
     };
     const { firestore } = this.props;
     await firestore
