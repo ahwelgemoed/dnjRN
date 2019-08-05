@@ -27,7 +27,7 @@ import {
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
-import { WebBrowser } from 'expo';
+import * as WebBrowser from 'expo-web-browser';
 import { activateDeleteAction } from '../actions/poemsActions';
 import { changePoem, toggleSwipeMode } from '../actions/themeActions';
 import OnlineUsers from '../components/OnlineUsers';
