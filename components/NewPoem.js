@@ -13,8 +13,11 @@ import {
 } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Permissions from 'expo-permissions';
+import { Icon } from 'native-base';
 import { compose } from 'redux';
 import AdminModal from './AdminModal';
+import AppologiesModal from './AppologiesModal';
+import ListOfPoemReplys from './ListOfPoemReplys';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { successfullyAddedPoem } from '../actions/poemsActions';
@@ -55,6 +58,8 @@ let customStyles = {
 class NewPoem extends Component {
   state = {
     open: false,
+    openReplyModal: false,
+    showAppologiesModal: false,
     userEdit: false,
     bookmarked: false,
     reportDialog: false,
@@ -182,6 +187,11 @@ class NewPoem extends Component {
       });
     }, 500);
   };
+  toggleReplyHistory = () => {
+    this.setState({
+      openReplyModal: !this.state.openReplyModal
+    });
+  };
 
   snapshot = async id => {
     await this.setState({
@@ -229,12 +239,16 @@ class NewPoem extends Component {
       this.setState({ cameraRollUri: saveResult, hideOptions: false });
     }
   };
+  changeTab = name => {
+    this.props.navigation.navigate(name, { poem: this.props.poem });
+  };
   // <ScreenShotMode>
   render() {
     const { hideOptions, elem } = this.state;
     const { theme, swipeMode } = this.props;
     return (
       <React.Fragment>
+        {/* <AppologiesModal showAppologiesModal={this.state.showAppologiesModal}> */}
         <StyledText
           style={swipeMode ? { marginLeft: 20 } : null}
           ref={ref => {
@@ -346,12 +360,33 @@ class NewPoem extends Component {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <Row>
+              <Row onPress={this.toggleReplyHistory}>
+                <AppologiesModal
+                  showAppologiesModal={this.state.openReplyModal}
+                >
+                  <ListOfPoemReplys poem={this.props.poem} />
+                  {/* <PurePoemView poem={poem} navigation={this.props.navigation} /> */}
+                </AppologiesModal>
                 <Col>
                   {hideOptions ? null : this.props.poem.nsfw ? (
                     <NSFWPills>
                       <NSFWPillsText>NSFW</NSFWPillsText>
                     </NSFWPills>
+                  ) : null}
+
+                  {hideOptions ? null : this.props.poem.canReply ? (
+                    <Icon
+                      onPress={this.changeTab.bind(this, 'Post')}
+                      style={{
+                        position: 'absolute',
+                        color: '#474554',
+                        top: 8,
+                        left: -30,
+                        transform: [{ rotate: '0deg' }]
+                      }}
+                      type="FontAwesome"
+                      name="reply"
+                    />
                   ) : null}
                   {hideOptions ? null : (
                     <NewBookmark
@@ -378,11 +413,7 @@ class NewPoem extends Component {
                     <InstagramText>- ANON</InstagramText>
                   )}
                   {this.props.poem.richText ? (
-                    <View
-                      style={{
-                        flex: 1
-                      }}
-                    >
+                    <View>
                       <CNRichTextView
                         text={this.props.poem.body}
                         styleList={customStyles}
@@ -463,6 +494,7 @@ class NewPoem extends Component {
             Save as Image
           </OptionsListText>
         </OptionsComponents>
+        {/* </AppologiesModal> */}
       </React.Fragment>
     );
   }

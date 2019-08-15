@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   ActivityIndicator,
   AsyncStorage,
+  Text,
   Platform
 } from 'react-native';
 import { Notifications } from 'expo';
@@ -387,17 +388,14 @@ class HomeScreen extends React.PureComponent {
                     this.flatListRef = ref;
                   }}
                   renderItem={({ item, i }) => (
-                    <NewPoem
-                      scrollDown={this.scrollDown}
-                      poem={item}
-                      auth={this.props.auth}
-                      navigation={this.props.navigation}
-                    />
-                    // <CardPoem
-                    //   poem={item}
-                    //   auth={this.props.auth}
-                    //   navigation={this.props.navigation}
-                    // />
+                    <React.Fragment>
+                      <NewPoem
+                        scrollDown={this.scrollDown}
+                        poem={item}
+                        auth={this.props.auth}
+                        navigation={this.props.navigation}
+                      />
+                    </React.Fragment>
                   )}
                 />
               </View>
