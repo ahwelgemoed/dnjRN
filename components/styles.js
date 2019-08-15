@@ -118,6 +118,13 @@ export const InstagramText = styled.Text`
   text-align: left;
   margin-bottom: 5px;
 `;
+export const MetaAppolo = styled.Text`
+  color: ${props => props.theme.SECOND_COLOR};
+  font-family: 'PTSansCaptionRegular';
+  font-size: 12;
+  text-align: left;
+  margin-bottom: 5px;
+`;
 export const ScreenBackground = styled.SafeAreaView`
   flex: 1;
   background-color: ${props => props.theme.SCREEN_BACKGROUND};

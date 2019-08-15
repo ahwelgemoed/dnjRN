@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PurePoemView from './PurePoemView';
 import { firestoreConnect } from 'react-redux-firebase';
+import { compareValues } from '../helperFuctions';
 var { height, width } = Dimensions.get('window');
 class ListOfPoemReplys extends Component {
   state = { poems: [this.props.poem], loading: true };
@@ -66,7 +67,7 @@ class ListOfPoemReplys extends Component {
               refreshing={this.state.isFetching}
               showsVerticalScrollIndicator={false}
               keyExtractor={(item, index) => index.toString()}
-              data={this.state.poems.reverse()}
+              data={this.state.poems.sort(compareValues('date'))}
               ref={ref => {
                 this.flatListRef = ref;
               }}

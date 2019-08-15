@@ -24,6 +24,7 @@ import { successfullyAddedPoem } from '../actions/poemsActions';
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot';
 import {
   StyledText,
+  MetaAppolo,
   PoemName,
   ScreenShotMode,
   PoemBodyText,
@@ -360,27 +361,21 @@ class NewPoem extends Component {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <Row onPress={this.toggleReplyHistory}>
+              <Row>
                 <AppologiesModal
                   showAppologiesModal={this.state.openReplyModal}
                 >
                   <ListOfPoemReplys poem={this.props.poem} />
-                  {/* <PurePoemView poem={poem} navigation={this.props.navigation} /> */}
                 </AppologiesModal>
                 <Col>
-                  {hideOptions ? null : this.props.poem.nsfw ? (
-                    <NSFWPills>
-                      <NSFWPillsText>NSFW</NSFWPillsText>
-                    </NSFWPills>
-                  ) : null}
-
                   {hideOptions ? null : this.props.poem.canReply ? (
                     <Icon
                       onPress={this.changeTab.bind(this, 'Post')}
                       style={{
+                        fontSize: 20,
                         position: 'absolute',
                         color: '#474554',
-                        top: 8,
+                        top: -20,
                         left: -30,
                         transform: [{ rotate: '0deg' }]
                       }}
@@ -396,6 +391,11 @@ class NewPoem extends Component {
                       toggleBookMark={this.toggleBookMark}
                     />
                   )}
+                  {this.props.poem.repliedTo ? (
+                    <MetaAppolo onPress={this.toggleReplyHistory}>
+                      MET APOLOGIE AAN
+                    </MetaAppolo>
+                  ) : null}
                   {this.props.poem.name.replace(/\s/g, '') ? (
                     <PoemName>{this.props.poem.name}</PoemName>
                   ) : null}
@@ -424,6 +424,11 @@ class NewPoem extends Component {
                   ) : (
                     <PoemBodyText>{this.props.poem.body}</PoemBodyText>
                   )}
+                  {hideOptions ? null : this.props.poem.nsfw ? (
+                    <NSFWPills>
+                      <NSFWPillsText>NSFW</NSFWPillsText>
+                    </NSFWPills>
+                  ) : null}
                 </Col>
               </Row>
               <Row style={{ marginTop: 40 }}>

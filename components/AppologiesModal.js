@@ -43,9 +43,7 @@ export default class AppologiesModal extends Component {
               alignItems: 'center'
             }}
           >
-            <InstagramText>met apologie aan</InstagramText>
-            <InstagramText>with apologies to</InstagramText>
-
+            <InstagramText> MET APOLOGIE AAN</InstagramText>
             {this.props.children}
           </View>
         </Modal>
