@@ -92,9 +92,9 @@ class NewBookmark extends Component {
         style={{
           position: 'absolute',
           color: '#474554',
-          top: 8,
-          right: -25,
-          transform: [{ rotate: '90deg' }]
+          fontSize: 20,
+          right: 0,
+          top: 10
         }}
         type="FontAwesome"
         name="bookmark"
@@ -105,9 +105,10 @@ class NewBookmark extends Component {
         style={{
           position: 'absolute',
           color: '#c2c2c2',
-          top: 8,
-          right: -25,
-          transform: [{ rotate: '90deg' }]
+          fontSize: 20,
+          right: 0,
+          top: 10
+          // transform: [{ rotate: '90deg' }]
         }}
         type="FontAwesome"
         name="bookmark"

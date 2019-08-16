@@ -12,6 +12,7 @@ import {
   Text,
   Platform
 } from 'react-native';
+import NewFeature from '../components/NewFeature';
 import { Notifications } from 'expo';
 import { HZScroll } from 'horizontaltextscroll';
 import * as Permissions from 'expo-permissions';
@@ -289,6 +290,7 @@ class HomeScreen extends React.PureComponent {
           }
         />
         <MorningModal navigation={this.props.navigation} />
+        <NewFeature />
         <UpdateUserInfo />
         {poems ? (
           <React.Fragment>

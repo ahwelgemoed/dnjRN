@@ -16,10 +16,10 @@ import * as Permissions from 'expo-permissions';
 import { Icon } from 'native-base';
 import { compose } from 'redux';
 import AdminModal from './AdminModal';
-import AppologiesModal from './AppologiesModal';
-import ListOfPoemReplys from './ListOfPoemReplys';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import AppologiesModal from './AppologiesModal';
+import ListOfPoemReplys from './ListOfPoemReplys';
 import { successfullyAddedPoem } from '../actions/poemsActions';
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot';
 import {
@@ -274,6 +274,11 @@ class NewPoem extends Component {
                         toggleBookMark={this.toggleBookMark}
                       />
                     )}
+                    {this.props.poem.repliedTo ? (
+                      <MetaAppolo onPress={this.toggleReplyHistory}>
+                        MET APOLOGIE AAN {this.props.poem.repliedToName}
+                      </MetaAppolo>
+                    ) : null}
                     {this.props.poem.name.replace(/\s/g, '') ? (
                       <PoemName>{this.props.poem.name}</PoemName>
                     ) : null}
@@ -361,118 +366,128 @@ class NewPoem extends Component {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <Row>
-                <AppologiesModal
-                  showAppologiesModal={this.state.openReplyModal}
-                >
-                  <ListOfPoemReplys poem={this.props.poem} />
-                </AppologiesModal>
-                <Col>
-                  {hideOptions ? null : this.props.poem.canReply ? (
-                    <Icon
-                      onPress={this.changeTab.bind(this, 'Post')}
-                      style={{
-                        fontSize: 20,
-                        position: 'absolute',
-                        color: '#474554',
-                        top: -20,
-                        left: -30,
-                        transform: [{ rotate: '0deg' }]
-                      }}
-                      type="FontAwesome"
-                      name="reply"
-                    />
-                  ) : null}
-                  {hideOptions ? null : (
-                    <NewBookmark
-                      poemId={this.props.poem.id}
-                      bookmarkedCount={this.props.poem.bookmarkedCount}
-                      bookmarked={this.state.bookmarked}
-                      toggleBookMark={this.toggleBookMark}
-                    />
-                  )}
+              <Grid>
+                <Row>
+                  <AppologiesModal
+                    showAppologiesModal={this.state.openReplyModal}
+                  >
+                    <ListOfPoemReplys poem={this.props.poem} />
+                  </AppologiesModal>
+
                   {this.props.poem.repliedTo ? (
                     <MetaAppolo onPress={this.toggleReplyHistory}>
                       MET APOLOGIE AAN
                     </MetaAppolo>
                   ) : null}
-                  {this.props.poem.name.replace(/\s/g, '') ? (
-                    <PoemName>{this.props.poem.name}</PoemName>
-                  ) : null}
-                  {this.props.poem.handle ? (
-                    <InstagramText
-                      onPress={async () =>
-                        await WebBrowser.openBrowserAsync(
-                          `https://www.instagram.com/${this.props.poem.handle}`
-                        )
-                      }
-                    >
-                      - {this.props.poem.handle}
-                    </InstagramText>
-                  ) : (
-                    <InstagramText>- ANON</InstagramText>
-                  )}
-                  {this.props.poem.richText ? (
-                    <View>
-                      <CNRichTextView
-                        text={this.props.poem.body}
-                        styleList={customStyles}
-                        foreColor={'#474554'}
-                        color={theme ? '#fff' : '#474554'}
+                </Row>
+                <Row>
+                  <Col style={{ width: '90%' }}>
+                    {this.props.poem.name.replace(/\s/g, '') ? (
+                      <PoemName>{this.props.poem.name}</PoemName>
+                    ) : null}
+                  </Col>
+
+                  <Col style={{ width: '10%' }}>
+                    {hideOptions ? null : this.props.poem.canReply ? (
+                      <Icon
+                        onPress={this.changeTab.bind(this, 'Post')}
+                        style={{
+                          position: 'absolute',
+                          color: '#c2c2c2',
+                          transform: [{ rotate: '0deg' }],
+                          fontSize: 20,
+                          right: 30,
+                          top: 10
+                        }}
+                        type="FontAwesome"
+                        name="reply"
                       />
-                    </View>
-                  ) : (
-                    <PoemBodyText>{this.props.poem.body}</PoemBodyText>
-                  )}
-                  {hideOptions ? null : this.props.poem.nsfw ? (
-                    <NSFWPills>
-                      <NSFWPillsText>NSFW</NSFWPillsText>
-                    </NSFWPills>
-                  ) : null}
-                </Col>
-              </Row>
-              <Row style={{ marginTop: 40 }}>
-                {hideOptions ? (
-                  <React.Fragment>
-                    <Col>
-                      <StaticPills>
-                        <StaticPillsText>DisNetJy.com</StaticPillsText>
-                      </StaticPills>
-                    </Col>
-                  </React.Fragment>
+                    ) : null}
+
+                    {hideOptions ? null : (
+                      <NewBookmark
+                        poemId={this.props.poem.id}
+                        bookmarkedCount={this.props.poem.bookmarkedCount}
+                        bookmarked={this.state.bookmarked}
+                        toggleBookMark={this.toggleBookMark}
+                      />
+                    )}
+                  </Col>
+                </Row>
+                {this.props.poem.handle ? (
+                  <InstagramText
+                    onPress={async () =>
+                      await WebBrowser.openBrowserAsync(
+                        `https://www.instagram.com/${this.props.poem.handle}`
+                      )
+                    }
+                  >
+                    - {this.props.poem.handle}
+                  </InstagramText>
                 ) : (
-                  <React.Fragment>
-                    <Col>
-                      <StaticPills>
-                        <StaticPillsText>
-                          {moment.unix(this.props.poem.date).fromNow()}
-                        </StaticPillsText>
-                      </StaticPills>
-                    </Col>
-                    {this.canIEdit()}
-                    <Col>
-                      <Pills
-                        onPress={() =>
-                          this.setState({
-                            open: !this.state.open
-                          })
-                        }
-                      >
-                        <PillsText
-                          onPress={() => {
-                            // this.props.scrollDown();
+                  <InstagramText>- ANON</InstagramText>
+                )}
+                {this.props.poem.richText ? (
+                  <View>
+                    <CNRichTextView
+                      text={this.props.poem.body}
+                      styleList={customStyles}
+                      foreColor={'#474554'}
+                      color={theme ? '#fff' : '#474554'}
+                    />
+                  </View>
+                ) : (
+                  <PoemBodyText>{this.props.poem.body}</PoemBodyText>
+                )}
+                {hideOptions ? null : this.props.poem.nsfw ? (
+                  <NSFWPills>
+                    <NSFWPillsText>NSFW</NSFWPillsText>
+                  </NSFWPills>
+                ) : null}
+
+                <Row style={{ marginTop: 40 }}>
+                  {hideOptions ? (
+                    <React.Fragment>
+                      <Col>
+                        <StaticPills>
+                          <StaticPillsText>DisNetJy.com</StaticPillsText>
+                        </StaticPills>
+                      </Col>
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      <Col>
+                        <StaticPills>
+                          <StaticPillsText>
+                            {moment.unix(this.props.poem.date).fromNow()}
+                          </StaticPillsText>
+                        </StaticPills>
+                      </Col>
+                      {this.canIEdit()}
+                      <Col>
+                        <Pills
+                          onPress={() =>
                             this.setState({
                               open: !this.state.open
-                            });
-                          }}
+                            })
+                          }
                         >
-                          Options
-                        </PillsText>
-                      </Pills>
-                    </Col>
-                  </React.Fragment>
-                )}
-              </Row>
+                          <PillsText
+                            onPress={() => {
+                              // this.props.scrollDown();
+                              this.setState({
+                                open: !this.state.open
+                              });
+                            }}
+                          >
+                            Options
+                          </PillsText>
+                        </Pills>
+                      </Col>
+                    </React.Fragment>
+                  )}
+                </Row>
+              </Grid>
             </React.Fragment>
           )}
         </StyledText>

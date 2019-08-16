@@ -39,6 +39,7 @@ padding:20px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
   /* width: ${width - 60}; */
 `;
+
 export const PoemName = styled.Text`
   color: ${props => props.theme.CARD_FONT_COLOR};
   font-size: 22;
@@ -46,6 +47,14 @@ export const PoemName = styled.Text`
   width: 90%;
   font-family: 'PTSansCaptionBold';
   text-align: left;
+`;
+export const FeatName = styled.Text`
+  color: ${props => props.theme.CARD_FONT_COLOR};
+  font-size: 22;
+  padding-top: 10;
+  width: 90%;
+  font-family: 'PTSansCaptionBold';
+  text-align: center;
 `;
 export const PoemBodyText = styled.Text`
   color: ${props => props.theme.CARD_FONT_COLOR};

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import moment from 'moment';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
 import { BlurView } from 'expo';
 import {
   CNRichTextView,
@@ -25,8 +28,9 @@ let customStyles = {
   ul: { fontSize: 12 }
 };
 
-export default class PurePoemView extends Component {
+class PurePoemView extends Component {
   render() {
+    const { theme } = this.props;
     return (
       <StyledText>
         <React.Fragment>
@@ -46,7 +50,7 @@ export default class PurePoemView extends Component {
                   text={this.props.poem.body}
                   styleList={customStyles}
                   foreColor={'#474554'}
-                  color={'#000'}
+                  color={theme ? '#fff' : '#474554'}
                 />
               </View>
             </Col>
@@ -67,3 +71,13 @@ export default class PurePoemView extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  theme: state.theme.isThemeDark
+});
+export default compose(
+  firestoreConnect(),
+  connect(
+    mapStateToProps,
+    {}
+  )
+)(PurePoemView);

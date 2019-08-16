@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import moment from 'moment';
 import AddInstagramModal from '../components/AddInstagramModal';
-import AppologiesModal from '../components/AppologiesModal';
+import PostPoemReplyModal from '../components/PostPoemReplyModal';
 import PurePoemView from '../components/PurePoemView';
 import { successfullyAddedPoem } from '../actions/poemsActions';
 import {
   PostPoemBackGround,
   JustColorBack,
+  InstagramText,
   PoemName
 } from '../components/Styles';
 import {
@@ -152,33 +153,19 @@ class PostPoem extends Component {
         reported
       } = this.state;
       let payLoad;
-      if (withInstagram) {
-        payLoad = {
-          date,
-          body: convertToHtmlString(body),
-          nsfw,
-          reported,
-          bookmarkedCount,
-          name,
-          adminNotes,
-          richText: true,
-          handle: this.props.profile.Instagram,
-          uid: auth.uid
-        };
-      } else {
-        payLoad = {
-          date,
-          body: convertToHtmlString(body),
-          adminNotes,
-          nsfw,
-          bookmarkedCount,
-          name,
-          reported,
-          richText: true,
-          handle: '',
-          uid: auth.uid
-        };
-      }
+
+      payLoad = {
+        date,
+        body: convertToHtmlString(body),
+        nsfw,
+        reported,
+        bookmarkedCount,
+        name,
+        adminNotes,
+        richText: true,
+        handle: withInstagram ? this.props.profile.Instagram : '',
+        uid: auth.uid
+      };
       await firestore
         .update(
           {
@@ -211,6 +198,7 @@ class PostPoem extends Component {
         adminNotes
       } = this.state;
       let payLoad;
+
       payLoad = {
         date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0)),
         body: convertToHtmlString(body),
@@ -223,9 +211,9 @@ class PostPoem extends Component {
         richText: true,
         uid: auth.uid,
         canReply: true,
-        repliedTo: poem.id
+        repliedTo: poem.id ? poem.id : null,
+        repliedToName: poem.id ? poem.name : null
       };
-
       await firestore
         .add(
           {
@@ -328,8 +316,6 @@ class PostPoem extends Component {
     const { theme } = this.props;
     const { navigation } = this.props;
     const poem = navigation.getParam('poem', 'noPoem');
-    console.log(poem);
-
     return (
       <PostPoemBackGround
         style={
@@ -354,7 +340,7 @@ class PostPoem extends Component {
           leftComponent={this.setLeftHeader}
         />
         {poem.id ? (
-          <PoemName
+          <InstagramText
             onPress={() =>
               this.setState({
                 showAppologiesModal: !this.state.showAppologiesModal
@@ -362,11 +348,15 @@ class PostPoem extends Component {
             }
           >
             {poem.name} by: {poem.handle ? poem.handle : '-ANON'}
-          </PoemName>
+          </InstagramText>
         ) : null}
-        <AppologiesModal showAppologiesModal={this.state.showAppologiesModal}>
-          <PurePoemView poem={poem} navigation={this.props.navigation} />
-        </AppologiesModal>
+        <PostPoemReplyModal
+          poem={poem}
+          navigation={this.props.navigation}
+          showAppologiesModal={this.state.showAppologiesModal}
+        >
+          {/* <PurePoemView poem={poem} navigation={this.props.navigation} /> */}
+        </PostPoemReplyModal>
         <KeyboardAvoidingView
           behavior="padding"
           enabled
