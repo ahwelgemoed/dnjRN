@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, Dimensions, ScrollView, StyleSheet } from 'react-native';
-import Modal from 'react-native-modal';
+// import Modal from 'react-native-modal';
 import { InstagramText, FeatName, PoemBodyText } from './Styles';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
