@@ -1,28 +1,44 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions, ScrollView, StyleSheet } from 'react-native';
+import {
+  Text,
+  View,
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  AsyncStorage
+} from 'react-native';
 // import Modal from 'react-native-modal';
-import { InstagramText, FeatName, PoemBodyText } from './Styles';
+import {
+  InstagramText,
+  FeatName,
+  PoemBodyText,
+  ScreenBackground
+} from './Styles';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
+import { withFirebase } from 'react-redux-firebase';
 import wiggly from './blobby.json';
 import Lottie from 'lottie-react-native';
 import { Icon, Button } from 'native-base';
 import Modalize from 'react-native-modalize';
 var { height, width } = Dimensions.get('window');
 
-export default class NewFeature extends Component {
+class NewFeature extends Component {
   state = {
     showAppologiesModal: false,
     animation: null
   };
   modal = React.createRef();
 
-  componentDidMount() {
+  async componentDidMount() {
+    const MetApologieaan = await AsyncStorage.getItem('MetApologieaan');
+    // if (MetApologieaan != 'true') {
+    AsyncStorage.setItem('MetApologieaan', 'true');
     setTimeout(() => {
       this.openModal();
       this._playAnimation();
     }, 2000);
+    // }
   }
   onClosed = () => {
     const { onClosed } = this.props;
@@ -58,21 +74,31 @@ export default class NewFeature extends Component {
     this.setState({ animation: wiggly }, this._playAnimation);
   };
   render() {
+    const { theme } = this.props;
     return (
       <Modalize
         ref={this.modal}
         onClosed={this.onClosed}
         scrollViewProps={{
-          showsVerticalScrollIndicator: false,
-          stickyHeaderIndices: [0]
+          showsVerticalScrollIndicator: false
         }}
         modalHeight={height / 2}
-        modalStyle={s.modal}
+        modalStyle={{
+          backgroundColor: theme ? '#000' : '#fff',
+          margin: 20,
+          paddingLeft: 20,
+          paddingRight: 20,
+          borderRadius: 20,
+          shadowOpacity: 0,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
         openAnimationConfig={{
           timing: { duration: 400 },
           spring: { speed: 20, bounciness: 10 }
         }}
       >
+        {/* <ScreenBackground> */}
         {this.state.animation && (
           <Lottie
             ref={animation => {
@@ -88,7 +114,11 @@ export default class NewFeature extends Component {
             loop={true}
           />
         )}
-        <FeatName>How It Works</FeatName>
+        <FeatName>
+          Hmmm... Seems you all like replying to eachothers work... So Lets make
+          it offical
+        </FeatName>
+        {/* <FeatName>How It Works</FeatName> */}
         <PoemBodyText>
           If You see this{' '}
           <Icon
@@ -109,21 +139,24 @@ export default class NewFeature extends Component {
           If a poem title starts with
           <InstagramText> MET APOLOGIE AAN</InstagramText> that means that poem
           is a reply to some other poem. Pressing that text will open the thread
-          of "replies".
+          of "replies", from there into the past.
         </PoemBodyText>
+        {/* </ScreenBackground> */}
       </Modalize>
     );
   }
 }
 
 const s = StyleSheet.create({
-  modal: {
-    margin: 20,
-    paddingLeft: 20,
-    paddingRight: 20,
-    borderRadius: 20,
-    shadowOpacity: 0,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+  modal: {}
 });
+
+export default compose(
+  withFirebase,
+  connect(
+    state => ({
+      theme: state.theme.isThemeDark
+    }),
+    {}
+  )
+)(NewFeature);

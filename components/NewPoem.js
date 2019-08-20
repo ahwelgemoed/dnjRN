@@ -376,7 +376,7 @@ class NewPoem extends Component {
 
                   {this.props.poem.repliedTo ? (
                     <MetaAppolo onPress={this.toggleReplyHistory}>
-                      MET APOLOGIE AAN
+                      MET APOLOGIE AAN : {this.props.poem.repliedToName}
                     </MetaAppolo>
                   ) : null}
                 </Row>

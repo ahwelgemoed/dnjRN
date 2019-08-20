@@ -263,6 +263,40 @@ class DrawerScreen extends Component {
             />
           </Right>
         </ListItem>
+        <ListItem
+          onPress={() => {
+            this.props.navigation.closeDrawer();
+            modal.openModal();
+          }}
+        >
+          <Left>
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="logo-instagram"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              How MET APOLOGIE AAN Works
+            </Text>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+            />
+          </Right>
+        </ListItem>
         {/* <ListItem onPress={this.changeTab.bind(this, 'Share')}>
           <Left>
             <Icon

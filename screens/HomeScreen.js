@@ -290,7 +290,11 @@ class HomeScreen extends React.PureComponent {
           }
         />
         <MorningModal navigation={this.props.navigation} />
-        <NewFeature />
+        <NewFeature
+          ref={el => {
+            modal = el;
+          }}
+        />
         <UpdateUserInfo />
         {poems ? (
           <React.Fragment>
