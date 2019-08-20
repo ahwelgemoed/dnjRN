@@ -386,7 +386,6 @@ class NewPoem extends Component {
                       <PoemName>{this.props.poem.name}</PoemName>
                     ) : null}
                   </Col>
-
                   <Col style={{ width: '10%' }}>
                     {hideOptions ? null : this.props.poem.canReply ? (
                       <Icon

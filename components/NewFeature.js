@@ -32,13 +32,13 @@ class NewFeature extends Component {
 
   async componentDidMount() {
     const MetApologieaan = await AsyncStorage.getItem('MetApologieaan');
-    // if (MetApologieaan != 'true') {
-    AsyncStorage.setItem('MetApologieaan', 'true');
-    setTimeout(() => {
-      this.openModal();
-      this._playAnimation();
-    }, 2000);
-    // }
+    if (MetApologieaan != 'true') {
+      AsyncStorage.setItem('MetApologieaan', 'true');
+      setTimeout(() => {
+        this.openModal();
+        this._playAnimation();
+      }, 2000);
+    }
   }
   onClosed = () => {
     const { onClosed } = this.props;
@@ -115,8 +115,8 @@ class NewFeature extends Component {
           />
         )}
         <FeatName>
-          Hmmm... Seems you all like replying to eachothers work... So Lets make
-          it offical
+          Hmmm... Seems you all like replying to each other's work... So Let's
+          make it official
         </FeatName>
         {/* <FeatName>How It Works</FeatName> */}
         <PoemBodyText>
