@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
 import { Button, Text, Spinner } from 'native-base';
-import { Facebook } from 'expo';
+import * as Facebook from 'expo-facebook';
 import { compose } from 'redux';
 import { withFirebase } from 'react-redux-firebase';
 import firebase from 'firebase';
@@ -13,11 +13,15 @@ class FacebookLogin extends Component {
     await this.setState({
       loading: true
     });
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
+
+    const { type, token } = await Facebook.logInWithReadPermissionsAsync(
       '433863794055791',
-      { permissions: ['public_profile'] }
+      {
+        permissions: ['public_profile']
+      }
     );
-    if (type == 'success') {
+
+    if (type === 'success') {
       // const { firebase } = this.props;
       const credential = firebase.auth.FacebookAuthProvider.credential(token);
       firebase

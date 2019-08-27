@@ -59,7 +59,8 @@
     "redux-thunk": "2.3.0",
     "remote-redux-devtools": "0.5.16",
     "sentry-expo": "~1.13.0",
-    "styled-components": "5.0.0-beta.5"
+    "styled-components": "5.0.0-beta.5",
+    "expo-facebook": "6.0.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",
