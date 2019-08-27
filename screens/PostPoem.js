@@ -4,8 +4,15 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import moment from 'moment';
 import AddInstagramModal from '../components/AddInstagramModal';
+import PostPoemReplyModal from '../components/PostPoemReplyModal';
+import PurePoemView from '../components/PurePoemView';
 import { successfullyAddedPoem } from '../actions/poemsActions';
-import { PostPoemBackGround, JustColorBack } from '../components/Styles';
+import {
+  PostPoemBackGround,
+  JustColorBack,
+  InstagramText,
+  PoemName
+} from '../components/Styles';
 import {
   HideWithKeyboard,
   ShowWithKeyboard
@@ -77,6 +84,7 @@ class PostPoem extends Component {
       selectedStyles: [],
       body: [getInitialObject()],
       withInstagram: false,
+      showAppologiesModal: false,
       instagram: false,
       openFirstModal: false,
       name: '',
@@ -103,6 +111,8 @@ class PostPoem extends Component {
   };
   upDateSave = async () => {};
   postToPoem = async () => {
+    const { navigation } = this.props;
+    const poem = navigation.getParam('poem', 'noPoem');
     if (!this.state.name) {
       return Toast.show({
         text: 'Please give Poem a Title',
@@ -113,7 +123,7 @@ class PostPoem extends Component {
     }
     if (!this.state.body) {
       return Toast.show({
-        text: 'Please give Poem a body',
+        text: 'Please give Poem a Body',
         position: 'top',
         type: 'danger',
         duration: 3000
@@ -143,33 +153,19 @@ class PostPoem extends Component {
         reported
       } = this.state;
       let payLoad;
-      if (withInstagram) {
-        payLoad = {
-          date,
-          body: convertToHtmlString(body),
-          nsfw,
-          reported,
-          bookmarkedCount,
-          name,
-          adminNotes,
-          richText: true,
-          handle: this.props.profile.Instagram,
-          uid: auth.uid
-        };
-      } else {
-        payLoad = {
-          date,
-          body: convertToHtmlString(body),
-          adminNotes,
-          nsfw,
-          bookmarkedCount,
-          name,
-          reported,
-          richText: true,
-          handle: '',
-          uid: auth.uid
-        };
-      }
+
+      payLoad = {
+        date,
+        body: convertToHtmlString(body),
+        nsfw,
+        reported,
+        bookmarkedCount,
+        name,
+        adminNotes,
+        richText: true,
+        handle: withInstagram ? this.props.profile.Instagram : '',
+        uid: auth.uid
+      };
       await firestore
         .update(
           {
@@ -202,33 +198,22 @@ class PostPoem extends Component {
         adminNotes
       } = this.state;
       let payLoad;
-      if (withInstagram) {
-        payLoad = {
-          date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0)),
-          body: convertToHtmlString(body),
-          nsfw,
-          name,
-          adminNotes,
-          bookmarkedCount,
-          reported,
-          handle: this.props.profile.Instagram,
-          richText: true,
-          uid: auth.uid
-        };
-      } else {
-        payLoad = {
-          date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0)),
-          nsfw,
-          body: convertToHtmlString(body),
-          name,
-          bookmarkedCount,
-          reported,
-          adminNotes,
-          richText: true,
-          handle: '',
-          uid: auth.uid
-        };
-      }
+
+      payLoad = {
+        date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0)),
+        body: convertToHtmlString(body),
+        nsfw,
+        name,
+        adminNotes,
+        bookmarkedCount,
+        reported,
+        handle: withInstagram ? this.props.profile.Instagram : '',
+        richText: true,
+        uid: auth.uid,
+        canReply: true,
+        repliedTo: poem.id ? poem.id : null,
+        repliedToName: poem.id ? poem.name : null
+      };
       await firestore
         .add(
           {
@@ -320,9 +305,17 @@ class PostPoem extends Component {
     });
   };
 
+  viewReplyingPoem = () => {
+    this.setState({
+      viewReplyingPoem: !this.state.viewReplyingPoem
+    });
+  };
+
   render() {
     const { handle, body, firstPost } = this.state;
     const { theme } = this.props;
+    const { navigation } = this.props;
+    const poem = navigation.getParam('poem', 'noPoem');
     return (
       <PostPoemBackGround
         style={
@@ -342,11 +335,28 @@ class PostPoem extends Component {
         }
       >
         <TopNav
-          pageTitle={'Post a Poem'}
+          pageTitle={poem.id ? 'Replying to:' : 'Post a Poem'}
           navigation={this.props.navigation}
           leftComponent={this.setLeftHeader}
         />
-
+        {poem.id ? (
+          <PoemName
+            onPress={() =>
+              this.setState({
+                showAppologiesModal: !this.state.showAppologiesModal
+              })
+            }
+          >
+            {poem.name} by: {poem.handle ? poem.handle : '-ANON'}
+          </PoemName>
+        ) : null}
+        <PostPoemReplyModal
+          poem={poem}
+          navigation={this.props.navigation}
+          showAppologiesModal={this.state.showAppologiesModal}
+        >
+          {/* <PurePoemView poem={poem} navigation={this.props.navigation} /> */}
+        </PostPoemReplyModal>
         <KeyboardAvoidingView
           behavior="padding"
           enabled

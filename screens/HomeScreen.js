@@ -9,8 +9,10 @@ import {
   SafeAreaView,
   ActivityIndicator,
   AsyncStorage,
+  Text,
   Platform
 } from 'react-native';
+import NewFeature from '../components/NewFeature';
 import { Notifications } from 'expo';
 import { HZScroll } from 'horizontaltextscroll';
 import * as Permissions from 'expo-permissions';
@@ -288,6 +290,11 @@ class HomeScreen extends React.PureComponent {
           }
         />
         <MorningModal navigation={this.props.navigation} />
+        <NewFeature
+          ref={el => {
+            modal = el;
+          }}
+        />
         <UpdateUserInfo />
         {poems ? (
           <React.Fragment>
@@ -387,17 +394,14 @@ class HomeScreen extends React.PureComponent {
                     this.flatListRef = ref;
                   }}
                   renderItem={({ item, i }) => (
-                    <NewPoem
-                      scrollDown={this.scrollDown}
-                      poem={item}
-                      auth={this.props.auth}
-                      navigation={this.props.navigation}
-                    />
-                    // <CardPoem
-                    //   poem={item}
-                    //   auth={this.props.auth}
-                    //   navigation={this.props.navigation}
-                    // />
+                    <React.Fragment>
+                      <NewPoem
+                        scrollDown={this.scrollDown}
+                        poem={item}
+                        auth={this.props.auth}
+                        navigation={this.props.navigation}
+                      />
+                    </React.Fragment>
                   )}
                 />
               </View>

@@ -32,6 +32,7 @@ import { activateDeleteAction } from '../actions/poemsActions';
 import { changePoem, toggleSwipeMode } from '../actions/themeActions';
 import OnlineUsers from '../components/OnlineUsers';
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import NewFeature from '../components/NewFeature';
 
 const { manifest } = Constants;
 // import { DrawerActions, DrawerItems, SafeAreaView } from 'react-navigation';
@@ -263,6 +264,41 @@ class DrawerScreen extends Component {
             />
           </Right>
         </ListItem>
+
+        {/* <ListItem
+          onPress={() => {
+            this.props.navigation.closeDrawer();
+          
+          }}
+        >
+          <Left>
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="logo-instagram"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              How MET APOLOGIE AAN Works
+            </Text>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+            />
+          </Right>
+        </ListItem> */}
         {/* <ListItem onPress={this.changeTab.bind(this, 'Share')}>
           <Left>
             <Icon
