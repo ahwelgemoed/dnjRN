@@ -120,7 +120,7 @@ class NewFeature extends Component {
         </FeatName>
         {/* <FeatName>How It Works</FeatName> */}
         <PoemBodyText>
-          If You see this{' '}
+          If you see this{' '}
           <Icon
             style={{
               position: 'absolute',

@@ -32,6 +32,7 @@ import { activateDeleteAction } from '../actions/poemsActions';
 import { changePoem, toggleSwipeMode } from '../actions/themeActions';
 import OnlineUsers from '../components/OnlineUsers';
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import NewFeature from '../components/NewFeature';
 
 const { manifest } = Constants;
 // import { DrawerActions, DrawerItems, SafeAreaView } from 'react-navigation';
@@ -263,10 +264,11 @@ class DrawerScreen extends Component {
             />
           </Right>
         </ListItem>
-        <ListItem
+
+        {/* <ListItem
           onPress={() => {
             this.props.navigation.closeDrawer();
-            modal.openModal();
+          
           }}
         >
           <Left>
@@ -296,7 +298,7 @@ class DrawerScreen extends Component {
               ]}
             />
           </Right>
-        </ListItem>
+        </ListItem> */}
         {/* <ListItem onPress={this.changeTab.bind(this, 'Share')}>
           <Left>
             <Icon

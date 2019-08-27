@@ -286,9 +286,7 @@ class NewPoem extends Component {
                       <InstagramText
                         onPress={async () =>
                           await WebBrowser.openBrowserAsync(
-                            `https://www.instagram.com/${
-                              this.props.poem.handle
-                            }`
+                            `https://www.instagram.com/${this.props.poem.handle}`
                           )
                         }
                       >
@@ -376,7 +374,10 @@ class NewPoem extends Component {
 
                   {this.props.poem.repliedTo ? (
                     <MetaAppolo onPress={this.toggleReplyHistory}>
-                      MET APOLOGIE AAN : {this.props.poem.repliedToName}
+                      MET APOLOGIE AAN{' '}
+                      {this.props.poem.repliedToName
+                        ? `- ${this.props.poem.repliedToName}`
+                        : null}
                     </MetaAppolo>
                   ) : null}
                 </Row>

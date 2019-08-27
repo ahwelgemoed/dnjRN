@@ -340,7 +340,7 @@ class PostPoem extends Component {
           leftComponent={this.setLeftHeader}
         />
         {poem.id ? (
-          <InstagramText
+          <PoemName
             onPress={() =>
               this.setState({
                 showAppologiesModal: !this.state.showAppologiesModal
@@ -348,7 +348,7 @@ class PostPoem extends Component {
             }
           >
             {poem.name} by: {poem.handle ? poem.handle : '-ANON'}
-          </InstagramText>
+          </PoemName>
         ) : null}
         <PostPoemReplyModal
           poem={poem}

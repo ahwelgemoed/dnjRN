@@ -61,7 +61,6 @@ class AppologiesModal extends Component {
         >
           <View
             style={{
-              flex: 1,
               paddingTop: 8,
               backgroundColor: theme ? '#191919' : '#fff',
               width: width * 0.95,

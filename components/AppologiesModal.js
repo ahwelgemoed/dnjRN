@@ -64,7 +64,7 @@ class AppologiesModal extends Component {
               warning
               onPress={() => this.setState({ showAppologiesModal: false })}
             >
-              <PoemBodyText>Close</PoemBodyText>
+              {/* <PoemBodyText>Close</PoemBodyText> */}
             </Button>
           </View>
         </Modal>
