@@ -10,18 +10,10 @@ class OnlineUsers extends Component {
   };
   render() {
     return (
-      <Text
-        style={{
-          fontSize: 12,
-          paddingTop: 10,
-          fontFamily: 'raleway-bold',
-          textAlign: 'left',
-          color: '#999'
-        }}
-      >
+      <React.Fragment>
         {this.props.presence ? Object.keys(this.props.presence).length : null}{' '}
-        Users Online
-      </Text>
+        Online
+      </React.Fragment>
     );
   }
 }

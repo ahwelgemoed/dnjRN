@@ -18,14 +18,22 @@ import {
   Linking,
   Platform
 } from 'react-native';
+import {
+  JustColorBack,
+  NavBarHeaderText,
+  OnlinePills,
+  OnlinePillsText
+} from '../components/Styles';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
-import { WebBrowser } from 'expo';
+import * as WebBrowser from 'expo-web-browser';
 import { activateDeleteAction } from '../actions/poemsActions';
 import { changePoem, toggleSwipeMode } from '../actions/themeActions';
 import OnlineUsers from '../components/OnlineUsers';
-import { ScreenBackground } from '../components/Styles';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import NewFeature from '../components/NewFeature';
+
 const { manifest } = Constants;
 // import { DrawerActions, DrawerItems, SafeAreaView } from 'react-navigation';
 // import styles from '../../styles/index';
@@ -62,13 +70,19 @@ class DrawerScreen extends Component {
     const { profile, theme } = this.props;
     // const { theme } = this.props;
     return (
-      <ScreenBackground style={styles.container}>
+      <JustColorBack style={styles.container}>
         {/* <Content> */}
-        <ListItem>
-          <Text style={styles.label}>
+        <NavBarHeaderText style={{ textAlign: 'center' }}>
+          {' '}
+          DNJ{' '}
+        </NavBarHeaderText>
+
+        <OnlinePills style={{ textAlign: 'center' }}>
+          <OnlinePillsText>
             <OnlineUsers />
-          </Text>
-        </ListItem>
+          </OnlinePillsText>
+        </OnlinePills>
+
         <ListItem onPress={this.changeTab.bind(this, 'Home')}>
           <Left>
             <Icon
@@ -250,7 +264,42 @@ class DrawerScreen extends Component {
             />
           </Right>
         </ListItem>
-        <ListItem onPress={this.changeTab.bind(this, 'Share')}>
+
+        {/* <ListItem
+          onPress={() => {
+            this.props.navigation.closeDrawer();
+          
+          }}
+        >
+          <Left>
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="logo-instagram"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              How MET APOLOGIE AAN Works
+            </Text>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+            />
+          </Right>
+        </ListItem> */}
+        {/* <ListItem onPress={this.changeTab.bind(this, 'Share')}>
           <Left>
             <Icon
               style={[
@@ -278,15 +327,15 @@ class DrawerScreen extends Component {
               ]}
             />
           </Right>
-        </ListItem>
-        <ListItem onPress={this.changeTab.bind(this, 'Account')}>
+        </ListItem> */}
+        <ListItem onPress={this.changeTab.bind(this, 'Settings')}>
           <Left>
             <Icon
               style={[
                 theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
                 styles.icons
               ]}
-              name="key"
+              name="settings"
             />
             <Text
               style={[
@@ -295,7 +344,7 @@ class DrawerScreen extends Component {
               ]}
             >
               {' '}
-              Account Page
+              Settings
             </Text>
           </Left>
           <Right>
@@ -424,7 +473,7 @@ class DrawerScreen extends Component {
               />
             </Right>
           </ListItem>
-          <ListItem
+          {/* <ListItem
             onPress={this.signOut}
             style={{ borderBottomWidth: 0, borderTopWidth: 0 }}
           >
@@ -444,7 +493,7 @@ class DrawerScreen extends Component {
               {' '}
               Sign Out
             </Text>
-          </ListItem>
+          </ListItem> */}
           <ListItem style={{ borderBottomWidth: 0, borderTopWidth: 0 }}>
             <Text
               style={[
@@ -456,7 +505,7 @@ class DrawerScreen extends Component {
             </Text>
           </ListItem>
         </View>
-      </ScreenBackground>
+      </JustColorBack>
     );
   }
 }
@@ -464,9 +513,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 40,
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    textAlign: 'left'
+    justifyContent: 'center',
+    // alignItems: 'stretch',
+    textAlign: 'center'
     // backgroundColor: '#efefef'
   },
   icons: {

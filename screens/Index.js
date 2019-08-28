@@ -13,7 +13,6 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { darkTheme, lightTheme } from '../components/theme';
 import { changePoem, toggleSwipeMode } from '../actions/themeActions';
-import { ScreenBackground } from '../components/Styles';
 
 class Index extends Component {
   async componentDidMount() {

@@ -3,9 +3,9 @@
     "name": "Dis Net Jy",
     "slug": "klyntjidnj",
     "privacy": "public",
-    "sdkVersion": "33.0.0",
+    "sdkVersion": "34.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "2.2.0",
+    "version": "2.5.0",
     "orientation": "portrait",
     "icon": "./assets/images/DNJ.png",
     "splash": {
@@ -20,7 +20,9 @@
             "native-base",
             "static-container",
             "react-native-pose",
-            "react-pose-core"
+            "react-pose-core",
+            "horizontaltextscroll",
+            "styled-components"
           ]
         }
       }
@@ -30,7 +32,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "android": {
-      "versionCode": 18,
+      "versionCode": 25,
       "package": "com.disnetons.googlesignin",
       "googleServicesFile": "./google-services.json"
     },

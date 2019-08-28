@@ -44,11 +44,11 @@ export default class App extends React.Component {
         <Provider store={store}>
           <Root>
             <View style={styles.container}>
-              <Version>
-                <Maintanince>
-                  <Index />
-                </Maintanince>
-              </Version>
+              {/* <Version> */}
+              <Maintanince>
+                <Index />
+              </Maintanince>
+              {/* </Version> */}
             </View>
           </Root>
         </Provider>
@@ -64,6 +64,8 @@ export default class App extends React.Component {
       'raleway-regular': require('./assets/fonts/Raleway-Regular.ttf'),
       'raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
       'raleway-extralight': require('./assets/fonts/Raleway-ExtraLight.ttf'),
+      PTSansCaptionBold: require('./assets/fonts/PTSansCaption-Bold.ttf'),
+      PTSansCaptionRegular: require('./assets/fonts/PTSansCaption-Regular.ttf'),
       ...Ionicons.font
     });
 

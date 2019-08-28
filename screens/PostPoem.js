@@ -4,8 +4,15 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import moment from 'moment';
 import AddInstagramModal from '../components/AddInstagramModal';
+import PostPoemReplyModal from '../components/PostPoemReplyModal';
+import PurePoemView from '../components/PurePoemView';
 import { successfullyAddedPoem } from '../actions/poemsActions';
-import { ScreenBackground } from '../components/Styles';
+import {
+  PostPoemBackGround,
+  JustColorBack,
+  InstagramText,
+  PoemName
+} from '../components/Styles';
 import {
   HideWithKeyboard,
   ShowWithKeyboard
@@ -51,8 +58,9 @@ import CNRichTextEditor, {
 const defaultStyles = getDefaultStyles();
 let customStyles = {
   ...defaultStyles,
-  body: { fontSize: 14 },
-  heading: { fontSize: 16 },
+  body: { fontSize: 16, fontFamily: 'raleway-medium' },
+  bold: { fontSize: 16, fontFamily: 'raleway-bold' },
+  heading: { fontSize: 18 },
   title: { fontSize: 20 },
   ol: { fontSize: 14 },
   ul: { fontSize: 12 }
@@ -76,6 +84,7 @@ class PostPoem extends Component {
       selectedStyles: [],
       body: [getInitialObject()],
       withInstagram: false,
+      showAppologiesModal: false,
       instagram: false,
       openFirstModal: false,
       name: '',
@@ -102,6 +111,8 @@ class PostPoem extends Component {
   };
   upDateSave = async () => {};
   postToPoem = async () => {
+    const { navigation } = this.props;
+    const poem = navigation.getParam('poem', 'noPoem');
     if (!this.state.name) {
       return Toast.show({
         text: 'Please give Poem a Title',
@@ -112,7 +123,7 @@ class PostPoem extends Component {
     }
     if (!this.state.body) {
       return Toast.show({
-        text: 'Please give Poem a body',
+        text: 'Please give Poem a Body',
         position: 'top',
         type: 'danger',
         duration: 3000
@@ -142,33 +153,19 @@ class PostPoem extends Component {
         reported
       } = this.state;
       let payLoad;
-      if (withInstagram) {
-        payLoad = {
-          date,
-          body: convertToHtmlString(body),
-          nsfw,
-          reported,
-          bookmarkedCount,
-          name,
-          adminNotes,
-          richText: true,
-          handle: this.props.profile.Instagram,
-          uid: auth.uid
-        };
-      } else {
-        payLoad = {
-          date,
-          body: convertToHtmlString(body),
-          adminNotes,
-          nsfw,
-          bookmarkedCount,
-          name,
-          reported,
-          richText: true,
-          handle: '',
-          uid: auth.uid
-        };
-      }
+
+      payLoad = {
+        date,
+        body: convertToHtmlString(body),
+        nsfw,
+        reported,
+        bookmarkedCount,
+        name,
+        adminNotes,
+        richText: true,
+        handle: withInstagram ? this.props.profile.Instagram : '',
+        uid: auth.uid
+      };
       await firestore
         .update(
           {
@@ -201,33 +198,22 @@ class PostPoem extends Component {
         adminNotes
       } = this.state;
       let payLoad;
-      if (withInstagram) {
-        payLoad = {
-          date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0)),
-          body: convertToHtmlString(body),
-          nsfw,
-          name,
-          adminNotes,
-          bookmarkedCount,
-          reported,
-          handle: this.props.profile.Instagram,
-          richText: true,
-          uid: auth.uid
-        };
-      } else {
-        payLoad = {
-          date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0)),
-          nsfw,
-          body: convertToHtmlString(body),
-          name,
-          bookmarkedCount,
-          reported,
-          adminNotes,
-          richText: true,
-          handle: '',
-          uid: auth.uid
-        };
-      }
+
+      payLoad = {
+        date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0)),
+        body: convertToHtmlString(body),
+        nsfw,
+        name,
+        adminNotes,
+        bookmarkedCount,
+        reported,
+        handle: withInstagram ? this.props.profile.Instagram : '',
+        richText: true,
+        uid: auth.uid,
+        canReply: true,
+        repliedTo: poem.id ? poem.id : null,
+        repliedToName: poem.id ? poem.name : null
+      };
       await firestore
         .add(
           {
@@ -319,33 +305,58 @@ class PostPoem extends Component {
     });
   };
 
+  viewReplyingPoem = () => {
+    this.setState({
+      viewReplyingPoem: !this.state.viewReplyingPoem
+    });
+  };
+
   render() {
     const { handle, body, firstPost } = this.state;
     const { theme } = this.props;
+    const { navigation } = this.props;
+    const poem = navigation.getParam('poem', 'noPoem');
     return (
-      <View
+      <PostPoemBackGround
         style={
           theme
             ? {
                 flex: 1,
-                paddingTop: 20,
-                fontFamily: 'raleway-regular',
-                backgroundColor: '#232526'
+                paddingTop: 40,
+                fontFamily: 'raleway-regular'
+                // backgroundColor: '#232526'
               }
             : {
                 flex: 1,
-                paddingTop: 20,
-                fontFamily: 'raleway-regular',
-                backgroundColor: '#EAEAEA'
+                paddingTop: 40,
+                fontFamily: 'raleway-regular'
+                // backgroundColor: '#EAEAEA'
               }
         }
       >
         <TopNav
-          pageTitle={'Post a Poem'}
+          pageTitle={poem.id ? 'Replying to:' : 'Post a Poem'}
           navigation={this.props.navigation}
           leftComponent={this.setLeftHeader}
         />
-
+        {poem.id ? (
+          <PoemName
+            onPress={() =>
+              this.setState({
+                showAppologiesModal: !this.state.showAppologiesModal
+              })
+            }
+          >
+            {poem.name} by: {poem.handle ? poem.handle : '-ANON'}
+          </PoemName>
+        ) : null}
+        <PostPoemReplyModal
+          poem={poem}
+          navigation={this.props.navigation}
+          showAppologiesModal={this.state.showAppologiesModal}
+        >
+          {/* <PurePoemView poem={poem} navigation={this.props.navigation} /> */}
+        </PostPoemReplyModal>
         <KeyboardAvoidingView
           behavior="padding"
           enabled
@@ -358,7 +369,7 @@ class PostPoem extends Component {
           }}
         >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View
+            <PostPoemBackGround
               style={
                 theme
                   ? {
@@ -368,8 +379,8 @@ class PostPoem extends Component {
                       alignItems: 'stretch',
                       flex: 1,
                       paddingTop: 20,
-                      fontFamily: 'raleway-regular',
-                      backgroundColor: '#232526'
+                      fontFamily: 'raleway-regular'
+                      // backgroundColor: '#232526'
                     }
                   : {
                       flex: 1,
@@ -378,8 +389,8 @@ class PostPoem extends Component {
                       alignItems: 'stretch',
                       flex: 1,
                       paddingTop: 20,
-                      fontFamily: 'raleway-regular',
-                      backgroundColor: '#EAEAEA'
+                      fontFamily: 'raleway-regular'
+                      // backgroundColor: '#EAEAEA'
                     }
               }
             >
@@ -479,7 +490,7 @@ class PostPoem extends Component {
                   theme
                     ? {
                         fontFamily: 'raleway-regular',
-                        backgroundColor: '#3c3e40',
+                        backgroundColor: '#121212',
                         shadowColor: '#404142',
                         color: '#EAEAEA'
                       }
@@ -492,18 +503,18 @@ class PostPoem extends Component {
                 ]}
                 onValueChanged={this.onValueChanged}
               />
-            </View>
+            </PostPoemBackGround>
           </TouchableWithoutFeedback>
-          <View
+          <JustColorBack
             style={
               theme
                 ? {
-                    minHeight: 14,
-                    backgroundColor: '#232526'
+                    minHeight: 14
+                    // backgroundColor: '#232526'
                   }
                 : {
-                    minHeight: 14,
-                    backgroundColor: '#EAEAEA'
+                    minHeight: 14
+                    // backgroundColor: '#EAEAEA'
                   }
             }
           >
@@ -650,14 +661,14 @@ class PostPoem extends Component {
               selectedStyles={this.state.selectedStyles}
               onStyleKeyPress={this.onStyleKeyPress}
               selectedBackgroundColor={[theme ? '#757575' : '#e7e9ec']}
-              backgroundColor={[theme ? '#404142' : '#F5F6F7']}
+              backgroundColor={[theme ? '#000' : '#F5F6F7']}
               color={[theme ? '#EAEAEA' : '#232526']}
               style={
                 theme
                   ? {
                       fontFamily: 'raleway-regular',
                       color: '#D8D9D9',
-                      backgroundColor: '#404142',
+                      backgroundColor: '#000',
                       borderWidth: 0
                     }
                   : {
@@ -668,19 +679,19 @@ class PostPoem extends Component {
                     }
               }
             />
-          </View>
-          <View
+          </JustColorBack>
+          <JustColorBack
             style={
               theme
                 ? {
                     height: 50,
-                    flexDirection: 'row',
-                    backgroundColor: '#232526'
+                    flexDirection: 'row'
+                    // backgroundColor: '#232526'
                   }
                 : {
                     height: 50,
-                    flexDirection: 'row',
-                    backgroundColor: '#EAEAEA'
+                    flexDirection: 'row'
+                    // backgroundColor: '#EAEAEA'
                   }
             }
           >
@@ -710,9 +721,9 @@ class PostPoem extends Component {
             </Right>
 
             <FirstPostModal openFirstModal={this.state.openFirstModal} />
-          </View>
+          </JustColorBack>
         </KeyboardAvoidingView>
-      </View>
+      </PostPoemBackGround>
     );
   }
 }
@@ -720,6 +731,7 @@ let screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   main: {
     flex: 1,
+    paddingTop: 40,
     paddingLeft: 12,
     paddingRight: 12,
     alignItems: 'stretch'

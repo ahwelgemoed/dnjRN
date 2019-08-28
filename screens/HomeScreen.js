@@ -9,8 +9,10 @@ import {
   SafeAreaView,
   ActivityIndicator,
   AsyncStorage,
-  Text
+  Text,
+  Platform
 } from 'react-native';
+import NewFeature from '../components/NewFeature';
 import { Notifications } from 'expo';
 import { HZScroll } from 'horizontaltextscroll';
 import * as Permissions from 'expo-permissions';
@@ -20,8 +22,9 @@ import { compose } from 'redux';
 import RefreshButton from '../components/RefreshButton';
 import { firestoreConnect } from 'react-redux-firebase';
 // import { MonoText } from '../components/StyledText';
-import CardPoem from '../components/CardPoem';
-import NewCardPoem from '../components/NewCardPoem';
+// import CardPoem from '../components/CardPoem';
+import NewPoem from '../components/NewPoem';
+// import NewCardPoem from '../components/NewCardPoem';
 import TandC from '../components/TandC';
 import Loading from '../components/Loading';
 import { Icon, Button } from 'native-base';
@@ -148,6 +151,7 @@ class HomeScreen extends React.PureComponent {
     await setTimeout(() => {
       this.registerForPushNotificationsAsync();
     }, 2000);
+    await this.updateNewProfile();
   }
   setLeftHeader = () => {
     this.props.navigation.setParams({
@@ -205,12 +209,24 @@ class HomeScreen extends React.PureComponent {
     };
     await firestore
       .update({ collection: 'users', doc: this.props.auth.uid }, payLoad)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+      .then(res => {})
+      .catch(err => {});
+  };
+  updateNewProfile = async () => {
+    const { visits } = this.props.profile;
+    const hand = this.props.profile.Instagram;
+    const res = hand.replace('@', '');
+    const payLoad = {
+      lastLogin: Date.now(),
+      Instagram: res,
+      Platform: Platform.OS,
+      visits: visits ? visits + 1 : 1
+    };
+    const { firestore } = this.props;
+    await firestore
+      .update({ collection: 'users', doc: this.props.auth.uid }, payLoad)
+      .then(res => {})
+      .catch(err => {});
   };
 
   getGrantedToken = () => {
@@ -227,41 +243,26 @@ class HomeScreen extends React.PureComponent {
                 { collection: 'users', doc: this.props.auth.uid },
                 payLoad
               )
-              .then(res => {
-                console.log(res);
-              })
-              .catch(err => {
-                console.log(err);
-              });
+              .then(res => {})
+              .catch(err => {});
           }
         })
-        .catch(err => {
-          console.log(err);
-        });
+        .catch(err => {});
     });
   };
   clickedRefreshButton = () => {
     this.initalFirebaseLoad();
     this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
   };
-  // _renderHeader = () => {
-  //   if (!this.state.swipeForPoem) {
-  //     AsyncStorage.setItem('swipeForPoem', JSON.stringify('true'));
-  //     return (
-  //       <ScreenBackground
-  //         style={{
-  //           width: width,
-  //           height: height,
-  //           flex: 1
-  //         }}
-  //       >
-  //         <SwipeLottie />
-  //       </ScreenBackground>
-  //     );
-  //   } else {
-  //     return null;
-  //   }
-  // };
+
+  scrollDown = () => {
+    if (!this.props.swipeMode) {
+      this.flatListRef.scrollToOffset({
+        animated: true,
+        offset: this.state.scrollPosition + 100
+      });
+    }
+  };
 
   render() {
     const { loading, poems } = this.state;
@@ -289,6 +290,11 @@ class HomeScreen extends React.PureComponent {
           }
         />
         <MorningModal navigation={this.props.navigation} />
+        <NewFeature
+          ref={el => {
+            modal = el;
+          }}
+        />
         <UpdateUserInfo />
         {poems ? (
           <React.Fragment>
@@ -300,8 +306,9 @@ class HomeScreen extends React.PureComponent {
               <React.Fragment>
                 <View
                   style={{
-                    paddingLeft: 20,
-                    height: height,
+                    width: width,
+                    justifyContent: 'center',
+                    alignItems: 'center',
                     flex: 1
                   }}
                 >
@@ -341,11 +348,17 @@ class HomeScreen extends React.PureComponent {
                     }}
                     data={poems}
                     components={item => (
-                      <CardPoem
+                      <NewPoem
+                        scrollDown={this.scrollDown}
                         poem={item}
                         auth={this.props.auth}
                         navigation={this.props.navigation}
                       />
+                      // <CardPoem
+                      //   poem={item}
+                      //   auth={this.props.auth}
+                      //   navigation={this.props.navigation}
+                      // />
                     )}
                   />
                 </View>
@@ -353,11 +366,18 @@ class HomeScreen extends React.PureComponent {
             ) : (
               <View
                 style={{
-                  // paddingLeft: 10,
+                  width: width,
+                  justifyContent: 'center',
+                  alignItems: 'center',
                   flex: 1
                 }}
               >
                 <FlatList
+                  contentContainerStyle={{
+                    width: width,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
                   scrollEventThrottle={160}
                   onScroll={this.handleScroll}
                   onEndReached={this.onRefresh}
@@ -374,11 +394,14 @@ class HomeScreen extends React.PureComponent {
                     this.flatListRef = ref;
                   }}
                   renderItem={({ item, i }) => (
-                    <CardPoem
-                      poem={item}
-                      auth={this.props.auth}
-                      navigation={this.props.navigation}
-                    />
+                    <React.Fragment>
+                      <NewPoem
+                        scrollDown={this.scrollDown}
+                        poem={item}
+                        auth={this.props.auth}
+                        navigation={this.props.navigation}
+                      />
+                    </React.Fragment>
                   )}
                 />
               </View>
@@ -412,6 +435,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     flex: 1,
+    alignItems: 'center',
     width: width
   },
   flatlist: {

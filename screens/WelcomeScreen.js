@@ -7,25 +7,33 @@ import {
   Image,
   ImageBackground
 } from 'react-native';
-import { Button } from 'native-base';
+import { AppLoading, Asset } from 'expo';
+import * as Font from 'expo-font';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import TandC from '../components/TandC';
-import { Font } from 'expo';
 const background = require('../assets/images/background.png');
 const slides = [
   {
     key: 'somethun',
     title: 'Welcome',
     text: 'Here you can post and consume poetry by other poetry lovers',
-    backgroundColor: '#59b2ab',
+    backgroundColor: '#000',
     image: require('../assets/images/DNJ.png')
   },
   {
     key: 'somethun-dos',
     title: 'Quick Overview',
-
     text: 'You get 5 min to review your post and then it is locked for ever.',
-    backgroundColor: '#febe29'
+    backgroundColor: '#59b2ab',
+    image: require('../assets/images/DNJ.png')
+  },
+  {
+    key: 'somethun-doss',
+    title: 'What?',
+
+    text: 'You Can Save Poems as Bookmarks or as Images for easy sharing',
+    backgroundColor: '#59b2ab',
+    image: require('../assets/images/DNJ.png')
   },
   {
     key: 'somethun1',
@@ -107,12 +115,12 @@ const styles = StyleSheet.create({
     height: 40,
     borderWidth: 0.5,
     borderRadius: 20,
-    borderColor: '#91D9D9',
+    borderColor: '#121212',
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 16,
     fontFamily: 'raleway-regular',
-    backgroundColor: '#fff',
+    backgroundColor: '#121212',
     color: 'white'
   },
   buttonBlueDone: {
@@ -121,8 +129,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     fontFamily: 'raleway-regular',
     textAlign: 'left',
-    borderColor: '#91D9D9',
-    backgroundColor: '#91D9D9',
+    borderColor: '#121212',
+    backgroundColor: '#121212',
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 16,
@@ -141,12 +149,13 @@ const styles = StyleSheet.create({
   slide: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 100
+    backgroundColor: '#000',
+    paddingTop: 100
   },
   image: {
     width: 100,
     height: 100,
-    borderRadius: 40,
+    borderRadius: 50,
     marginTop: 20,
     shadowColor: '#000000',
     shadowOffset: {
@@ -157,9 +166,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 1.0
   },
   text: {
-    color: '#111111',
+    color: '#fff',
     marginTop: 200,
-    fontFamily: 'raleway-regular',
+    fontFamily: 'PTSansCaptionBold',
     backgroundColor: 'transparent',
     textAlign: 'center',
     paddingHorizontal: 16,
@@ -167,18 +176,18 @@ const styles = StyleSheet.create({
   },
   buttonBlueText: {
     color: '#91D9D9',
-    fontFamily: 'raleway-regular',
+    fontFamily: 'PTSansCaptionBold',
     fontSize: 16
   },
   buttonBlueTextDone: {
     color: '#fff',
-    fontFamily: 'raleway-regular',
+    fontFamily: 'PTSansCaptionBold',
     fontSize: 16
   },
   title: {
     fontSize: 26,
     color: '#91D9D9',
-    fontFamily: 'raleway-regular',
+    fontFamily: 'PTSansCaptionRegular',
     backgroundColor: 'transparent',
     textAlign: 'center',
     marginBottom: 16

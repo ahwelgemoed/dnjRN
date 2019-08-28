@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { ScreenBackground, PoemName } from '../components/Styles';
 import { firestoreConnect } from 'react-redux-firebase';
-import { DangerZone } from 'expo';
+
 import wiggly from './book.json';
-const { Lottie } = DangerZone;
+import Lottie from 'lottie-react-native';
 
 class Maintanince extends React.PureComponent {
   state = {

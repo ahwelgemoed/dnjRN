@@ -15,7 +15,11 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { DangerZone } from 'expo';
 import wiggly from '../components/data.json';
-import { ScreenBackground, PoemName } from '../components/Styles';
+import {
+  ScreenBackground,
+  PoemName,
+  NavBarHeaderText
+} from '../components/Styles';
 
 class AuthLoadingScreen extends React.Component {
   state = { firstVisit: null, animation: null, speed: 1, modalVisible: false };
@@ -47,7 +51,6 @@ class AuthLoadingScreen extends React.Component {
   };
   componentDidUpdate(prevProps, prevState) {
     if (this.state.modalVisible === true && prevState.modalVisible === false) {
-      this._playAnimation();
     }
   }
 
@@ -56,11 +59,13 @@ class AuthLoadingScreen extends React.Component {
   }
 
   render() {
-    console.log(this.props.appStatus);
-
     const { auth } = this.props;
     if (!isLoaded(auth)) {
-      return <ScreenBackground style={styles.mainContent} />;
+      return (
+        <ScreenBackground style={styles.mainContent}>
+          <NavBarHeaderText>DNJ</NavBarHeaderText>
+        </ScreenBackground>
+      );
     }
     if (isEmpty(auth)) {
       if (this.state.firstVisit !== 'Yes') {
@@ -72,26 +77,6 @@ class AuthLoadingScreen extends React.Component {
     return this.props.navigation.navigate('App');
   }
 }
-_changeSpeed = speed => {
-  this.setState({ speed });
-};
-
-_playAnimation = () => {
-  if (!this.state.animation) {
-    this._loadAnimation();
-  } else {
-    this.animation.reset();
-    this.animation.play();
-  }
-};
-
-_stopAnimation = () => {
-  this.animation.reset();
-};
-
-_loadAnimation = () => {
-  this.setState({ animation: wiggly }, this._playAnimation);
-};
 const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
