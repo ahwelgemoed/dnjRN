@@ -144,6 +144,12 @@ export const ScreenBackground = styled.SafeAreaView`
   padding-left: 15;
   padding-right: 15;
 `;
+export const RecordScrollView = styled.ScrollView`
+  flex: 1;
+  background-color: ${props => props.theme.RECORD_BACKGROUND};
+  height: ${height};
+  width: ${width};
+`;
 export const PostPoemBackGround = styled.View`
   flex: 1;
   background-color: ${props => props.theme.SCREEN_BACKGROUND};

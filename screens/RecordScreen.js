@@ -6,6 +6,7 @@ import {
   PoemName,
   StaticPills,
   StaticPillsText,
+  RecordScrollView,
   InstagramText
 } from '../components/Styles';
 import {
@@ -62,9 +63,9 @@ class RecordScreen extends Component {
             {poem ? <PurePoemView poem={poem} /> : null}
           </ScrollView>
         </View>
-        <ScrollView contentContainerStyle={{}}>
+        <RecordScrollView contentContainerStyle={{}}>
           <RecodingComponent poem={poem} />
-        </ScrollView>
+        </RecordScrollView>
       </ScreenBackground>
     );
   }

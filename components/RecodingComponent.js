@@ -15,7 +15,9 @@ export default class RecodingComponent extends Component {
   };
   render() {
     return (
-      <View style={{ width: width, flexDirection: 'row' }}>
+      <View
+        style={{ width: width, flexDirection: 'row', alignItems: 'center' }}
+      >
         <Recorder
           style={{ flex: 1, width: width }}
           onComplete={this.recorderComplete}
@@ -36,7 +38,12 @@ export default class RecodingComponent extends Component {
             return (
               <Button
                 onPress={renderProps.onPress}
-                style={{ marginVertical: 5 }}
+                style={{
+                  marginVertical: 5,
+                  width: width * 0.5,
+                  paddingLeft: 10,
+                  backgroundColor: '#474554'
+                }}
               >
                 <Text>Reset</Text>
               </Button>
@@ -45,11 +52,15 @@ export default class RecodingComponent extends Component {
           recordingCompleteButton={renderProps => {
             return (
               <Button
-                block
                 onPress={renderProps.onPress}
-                style={{ marginVertical: 5 }}
+                style={{
+                  marginVertical: 5,
+                  width: width * 0.5,
+                  paddingRight: 10,
+                  backgroundColor: '#474554'
+                }}
               >
-                <Text>Finish</Text>
+                <Text>Upload</Text>
               </Button>
             );
           }}

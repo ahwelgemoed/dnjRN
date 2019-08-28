@@ -4,6 +4,7 @@ export const lightTheme = {
   FONT_COLOR: '#474554',
   SECOND_COLOR: '#C2C2C2',
   SCREEN_BACKGROUND: '#fafafa',
+  RECORD_BACKGROUND: '#efefef',
   CARD_SHADOW: 'rgba(0, 0, 0, 0.2)'
 };
 export const darkTheme = {
@@ -12,6 +13,7 @@ export const darkTheme = {
   FONT_COLOR: '#fff',
   SECOND_COLOR: '#5D5D5D',
   SCREEN_BACKGROUND: '#000',
+  RECORD_BACKGROUND: '#2d2d2d',
   CARD_SHADOW: 'rgba(255, 255, 255, 0.05)'
 };
 // export const darkTheme = {
