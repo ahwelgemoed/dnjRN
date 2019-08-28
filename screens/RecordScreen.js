@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import TopNav from '../components/TopNav';
+import RecodingComponent from '../components/RecodingComponent';
 import PurePoemView from '../components/PurePoemView';
 import { ScrollView } from 'react-native-gesture-handler';
 const defaultStyles = getDefaultStyles();
@@ -61,18 +62,8 @@ class RecordScreen extends Component {
             {poem ? <PurePoemView poem={poem} /> : null}
           </ScrollView>
         </View>
-        <ScrollView
-          style={{
-            width: width
-          }}
-          contentContainerStyle={{ alignItems: 'center' }}
-        >
-          <PoemName>{poem.name}</PoemName>
-          <PoemName>{poem.name}</PoemName>
-          <PoemName>{poem.name}</PoemName>
-          <PoemName>{poem.name}</PoemName>
-          <PoemName>{poem.name}</PoemName>
-          <PoemName>{poem.name}</PoemName>
+        <ScrollView contentContainerStyle={{}}>
+          <RecodingComponent poem={poem} />
         </ScrollView>
       </ScreenBackground>
     );

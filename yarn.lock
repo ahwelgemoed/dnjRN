@@ -1340,9 +1340,9 @@
     "@types/lodash" "*"
 
 "@types/lodash@*":
-  version "4.14.137"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.137.tgz#8a4804937dc6462274ffcc088df8f14fc1b368e2"
-  integrity sha512-g4rNK5SRKloO+sUGbuO7aPtwbwzMgjK+bm9BBhLD7jGUiGR7zhwYEhSln/ihgYQBeIJ5j7xjyaYzrWTcu3UotQ==
+  version "4.14.138"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.138.tgz#34f52640d7358230308344e579c15b378d91989e"
+  integrity sha512-A4uJgHz4hakwNBdHNPdxOTkYmXNgmUAKLbXZ7PKGslgeV0Mb8P3BlbYfPovExek1qnod4pDfRbxuzcVs3dlFLg==
 
 "@types/node@^10.0.5":
   version "10.14.16"
@@ -2150,9 +2150,9 @@ buffer-from@^1.0.0:
   integrity sha512-MQcXEUbCKtEo7bhqEs6560Hyd4XaovZlO/k9V3hjVUF/zwW7KBVdSK4gIt/bzwS9MbR5qob+F5jusZsb0YQK2A==
 
 buffer@^5.2.1:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.4.0.tgz#33294f5c1f26e08461e528b69fa06de3c45cbd8c"
-  integrity sha512-Xpgy0IwHK2N01ncykXTy6FpCWuM+CJSHoPVBLyNqyrWxsedpLvwsYUhf0ME3WRFNUhos0dMamz9cOS/xRDtU5g==
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.4.2.tgz#2012872776206182480eccb2c0fba5f672a2efef"
+  integrity sha512-iy9koArjAFCzGnx3ZvNA6Z0clIbbFgbdWQ0mKD3hO0krOrZh8UgA6qMKcZvwLJxS+D6iVR76+5/pV56yMNYTag==
   dependencies:
     base64-js "^1.0.2"
     ieee754 "^1.1.4"
@@ -2840,9 +2840,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.191:
-  version "1.3.241"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.241.tgz#859dc49ab7f90773ed698767372d384190f60cb1"
-  integrity sha512-Gb9E6nWZlbgjDDNe5cAvMJixtn79krNJ70EDpq/M10lkGo7PGtBUe7Y0CYVHsBScRwi6ybCS+YetXAN9ysAHDg==
+  version "1.3.243"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.243.tgz#32f64f00fa121532d1d49f5c0a15fd77f52ae889"
+  integrity sha512-+edFdHGxLSmAKftXa5xZIg19rHkkJLiW+tRu0VMVG3RKztyeKX7d3pXf707lS6+BxB9uBun3RShbxCI1PtBAgQ==
 
 emoji-regex@^7.0.1:
   version "7.0.3"
@@ -3074,6 +3074,14 @@ expo-asset@^6.0.0, expo-asset@~6.0.0:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
+expo-av@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-6.0.0.tgz#95a5a095583bec3ac0a35ba1e9b67e72ac4a6485"
+  integrity sha512-4GI6PUitp3rf9EzPHCuQ2JxrDGo20djen5JISldG0XMNq0y/y+TgEuWyJPYa0/HwKAlwtHoPzYLuhfvjSTIiDg==
+  dependencies:
+    lodash "^4.17.11"
+    nullthrows "^1.1.0"
+
 expo-constants@6.0.0, expo-constants@~6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-6.0.0.tgz#ff4598985ba006e24949be3f05be7429e5bedacf"
@@ -3086,7 +3094,7 @@ expo-facebook@6.0.0:
   resolved "https://registry.yarnpkg.com/expo-facebook/-/expo-facebook-6.0.0.tgz#2a5f27089df6eb145922ccab8c7b2fd58c4d5eab"
   integrity sha512-XkSd14Pt2BDz5w1OTgrpfGSoVL9XBArtF8ntpx6k9/Pb4+ZdH5tci30Qh6h9pGkYaWVUsldQFl4uzI6ePUHmeQ==
 
-expo-file-system@~6.0.0:
+expo-file-system@^6.0.2, expo-file-system@~6.0.0:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-6.0.2.tgz#e65f30eb6a7213e07933df9688116eaf4e25bbf8"
   integrity sha512-s+6oQpLhcT7MQp7fcoj1E+zttMr0WX6c0FrddzqB4dUfhIggV+nb35nQMASIiTHAj8VPUanTFliY5rETHRMHRA==
@@ -3346,7 +3354,7 @@ fbjs-scripts@^1.0.0:
     semver "^5.1.0"
     through2 "^2.0.0"
 
-fbjs@^0.8.4, fbjs@^0.8.9:
+fbjs@^0.8.16, fbjs@^0.8.4, fbjs@^0.8.9:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   integrity sha1-xNWY6taUkRJlPWWIsBpc3Nn5D90=
@@ -5010,12 +5018,17 @@ lodash.throttle@^4.1.1:
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
   integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
+lodash@4.17.10:
+  version "4.17.10"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
+  integrity sha512-UejweD1pDoXu+AD825lWwp4ZGtSwgnpZxb3JDViD7StjQz+Nb/6l093lx4OQ0foGWNRoc19mWy7BzL+UAK2iVg==
+
 lodash@4.17.11:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
 
-lodash@^4.0.0, lodash@^4.15.0, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.3.0, lodash@^4.5.0, lodash@^4.6.0, lodash@^4.6.1:
+lodash@^4.0.0, lodash@^4.10.1, lodash@^4.11.1, lodash@^4.15.0, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.3.0, lodash@^4.5.0, lodash@^4.6.0, lodash@^4.6.1:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -5602,6 +5615,15 @@ nanomatch@^1.2.9:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+native-base-shoutem-theme@0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/native-base-shoutem-theme/-/native-base-shoutem-theme-0.2.2.tgz#5823310455fe391adf72236469c039fd44f56a20"
+  integrity sha1-WCMxBFX+ORrfciNkacA5/UT1aiA=
+  dependencies:
+    hoist-non-react-statics "^1.0.5"
+    lodash "^4.10.1"
+    prop-types "^15.5.10"
+
 native-base-shoutem-theme@0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/native-base-shoutem-theme/-/native-base-shoutem-theme-0.2.3.tgz#4ec27c663f0aa78be36fca239e490db1811ad617"
@@ -5640,6 +5662,27 @@ native-base@2.12.1:
     react-native-keyboard-aware-scroll-view "0.8.0"
     react-native-vector-icons "6.1.0"
     react-timer-mixin "^0.13.4"
+    react-tween-state "^0.1.5"
+    tween-functions "^1.0.1"
+
+native-base@2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/native-base/-/native-base-2.8.0.tgz#6043d01dd6f79540105f07afea456d5c01d72ebd"
+  integrity sha512-R7arHMg7B9NRnwrg+QneGKjTJIUUDKJXcKaHQhKUBJTTql4veE04Jm3TGlAIcE0mxzUArGsp3c89UBMy+pxXzg==
+  dependencies:
+    blueimp-md5 "^2.5.0"
+    clamp "^1.0.1"
+    color "~1.0.3"
+    fs-extra "^2.0.0"
+    jest-react-native "^18.0.0"
+    lodash "4.17.10"
+    native-base-shoutem-theme "0.2.2"
+    print-message "^2.1.0"
+    prop-types "^15.5.10"
+    react-native-drawer "2.5.0"
+    react-native-easy-grid "0.2.0"
+    react-native-keyboard-aware-scroll-view "0.5.0"
+    react-native-vector-icons "4.6.0"
     react-tween-state "^0.1.5"
     tween-functions "^1.0.1"
 
@@ -6334,6 +6377,15 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.3"
 
+prop-types@15.6.1:
+  version "15.6.1"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
+  integrity sha512-4ec7bY1Y66LymSUOH/zARVYObB23AT2h8cf6e/O6ZALB/N0sqZFEx7rq6EYPX2MkOdKORuooI/H5k9TlR4q7kQ==
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.3.1"
+    object-assign "^4.1.1"
+
 prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
@@ -6522,6 +6574,21 @@ react-native-app-intro-slider@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-native-app-intro-slider/-/react-native-app-intro-slider-2.0.1.tgz#947fece38d2332d9cdc5381344b0c47ab822984b"
   integrity sha512-Bg/hQ+fU7IJDaZYXApH7xWW7dxdb0buDZ46GGhOerOmJh6GMq5WIxtimYKP8u1Pumq+hGrbSRFzT1vhYlPkDAw==
 
+"react-native-audio-player-recorder-no-linking@https://github.com/ahwelgemoed/react-native-audio-player-recorder-no-linking":
+  version "1.0.1"
+  resolved "https://github.com/ahwelgemoed/react-native-audio-player-recorder-no-linking#a3b78bbedf67cc6dd6be51a16cf51506b079a516"
+  dependencies:
+    native-base "2.8.0"
+    prop-types "15.6.1"
+    react-native-blink-view "0.0.6"
+
+react-native-blink-view@0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-blink-view/-/react-native-blink-view-0.0.6.tgz#f8dce7246c8995236644f81d196839bda362ab00"
+  integrity sha512-zdd+v9UcPy0RIbmR13Q9gDFa2UXTy1a8Zkcn8YewUbUIzha+nVjn9NhjgKuEyGq0IHZ2QCpdCQdMUnBFsVuhIg==
+  dependencies:
+    prop-types "^15.6.0"
+
 react-native-branch@~3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-3.0.1.tgz#5b07b61cbd290168cd3c3662e017ebe0f356d2ca"
@@ -6538,6 +6605,14 @@ react-native-cn-richtext-editor@1.0.40:
     shortid "^2.2.14"
     xmldom "^0.1.27"
 
+react-native-drawer@2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-drawer/-/react-native-drawer-2.5.0.tgz#022cba5c0516126a9fc9cce3185cb46c644b51c4"
+  integrity sha512-I8rGv0EM6PxRWeq8g463OBt4DYoTri7v9rh98Qpg9q/JToZYTIjavjY0BwchDwyV7J5LdAg7IPbfZUYBkZJsZQ==
+  dependencies:
+    prop-types "^15.5.8"
+    tween-functions "^1.0.1"
+
 react-native-drawer@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/react-native-drawer/-/react-native-drawer-2.5.1.tgz#08b9314184f48c724f1b467f8859797369798654"
@@ -6545,6 +6620,13 @@ react-native-drawer@2.5.1:
   dependencies:
     prop-types "^15.5.8"
     tween-functions "^1.0.1"
+
+react-native-easy-grid@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.2.0.tgz#4718031aa1baaa2613b829fc807da288eb0d2797"
+  integrity sha512-ZTi84+nJq2wwov55s1rHez0twk/8bs/AGnA5ERF8eYsMbOhBhOzzclj+TyY+/woB/2REAd9QQmWmIT/L999n6Q==
+  dependencies:
+    lodash "^4.11.1"
 
 react-native-easy-grid@0.2.1:
   version "0.2.1"
@@ -6567,10 +6649,18 @@ react-native-hide-with-keyboard@1.2.0:
   resolved "https://registry.yarnpkg.com/react-native-hide-with-keyboard/-/react-native-hide-with-keyboard-1.2.0.tgz#aa9da6d1eae85fe8ca2dbab6c16f05af9b71974c"
   integrity sha512-sCbZfdOscTAATw9L2hXLj1jJ+UBjgZCxmtMNlxHKsxgVhgHq4AOQPDkLc+CrpnGg5bim5MKv4dYXM8C+m54wsQ==
 
-react-native-iphone-x-helper@^1.0.3:
+react-native-iphone-x-helper@^1.0.1, react-native-iphone-x-helper@^1.0.3:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
   integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
+
+react-native-keyboard-aware-scroll-view@0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.5.0.tgz#57ab933089375bf62f4324797e8be949ad97849d"
+  integrity sha512-nGXsACZBCiWuwRrZy+UjiSJqb4tZ/6ePHUSY8M+09g4VfNm/ogvvWpwBa6B999NZ6DwhZTKBjVWeZxX9XG8bbQ==
+  dependencies:
+    prop-types "^15.6.0"
+    react-native-iphone-x-helper "^1.0.1"
 
 react-native-keyboard-aware-scroll-view@0.8.0:
   version "0.8.0"
@@ -6689,6 +6779,15 @@ react-native-textinput-effects@0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/react-native-textinput-effects/-/react-native-textinput-effects-0.5.1.tgz#52b54bb56b58a4b67b5d3fa4ffccba3d288cd8c9"
   integrity sha512-9ywFH1S4WV/IkYcGwFYZrOYx5j84WvbhzWbLO52rN1PxgjI1tfZu8c5Ju8fsA7eLKuXt7YRen4iVTYYahrFq1w==
+
+react-native-vector-icons@4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.6.0.tgz#e4014311ffa6de397d914ffc31b7097a874cc8d5"
+  integrity sha512-rpfhfPiXCK2PX1nrNhdxSMrEGB/Gw/SvKoPM0G2wAkSoqynnes19K0VYI+Up7DqR1rFIpE4hP2erpT1tNx2tfg==
+  dependencies:
+    lodash "^4.0.0"
+    prop-types "^15.5.10"
+    yargs "^8.0.2"
 
 react-native-vector-icons@6.1.0:
   version "6.1.0"
