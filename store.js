@@ -4,6 +4,7 @@ import devToolsEnhancer from 'remote-redux-devtools';
 import rootReducer from './reducers/index';
 import thunk from 'redux-thunk';
 import firebase from 'firebase/app';
+import 'firebase/storage';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/firestore';
