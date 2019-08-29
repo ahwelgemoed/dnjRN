@@ -64,7 +64,15 @@ class RecodingComponent extends Component {
           collection: 'poems',
           doc: poem.id
         },
-        { stemme: [...stemme, url] }
+        {
+          stemme: [
+            ...stemme,
+            {
+              url,
+              date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0))
+            }
+          ]
+        }
       )
       .then(() => {
         this.setState({

@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Permissions from 'expo-permissions';
+import ListAllAudioComponent from './ListAllAudioComponent'
 import { Icon } from 'native-base';
 import { compose } from 'redux';
 import AdminModal from './AdminModal';
@@ -21,6 +22,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import AppologiesModal from './AppologiesModal';
 import ListOfPoemReplys from './ListOfPoemReplys';
 import { successfullyAddedPoem } from '../actions/poemsActions';
+import ListAllAudioModal from './ListAllAudioModal';
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot';
 import {
   StyledText,
@@ -366,6 +368,9 @@ class NewPoem extends Component {
             <React.Fragment>
               <Grid>
                 <Row>
+                  <ListAllAudioModal ListAllAudioModal={this.ListAllAudioModal}>
+                    <ListAllAudioComponent poem={this.props.poem} />
+                  </ListAllAudioModal>
                   <AppologiesModal
                     showAppologiesModal={this.state.openReplyModal}
                   >
