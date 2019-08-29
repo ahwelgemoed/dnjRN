@@ -64,7 +64,7 @@ class RecordScreen extends Component {
           </ScrollView>
         </View>
         <RecordScrollView contentContainerStyle={{}}>
-          <RecodingComponent poem={poem} />
+          <RecodingComponent poem={poem} navigation={navigation} />
         </RecordScrollView>
       </ScreenBackground>
     );
