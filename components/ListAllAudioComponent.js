@@ -25,7 +25,12 @@ export default class ListAllAudioComponent extends Component {
               <Row>
                 <Col>
                   <Player
-                    timeStampStyle={{ color: 'green' }}
+                    timeStampStyle={{
+                      fontFamily: 'PTSansCaptionRegular',
+                      fontSize: 14,
+                      textAlign: 'left',
+                      marginBottom: 5
+                    }}
                     uri={stem.url}
                     showBackButton={false}
                     playbackSlider={renderProps => {}}

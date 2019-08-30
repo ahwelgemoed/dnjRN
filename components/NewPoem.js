@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Permissions from 'expo-permissions';
-import ListAllAudioComponent from './ListAllAudioComponent'
+import ListAllAudioComponent from './ListAllAudioComponent';
 import { Icon } from 'native-base';
 import { compose } from 'redux';
 import AdminModal from './AdminModal';
@@ -368,9 +368,13 @@ class NewPoem extends Component {
             <React.Fragment>
               <Grid>
                 <Row>
-                  <ListAllAudioModal ListAllAudioModal={this.ListAllAudioModal}>
-                    <ListAllAudioComponent poem={this.props.poem} />
-                  </ListAllAudioModal>
+                  {this.props.poem.stemme ? (
+                    <ListAllAudioModal
+                      ListAllAudioModal={this.ListAllAudioModal}
+                    >
+                      <ListAllAudioComponent poem={this.props.poem} />
+                    </ListAllAudioModal>
+                  ) : null}
                   <AppologiesModal
                     showAppologiesModal={this.state.openReplyModal}
                   >

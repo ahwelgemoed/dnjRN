@@ -3,6 +3,7 @@ import { Text, View, Dimensions } from 'react-native';
 import Modal from 'react-native-modal';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { PoemName, MetaAppolo } from './Styles';
 import { firestoreConnect } from 'react-redux-firebase';
 var { height, width } = Dimensions.get('window');
 
@@ -29,7 +30,7 @@ class ListAllAudioModal extends React.PureComponent {
     const { theme } = this.props;
     return (
       <View>
-        <Text onPress={this.toggleModal}>Luister Toonset</Text>
+        <MetaAppolo onPress={this.toggleModal}>Luister Toonse</MetaAppolo>
         <Modal
           style={{ borderRadius: height * 0.03 }}
           isVisible={this.state.ListAllAudioModal}
@@ -47,7 +48,7 @@ class ListAllAudioModal extends React.PureComponent {
               alignItems: 'center'
             }}
           >
-            <Text>Toonsete</Text>
+            <MetaAppolo>Toonsete</MetaAppolo>
             {this.props.children}
           </View>
         </Modal>
