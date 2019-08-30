@@ -13,6 +13,7 @@ import {
   CNRichTextView,
   getDefaultStyles
 } from 'react-native-cn-richtext-editor';
+import { CheckBox, ListItem, Body } from 'native-base';
 import moment from 'moment';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Icon, Button } from 'native-base';
@@ -40,9 +41,16 @@ class RecordScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: null
   });
+  state = { withInstagram: false };
+
+  withInstagram = () => {
+    this.setState({
+      withInstagram: !this.state.withInstagram
+    });
+  };
 
   render() {
-    const { navigation, theme } = this.props;
+    const { navigation, theme, audio_Upload_Status } = this.props;
     const poem = navigation.getParam('poem', 'noPoem');
     return (
       <ScreenBackground>
@@ -63,8 +71,27 @@ class RecordScreen extends Component {
             {poem ? <PurePoemView poem={poem} /> : null}
           </ScrollView>
         </View>
+
         <RecordScrollView contentContainerStyle={{}}>
-          <RecodingComponent poem={poem} navigation={navigation} />
+          <RecodingComponent
+            poem={poem}
+            navigation={navigation}
+            withInstagram={this.state.withInstagram}
+          />
+          {this.props.profile.isLoaded && this.props.profile.Instagram ? (
+            <ListItem>
+              <CheckBox
+                color={'#000'}
+                checked={this.state.withInstagram}
+                onPress={this.withInstagram}
+              />
+              <Body>
+                <Text>Post as {this.props.profile.Instagram}</Text>
+              </Body>
+            </ListItem>
+          ) : (
+            <React.Fragment>{/* <AddInstagramModal /> */}</React.Fragment>
+          )}
         </RecordScrollView>
       </ScreenBackground>
     );
@@ -72,7 +99,9 @@ class RecordScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  theme: state.theme.isThemeDark
+  theme: state.theme.isThemeDark,
+  profile: state.firebase.profile,
+  audio_Upload_Status: state.poems.audio_Upload_Status
 });
 export default compose(
   firestoreConnect(),

@@ -1,47 +1,46 @@
 import React, { Component } from 'react';
-import { Text, View, Slider } from 'react-native';
+import { Text, ScrollView, Slider } from 'react-native';
 import {
   Recorder,
   Player
 } from 'react-native-audio-player-recorder-no-linking';
 import moment from 'moment';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import { PoemName, InstagramText } from './Styles';
 
 export default class ListAllAudioComponent extends Component {
   render() {
     console.log(this.props.poem.stemme);
-
     const { poem } = this.props;
     return (
-      <View>
-        {poem.stemme.map((stem, i) => (
-          <React.Fragment>
-            <Text> {moment.unix(stem.date).fromNow()}</Text>
-            <Text> 🔥🔥🔥</Text>
-            <Player
-              key={i}
-              // style={{ flex: 1 }}
-              //  onComplete={}
-              // completeButtonText={'Return Home'}
-              uri={stem.url}
-              // showDebug={true}
-              showBackButton={false}
-              playbackSlider={renderProps => {
-                return (
-                  <Slider
-                    minimimValue={0}
-                    maximumValue={renderProps.maximumValue}
-                    onValueChange={renderProps.onSliderValueChange}
-                    value={renderProps.value}
-                    style={{
-                      width: '100%'
-                    }}
+      <ScrollView>
+        <Grid>
+          <Row>
+            <PoemName>
+              There are {poem.stemme.length} recordings for {poem.name}
+            </PoemName>
+          </Row>
+          {poem.stemme.map((stem, i) => (
+            <React.Fragment key={i}>
+              <Row>
+                <Col>
+                  <Player
+                    timeStampStyle={{ color: 'green' }}
+                    uri={stem.url}
+                    showBackButton={false}
+                    playbackSlider={renderProps => {}}
                   />
-                );
-              }}
-            />
-          </React.Fragment>
-        ))}
-      </View>
+                </Col>
+                <Col>
+                  <InstagramText>
+                    Posted{moment.unix(stem.date).fromNow()}
+                  </InstagramText>
+                </Col>
+              </Row>
+            </React.Fragment>
+          ))}
+        </Grid>
+      </ScrollView>
     );
   }
 }

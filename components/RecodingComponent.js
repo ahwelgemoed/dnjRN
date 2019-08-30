@@ -12,13 +12,21 @@ import { Audio } from 'expo-av';
 import { Button, Icon } from 'native-base';
 import { Slider } from 'react-native';
 import * as firebase from 'firebase';
+import {
+  uploadVoiceRecording,
+  changeAudioStatus
+} from '../actions/poemsActions';
 var { height, width } = Dimensions.get('window');
 class RecodingComponent extends Component {
   state = { uploading: false };
+  componentWillMount() {
+    this.props.changeAudioStatus('DONE');
+  }
   recorderComplete = async options => {
-    await this.setState({
-      uploading: true
-    });
+    await this.props.changeAudioStatus('LOADING');
+    // await this.setState({
+    //   uploading: true
+    // });
     const storagePath = 'avatars';
     const dbPath = 'avatarFilesInfo';
     const fileMetadata = { contentType: 'audio/mp4' };
@@ -55,35 +63,33 @@ class RecodingComponent extends Component {
       .then(res => this.updatePoem(res));
   };
 
-  updatePoem = url => {
+  updatePoem = async url => {
     const { firestore, poem } = this.props;
-    let stemme = poem.stemme ? [...poem.stemme] : [];
-    firestore
-      .update(
-        {
-          collection: 'poems',
-          doc: poem.id
-        },
-        {
-          stemme: [
-            ...stemme,
-            {
-              url,
-              date: parseInt((new Date(Date.now()).getTime() / 1000).toFixed(0))
-            }
-          ]
-        }
-      )
-      .then(() => {
-        this.setState({
-          uploading: false
-        });
-        // this.props.navigation.navigate('Home');
-      });
+    const instagram = {
+      withInstagram: this.props.withInstagram,
+      instagramHandle: this.props.profile.Instagram
+    };
+
+    await this.props.uploadVoiceRecording(
+      firestore,
+      poem,
+      url,
+      instagram,
+      this.props.navigation
+    );
   };
+  componentWillReceiveProps(prevProps) {
+    console.log(this.props.audio_Upload_Status);
+  }
+
+  componentDidUpdate() {
+    // console.log(this.props.audio_Upload_Status);
+  }
   render() {
     const { uploading } = this.state;
-    return uploading ? (
+    const { audio_Upload_Status } = this.props;
+
+    return audio_Upload_Status === 'LOADING' ? (
       <ActivityIndicator />
     ) : (
       <React.Fragment>
@@ -144,17 +150,17 @@ class RecodingComponent extends Component {
               );
             }}
             playbackSlider={renderProps => {
-              return (
-                <Slider
-                  minimimValue={0}
-                  maximumValue={renderProps.maximumValue}
-                  onValueChange={renderProps.onSliderValueChange}
-                  value={renderProps.value}
-                  style={{
-                    width: '100%'
-                  }}
-                />
-              );
+              // return (
+              //   <Slider
+              //     minimimValue={0}
+              //     maximumValue={renderProps.maximumValue}
+              //     onValueChange={renderProps.onSliderValueChange}
+              //     value={renderProps.value}
+              //     style={{
+              //       width: '100%'
+              //     }}
+              //   />
+              // );
             }}
           />
         </View>
@@ -164,12 +170,14 @@ class RecodingComponent extends Component {
 }
 
 const mapStateToProps = state => ({
-  theme: state.theme.isThemeDark
+  theme: state.theme.isThemeDark,
+  audio_Upload_Status: state.poems.audio_Upload_Status,
+  profile: state.firebase.profile
 });
 export default compose(
   firestoreConnect(),
   connect(
     mapStateToProps,
-    {}
+    { uploadVoiceRecording, changeAudioStatus }
   )
 )(RecodingComponent);
