@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { PoemName, MetaAppolo } from './Styles';
 import { firestoreConnect } from 'react-redux-firebase';
+import { Icon } from 'native-base';
 var { height, width } = Dimensions.get('window');
 
 class ListAllAudioModal extends React.PureComponent {
@@ -30,7 +31,20 @@ class ListAllAudioModal extends React.PureComponent {
     const { theme } = this.props;
     return (
       <View>
-        <MetaAppolo onPress={this.toggleModal}>Luister Toonse</MetaAppolo>
+        <Icon
+          onPress={this.toggleModal}
+          style={{
+            position: 'absolute',
+            color: '#c2c2c2',
+            transform: [{ rotate: '0deg' }],
+            fontSize: 20,
+            right: 80,
+            top: 10
+          }}
+          type="FontAwesome"
+          name="play"
+        />
+        {/* <MetaAppolo >Luister Toonse</MetaAppolo> */}
         <Modal
           style={{ borderRadius: height * 0.03 }}
           isVisible={this.state.ListAllAudioModal}

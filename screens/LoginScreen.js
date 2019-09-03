@@ -88,7 +88,7 @@ class LoginScreen extends Component {
           label={'Email'}
           iconClass={FontAwesome}
           iconName={'envelope'}
-          iconColor={'#91D9D9'}
+          iconColor={'#3CADA0'}
           iconSize={20}
           iconWidth={40}
           inputPadding={16}
@@ -99,7 +99,7 @@ class LoginScreen extends Component {
           label={'Password'}
           iconClass={FontAwesome}
           iconName={'lock'}
-          iconColor={'#91D9D9'}
+          iconColor={'#3CADA0'}
           iconSize={20}
           iconWidth={40}
           inputPadding={16}
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   labelSignUp: {
-    color: '#91D9D9',
+    color: '#3CADA0',
     fontSize: 16,
     fontFamily: 'raleway-regular',
     textAlign: 'left',
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 14,
-    color: '#91D9D9',
+    color: '#3CADA0',
     fontFamily: 'raleway-regular',
     textAlign: 'left'
   },
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   },
   buttonIn: {
     fontSize: 16,
-    backgroundColor: '#91D9D9',
+    backgroundColor: '#3CADA0',
     width: screenWidth,
     marginTop: 20,
     fontFamily: 'raleway-regular',
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   },
   buttonUp: {
     fontSize: 16,
-    borderColor: '#91D9D9',
+    borderColor: '#3CADA0',
     width: screenWidth,
     marginTop: 20,
     fontFamily: 'raleway-regular',

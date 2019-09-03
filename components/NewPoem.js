@@ -368,13 +368,6 @@ class NewPoem extends Component {
             <React.Fragment>
               <Grid>
                 <Row>
-                  {this.props.poem.stemme ? (
-                    <ListAllAudioModal
-                      ListAllAudioModal={this.ListAllAudioModal}
-                    >
-                      <ListAllAudioComponent poem={this.props.poem} />
-                    </ListAllAudioModal>
-                  ) : null}
                   <AppologiesModal
                     showAppologiesModal={this.state.openReplyModal}
                   >
@@ -397,6 +390,13 @@ class NewPoem extends Component {
                     ) : null}
                   </Col>
                   <Col style={{ width: '10%' }}>
+                    {this.props.poem.stemme ? (
+                      <ListAllAudioModal
+                        ListAllAudioModal={this.ListAllAudioModal}
+                      >
+                        <ListAllAudioComponent poem={this.props.poem} />
+                      </ListAllAudioModal>
+                    ) : null}
                     {hideOptions ? null : this.props.poem.canReply ? (
                       <Icon
                         onPress={this.changeTab.bind(this, 'Post')}

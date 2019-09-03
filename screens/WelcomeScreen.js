@@ -101,7 +101,7 @@ export default class WelcomeScreen extends Component {
         renderItem={this._renderItem}
         slides={slides}
         dotStyle={{ backgroundColor: '#ddd' }}
-        activeDotStyle={{ backgroundColor: '#91D9D9' }}
+        activeDotStyle={{ backgroundColor: '#3CADA0' }}
         onDone={this._onDone}
         bottomButton
       />
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // width: 40,
     height: 40,
-    backgroundColor: '#91D9D9',
+    backgroundColor: '#3CADA0',
     color: '#fff',
     borderRadius: 20,
     justifyContent: 'center',
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   buttonBlueText: {
-    color: '#91D9D9',
+    color: '#3CADA0',
     fontFamily: 'PTSansCaptionBold',
     fontSize: 16
   },
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    color: '#91D9D9',
+    color: '#3CADA0',
     fontFamily: 'PTSansCaptionRegular',
     backgroundColor: 'transparent',
     textAlign: 'center',
