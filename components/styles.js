@@ -9,9 +9,30 @@ export const StyledText = styled.View`
   background: ${props => props.theme.CARD_BACKGROUND};
   color: ${props => props.theme.CARD_FONT_COLOR};
   margin-top: 30px;
+  margin-bottom: 30px;
   box-shadow: 0px 0px 20px ${props => props.theme.CARD_SHADOW};
   width: ${width - 40};
+  align-self: center;
+  justify-content: center;
   padding: 20px;
+`;
+export const PlayerScrollView = styled.View`
+  border-radius: 10px;
+  background: ${props => props.theme.SECOND_COLOR};
+  color: ${props => props.theme.CARD_FONT_COLOR};
+  margin-top: 30px;
+  margin-right: ${width * 0.1}
+  width: ${width * 0.5};
+  align-self: center;
+  justify-content: center;
+  padding: 20px;
+`;
+export const StyledView = styled.View`
+  width: ${width};
+  align-self: center;
+  justify-content: center;
+
+  /* padding: 20px; */
 `;
 export const StyledOptions = styled.View`
   shadow-radius: 20px;
@@ -25,7 +46,7 @@ export const StyledOptions = styled.View`
   color: ${props => props.theme.CARD_FONT_COLOR};
   margin-top: 10px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-  width: ${width - 40};
+  /* width: ${width - 40}; */
   padding: 20px;
 `;
 export const ScreenShotMode = styled.View`
@@ -88,8 +109,18 @@ export const NSFWPills = styled.View`
   left: -30;
   top: -30;
 `;
+export const AduioPills = styled.View`
+  background: ${props => props.theme.CARD_FONT_COLOR};
+  width: 105px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 10px;
+  position: absolute;
+  right: 0;
+  top: -30;
+`;
 export const NSFWPillsText = styled.Text`
-  color: ${props => props.theme.SECOND_COLOR};
+  color: ${props => props.theme.CARD_BACKGROUND};
   font-family: 'PTSansCaptionRegular';
   font-size: 14;
 `;

@@ -1,49 +1,65 @@
 import React, { Component } from 'react';
-import { Text, ScrollView, Slider } from 'react-native';
+import { Text, ScrollView, Dimensions } from 'react-native';
 import {
   Recorder,
   Player
 } from 'react-native-audio-player-recorder-no-linking';
 import moment from 'moment';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { PoemName, InstagramText } from './Styles';
+import { PoemName, PlayerScrollView, InstagramText } from './Styles';
+var { height, width } = Dimensions.get('window');
 
 export default class ListAllAudioComponent extends Component {
   render() {
-    console.log(this.props.poem.stemme);
     const { poem } = this.props;
     return (
       <ScrollView>
         <Grid>
           <Row>
-            <PoemName>
-              There are {poem.stemme.length} recordings for {poem.name}
-            </PoemName>
+            <PoemName>There are {poem.stemme.length} recording(s)</PoemName>
           </Row>
-          {poem.stemme.map((stem, i) => (
-            <React.Fragment key={i}>
-              <Row>
-                <Col>
-                  <Player
-                    timeStampStyle={{
-                      fontFamily: 'PTSansCaptionRegular',
-                      fontSize: 14,
-                      textAlign: 'left',
-                      marginBottom: 5
-                    }}
-                    uri={stem.url}
-                    showBackButton={false}
-                    playbackSlider={renderProps => {}}
-                  />
-                </Col>
-                <Col>
-                  <InstagramText>
-                    Posted{moment.unix(stem.date).fromNow()}
-                  </InstagramText>
-                </Col>
-              </Row>
-            </React.Fragment>
-          ))}
+          <ScrollView
+            horizontal={true}
+            decelerationRate={0}
+            scrollEventThrottle={16}
+            snapToInterval={width * 0.6} //your element width
+            snapToAlignment={'center'}
+            showsHorizontalScrollIndicator={false}
+          >
+            {poem.stemme.map((stem, i) => (
+              <React.Fragment key={i}>
+                <Row>
+                  <PlayerScrollView>
+                    <Col>
+                      <Player
+                        timeStampStyle={{
+                          fontFamily: 'PTSansCaptionRegular',
+                          fontSize: 14,
+                          textAlign: 'left',
+                          marginBottom: 5
+                        }}
+                        uri={stem.url}
+                        showBackButton={false}
+                        playbackSlider={renderProps => {}}
+                      />
+                    </Col>
+                    <Col>
+                      {poem.stemme.instagram ? (
+                        <InstagramText>
+                          Posted by :{poem.stemme.instagram}
+                        </InstagramText>
+                      ) : (
+                        <InstagramText>Posted by : ANON</InstagramText>
+                      )}
+                      <InstagramText>
+                        {moment.unix(stem.date).fromNow()}
+                      </InstagramText>
+                    </Col>
+                  </PlayerScrollView>
+                </Row>
+              </React.Fragment>
+            ))}
+          </ScrollView>
         </Grid>
       </ScrollView>
     );

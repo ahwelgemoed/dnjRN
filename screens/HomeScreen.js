@@ -12,7 +12,6 @@ import {
   Text,
   Platform
 } from 'react-native';
-import NewFeature from '../components/NewFeature';
 import { Notifications } from 'expo';
 import { HZScroll } from 'horizontaltextscroll';
 import * as Permissions from 'expo-permissions';
@@ -24,6 +23,8 @@ import RefreshButton from '../components/RefreshButton';
 import NewPoem from '../components/NewPoem';
 import TandC from '../components/TandC';
 import Loading from '../components/Loading';
+import NewFeature from '../components/NewFeature';
+import ListAllAudioComponent from '../components/ListAllAudioComponent';
 import { Icon, Button } from 'native-base';
 import UpdateUserInfo from '../components/UpdateUserInfo';
 import { ScreenBackground } from '../components/Styles';
