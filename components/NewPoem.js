@@ -40,6 +40,7 @@ import {
   InstagramText,
   OptionsListText,
   NSFWPills,
+  StyledAduioText,
   NSFWPillsText,
   AduioPills
 } from './Styles';
@@ -74,7 +75,8 @@ class NewPoem extends Component {
     wasScrolled: false,
     modalVisible: false,
     elem: false,
-    hideOptions: false
+    hideOptions: false,
+    toonsetteClicked: false
   };
   componentDidMount() {
     getParentRef = () => {
@@ -252,13 +254,27 @@ class NewPoem extends Component {
     this.props.navigation.navigate(name, { poem: this.props.poem });
   };
   handleScroll = event => {
-    this.setState({
-      wasScrolled: true
-    });
+    if (event.nativeEvent.contentOffset.x <= 0) {
+      this.setState({
+        wasScrolled: false,
+        toonsetteClicked: false
+      });
+    } else {
+      this.setState({
+        wasScrolled: true
+      });
+    }
+  };
+  toonsetText = () => {
+    if (!this.state.toonsetteClicked) {
+      return `${this.props.poem.stemme.length} TOONSETTINGS`;
+    } else {
+      return 'SWIPE TO LISTEN';
+    }
   };
   // <ScreenShotMode>
   render() {
-    const { hideOptions, elem } = this.state;
+    const { hideOptions, toonsetteClicked } = this.state;
     const { theme, swipeMode } = this.props;
     return (
       <React.Fragment>
@@ -269,18 +285,28 @@ class NewPoem extends Component {
             this[`${this.props.poem.id}`] = ref;
           }}
         >
-          {this.props.poem.stemme ? (
-            <AduioPills
-              style={{ position: 'absolute', top: 20, zIndex: 99, right: 10 }}
-            >
-              <NSFWPillsText>GETOONSET</NSFWPillsText>
-            </AduioPills>
-          ) : // <ListAllAudioModal
-          //   ListAllAudioModal={this.ListAllAudioModal}
-          // >
-          //   <ListAllAudioComponent poem={this.props.poem} />
-          // </ListAllAudioModal>
-          null}
+          {!hideOptions ? (
+            this.props.poem.stemme && !this.state.wasScrolled ? (
+              <AduioPills
+                style={{ position: 'absolute', top: 20, zIndex: 99, right: 10 }}
+              >
+                <NSFWPillsText
+                  onPress={() =>
+                    this.setState({
+                      toonsetteClicked: true
+                    })
+                  }
+                >
+                  {this.toonsetText()}
+                </NSFWPillsText>
+              </AduioPills>
+            ) : // <ListAllAudioModal
+            //   ListAllAudioModal={this.ListAllAudioModal}
+            // >
+            //   <ListAllAudioComponent poem={this.props.poem} />
+            // </ListAllAudioModal>
+            null
+          ) : null}
           {hideOptions ? (
             <React.Fragment>
               <ScreenShotMode>
@@ -575,7 +601,7 @@ class NewPoem extends Component {
               {this.props.poem.stemme ? (
                 <React.Fragment>
                   <View style={{ width }}>
-                    <StyledText>
+                    <StyledAduioText>
                       {this.state.wasScrolled ? (
                         <ListAllAudioComponent poem={this.props.poem} />
                       ) : (
@@ -583,7 +609,7 @@ class NewPoem extends Component {
                           color={theme ? '#D8D9D9' : '#2C2D2D'}
                         />
                       )}
-                    </StyledText>
+                    </StyledAduioText>
                   </View>
                 </React.Fragment>
               ) : null}

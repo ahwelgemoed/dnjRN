@@ -22,7 +22,7 @@ export default class ListAllAudioComponent extends Component {
             horizontal={true}
             decelerationRate={0}
             scrollEventThrottle={16}
-            snapToInterval={width * 0.6} //your element width
+            snapToInterval={width * 0.25} //your element width
             snapToAlignment={'center'}
             showsHorizontalScrollIndicator={false}
           >
@@ -36,6 +36,7 @@ export default class ListAllAudioComponent extends Component {
                           fontFamily: 'PTSansCaptionRegular',
                           fontSize: 14,
                           textAlign: 'left',
+                          color: '#C2C2C2',
                           marginBottom: 5
                         }}
                         uri={stem.url}

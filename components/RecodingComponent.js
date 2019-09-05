@@ -78,8 +78,9 @@ class RecodingComponent extends Component {
       this.props.navigation
     );
   };
-  componentWillReceiveProps(prevProps) {
-    console.log(this.props.audio_Upload_Status);
+  componentWillReceiveProps(prevProps) {}
+  componentWillUnmount() {
+    console.log('DONE');
   }
 
   componentDidUpdate() {
@@ -121,9 +122,9 @@ class RecodingComponent extends Component {
                     marginVertical: 5,
                     marginLeft: 10,
                     marginRight: 10,
-                    width: width * 0.4,
+                    width: width * 0.2,
                     paddingLeft: 10,
-                    backgroundColor: '#474554',
+                    backgroundColor: '#DE875A',
                     color: 'white'
                   }}
                 >
@@ -137,11 +138,12 @@ class RecodingComponent extends Component {
                   onPress={renderProps.onPress}
                   style={{
                     marginVertical: 5,
-                    width: width * 0.4,
+                    width: width * 0.6,
                     // paddingRight: 10,
                     marginRight: 10,
                     marginLeft: 10,
-                    backgroundColor: '#474554',
+                    paddingLeft: 10,
+                    backgroundColor: '#3CADA0',
                     color: 'white'
                   }}
                 >

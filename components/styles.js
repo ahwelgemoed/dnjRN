@@ -16,12 +16,28 @@ export const StyledText = styled.View`
   justify-content: center;
   padding: 20px;
 `;
-export const PlayerScrollView = styled.View`
+export const StyledAduioText = styled.View`
+  shadow-radius: 20px;
   border-radius: 10px;
-  background: ${props => props.theme.SECOND_COLOR};
+  shadow-color: ${props => props.theme.CARD_SHADOW};
+  shadow-offset: 0px 0px;
+
   color: ${props => props.theme.CARD_FONT_COLOR};
   margin-top: 30px;
-  margin-right: ${width * 0.1}
+  margin-bottom: 30px;
+  background: ${props => props.theme.PLAYER_BACKGROUND};
+  box-shadow: 0px 0px 20px ${props => props.theme.CARD_SHADOW};
+  width: ${width - 40};
+  align-self: center;
+  justify-content: center;
+  padding: 20px;
+`;
+export const PlayerScrollView = styled.View`
+  border-radius: 10px;
+  background: ${props => props.theme.CARD_BACKGROUND};
+  color: ${props => props.theme.CARD_FONT_COLOR};
+  margin-top: 30px;
+  margin-right: ${width * 0.05}
   width: ${width * 0.5};
   align-self: center;
   justify-content: center;
@@ -111,7 +127,7 @@ export const NSFWPills = styled.View`
 `;
 export const AduioPills = styled.View`
   background: ${props => props.theme.CARD_FONT_COLOR};
-  width: 105px;
+  width: 125px;
   padding-right: 10px;
   padding-left: 10px;
   border-radius: 10px;
@@ -122,7 +138,7 @@ export const AduioPills = styled.View`
 export const NSFWPillsText = styled.Text`
   color: ${props => props.theme.CARD_BACKGROUND};
   font-family: 'PTSansCaptionRegular';
-  font-size: 14;
+  font-size: 12;
 `;
 export const StaticPills = styled.View`
   width: 150px;
@@ -177,7 +193,7 @@ export const ScreenBackground = styled.SafeAreaView`
 `;
 export const RecordScrollView = styled.ScrollView`
   flex: 1;
-  background-color: ${props => props.theme.RECORD_BACKGROUND};
+  background-color: ${props => props.theme.RECORDER_BACKGROUND};
   height: ${height};
   width: ${width};
 `;

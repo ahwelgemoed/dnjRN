@@ -81,12 +81,15 @@ class RecordScreen extends Component {
           {this.props.profile.isLoaded && this.props.profile.Instagram ? (
             <ListItem>
               <CheckBox
-                color={'#000'}
+                color={'#474554'}
                 checked={this.state.withInstagram}
                 onPress={this.withInstagram}
               />
               <Body>
-                <Text>Post as {this.props.profile.Instagram}</Text>
+                <InstagramText>
+                  {' '}
+                  Post as {this.props.profile.Instagram}
+                </InstagramText>
               </Body>
             </ListItem>
           ) : (
