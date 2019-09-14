@@ -9,13 +9,14 @@ import {
   Player
 } from 'react-native-audio-player-recorder-no-linking';
 import { Audio } from 'expo-av';
-import { Button, Icon } from 'native-base';
+import { Button, Toast } from 'native-base';
 import { Slider } from 'react-native';
 import * as firebase from 'firebase';
 import {
   uploadVoiceRecording,
   changeAudioStatus
 } from '../actions/poemsActions';
+import { PoemName, MetaAppolo } from './Styles';
 var { height, width } = Dimensions.get('window');
 class RecodingComponent extends Component {
   state = { uploading: false };
@@ -27,16 +28,19 @@ class RecodingComponent extends Component {
     // await this.setState({
     //   uploading: true
     // });
-    const storagePath = 'avatars';
-    const dbPath = 'avatarFilesInfo';
-    const fileMetadata = { contentType: 'audio/mp4' };
-    await this.upLoad(options.uri)
-      .then(res => console.log(res))
-      .cath(err =>
-        this.setState({
-          uploading: false
-        })
-      );
+    if (options.uri) {
+      await this.upLoad(options.uri)
+        .then(res => console.log(res))
+        .cath(err => this.props.changeAudioStatus('DONE'));
+    } else {
+      this.props.changeAudioStatus('DONE');
+      Toast.show({
+        text: 'No Recording To Upload',
+        buttonText: 'Okay',
+        position: 'top',
+        type: 'danger'
+      });
+    }
   };
 
   upLoad = async uri => {
@@ -91,17 +95,33 @@ class RecodingComponent extends Component {
     const { audio_Upload_Status } = this.props;
 
     return audio_Upload_Status === 'LOADING' ? (
-      <ActivityIndicator />
+      <View
+        style={{
+          width: width,
+          paddingTop: 20,
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <ActivityIndicator />
+        <MetaAppolo>Uploading Please Wait </MetaAppolo>
+        <MetaAppolo>We Will Redirect You</MetaAppolo>
+      </View>
     ) : (
       <React.Fragment>
         <View
-          style={{ width: width, flexDirection: 'row', alignItems: 'center' }}
+          style={{
+            width: width,
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
         >
           <Recorder
             style={{ flex: 1, width: width }}
             onComplete={this.recorderComplete}
             maxDurationMillis={150000}
-            showDebug={false}
+            showDebug={true}
             showBackButton={true}
             audioMode={{
               allowsRecordingIOS: true,
