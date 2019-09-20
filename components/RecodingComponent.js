@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import { Icon } from 'native-base';
 import { Text, View, Dimensions, ActivityIndicator } from 'react-native';
 import uuid from 'uuid';
 import {
@@ -90,7 +91,6 @@ class RecodingComponent extends Component {
   render() {
     const { uploading } = this.state;
     const { audio_Upload_Status } = this.props;
-
     return audio_Upload_Status === 'LOADING' ? (
       <View
         style={{
@@ -117,7 +117,7 @@ class RecodingComponent extends Component {
           <Recorder
             style={{ flex: 1, width: width }}
             onComplete={this.recorderComplete}
-            maxDurationMillis={20000}
+            maxDurationMillis={30000}
             showDebug={false}
             showBackButton={true}
             audioMode={{
@@ -145,7 +145,15 @@ class RecodingComponent extends Component {
                     color: 'white'
                   }}
                 >
-                  <Text style={{ color: 'white' }}>Reset</Text>
+                  <Text style={{ color: 'white' }}>
+                    {' '}
+                    <Icon
+                      style={{ fontSize: 20 }}
+                      type="FontAwesome"
+                      name="times"
+                    />{' '}
+                    Reset
+                  </Text>
                 </Button>
               );
             }}
@@ -164,7 +172,15 @@ class RecodingComponent extends Component {
                     color: 'white'
                   }}
                 >
-                  <Text style={{ color: 'white' }}>Upload</Text>
+                  <Text style={{ color: 'white' }}>
+                    {' '}
+                    <Icon
+                      style={{ fontSize: 20 }}
+                      type="FontAwesome"
+                      name="upload"
+                    />{' '}
+                    Upload
+                  </Text>
                 </Button>
               );
             }}

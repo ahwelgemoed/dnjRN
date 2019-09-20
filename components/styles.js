@@ -81,7 +81,7 @@ export const PoemName = styled.Text`
   color: ${props => props.theme.CARD_FONT_COLOR};
   font-size: 22;
   padding-top: 10;
-  width: 90%;
+  width: 80%;
   font-family: 'PTSansCaptionBold';
   text-align: left;
 `;
@@ -177,7 +177,7 @@ export const InstagramText = styled.Text`
 export const MetaAppolo = styled.Text`
   color: ${props => props.theme.SECOND_COLOR};
   font-family: 'PTSansCaptionRegular';
-  font-size: 16;
+  font-size: 14;
   text-align: left;
   margin-bottom: 5px;
 `;

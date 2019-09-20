@@ -12,6 +12,8 @@ var { height, width } = Dimensions.get('window');
 export default class ListAllAudioComponent extends Component {
   render() {
     const { poem } = this.props;
+    console.log(poem.stemme[0].instagram);
+
     return (
       <View>
         <Grid>
@@ -45,9 +47,9 @@ export default class ListAllAudioComponent extends Component {
                       />
                     </Col>
                     <Col>
-                      {poem.stemme.instagram ? (
+                      {stem.instagram ? (
                         <InstagramText>
-                          Posted by :{poem.stemme.instagram}
+                          Posted by : {stem.instagram}
                         </InstagramText>
                       ) : (
                         <InstagramText>Posted by : ANON</InstagramText>

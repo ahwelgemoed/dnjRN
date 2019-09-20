@@ -31,6 +31,8 @@ import { ScreenBackground } from '../components/Styles';
 import TopNav from '../components/TopNav';
 import MorningModal from '../components/MorningModal';
 import SwipeLottie from '../components/SwipeLottie';
+import Constants from 'expo-constants';
+const { manifest } = Constants;
 
 class HomeScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
@@ -218,6 +220,7 @@ class HomeScreen extends React.PureComponent {
       lastLogin: Date.now(),
       Instagram: res,
       Platform: Platform.OS,
+      V: manifest.version,
       visits: visits ? visits + 1 : 1
     };
     const { firestore } = this.props;

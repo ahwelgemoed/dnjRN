@@ -51,7 +51,7 @@ class AppologiesModal extends Component {
           >
             <InstagramText> MET APOLOGIE AAN</InstagramText>
             {this.props.children}
-            <Button
+            {/* <Button
               style={{
                 fontSize: 16,
                 backgroundColor: theme ? '#2f2f2f' : '#e5e5e5',
@@ -63,9 +63,9 @@ class AppologiesModal extends Component {
               block
               warning
               onPress={() => this.setState({ showAppologiesModal: false })}
-            >
-              {/* <PoemBodyText>Close</PoemBodyText> */}
-            </Button>
+            > */}
+            {/* <PoemBodyText>Close</PoemBodyText> */}
+            {/* </Button> */}
           </View>
         </Modal>
       </View>

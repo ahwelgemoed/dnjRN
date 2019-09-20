@@ -31,9 +31,9 @@ class NewFeature extends Component {
   modal = React.createRef();
 
   async componentDidMount() {
-    const MetApologieaan = await AsyncStorage.getItem('Record');
-    if (MetApologieaan == 'true') {
-      AsyncStorage.setItem('Record', 'true');
+    const MetApologieaan = await AsyncStorage.getItem('Records');
+    if (MetApologieaan !== 'true') {
+      AsyncStorage.setItem('Records', 'true');
       setTimeout(() => {
         this.openModal();
         this._playAnimation();
@@ -122,7 +122,7 @@ class NewFeature extends Component {
         </PoemBodyText>
 
         <PoemBodyText>Go ahead Record some poems and post it.</PoemBodyText>
-        <PoemBodyText>You have 20 seconds. Give It a go.</PoemBodyText>
+        <PoemBodyText>You have 30 seconds. Give It a go.</PoemBodyText>
 
         {/* </ScreenBackground> */}
       </Modalize>

@@ -465,19 +465,21 @@ class NewPoem extends Component {
                               name="reply"
                             />
                           ) : null}
-                          <Icon
-                            onPress={this.changeTab.bind(this, 'RecordPoem')}
-                            style={{
-                              position: 'absolute',
-                              color: '#c2c2c2',
-                              transform: [{ rotate: '0deg' }],
-                              fontSize: 20,
-                              right: 60,
-                              top: 10
-                            }}
-                            type="FontAwesome"
-                            name="microphone"
-                          />
+                          {hideOptions ? null : this.props.poem.canReply ? (
+                            <Icon
+                              onPress={this.changeTab.bind(this, 'RecordPoem')}
+                              style={{
+                                position: 'absolute',
+                                color: '#c2c2c2',
+                                transform: [{ rotate: '0deg' }],
+                                fontSize: 20,
+                                right: 60,
+                                top: 10
+                              }}
+                              type="FontAwesome"
+                              name="microphone"
+                            />
+                          ) : null}
 
                           {hideOptions ? null : (
                             <NewBookmark

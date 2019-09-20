@@ -28,8 +28,12 @@ export const uploadVoiceRecording = (
     type: 'AUDIO_ADDED',
     payload: 'LOADING'
   });
+
   nav.navigate('Home');
   const { withInstagram, instagramHandle } = instagram;
+
+  console.log(instagram);
+
   let stemme = poem.stemme ? [...poem.stemme] : [];
   firestore.update(
     {
