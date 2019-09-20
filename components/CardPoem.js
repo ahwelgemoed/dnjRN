@@ -238,7 +238,7 @@ class CardPoem extends Component {
                 position: 'absolute',
                 right: 0,
                 width: '10%',
-                backgroundColor: '#91D9D9',
+                backgroundColor: '#3CADA0',
                 borderBottomLeftRadius: 10,
                 // borderBottomRightRadius: 10,
                 borderTopRightRadius: 10,

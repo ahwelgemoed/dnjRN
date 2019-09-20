@@ -14,6 +14,7 @@ import AccountScreen from '../screens/AccountScreen';
 import ShareScreen from '../screens/ShareScreen';
 import YourPoems from '../screens/YourPoems';
 import Settings from '../screens/Settings';
+import RecordScreen from '../screens/RecordScreen';
 import FooterTabs from '../components/FooterTabs';
 
 const HomeStack = createStackNavigator(
@@ -38,6 +39,9 @@ const HomeStack = createStackNavigator(
     },
     Bookmark: {
       screen: BookmarkScreen
+    },
+    RecordPoem: {
+      screen: RecordScreen
     }
   },
   {
@@ -63,7 +67,7 @@ const Tabs = createBottomTabNavigator(
   }
 );
 
-export default (Drawer = createDrawerNavigator(
+export default Drawer = createDrawerNavigator(
   {
     Home: {
       screen: Tabs
@@ -76,4 +80,4 @@ export default (Drawer = createDrawerNavigator(
     transitionConfig: () => fadeIn(),
     drawerWidth: 250
   }
-));
+);

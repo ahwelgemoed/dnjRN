@@ -12,27 +12,27 @@ import {
   Text,
   Platform
 } from 'react-native';
-import NewFeature from '../components/NewFeature';
 import { Notifications } from 'expo';
 import { HZScroll } from 'horizontaltextscroll';
 import * as Permissions from 'expo-permissions';
 import { successfullyAddedPoem } from '../actions/poemsActions';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import RefreshButton from '../components/RefreshButton';
 import { firestoreConnect } from 'react-redux-firebase';
-// import { MonoText } from '../components/StyledText';
-// import CardPoem from '../components/CardPoem';
+import RefreshButton from '../components/RefreshButton';
 import NewPoem from '../components/NewPoem';
-// import NewCardPoem from '../components/NewCardPoem';
 import TandC from '../components/TandC';
 import Loading from '../components/Loading';
+import NewFeature from '../components/NewFeature';
+import ListAllAudioComponent from '../components/ListAllAudioComponent';
 import { Icon, Button } from 'native-base';
 import UpdateUserInfo from '../components/UpdateUserInfo';
 import { ScreenBackground } from '../components/Styles';
 import TopNav from '../components/TopNav';
 import MorningModal from '../components/MorningModal';
 import SwipeLottie from '../components/SwipeLottie';
+import Constants from 'expo-constants';
+const { manifest } = Constants;
 
 class HomeScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
@@ -220,6 +220,7 @@ class HomeScreen extends React.PureComponent {
       lastLogin: Date.now(),
       Instagram: res,
       Platform: Platform.OS,
+      V: manifest.version,
       visits: visits ? visits + 1 : 1
     };
     const { firestore } = this.props;

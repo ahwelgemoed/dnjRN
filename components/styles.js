@@ -9,9 +9,46 @@ export const StyledText = styled.View`
   background: ${props => props.theme.CARD_BACKGROUND};
   color: ${props => props.theme.CARD_FONT_COLOR};
   margin-top: 30px;
+  margin-bottom: 30px;
   box-shadow: 0px 0px 20px ${props => props.theme.CARD_SHADOW};
   width: ${width - 40};
+  align-self: center;
+  justify-content: center;
   padding: 20px;
+`;
+export const StyledAduioText = styled.View`
+  shadow-radius: 20px;
+  border-radius: 10px;
+  shadow-color: ${props => props.theme.CARD_SHADOW};
+  shadow-offset: 0px 0px;
+
+  color: ${props => props.theme.CARD_FONT_COLOR};
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background: ${props => props.theme.PLAYER_BACKGROUND};
+  box-shadow: 0px 0px 20px ${props => props.theme.CARD_SHADOW};
+  width: ${width - 40};
+  align-self: center;
+  justify-content: center;
+  padding: 20px;
+`;
+export const PlayerScrollView = styled.View`
+  border-radius: 10px;
+  background: ${props => props.theme.CARD_BACKGROUND};
+  color: ${props => props.theme.CARD_FONT_COLOR};
+  margin-top: 30px;
+  margin-right: ${width * 0.05}
+  width: ${width * 0.5};
+  align-self: center;
+  justify-content: center;
+  padding: 20px;
+`;
+export const StyledView = styled.View`
+  width: ${width};
+  align-self: center;
+  justify-content: center;
+
+  /* padding: 20px; */
 `;
 export const StyledOptions = styled.View`
   shadow-radius: 20px;
@@ -25,7 +62,7 @@ export const StyledOptions = styled.View`
   color: ${props => props.theme.CARD_FONT_COLOR};
   margin-top: 10px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-  width: ${width - 40};
+  /* width: ${width - 40}; */
   padding: 20px;
 `;
 export const ScreenShotMode = styled.View`
@@ -44,7 +81,7 @@ export const PoemName = styled.Text`
   color: ${props => props.theme.CARD_FONT_COLOR};
   font-size: 22;
   padding-top: 10;
-  width: 90%;
+  width: 80%;
   font-family: 'PTSansCaptionBold';
   text-align: left;
 `;
@@ -88,10 +125,20 @@ export const NSFWPills = styled.View`
   left: -30;
   top: -30;
 `;
+export const AduioPills = styled.View`
+  background: ${props => props.theme.CARD_FONT_COLOR};
+  width: 125px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 10px;
+  position: absolute;
+  right: 0;
+  top: -30;
+`;
 export const NSFWPillsText = styled.Text`
-  color: ${props => props.theme.SECOND_COLOR};
+  color: ${props => props.theme.CARD_BACKGROUND};
   font-family: 'PTSansCaptionRegular';
-  font-size: 14;
+  font-size: 12;
 `;
 export const StaticPills = styled.View`
   width: 150px;
@@ -130,7 +177,7 @@ export const InstagramText = styled.Text`
 export const MetaAppolo = styled.Text`
   color: ${props => props.theme.SECOND_COLOR};
   font-family: 'PTSansCaptionRegular';
-  font-size: 12;
+  font-size: 14;
   text-align: left;
   margin-bottom: 5px;
 `;
@@ -143,6 +190,12 @@ export const ScreenBackground = styled.SafeAreaView`
   align-items: center;
   padding-left: 15;
   padding-right: 15;
+`;
+export const RecordScrollView = styled.ScrollView`
+  flex: 1;
+  background-color: ${props => props.theme.RECORDER_BACKGROUND};
+  height: ${height};
+  width: ${width};
 `;
 export const PostPoemBackGround = styled.View`
   flex: 1;

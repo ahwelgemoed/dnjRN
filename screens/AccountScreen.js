@@ -267,11 +267,11 @@ const styles = StyleSheet.create({
     fontFamily: 'raleway-regular',
     marginTop: 20,
     textAlign: 'left',
-    backgroundColor: '#91D9D9',
+    backgroundColor: '#3CADA0',
     color: 'white'
   },
   blueText: {
-    color: '#91D9D9',
+    color: '#3CADA0',
     fontSize: 16,
     fontFamily: 'raleway-regular',
     textAlign: 'left'
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
   },
   buttonUp: {
     fontSize: 16,
-    borderColor: '#91D9D9',
+    borderColor: '#3CADA0',
     marginTop: 20,
     fontFamily: 'raleway-regular',
     textAlign: 'left'

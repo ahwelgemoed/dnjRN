@@ -26,11 +26,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    if (
-      !this.state.isLoadingComplete &&
-      !this.props.skipLoadingScreen &&
-      this.state.mountyLoad
-    ) {
+    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
           startAsync={this._loadResourcesAsync}
@@ -69,7 +65,7 @@ export default class App extends React.Component {
       ...Ionicons.font
     });
 
-    await this.setState({ mountyLoad: false });
+    // await this.setState({ mountyLoad: false });
   };
 
   _handleLoadingError = error => {

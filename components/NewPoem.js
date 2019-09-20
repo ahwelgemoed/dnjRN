@@ -5,14 +5,17 @@ import {
   CameraRoll,
   PixelRatio,
   Vibration,
-  Image,
+  ActivityIndicator,
   Linking,
   StyleSheet,
+  Dimensions,
+  ScrollView,
   Platform,
   Share
 } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Permissions from 'expo-permissions';
+import ListAllAudioComponent from './ListAllAudioComponent';
 import { Icon } from 'native-base';
 import { compose } from 'redux';
 import AdminModal from './AdminModal';
@@ -21,11 +24,13 @@ import { firestoreConnect } from 'react-redux-firebase';
 import AppologiesModal from './AppologiesModal';
 import ListOfPoemReplys from './ListOfPoemReplys';
 import { successfullyAddedPoem } from '../actions/poemsActions';
+import ListAllAudioModal from './ListAllAudioModal';
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot';
 import {
   StyledText,
   MetaAppolo,
   PoemName,
+  StyledView,
   ScreenShotMode,
   PoemBodyText,
   Pills,
@@ -35,7 +40,9 @@ import {
   InstagramText,
   OptionsListText,
   NSFWPills,
-  NSFWPillsText
+  StyledAduioText,
+  NSFWPillsText,
+  AduioPills
 } from './Styles';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import OptionsComponents from './OptionsComponents';
@@ -56,6 +63,7 @@ let customStyles = {
   bold: { fontSize: 16, fontFamily: 'raleway-bold' },
   ul: { fontSize: 12 }
 };
+var { height, width } = Dimensions.get('window');
 class NewPoem extends Component {
   state = {
     open: false,
@@ -64,9 +72,11 @@ class NewPoem extends Component {
     userEdit: false,
     bookmarked: false,
     reportDialog: false,
+    wasScrolled: false,
     modalVisible: false,
     elem: false,
-    hideOptions: false
+    hideOptions: false,
+    toonsetteClicked: false
   };
   componentDidMount() {
     getParentRef = () => {
@@ -243,19 +253,60 @@ class NewPoem extends Component {
   changeTab = name => {
     this.props.navigation.navigate(name, { poem: this.props.poem });
   };
+  handleScroll = event => {
+    if (event.nativeEvent.contentOffset.x <= 0) {
+      this.setState({
+        wasScrolled: false,
+        toonsetteClicked: false
+      });
+    } else {
+      this.setState({
+        wasScrolled: true
+      });
+    }
+  };
+  toonsetText = () => {
+    if (!this.state.toonsetteClicked) {
+      return `${this.props.poem.stemme.length} TOONSETTINGS`;
+    } else {
+      return 'SWIPE TO LISTEN';
+    }
+  };
   // <ScreenShotMode>
   render() {
-    const { hideOptions, elem } = this.state;
+    const { hideOptions, toonsetteClicked } = this.state;
     const { theme, swipeMode } = this.props;
     return (
       <React.Fragment>
         {/* <AppologiesModal showAppologiesModal={this.state.showAppologiesModal}> */}
-        <StyledText
+        <StyledView
           style={swipeMode ? { marginLeft: 20 } : null}
           ref={ref => {
             this[`${this.props.poem.id}`] = ref;
           }}
         >
+          {!hideOptions ? (
+            this.props.poem.stemme && !this.state.wasScrolled ? (
+              <AduioPills
+                style={{ position: 'absolute', top: 20, zIndex: 99, right: 10 }}
+              >
+                <NSFWPillsText
+                  onPress={() =>
+                    this.setState({
+                      toonsetteClicked: true
+                    })
+                  }
+                >
+                  {this.toonsetText()}
+                </NSFWPillsText>
+              </AduioPills>
+            ) : // <ListAllAudioModal
+            //   ListAllAudioModal={this.ListAllAudioModal}
+            // >
+            //   <ListAllAudioComponent poem={this.props.poem} />
+            // </ListAllAudioModal>
+            null
+          ) : null}
           {hideOptions ? (
             <React.Fragment>
               <ScreenShotMode>
@@ -363,157 +414,211 @@ class NewPoem extends Component {
               </ScreenShotMode>
             </React.Fragment>
           ) : (
-            <React.Fragment>
-              <Grid>
-                <Row>
-                  <AppologiesModal
-                    showAppologiesModal={this.state.openReplyModal}
-                  >
-                    <ListOfPoemReplys poem={this.props.poem} />
-                  </AppologiesModal>
+            <ScrollView
+              horizontal={true}
+              decelerationRate={0}
+              onScroll={this.handleScroll}
+              scrollEventThrottle={16}
+              snapToInterval={width} //your element width
+              snapToAlignment={'center'}
+              showsHorizontalScrollIndicator={false}
+            >
+              <React.Fragment>
+                <View style={{ width }}>
+                  <StyledText>
+                    <Grid>
+                      <Row>
+                        <AppologiesModal
+                          showAppologiesModal={this.state.openReplyModal}
+                        >
+                          <ListOfPoemReplys poem={this.props.poem} />
+                        </AppologiesModal>
 
-                  {this.props.poem.repliedTo ? (
-                    <MetaAppolo onPress={this.toggleReplyHistory}>
-                      MET APOLOGIE AAN{' '}
-                      {this.props.poem.repliedToName
-                        ? `- ${this.props.poem.repliedToName}`
-                        : null}
-                    </MetaAppolo>
-                  ) : null}
-                </Row>
-                <Row>
-                  <Col style={{ width: '90%' }}>
-                    {this.props.poem.name.replace(/\s/g, '') ? (
-                      <PoemName>{this.props.poem.name}</PoemName>
-                    ) : null}
-                  </Col>
-                  <Col style={{ width: '10%' }}>
-                    {hideOptions ? null : this.props.poem.canReply ? (
-                      <Icon
-                        onPress={this.changeTab.bind(this, 'Post')}
-                        style={{
-                          position: 'absolute',
-                          color: '#c2c2c2',
-                          transform: [{ rotate: '0deg' }],
-                          fontSize: 20,
-                          right: 30,
-                          top: 10
-                        }}
-                        type="FontAwesome"
-                        name="reply"
-                      />
-                    ) : null}
+                        {this.props.poem.repliedTo ? (
+                          <MetaAppolo onPress={this.toggleReplyHistory}>
+                            MET APOLOGIE AAN{' '}
+                            {this.props.poem.repliedToName
+                              ? `- ${this.props.poem.repliedToName}`
+                              : null}
+                          </MetaAppolo>
+                        ) : null}
+                      </Row>
+                      <Row>
+                        <Col style={{ width: '90%' }}>
+                          {this.props.poem.name.replace(/\s/g, '') ? (
+                            <PoemName>{this.props.poem.name}</PoemName>
+                          ) : null}
+                        </Col>
+                        <Col style={{ width: '10%' }}>
+                          {hideOptions ? null : this.props.poem.canReply ? (
+                            <Icon
+                              onPress={this.changeTab.bind(this, 'Post')}
+                              style={{
+                                position: 'absolute',
+                                color: '#c2c2c2',
+                                transform: [{ rotate: '0deg' }],
+                                fontSize: 20,
+                                right: 30,
+                                top: 10
+                              }}
+                              type="FontAwesome"
+                              name="reply"
+                            />
+                          ) : null}
+                          {hideOptions ? null : this.props.poem.canReply ? (
+                            <Icon
+                              onPress={this.changeTab.bind(this, 'RecordPoem')}
+                              style={{
+                                position: 'absolute',
+                                color: '#c2c2c2',
+                                transform: [{ rotate: '0deg' }],
+                                fontSize: 20,
+                                right: 60,
+                                top: 10
+                              }}
+                              type="FontAwesome"
+                              name="microphone"
+                            />
+                          ) : null}
 
-                    {hideOptions ? null : (
-                      <NewBookmark
-                        poemId={this.props.poem.id}
-                        bookmarkedCount={this.props.poem.bookmarkedCount}
-                        bookmarked={this.state.bookmarked}
-                        toggleBookMark={this.toggleBookMark}
-                      />
-                    )}
-                  </Col>
-                </Row>
-                {this.props.poem.handle ? (
-                  <InstagramText
-                    onPress={async () =>
-                      await WebBrowser.openBrowserAsync(
-                        `https://www.instagram.com/${this.props.poem.handle}`
-                      )
-                    }
-                  >
-                    - {this.props.poem.handle}
-                  </InstagramText>
-                ) : (
-                  <InstagramText>- ANON</InstagramText>
-                )}
-                {this.props.poem.richText ? (
-                  <View>
-                    <CNRichTextView
-                      text={this.props.poem.body}
-                      styleList={customStyles}
-                      foreColor={'#474554'}
-                      color={theme ? '#fff' : '#474554'}
-                    />
-                  </View>
-                ) : (
-                  <PoemBodyText>{this.props.poem.body}</PoemBodyText>
-                )}
-                {hideOptions ? null : this.props.poem.nsfw ? (
-                  <NSFWPills>
-                    <NSFWPillsText>NSFW</NSFWPillsText>
-                  </NSFWPills>
-                ) : null}
-
-                <Row style={{ marginTop: 40 }}>
-                  {hideOptions ? (
-                    <React.Fragment>
-                      <Col>
-                        <StaticPills>
-                          <StaticPillsText>DisNetJy.com</StaticPillsText>
-                        </StaticPills>
-                      </Col>
-                    </React.Fragment>
-                  ) : (
-                    <React.Fragment>
-                      <Col>
-                        <StaticPills>
-                          <StaticPillsText>
-                            {moment.unix(this.props.poem.date).fromNow()}
-                          </StaticPillsText>
-                        </StaticPills>
-                      </Col>
-                      {this.canIEdit()}
-                      <Col>
-                        <Pills
-                          onPress={() =>
-                            this.setState({
-                              open: !this.state.open
-                            })
+                          {hideOptions ? null : (
+                            <NewBookmark
+                              poemId={this.props.poem.id}
+                              bookmarkedCount={this.props.poem.bookmarkedCount}
+                              bookmarked={this.state.bookmarked}
+                              toggleBookMark={this.toggleBookMark}
+                            />
+                          )}
+                        </Col>
+                      </Row>
+                      {this.props.poem.handle ? (
+                        <InstagramText
+                          onPress={async () =>
+                            await WebBrowser.openBrowserAsync(
+                              `https://www.instagram.com/${this.props.poem.handle}`
+                            )
                           }
                         >
-                          <PillsText
-                            onPress={() => {
-                              // this.props.scrollDown();
-                              this.setState({
-                                open: !this.state.open
-                              });
-                            }}
-                          >
-                            Options
-                          </PillsText>
-                        </Pills>
-                      </Col>
-                    </React.Fragment>
-                  )}
-                </Row>
-              </Grid>
-            </React.Fragment>
-          )}
-        </StyledText>
+                          - {this.props.poem.handle}
+                        </InstagramText>
+                      ) : (
+                        <InstagramText>- ANON</InstagramText>
+                      )}
+                      {this.props.poem.richText ? (
+                        <View>
+                          <CNRichTextView
+                            text={this.props.poem.body}
+                            styleList={customStyles}
+                            foreColor={'#474554'}
+                            color={theme ? '#fff' : '#474554'}
+                          />
+                        </View>
+                      ) : (
+                        <PoemBodyText>{this.props.poem.body}</PoemBodyText>
+                      )}
+                      {hideOptions ? null : this.props.poem.nsfw ? (
+                        <NSFWPills>
+                          <NSFWPillsText>NSFW</NSFWPillsText>
+                        </NSFWPills>
+                      ) : null}
 
-        <OptionsComponents open={this.state.open} poem={this.props.poem}>
-          <AdminModal poem={this.props.poem} />
-          {Platform.OS !== 'android' ? (
-            <React.Fragment>
-              <OptionsListText
-                onPress={() => this.share(`${this.props.poem.id}`)}
-              >
-                Share
-              </OptionsListText>
-              {/* <OptionsListText
+                      <Row style={{ marginTop: 40 }}>
+                        {hideOptions ? (
+                          <React.Fragment>
+                            <Col>
+                              <StaticPills>
+                                <StaticPillsText>DisNetJy.com</StaticPillsText>
+                              </StaticPills>
+                            </Col>
+                          </React.Fragment>
+                        ) : (
+                          <React.Fragment>
+                            <Col>
+                              <StaticPills>
+                                <StaticPillsText>
+                                  {moment.unix(this.props.poem.date).fromNow()}
+                                </StaticPillsText>
+                              </StaticPills>
+                            </Col>
+                            {this.canIEdit()}
+                            <Col>
+                              <Pills
+                                onPress={() =>
+                                  this.setState({
+                                    open: !this.state.open
+                                  })
+                                }
+                              >
+                                <PillsText
+                                  onPress={() => {
+                                    // this.props.scrollDown();
+                                    this.setState({
+                                      open: !this.state.open
+                                    });
+                                  }}
+                                >
+                                  Options
+                                </PillsText>
+                              </Pills>
+                            </Col>
+                          </React.Fragment>
+                        )}
+                      </Row>
+                    </Grid>
+                    <OptionsComponents
+                      open={this.state.open}
+                      poem={this.props.poem}
+                    >
+                      {/* <AdminModal poem={this.props.poem} /> */}
+
+                      <View style={{ width }}>
+                        {Platform.OS !== 'android' ? (
+                          <React.Fragment>
+                            <OptionsListText
+                              onPress={() =>
+                                this.share(`${this.props.poem.id}`)
+                              }
+                            >
+                              Share
+                            </OptionsListText>
+                            {/* <OptionsListText
                 onPress={() => this.shareToInstagram(`${this.props.poem.id}`)}
-              >
+                >
                 Share To Instagram
               </OptionsListText> */}
-            </React.Fragment>
-          ) : null}
-          <OptionsListText
-            onPress={() => this.snapshot(`${this.props.poem.id}`)}
-          >
-            Save as Image
-          </OptionsListText>
-        </OptionsComponents>
+                          </React.Fragment>
+                        ) : null}
+                      </View>
+                      <View style={{ width }}>
+                        <OptionsListText
+                          onPress={() => this.snapshot(`${this.props.poem.id}`)}
+                        >
+                          Save as Image
+                        </OptionsListText>
+                      </View>
+                    </OptionsComponents>
+                  </StyledText>
+                </View>
+              </React.Fragment>
+              {this.props.poem.stemme ? (
+                <React.Fragment>
+                  <View style={{ width }}>
+                    <StyledAduioText>
+                      {this.state.wasScrolled ? (
+                        <ListAllAudioComponent poem={this.props.poem} />
+                      ) : (
+                        <ActivityIndicator
+                          color={theme ? '#D8D9D9' : '#2C2D2D'}
+                        />
+                      )}
+                    </StyledAduioText>
+                  </View>
+                </React.Fragment>
+              ) : null}
+            </ScrollView>
+          )}
+        </StyledView>
+
         {/* </AppologiesModal> */}
       </React.Fragment>
     );

@@ -152,7 +152,7 @@ class Bookmark extends Component {
 }
 const styles = StyleSheet.create({
   selected: {
-    color: '#91D9D9',
+    color: '#3CADA0',
     fontSize: 16,
     margin: 10,
     width: 10

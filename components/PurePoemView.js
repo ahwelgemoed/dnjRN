@@ -34,27 +34,24 @@ class PurePoemView extends Component {
     return (
       <StyledText>
         <React.Fragment>
-          <Row>
-            <Col>
-              {this.props.poem.name.replace(/\s/g, '') ? (
-                <PoemName>{this.props.poem.name}</PoemName>
-              ) : null}
-              {this.props.poem.handle ? (
-                <InstagramText> {this.props.poem.handle}</InstagramText>
-              ) : (
-                <InstagramText>- ANON</InstagramText>
-              )}
+          {this.props.poem.name.replace(/\s/g, '') ? (
+            <PoemName>{this.props.poem.name}</PoemName>
+          ) : null}
+          {this.props.poem.handle ? (
+            <InstagramText> {this.props.poem.handle}</InstagramText>
+          ) : (
+            <InstagramText>- ANON</InstagramText>
+          )}
 
-              <View>
-                <CNRichTextView
-                  text={this.props.poem.body}
-                  styleList={customStyles}
-                  foreColor={'#474554'}
-                  color={theme ? '#fff' : '#474554'}
-                />
-              </View>
-            </Col>
-          </Row>
+          <View>
+            <CNRichTextView
+              text={this.props.poem.body}
+              styleList={customStyles}
+              foreColor={'#474554'}
+              color={theme ? '#fff' : '#474554'}
+            />
+          </View>
+
           <Row style={{ marginTop: 40 }}>
             <React.Fragment>
               <Col>

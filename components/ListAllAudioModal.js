@@ -1,41 +1,54 @@
 import React, { Component } from 'react';
 import { Text, View, Dimensions } from 'react-native';
 import Modal from 'react-native-modal';
-import { InstagramText, PoemBodyText } from './Styles';
-import { Button } from 'native-base';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { PoemName, MetaAppolo } from './Styles';
 import { firestoreConnect } from 'react-redux-firebase';
-
+import { Icon } from 'native-base';
 var { height, width } = Dimensions.get('window');
 
-class AppologiesModal extends Component {
+class ListAllAudioModal extends React.PureComponent {
   state = {
-    showAppologiesModal: false
+    ListAllAudioModal: false
   };
   async componentDidUpdate(prevProps, prevState) {
     if (
-      this.props.showAppologiesModal !== prevProps.showAppologiesModal &&
-      !this.state.showAppologiesModal
+      this.props.ListAllAudioModal !== prevProps.ListAllAudioModal &&
+      !this.state.ListAllAudioModal
     ) {
       this.setState({
-        showAppologiesModal: true
+        ListAllAudioModal: true
       });
     }
   }
 
   toggleModal = () => {
-    this.setState({ showAppologiesModal: !this.state.showAppologiesModal });
+    this.setState({ ListAllAudioModal: !this.state.ListAllAudioModal });
   };
 
   render() {
     const { theme } = this.props;
     return (
-      <View onPress={this.toggleModal}>
+      <View>
+        <Icon
+          onPress={this.toggleModal}
+          style={{
+            position: 'absolute',
+            color: '#c2c2c2',
+            transform: [{ rotate: '0deg' }],
+            fontSize: 20,
+            right: 80,
+            top: 10
+          }}
+          type="FontAwesome"
+          name="play"
+        />
+        {/* <MetaAppolo >Luister Toonse</MetaAppolo> */}
         <Modal
           style={{ borderRadius: height * 0.03 }}
-          isVisible={this.state.showAppologiesModal}
-          onBackdropPress={() => this.setState({ showAppologiesModal: false })}
+          isVisible={this.state.ListAllAudioModal}
+          onBackdropPress={() => this.setState({ ListAllAudioModal: false })}
         >
           <View
             style={{
@@ -49,23 +62,8 @@ class AppologiesModal extends Component {
               alignItems: 'center'
             }}
           >
-            <InstagramText> MET APOLOGIE AAN</InstagramText>
+            <MetaAppolo>Toonsete</MetaAppolo>
             {this.props.children}
-            {/* <Button
-              style={{
-                fontSize: 16,
-                backgroundColor: theme ? '#2f2f2f' : '#e5e5e5',
-                marginTop: 20,
-                marginRight: 5,
-                fontFamily: 'raleway-regular',
-                textAlign: 'center'
-              }}
-              block
-              warning
-              onPress={() => this.setState({ showAppologiesModal: false })}
-            > */}
-            {/* <PoemBodyText>Close</PoemBodyText> */}
-            {/* </Button> */}
           </View>
         </Modal>
       </View>
@@ -81,4 +79,4 @@ export default compose(
     mapStateToProps,
     {}
   )
-)(AppologiesModal);
+)(ListAllAudioModal);

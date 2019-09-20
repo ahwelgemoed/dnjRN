@@ -405,7 +405,7 @@ class PostPoem extends Component {
                     position: 'absolute',
                     top: 0,
                     right: 12,
-                    backgroundColor: '#91D9D9'
+                    backgroundColor: '#3CADA0'
                   }}
                 >
                   <Icon
@@ -769,7 +769,7 @@ const styles = StyleSheet.create({
   buttonIn: {
     fontSize: 16,
     textAlign: 'center',
-    backgroundColor: '#91D9D9',
+    backgroundColor: '#3CADA0',
     marginTop: 5,
     padding: 16,
     width: '90%',
