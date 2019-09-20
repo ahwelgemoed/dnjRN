@@ -51,6 +51,7 @@ class RecordScreen extends Component {
 
   render() {
     const { navigation, theme, audio_Upload_Status } = this.props;
+
     const poem = navigation.getParam('poem', 'noPoem');
     return (
       <ScreenBackground>
@@ -78,22 +79,26 @@ class RecordScreen extends Component {
             navigation={navigation}
             withInstagram={this.state.withInstagram}
           />
-          {this.props.profile.isLoaded && this.props.profile.Instagram ? (
-            <ListItem>
-              <CheckBox
-                color={'#474554'}
-                checked={this.state.withInstagram}
-                onPress={this.withInstagram}
-              />
-              <Body>
-                <InstagramText>
-                  {' '}
-                  Post as {this.props.profile.Instagram}
-                </InstagramText>
-              </Body>
-            </ListItem>
-          ) : (
-            <React.Fragment>{/* <AddInstagramModal /> */}</React.Fragment>
+          {audio_Upload_Status === 'LOADING' ? null : (
+            <React.Fragment>
+              {this.props.profile.isLoaded && this.props.profile.Instagram ? (
+                <ListItem>
+                  <CheckBox
+                    color={'#474554'}
+                    checked={this.state.withInstagram}
+                    onPress={this.withInstagram}
+                  />
+                  <Body>
+                    <InstagramText>
+                      {' '}
+                      Post as {this.props.profile.Instagram}
+                    </InstagramText>
+                  </Body>
+                </ListItem>
+              ) : (
+                <React.Fragment>{/* <AddInstagramModal /> */}</React.Fragment>
+              )}
+            </React.Fragment>
           )}
         </RecordScrollView>
       </ScreenBackground>

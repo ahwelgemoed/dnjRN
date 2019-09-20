@@ -87,9 +87,6 @@ class RecodingComponent extends Component {
     console.log('DONE');
   }
 
-  componentDidUpdate() {
-    // console.log(this.props.audio_Upload_Status);
-  }
   render() {
     const { uploading } = this.state;
     const { audio_Upload_Status } = this.props;
@@ -120,8 +117,8 @@ class RecodingComponent extends Component {
           <Recorder
             style={{ flex: 1, width: width }}
             onComplete={this.recorderComplete}
-            maxDurationMillis={150000}
-            showDebug={true}
+            maxDurationMillis={20000}
+            showDebug={false}
             showBackButton={true}
             audioMode={{
               allowsRecordingIOS: true,

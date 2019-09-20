@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, ScrollView, Dimensions } from 'react-native';
+import { View, ScrollView, Dimensions } from 'react-native';
 import {
   Recorder,
   Player
@@ -13,7 +13,7 @@ export default class ListAllAudioComponent extends Component {
   render() {
     const { poem } = this.props;
     return (
-      <ScrollView>
+      <View>
         <Grid>
           <Row>
             <PoemName>There are {poem.stemme.length} recording(s)</PoemName>
@@ -62,7 +62,7 @@ export default class ListAllAudioComponent extends Component {
             ))}
           </ScrollView>
         </Grid>
-      </ScrollView>
+      </View>
     );
   }
 }

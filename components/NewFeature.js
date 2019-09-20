@@ -31,14 +31,14 @@ class NewFeature extends Component {
   modal = React.createRef();
 
   async componentDidMount() {
-    const MetApologieaan = await AsyncStorage.getItem('MetApologieaan');
-    // if (MetApologieaan == 'true') {
-    AsyncStorage.setItem('MetApologieaan', 'true');
-    setTimeout(() => {
-      this.openModal();
-      this._playAnimation();
-    }, 2000);
-    // }
+    const MetApologieaan = await AsyncStorage.getItem('Record');
+    if (MetApologieaan == 'true') {
+      AsyncStorage.setItem('Record', 'true');
+      setTimeout(() => {
+        this.openModal();
+        this._playAnimation();
+      }, 2000);
+    }
   }
   onClosed = () => {
     const { onClosed } = this.props;
@@ -105,8 +105,8 @@ class NewFeature extends Component {
               this.animation = animation;
             }}
             style={{
-              width: 100,
-              height: 100,
+              width: 400,
+              height: 200,
               alignSelf: 'center'
             }}
             source={this.state.animation}
@@ -114,12 +114,15 @@ class NewFeature extends Component {
             loop={true}
           />
         )}
-        <FeatName>Record Your Voice</FeatName>
+        <FeatName>TOONSET</FeatName>
         {/* <FeatName>How It Works</FeatName> */}
         <PoemBodyText>
-          The Way You read/ inerpret someone elses words is what we see as art
-          intresting. You have 15s
+          Everyone read/interprets someone else's work differently. We thought
+          it would be interesting to hear it.
         </PoemBodyText>
+
+        <PoemBodyText>Go ahead Record some poems and post it.</PoemBodyText>
+        <PoemBodyText>You have 20 seconds. Give It a go.</PoemBodyText>
 
         {/* </ScreenBackground> */}
       </Modalize>
