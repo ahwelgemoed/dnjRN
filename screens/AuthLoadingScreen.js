@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  ActivityIndicator,
-  AsyncStorage,
-  StatusBar,
-  Image,
-  StyleSheet,
-  View
-} from 'react-native';
+import { StyleSheet } from 'react-native';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -24,39 +17,39 @@ import {
 class AuthLoadingScreen extends React.Component {
   state = { firstVisit: null, animation: null, speed: 1, modalVisible: false };
 
-  componentDidMount() {
-    const { firestore } = this.props;
-    firestore
-      .get({
-        collection: 'appStatus'
-      })
-      .then(() => {
-        this.setState({
-          appStatus: this.props.appStatus,
-          isFetching: false,
-          loading: false
-        });
-      });
-  }
+  // componentDidMount() {
+  //   const { firestore } = this.props;
+  //   firestore
+  //     .get({
+  //       collection: 'appStatus'
+  //     })
+  //     .then(() => {
+  //       this.setState({
+  //         appStatus: this.props.appStatus,
+  //         isFetching: false,
+  //         loading: false
+  //       });
+  //     });
+  // }
   constructor(props) {
     super(props);
   }
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem('userToke');
-    const firstVisit = await AsyncStorage.getItem('firstVisit');
-    await this.setState({
-      firstVisit
-    });
+    // const userToken = await AsyncStorage.getItem('userToke');
+    // const firstVisit = await AsyncStorage.getItem('firstVisit');
+    // await this.setState({
+    //   firstVisit
+    // });
   };
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.modalVisible === true && prevState.modalVisible === false) {
-    }
+    // if (this.state.modalVisible === true && prevState.modalVisible === false) {
+    // }
   }
 
-  setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
-  }
+  // setModalVisible(visible) {
+  //   this.setState({ modalVisible: visible });
+  // }
 
   render() {
     const { auth } = this.props;
@@ -68,11 +61,11 @@ class AuthLoadingScreen extends React.Component {
       );
     }
     if (isEmpty(auth)) {
-      if (this.state.firstVisit !== 'Yes') {
-        return this.props.navigation.navigate('Welcome');
-      } else {
-        return this.props.navigation.navigate('LoginScreen');
-      }
+      // if (this.state.firstVisit !== 'Yes') {
+      return this.props.navigation.navigate('Welcome');
+      // } else {
+      //   return this.props.navigation.navigate('LoginScreen');
+      // }
     }
     return this.props.navigation.navigate('App');
   }

@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
   buttonIn: {
     fontSize: 16,
-    backgroundColor: '#91D9D9',
+    backgroundColor: '#3CADA0',
     width: screenWidth,
     marginTop: 20,
     fontFamily: 'raleway-regular',
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
 
     fontFamily: 'raleway-regular',
-    color: '#91D9D9',
+    color: '#3CADA0',
     textAlign: 'left'
   }
 });

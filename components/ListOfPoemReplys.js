@@ -11,6 +11,7 @@ import { compose } from 'redux';
 import PurePoemView from './PurePoemView';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compareValues } from '../helperFuctions';
+
 var { height, width } = Dimensions.get('window');
 class ListOfPoemReplys extends Component {
   state = { poems: [this.props.poem], loading: true };

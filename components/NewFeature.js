@@ -31,9 +31,9 @@ class NewFeature extends Component {
   modal = React.createRef();
 
   async componentDidMount() {
-    const MetApologieaan = await AsyncStorage.getItem('MetApologieaan');
-    if (MetApologieaan != 'true') {
-      AsyncStorage.setItem('MetApologieaan', 'true');
+    const MetApologieaan = await AsyncStorage.getItem('Records');
+    if (MetApologieaan !== 'true') {
+      AsyncStorage.setItem('Records', 'true');
       setTimeout(() => {
         this.openModal();
         this._playAnimation();
@@ -105,8 +105,8 @@ class NewFeature extends Component {
               this.animation = animation;
             }}
             style={{
-              width: 100,
-              height: 100,
+              width: 400,
+              height: 200,
               alignSelf: 'center'
             }}
             source={this.state.animation}
@@ -114,33 +114,16 @@ class NewFeature extends Component {
             loop={true}
           />
         )}
-        <FeatName>
-          Hmmm... Seems you all like replying to each other's work... So Let's
-          make it official
-        </FeatName>
+        <FeatName>TOONSET</FeatName>
         {/* <FeatName>How It Works</FeatName> */}
         <PoemBodyText>
-          If you see this{' '}
-          <Icon
-            style={{
-              position: 'absolute',
-              color: '#c2c2c2',
-              transform: [{ rotate: '0deg' }],
-              fontSize: 20,
-              right: 30,
-              top: 10
-            }}
-            type="FontAwesome"
-            name="reply"
-          />{' '}
-          Icon that means you can "reply" to that poem with a poem.
+          Everyone read/interprets someone else's work differently. We thought
+          it would be interesting to hear it.
         </PoemBodyText>
-        <PoemBodyText>
-          If a poem title starts with
-          <InstagramText> MET APOLOGIE AAN</InstagramText> that means that poem
-          is a reply to some other poem. Pressing that text will open the thread
-          of "replies", from there into the past.
-        </PoemBodyText>
+
+        <PoemBodyText>Go ahead Record some poems and post it.</PoemBodyText>
+        <PoemBodyText>You have 30 seconds. Give It a go.</PoemBodyText>
+
         {/* </ScreenBackground> */}
       </Modalize>
     );
