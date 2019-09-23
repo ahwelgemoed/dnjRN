@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator } from 'react-native';
-import { Input, Right, Left, Button, Text, ListItem } from 'native-base';
+import {
+  View,
+  ActivityIndicator,
+  StyleSheet,
+  Dimensions,
+  Keyboard
+} from 'react-native';
+import { Input, Right, Left, Button, Text, ListItem, Toast } from 'native-base';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
@@ -16,7 +22,12 @@ class GetUserSudjestion extends Component {
       await this.setState({
         loading: false
       });
-      return;
+      return Toast.show({
+        text: 'Please Add Tema Name',
+        position: 'top',
+        type: 'danger',
+        duration: 3000
+      });
     }
 
     await this.setState({
@@ -25,7 +36,9 @@ class GetUserSudjestion extends Component {
     const payLoad = {
       uid: auth.uid,
       datePosted: dateNow,
-      title: this.state.name
+      title: this.state.name,
+      votes: 0,
+      wasUsed: false
     };
     await firestore
       .add(
@@ -37,14 +50,22 @@ class GetUserSudjestion extends Component {
       .then(() => {
         this.props.toggleReplyHistory();
         this.setState({
-          loading: false
+          loading: false,
+          name: ''
+        });
+        Keyboard.dismiss;
+        return Toast.show({
+          text: 'Tema Posted Added',
+          buttonText: 'Okay',
+          position: 'top',
+          type: 'success'
         });
       });
   };
   render() {
     const { theme } = this.props;
     return (
-      <View>
+      <View style={styles.mainContent}>
         <PoemName>Post A Tema Suggestion</PoemName>
         <ListItem>
           <Input
@@ -63,47 +84,59 @@ class GetUserSudjestion extends Component {
                     textAlign: 'left'
                   }
             }
-            placeholder="Tema"
+            placeholder="Tema Name"
             value={this.state.name}
             onChangeText={text => this.setState({ name: text })}
           />
         </ListItem>
-        <Left></Left>
-        <Right>
-          <Button
-            small
+        {/* <ListItem> */}
+        <Button
+          small
+          style={{
+            fontSize: 16,
+            textAlign: 'center',
+            backgroundColor: '#3CADA0',
+            marginTop: 5,
+            padding: 16,
+            marginTop: 30,
+            width: '90%',
+            // width: screenWidth - 80,
+            fontFamily: 'raleway-regular',
+            alignSelf: 'center',
+            textAlign: 'center'
+          }}
+          light
+          onPress={this.postUserTema}
+        >
+          <Text
             style={{
-              fontSize: 16,
-              textAlign: 'center',
-              backgroundColor: '#3CADA0',
-              marginTop: 5,
-              padding: 16,
-              width: '90%',
-              // width: screenWidth - 80,
+              color: '#fff',
               fontFamily: 'raleway-regular',
-              alignSelf: 'center',
+              fontSize: 16,
               textAlign: 'center'
             }}
-            light
-            onPress={this.postUserTema}
           >
-            {this.state.loading ? <ActivityIndicator color={'#fff'} /> : null}
-            <Text
-              style={{
-                color: '#fff',
-                fontFamily: 'raleway-regular',
-                fontSize: 16,
-                textAlign: 'center'
-              }}
-            >
-              Submit Tema
-            </Text>
-          </Button>
-        </Right>
+            Submit Tema
+          </Text>
+        </Button>
+        {/* </ListItem> */}
       </View>
     );
   }
 }
+
+let screenWidth = Dimensions.get('window').width;
+
+const styles = StyleSheet.create({
+  mainContent: {
+    flex: 1,
+    paddingTop: 20,
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    textAlign: 'center'
+    // width: screenWidth,
+  }
+});
 
 export default compose(
   firestoreConnect(),

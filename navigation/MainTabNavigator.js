@@ -20,11 +20,11 @@ import FooterTabs from '../components/FooterTabs';
 
 const HomeStack = createStackNavigator(
   {
-    TemaScreen: {
-      screen: TemaScreen
-    },
     Home: {
       screen: HomeScreen
+    },
+    TemaScreen: {
+      screen: TemaScreen
     },
     Post: {
       screen: PostPoem

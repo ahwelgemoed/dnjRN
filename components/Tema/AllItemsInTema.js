@@ -34,6 +34,8 @@ class AllItemsInTema extends Component {
   }
   render() {
     const { theme } = this.props;
+    console.log(this.state.poems);
+
     return (
       <View>
         {!this.state.loading ? (

@@ -20,13 +20,19 @@ import { successfullyAddedPoem } from '../actions/poemsActions';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { ScreenBackground, PoemName } from '../components/Styles';
+import {
+  ScreenBackground,
+  PoemName,
+  InstagramText
+} from '../components/Styles';
 import { changePoem, toggleSwipeMode } from '../actions/themeActions';
 import AppologiesModal from '../components/AppologiesModal';
 import TemaItem from '../components/Tema/TemaItem';
 import GetUserSudjestion from '../components/Tema/GetUserSudjestion';
+import AllUserSujestions from '../components/Tema/AllUserSujestions';
 import TopNav from '../components/TopNav';
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import { ScrollView } from 'react-native-gesture-handler';
 
 class TemaScreen extends React.PureComponent {
   state = { openReplyModal: false };
@@ -36,7 +42,6 @@ class TemaScreen extends React.PureComponent {
     });
   };
   toggleReplyHistorys = () => {
-    console.log('RANRANRAN');
     this.setState({
       openReplyModal: false
     });
@@ -63,22 +68,31 @@ class TemaScreen extends React.PureComponent {
         >
           <GetUserSudjestion toggleReplyHistory={this.toggleReplyHistorys} />
         </AppologiesModal>
-        <PoemName>Past and Current Tema's</PoemName>
+        <Row style={{ height: 50 }}>
+          <Col style={{ width: '100%', marginLeft: 10 }}>
+            <PoemName>Past and Current Tema's</PoemName>
+            <InstagramText>Pressing On Shows The Submissions</InstagramText>
+          </Col>
+        </Row>
         {tema ? (
-          <View style={styles.mainContent}>
-            {tema.map((t, i) => {
-              if (t.isActive || t.wasActive) {
-                return (
-                  <ListItem key={i}>
-                    <TemaItem t={t} />
-                  </ListItem>
-                );
-              }
-            })}
-
-            <Row>
-              <Col style={{ width: '90%' }}>
+          <React.Fragment>
+            <ScrollView
+              style={{
+                flex: 1,
+                paddingTop: 10,
+                maxHeight: '50%'
+              }}
+            >
+              {tema.map((t, i) => {
+                if (t.isActive || t.wasActive) {
+                  return <TemaItem t={t} key={i} />;
+                }
+              })}
+            </ScrollView>
+            <Row style={{ height: 60 }}>
+              <Col style={{ width: '90%', marginLeft: 10 }}>
                 <PoemName>User Suggestion Tema's</PoemName>
+                <InstagramText>Pressing On It Votes For It</InstagramText>
               </Col>
               <Col style={{ width: '10%' }}>
                 <Icon
@@ -93,7 +107,10 @@ class TemaScreen extends React.PureComponent {
                 />
               </Col>
             </Row>
-          </View>
+            <Col style={{ height: '50%', marginLeft: 10 }}>
+              <AllUserSujestions reftesh={this.state.openReplyModal} />
+            </Col>
+          </React.Fragment>
         ) : (
           <ActivityIndicator color={theme ? '#D8D9D9' : '#2C2D2D'} />
         )}
@@ -126,7 +143,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     textAlign: 'left',
-    width: screenWidth
+    width: screenWidth,
+    height: '50%'
   },
   flatlist: {
     flex: 1,

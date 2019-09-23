@@ -31,17 +31,17 @@ export default class TemaItem extends Component {
         >
           <AllItemsInTema t={t} />
         </AppologiesModal>
-        <Left>
-          <InstagramText onPress={this.toggleReplyHistory}>
-            {t.title}
-          </InstagramText>
-        </Left>
-        <Right>
-          <Icon
-            name="arrow-forward"
-            style={[theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' }]}
-          />
-        </Right>
+        <ListItem onPress={this.toggleReplyHistory}>
+          <Left>
+            <InstagramText>{t.title}</InstagramText>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' }]}
+            />
+          </Right>
+        </ListItem>
       </React.Fragment>
     );
   }

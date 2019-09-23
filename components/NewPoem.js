@@ -579,7 +579,7 @@ class NewPoem extends Component {
                       open={this.state.open}
                       poem={this.props.poem}
                     >
-                      {/* <AdminModal poem={this.props.poem} /> */}
+                      <AdminModal poem={this.props.poem} />
 
                       <View style={{ width }}>
                         {Platform.OS !== 'android' ? (
