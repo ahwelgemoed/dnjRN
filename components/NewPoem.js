@@ -37,6 +37,7 @@ import {
   PillsText,
   StaticPills,
   StaticPillsText,
+  StaticPillsTextS,
   InstagramText,
   OptionsListText,
   NSFWPills,
@@ -445,9 +446,16 @@ class NewPoem extends Component {
                       </Row>
                       <Row>
                         <Col style={{ width: '90%' }}>
-                          {this.props.poem.name.replace(/\s/g, '') ? (
-                            <PoemName>{this.props.poem.name}</PoemName>
-                          ) : null}
+                          <PoemName>
+                            {this.props.poem.activeTema ? (
+                              <StaticPillsTextS>
+                                {this.props.poem.activeTema} |{' '}
+                              </StaticPillsTextS>
+                            ) : null}
+                            {this.props.poem.name.replace(/\s/g, '') ? (
+                              <PoemName>{this.props.poem.name}</PoemName>
+                            ) : null}
+                          </PoemName>
                         </Col>
                         <Col style={{ width: '10%' }}>
                           {hideOptions ? null : this.props.poem.canReply ? (
@@ -504,6 +512,7 @@ class NewPoem extends Component {
                       ) : (
                         <InstagramText>- ANON</InstagramText>
                       )}
+
                       {this.props.poem.richText ? (
                         <View>
                           <CNRichTextView
@@ -516,6 +525,7 @@ class NewPoem extends Component {
                       ) : (
                         <PoemBodyText>{this.props.poem.body}</PoemBodyText>
                       )}
+
                       {hideOptions ? null : this.props.poem.nsfw ? (
                         <NSFWPills>
                           <NSFWPillsText>NSFW</NSFWPillsText>
@@ -569,7 +579,7 @@ class NewPoem extends Component {
                       open={this.state.open}
                       poem={this.props.poem}
                     >
-                      {/* <AdminModal poem={this.props.poem} /> */}
+                      <AdminModal poem={this.props.poem} />
 
                       <View style={{ width }}>
                         {Platform.OS !== 'android' ? (

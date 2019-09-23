@@ -109,9 +109,14 @@ class PostPoem extends Component {
       nsfw: !this.state.nsfw
     });
   };
+  temaSelect = () => {
+    this.setState({
+      tema: !this.state.tema
+    });
+  };
   upDateSave = async () => {};
   postToPoem = async () => {
-    const { navigation } = this.props;
+    const { navigation, activeTema } = this.props;
     const poem = navigation.getParam('poem', 'noPoem');
     if (!this.state.name) {
       return Toast.show({
@@ -160,6 +165,7 @@ class PostPoem extends Component {
         nsfw,
         reported,
         bookmarkedCount,
+        activeTema: activeTema ? activeTema.title : null,
         name,
         adminNotes,
         richText: true,
@@ -206,6 +212,7 @@ class PostPoem extends Component {
         name,
         adminNotes,
         bookmarkedCount,
+        activeTema: activeTema ? activeTema.title : null,
         reported,
         handle: withInstagram ? this.props.profile.Instagram : '',
         richText: true,
@@ -258,20 +265,30 @@ class PostPoem extends Component {
       firstPost
     });
     const { navigation } = this.props;
+    const comingForTema = navigation.getParam('comingForTema');
+    console.log(comingForTema);
+    if (comingForTema) {
+      this.temaSelect();
+    }
     const id = navigation.getParam('id');
     const name = navigation.getParam('name');
     const handle = navigation.getParam('handle');
     const bookmarkedCount = navigation.getParam('bookmarkedCount');
     const body = navigation.getParam('body');
+    const activeTema = navigation.getParam('activeTema');
     const nsfw = navigation.getParam('nsfw');
     const date = navigation.getParam('date');
     if (body) {
+      if (activeTema) {
+        this.temaSelect();
+      }
       const convertBody = convertToObject(body);
       await this.setState({
         id,
         name,
         nsfw,
         body: convertBody,
+        activeTema,
         date,
         bookmarkedCount,
         update: true
@@ -313,7 +330,9 @@ class PostPoem extends Component {
 
   render() {
     const { handle, body, firstPost } = this.state;
-    const { theme } = this.props;
+    const { theme, activeTema } = this.props;
+    console.log(activeTema);
+
     const { navigation } = this.props;
     const poem = navigation.getParam('poem', 'noPoem');
     return (
@@ -456,6 +475,20 @@ class PostPoem extends Component {
                     <AddInstagramModal />
                   </React.Fragment>
                 )}
+                {this.props.activeTema ? (
+                  <ListItem>
+                    <CheckBox
+                      color={'#000'}
+                      checked={this.state.tema}
+                      onPress={this.temaSelect}
+                    />
+                    <Body>
+                      <Text style={styles.check}>
+                        Tema : {this.props.activeTema.title}
+                      </Text>
+                    </Body>
+                  </ListItem>
+                ) : null}
                 <ListItem>
                   <CheckBox
                     color={'#000'}
@@ -803,6 +836,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   profile: state.firebase.profile,
   auth: state.firebase.auth,
+  activeTema: state.poems.activeTema,
   theme: state.theme.isThemeDark
 });
 

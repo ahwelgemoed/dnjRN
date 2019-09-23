@@ -12,20 +12,30 @@ import styled, { ThemeProvider } from 'styled-components';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { darkTheme, lightTheme } from '../components/theme';
+import GetTemas from '../components/Tema/GetTemas';
 import { changePoem, toggleSwipeMode } from '../actions/themeActions';
+import { firestoreConnect } from 'react-redux-firebase';
 
 class Index extends Component {
   async componentDidMount() {
     const theme = JSON.parse(await AsyncStorage.getItem('theme'));
-    const swipe = JSON.parse(await AsyncStorage.getItem('swipe'));
+    // const swipe = JSON.parse(await AsyncStorage.getItem('swipe'));
+    await this.props.toggleSwipeMode(false);
+
     await this.props.changePoem(theme);
-    await this.props.toggleSwipeMode(swipe);
+    // await this.props.toggleSwipeMode(swipe);
+    const { firestore } = this.props;
+    await firestore.get({
+      collection: 'tema'
+      // orderBy: 'desc'
+    });
   }
   render() {
     const { theme } = this.props;
     return (
       <ThemeProvider theme={theme ? darkTheme : lightTheme}>
         <React.Fragment>
+          {/* <GetTemas /> */}
           {theme ? (
             <StatusBar translucent barStyle="light-content" />
           ) : (
@@ -57,6 +67,7 @@ const styles = StyleSheet.create({
   }
 });
 export default compose(
+  firestoreConnect(),
   connect(
     state => ({
       poems: state.firestore.ordered.poems,
