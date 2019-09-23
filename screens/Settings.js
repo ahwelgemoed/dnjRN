@@ -80,7 +80,7 @@ class Settings extends React.PureComponent {
               />
             </Right>
           </ListItem>
-          <ListItem>
+          {/* <ListItem>
             <Left>
               <Icon
                 style={[
@@ -110,7 +110,7 @@ class Settings extends React.PureComponent {
                 onValueChange={this.toggleSwipeMode}
               />
             </Right>
-          </ListItem>
+          </ListItem> */}
           <ListItem
             onPress={this.props.navigation.navigate.bind(this, 'Account')}
           >

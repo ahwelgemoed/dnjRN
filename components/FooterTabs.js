@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { StyleSheet, AsyncStorage, View } from 'react-native';
-import { Container, Header, Content, Button, Icon, Text } from 'native-base';
+import { Container, Header, Content, Button, Icon, Badge } from 'native-base';
 
 import { Footer, FooterTab } from './Styles';
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -29,6 +29,9 @@ class FooterTabs extends Component {
         {/* <FooterTab> */}
         <FooterTab vertical onPress={this.changeTab.bind(this, 'Home')}>
           Home
+        </FooterTab>
+        <FooterTab vertical onPress={this.changeTab.bind(this, 'TemaScreen')}>
+          Tema{' '}
         </FooterTab>
         <FooterTab vertical onPress={this.changeTab.bind(this, 'Post')}>
           Post

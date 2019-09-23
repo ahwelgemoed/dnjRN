@@ -16,6 +16,7 @@ import { Notifications } from 'expo';
 import { HZScroll } from 'horizontaltextscroll';
 import * as Permissions from 'expo-permissions';
 import { successfullyAddedPoem } from '../actions/poemsActions';
+import ActiveTemaCard from '../components/Tema/ActiveTemaCard';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
@@ -387,6 +388,9 @@ class HomeScreen extends React.PureComponent {
                   refreshing={this.state.isFetching}
                   showsVerticalScrollIndicator={false}
                   keyExtractor={(item, index) => index.toString()}
+                  ListHeaderComponent={() => (
+                    <ActiveTemaCard navigation={this.props.navigation} />
+                  )}
                   ListFooterComponent={() => (
                     <ActivityIndicator color={theme ? '#D8D9D9' : '#2C2D2D'} />
                   )}

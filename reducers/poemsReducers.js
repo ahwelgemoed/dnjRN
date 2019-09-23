@@ -1,7 +1,8 @@
 const initialState = {
   addedPoem: false,
   activateDelete: false,
-  audio_Upload_Status: 'LOADING'
+  audio_Upload_Status: 'LOADING',
+  activeTema: null
 };
 
 export default function(state = initialState, action) {
@@ -10,6 +11,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         addedPoem: action.payload
+      };
+    case 'ACTIVETEMA':
+      return {
+        ...state,
+        activeTema: action.payload
       };
     case 'ACTIVATEDELETE':
       return {

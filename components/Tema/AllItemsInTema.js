@@ -8,39 +8,34 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import PurePoemView from './PurePoemView';
+import PurePoemView from '../PurePoemView';
 import { firestoreConnect } from 'react-redux-firebase';
-import { compareValues } from '../helperFuctions';
+import { compareValues } from '../../helperFuctions';
+import * as firebase from 'firebase';
 
 var { height, width } = Dimensions.get('window');
-class ListOfPoemReplys extends Component {
-  state = { poems: [this.props.poem], loading: true };
+class AllItemsInTema extends Component {
+  state = { poems: '', loading: true };
   async componentDidMount() {
-    let i = 0;
-    let gettingId = this.props.poem.repliedTo;
     const { firestore } = this.props;
-    while (i <= 0) {
-      await firestore
-        .get({ collection: 'poems', doc: gettingId })
-        .then(doc => {
+    await firestore
+      .collection('poems')
+      .where('activeTema', '==', this.props.t.title)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          console.log(doc.data());
           this.setState({
-            poems: [...this.state.poems, doc.data()]
+            poems: [...this.state.poems, doc.data()],
+            loading: false
           });
-          if (doc.data().repliedTo) {
-            gettingId = doc.data().repliedTo;
-            i = 0;
-          } else {
-            i = 1;
-            this.setState({
-              loading: false
-            });
-          }
-        })
-        .catch(err => {});
-    }
+        });
+      });
   }
   render() {
     const { theme } = this.props;
+    console.log(this.state.poems);
+
     return (
       <View>
         {!this.state.loading ? (
@@ -100,4 +95,4 @@ export default compose(
     }),
     {}
   )
-)(ListOfPoemReplys);
+)(AllItemsInTema);

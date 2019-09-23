@@ -141,6 +141,36 @@ class DrawerScreen extends Component {
             />
           </Right>
         </ListItem>
+        <ListItem onPress={this.changeTab.bind(this, 'TemaScreen')}>
+          <Left>
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="question"
+              type="FontAwesome"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              Tema
+            </Text>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+            />
+          </Right>
+        </ListItem>
         <ListItem onPress={this.changeTab.bind(this, 'Bookmark')}>
           <Left>
             <Icon
@@ -442,7 +472,7 @@ class DrawerScreen extends Component {
               />
             </Right>
           </ListItem>
-          <ListItem>
+          {/* <ListItem>
             <Left>
               <Icon
                 style={[
@@ -472,7 +502,7 @@ class DrawerScreen extends Component {
                 onValueChange={this.toggleSwipeMode}
               />
             </Right>
-          </ListItem>
+          </ListItem> */}
           {/* <ListItem
             onPress={this.signOut}
             style={{ borderBottomWidth: 0, borderTopWidth: 0 }}

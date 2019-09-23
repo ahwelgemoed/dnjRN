@@ -49,23 +49,11 @@ class AppologiesModal extends Component {
               alignItems: 'center'
             }}
           >
-            <InstagramText> MET APOLOGIE AAN</InstagramText>
+            <InstagramText>
+              {' '}
+              {this.props.text ? this.props.text : 'MET APOLOGIE AAN'}
+            </InstagramText>
             {this.props.children}
-            {/* <Button
-              style={{
-                fontSize: 16,
-                backgroundColor: theme ? '#2f2f2f' : '#e5e5e5',
-                marginTop: 20,
-                marginRight: 5,
-                fontFamily: 'raleway-regular',
-                textAlign: 'center'
-              }}
-              block
-              warning
-              onPress={() => this.setState({ showAppologiesModal: false })}
-            > */}
-            {/* <PoemBodyText>Close</PoemBodyText> */}
-            {/* </Button> */}
           </View>
         </Modal>
       </View>
