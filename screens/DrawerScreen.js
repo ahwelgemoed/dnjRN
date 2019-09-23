@@ -472,7 +472,7 @@ class DrawerScreen extends Component {
               />
             </Right>
           </ListItem>
-          <ListItem>
+          {/* <ListItem>
             <Left>
               <Icon
                 style={[
@@ -502,7 +502,7 @@ class DrawerScreen extends Component {
                 onValueChange={this.toggleSwipeMode}
               />
             </Right>
-          </ListItem>
+          </ListItem> */}
           {/* <ListItem
             onPress={this.signOut}
             style={{ borderBottomWidth: 0, borderTopWidth: 0 }}

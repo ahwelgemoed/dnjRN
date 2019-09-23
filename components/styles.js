@@ -198,6 +198,13 @@ export const InstagramText = styled.Text`
   text-align: left;
   margin-bottom: 5px;
 `;
+export const MainPageTema = styled.Text`
+  color: ${props => props.theme.CARD_FONT_COLOR};
+  font-family: 'raleway-extralight';
+  font-size: 14;
+  text-align: left;
+  margin-bottom: 5px;
+`;
 export const MetaAppolo = styled.Text`
   color: ${props => props.theme.SECOND_COLOR};
   font-family: 'PTSansCaptionRegular';

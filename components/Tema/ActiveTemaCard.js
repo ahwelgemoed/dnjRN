@@ -3,7 +3,7 @@ import { Text, View, ActivityIndicator } from 'react-native';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { Poop, InstagramText } from '../Styles';
+import { Poop, InstagramText, MainPageTema } from '../Styles';
 import { activeTema } from '../../actions/poemsActions';
 
 class ActiveTemaCard extends Component {
@@ -30,18 +30,18 @@ class ActiveTemaCard extends Component {
             this.props.navigation.navigate('Post', { comingForTema: true })
           }
         >
-          <InstagramText
+          <MainPageTema
             style={{ textAlaign: 'center' }}
             onPress={() =>
               this.props.navigation.navigate('Post', { comingForTema: true })
             }
           >
-            Huidige Tema : {TEMA.title}
-          </InstagramText>
+            Tema : {TEMA.title}
+          </MainPageTema>
         </View>
       );
     } else {
-      return <ActivityIndicator color={theme ? '#D8D9D9' : '#2C2D2D'} />;
+      return <Text></Text>;
     }
   }
 }

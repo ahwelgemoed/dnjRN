@@ -61,7 +61,7 @@ class TemaScreen extends React.PureComponent {
     const { theme, tema } = this.props;
     return (
       <ScreenBackground style={styles.mainContent}>
-        <TopNav pageTitle={'Temas'} navigation={this.props.navigation} />
+        <TopNav pageTitle={'Tema'} navigation={this.props.navigation} />
         <AppologiesModal
           text={'Add Submition'}
           showAppologiesModal={this.state.openReplyModal}
@@ -70,8 +70,8 @@ class TemaScreen extends React.PureComponent {
         </AppologiesModal>
         <Row style={{ height: 50 }}>
           <Col style={{ width: '100%', marginLeft: 10 }}>
-            <PoemName>Past and Current Tema's</PoemName>
-            <InstagramText>Pressing On Shows The Submissions</InstagramText>
+            <PoemName>Past and Current Temas</PoemName>
+            <InstagramText>Select To View The Submissions</InstagramText>
           </Col>
         </Row>
         {tema ? (
@@ -91,8 +91,8 @@ class TemaScreen extends React.PureComponent {
             </ScrollView>
             <Row style={{ height: 60 }}>
               <Col style={{ width: '90%', marginLeft: 10 }}>
-                <PoemName>User Suggestion Tema's</PoemName>
-                <InstagramText>Pressing On It Votes For It</InstagramText>
+                <PoemName>User Suggestion Tema</PoemName>
+                <InstagramText>Pressing It Votes For That Tema</InstagramText>
               </Col>
               <Col style={{ width: '10%' }}>
                 <Icon

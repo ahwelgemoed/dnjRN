@@ -61,7 +61,26 @@ class AllUserSujestions extends Component {
                   <Left>
                     <InstagramText>{t.title}</InstagramText>
                   </Left>
-                  <Right>
+                  <Right style={{ textAlign: 'center' }}>
+                    <Text
+                      style={[
+                        theme
+                          ? {
+                              color: '#D8D9D9',
+                              fontSize: 16,
+                              textAlign: 'center',
+                              paddingRight: 5
+                            }
+                          : {
+                              color: '#2C2D2D',
+                              fontSize: 16,
+                              textAlign: 'center',
+                              paddingRight: 5
+                            }
+                      ]}
+                    >
+                      {t.votes}
+                    </Text>
                     <Icon
                       name="heart"
                       type="FontAwesome"

@@ -19,9 +19,11 @@ import { firestoreConnect } from 'react-redux-firebase';
 class Index extends Component {
   async componentDidMount() {
     const theme = JSON.parse(await AsyncStorage.getItem('theme'));
-    const swipe = JSON.parse(await AsyncStorage.getItem('swipe'));
+    // const swipe = JSON.parse(await AsyncStorage.getItem('swipe'));
+    await this.props.toggleSwipeMode(false);
+
     await this.props.changePoem(theme);
-    await this.props.toggleSwipeMode(swipe);
+    // await this.props.toggleSwipeMode(swipe);
     const { firestore } = this.props;
     await firestore.get({
       collection: 'tema'
