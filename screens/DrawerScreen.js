@@ -141,6 +141,35 @@ class DrawerScreen extends Component {
             />
           </Right>
         </ListItem>
+        <ListItem onPress={this.changeTab.bind(this, 'TemaScreen')}>
+          <Left>
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="bookmarks"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              TemaScreen
+            </Text>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+            />
+          </Right>
+        </ListItem>
         <ListItem onPress={this.changeTab.bind(this, 'Bookmark')}>
           <Left>
             <Icon

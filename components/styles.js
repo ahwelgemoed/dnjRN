@@ -16,6 +16,21 @@ export const StyledText = styled.View`
   justify-content: center;
   padding: 20px;
 `;
+export const Poop = styled.View`
+  /* shadow-radius: 10px; */
+  border-radius: 10px;
+  /* shadow-color: ${props => props.theme.CARD_SHADOW};
+  shadow-offset: 0px 0px; */
+  background: ${props => props.theme.CARD_BACKGROUND};
+  color: ${props => props.theme.CARD_FONT_COLOR};
+  margin-top: 10px;
+  margin-bottom: 10px;
+  /* box-shadow: 0px 0px 2px ${props => props.theme.CARD_SHADOW}; */
+  width: ${width - 40};
+  align-self: center;
+  justify-content: center;
+  padding: 20px;
+`;
 export const StyledAduioText = styled.View`
   shadow-radius: 20px;
   border-radius: 10px;
@@ -151,6 +166,15 @@ export const StaticPillsText = styled.Text`
   color: ${props => props.theme.SECOND_COLOR};
   font-family: 'PTSansCaptionRegular';
   font-size: 14;
+`;
+export const StaticPillsTextS = styled.Text`
+  color: ${props => props.theme.SECOND_COLOR};
+  /* color: ${props => props.theme.CARD_FONT_COLOR}; */
+  font-size: 20;
+  /* padding-top: 10; */
+  /* width: 80%; */
+  font-family: 'PTSansCaptionBold';
+  text-align: left;
 `;
 export const OnlinePills = styled.View`
   background: ${props => props.theme.CARD_FONT_COLOR};

@@ -12,6 +12,7 @@ import PostPoem from '../screens/PostPoem';
 import DrawerScreen from '../screens/DrawerScreen';
 import AccountScreen from '../screens/AccountScreen';
 import ShareScreen from '../screens/ShareScreen';
+import TemaScreen from '../screens/TemaScreen';
 import YourPoems from '../screens/YourPoems';
 import Settings from '../screens/Settings';
 import RecordScreen from '../screens/RecordScreen';
@@ -19,6 +20,9 @@ import FooterTabs from '../components/FooterTabs';
 
 const HomeStack = createStackNavigator(
   {
+    TemaScreen: {
+      screen: TemaScreen
+    },
     Home: {
       screen: HomeScreen
     },

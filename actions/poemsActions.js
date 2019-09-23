@@ -4,6 +4,12 @@ export const successfullyAddedPoem = payLoad => async dispatch => {
     payload: payLoad
   });
 };
+export const activeTema = payLoad => async dispatch => {
+  dispatch({
+    type: 'ACTIVETEMA',
+    payload: payLoad
+  });
+};
 export const activateDeleteAction = payLoad => async dispatch => {
   dispatch({
     type: 'ACTIVATEDELETE',
