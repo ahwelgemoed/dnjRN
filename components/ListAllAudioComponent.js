@@ -12,7 +12,7 @@ var { height, width } = Dimensions.get('window');
 export default class ListAllAudioComponent extends Component {
   render() {
     const { poem } = this.props;
-    console.log(poem.stemme[0].instagram);
+    console.log(poem.stemme[0]);
 
     return (
       <View>

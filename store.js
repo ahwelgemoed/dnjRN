@@ -15,7 +15,8 @@ const fbConfig = {
   databaseURL: 'https://disnetons.firebaseio.com',
   projectId: 'disnetons',
   storageBucket: 'disnetons.appspot.com',
-  messagingSenderId: '554939781321'
+  messagingSenderId: '554939781321',
+  appId: '1:554939781321:web:05ce7cd294e7cdd8'
 };
 // const fbConfig = {
 //   apiKey: 'AIzaSyBvirTMZcq_mBH_RLGpy3rbcgSRuZSTeJU',
