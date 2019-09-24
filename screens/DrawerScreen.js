@@ -329,14 +329,14 @@ class DrawerScreen extends Component {
             />
           </Right>
         </ListItem> */}
-        {/* <ListItem onPress={this.changeTab.bind(this, 'Share')}>
+        <ListItem onPress={this.changeTab.bind(this, 'PodCastScreen')}>
           <Left>
             <Icon
               style={[
                 theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
                 styles.icons
               ]}
-              name="share"
+              name="head-phone"
             />
             <Text
               style={[
@@ -345,7 +345,7 @@ class DrawerScreen extends Component {
               ]}
             >
               {' '}
-              Share DNJ
+              huiDIG
             </Text>
           </Left>
           <Right>
@@ -357,7 +357,7 @@ class DrawerScreen extends Component {
               ]}
             />
           </Right>
-        </ListItem> */}
+        </ListItem>
         <ListItem onPress={this.changeTab.bind(this, 'Settings')}>
           <Left>
             <Icon

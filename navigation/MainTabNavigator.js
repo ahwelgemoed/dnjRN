@@ -16,10 +16,14 @@ import TemaScreen from '../screens/TemaScreen';
 import YourPoems from '../screens/YourPoems';
 import Settings from '../screens/Settings';
 import RecordScreen from '../screens/RecordScreen';
+import PodCastScreen from '../screens/PodCastScreen';
 import FooterTabs from '../components/FooterTabs';
 
 const HomeStack = createStackNavigator(
   {
+    PodCastScreen: {
+      screen: PodCastScreen
+    },
     Home: {
       screen: HomeScreen
     },
