@@ -9,27 +9,27 @@ import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/firestore';
 import { reduxFirestore } from 'redux-firestore';
-// const fbConfig = {
-//   apiKey: 'AIzaSyCu119y-X_66vUOXixI9hCbTxjRx4zXPVM',
-//   authDomain: 'disnetons.firebaseapp.com',
-//   databaseURL: 'https://disnetons.firebaseio.com',
-//   projectId: 'disnetons',
-//   storageBucket: 'disnetons.appspot.com',
-//   messagingSenderId: '554939781321',
-//   appId: '1:554939781321:web:05ce7cd294e7cdd8'
-// };
 const fbConfig = {
-  apiKey: 'AIzaSyBvirTMZcq_mBH_RLGpy3rbcgSRuZSTeJU',
-  authDomain: 'disnetonsbackup.firebaseapp.com',
-  databaseURL: 'https://disnetonsbackup.firebaseio.com',
-  projectId: 'disnetonsbackup',
-  storageBucket: 'disnetonsbackup.appspot.com',
-  messagingSenderId: '168959021962',
-  appId: '1:168959021962:web:cc04cf1f7bb344a3'
+  apiKey: 'AIzaSyCu119y-X_66vUOXixI9hCbTxjRx4zXPVM',
+  authDomain: 'disnetons.firebaseapp.com',
+  databaseURL: 'https://disnetons.firebaseio.com',
+  projectId: 'disnetons',
+  storageBucket: 'disnetons.appspot.com',
+  messagingSenderId: '554939781321',
+  appId: '1:554939781321:web:05ce7cd294e7cdd8'
 };
+// const fbConfig = {
+//   apiKey: 'AIzaSyBvirTMZcq_mBH_RLGpy3rbcgSRuZSTeJU',
+//   authDomain: 'disnetonsbackup.firebaseapp.com',
+//   databaseURL: 'https://disnetonsbackup.firebaseio.com',
+//   projectId: 'disnetonsbackup',
+//   storageBucket: 'disnetonsbackup.appspot.com',
+//   messagingSenderId: '168959021962',
+//   appId: '1:168959021962:web:cc04cf1f7bb344a3'
+// };
 const rrfConfig = {
   userProfile: 'users',
-  // presence: 'presence', // where list of online users is stored in database
+  presence: 'presence', // where list of online users is stored in database
   useFirestoreForProfile: true,
   enableRedirectHandling: false
 };

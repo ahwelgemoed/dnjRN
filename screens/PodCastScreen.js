@@ -66,23 +66,43 @@ class PodCastScreen extends React.PureComponent {
                 style={{
                   width: 150,
                   height: 150,
+                  borderRadius: 10,
                   justifyContent: 'center',
                   alignItems: 'center'
                 }}
                 source={{ uri: podCast.image }}
               />
-              <Row style={{ height: 40, paddingLeft: 20, paddingRight: 20 }}>
-                <Left>
-                  <CustomLinks onPress={() => this.props.listenToThisEp('all')}>
-                    LISTEN ALL
-                  </CustomLinks>
-                </Left>
-                <Right>
-                  <CustomLinks onPress={() => Linking.openURL(podCast.website)}>
-                    SPREAKER
-                  </CustomLinks>
-                </Right>
-              </Row>
+              {allEps ? (
+                <Row style={{ height: 40, paddingLeft: 20, paddingRight: 20 }}>
+                  <Col>
+                    <CustomLinks
+                      onPress={() => this.props.listenToThisEp('all')}
+                    >
+                      LISTEN ALL
+                    </CustomLinks>
+                  </Col>
+                  <Col style={{ paddingLeft: 20, paddingRight: 20 }}>
+                    <CustomLinks
+                      onPress={() =>
+                        Linking.openURL(
+                          'https://podcasts.apple.com/za/podcast/huidig'
+                        )
+                      }
+                    >
+                      PODCAST
+                    </CustomLinks>
+                  </Col>
+                  <Col>
+                    <CustomLinks
+                      onPress={() => Linking.openURL(podCast.website)}
+                    >
+                      SPREAKER
+                    </CustomLinks>
+                  </Col>
+                </Row>
+              ) : (
+                <ActivityIndicator color={theme ? '#D8D9D9' : '#2C2D2D'} />
+              )}
               <HTMLView
                 value={dispP}
                 stylesheet={StyleSheet.create({
@@ -100,7 +120,9 @@ class PodCastScreen extends React.PureComponent {
             </React.Fragment>
           ) : null}
           <Row>
-            <ScrollView>
+            <ScrollView
+              style={{ backgroundColor: theme ? '#2b2b2b' : '#efefef' }}
+            >
               <Col style={{ height: '50%', marginLeft: 10 }}>
                 {allEps ? (
                   allEps.map(p => (

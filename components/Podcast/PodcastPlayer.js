@@ -4,7 +4,9 @@ import Modalize from 'react-native-modalize';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import { CustomLinks } from '../styles';
 import PodPlayer from './PodPlayer';
+import { closePlayer } from '../../actions/podcastActions';
 var { height, width } = Dimensions.get('window');
 
 class PodcastPlayer extends Component {
@@ -53,33 +55,34 @@ class PodcastPlayer extends Component {
       onClosed();
     }
   };
+  closePlayer = () => {
+    this.props.closePlayer();
+  };
 
   render() {
     const { theme, selectedPodCast, allEps, playerStatus } = this.props;
     return (
       <Modalize
         ref={this.modal}
-        modalHeight={height * 0.4}
+        scrollViewProps={{ scrollEnabled: false }}
+        modalHeight={height * 0.5}
         onClosed={this.onClosed}
         modalStyle={{
           backgroundColor: theme ? '#2b2b2b' : '#efefef',
-          // margin: 20,
           paddingLeft: 20,
           paddingRight: 20,
           borderRadius: 20,
           shadowOpacity: 0
-          // justifyContent: 'center',
-          // alignItems: 'center'
         }}
-        // modalStyle={s.content__modal}
         alwaysOpen={85}
-        handlePosition="outside"
+        handlePosition="inside"
       >
         <PodPlayer
           podPlaylist={this.state.PLAYLIST}
           theme={theme}
           playerStatus={playerStatus}
         />
+        <CustomLinks onPress={this.closePlayer}>Close Player</CustomLinks>
       </Modalize>
     );
   }
@@ -97,6 +100,6 @@ export default compose(
       addedPoem: state.poems.addedPoem,
       theme: state.theme.isThemeDark
     }),
-    {}
+    { closePlayer }
   )
 )(PodcastPlayer);

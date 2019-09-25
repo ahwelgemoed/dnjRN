@@ -329,36 +329,7 @@ class DrawerScreen extends Component {
             />
           </Right>
         </ListItem> */}
-        <ListItem onPress={this.changeTab.bind(this, 'PodCastScreen')}>
-          <Left>
-            <Icon
-              style={[
-                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
-                styles.icons
-              ]}
-              name="headphones"
-              type="FontAwesome"
-            />
-            <Text
-              style={[
-                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
-                styles.label
-              ]}
-            >
-              {' '}
-              huiDIG
-            </Text>
-          </Left>
-          <Right>
-            <Icon
-              name="arrow-forward"
-              style={[
-                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
-                styles.icons
-              ]}
-            />
-          </Right>
-        </ListItem>
+
         <ListItem onPress={this.changeTab.bind(this, 'Settings')}>
           <Left>
             <Icon
@@ -390,6 +361,36 @@ class DrawerScreen extends Component {
         </ListItem>
         {profile.auth ? (
           <View>
+            <ListItem onPress={this.changeTab.bind(this, 'PodCastScreen')}>
+              <Left>
+                <Icon
+                  style={[
+                    theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                    styles.icons
+                  ]}
+                  name="headphones"
+                  type="FontAwesome"
+                />
+                <Text
+                  style={[
+                    theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                    styles.label
+                  ]}
+                >
+                  {' '}
+                  huiDIG
+                </Text>
+              </Left>
+              <Right>
+                <Icon
+                  name="arrow-forward"
+                  style={[
+                    theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                    styles.icons
+                  ]}
+                />
+              </Right>
+            </ListItem>
             <ListItem
               itemDivider
               style={[

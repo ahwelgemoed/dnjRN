@@ -13,7 +13,7 @@ class ListPodcastEpisodes extends Component {
     this.props.postSelectedEpisode(episode);
   };
   render() {
-    const { episode } = this.props;
+    const { episode, theme } = this.props;
     return (
       <ListItem onPress={this.postSelectedEpisode}>
         <Left>
@@ -29,7 +29,8 @@ export default compose(
   firestoreConnect(),
   connect(
     state => ({
-      podCast: state.podcasts.podCast
+      podCast: state.podcasts.podCast,
+      theme: state.theme.isThemeDark
     }),
     { postSelectedEpisode }
   )

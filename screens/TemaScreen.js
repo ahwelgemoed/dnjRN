@@ -68,7 +68,7 @@ class TemaScreen extends React.PureComponent {
         >
           <GetUserSudjestion toggleReplyHistory={this.toggleReplyHistorys} />
         </AppologiesModal>
-        <Row style={{ height: 50 }}>
+        <Row style={{ height: 70 }}>
           <Col style={{ width: '100%', marginLeft: 10 }}>
             <PoemName>Past and Current Temas</PoemName>
             <InstagramText>Select To View The Submissions</InstagramText>
@@ -78,6 +78,7 @@ class TemaScreen extends React.PureComponent {
           <React.Fragment>
             <ScrollView
               style={{
+                backgroundColor: theme ? '#2b2b2b' : '#efefef',
                 flex: 1,
                 paddingTop: 10,
                 maxHeight: '50%'
@@ -89,8 +90,8 @@ class TemaScreen extends React.PureComponent {
                 }
               })}
             </ScrollView>
-            <Row style={{ height: 60 }}>
-              <Col style={{ width: '90%', marginLeft: 10 }}>
+            <Row style={{ height: 70 }}>
+              <Col style={{ width: '90%', paddingLeft: 10 }}>
                 <PoemName>User Suggestion Tema</PoemName>
                 <InstagramText>Pressing It Votes For That Tema</InstagramText>
               </Col>
@@ -107,7 +108,13 @@ class TemaScreen extends React.PureComponent {
                 />
               </Col>
             </Row>
-            <Col style={{ height: '50%', marginLeft: 10 }}>
+            <Col
+              style={{
+                height: '50%',
+                // marginLeft: 10,
+                backgroundColor: theme ? '#2b2b2b' : '#efefef'
+              }}
+            >
               <AllUserSujestions reftesh={this.state.openReplyModal} />
             </Col>
           </React.Fragment>

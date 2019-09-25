@@ -21,11 +21,11 @@ import FooterTabs from '../components/FooterTabs';
 
 const HomeStack = createStackNavigator(
   {
-    PodCastScreen: {
-      screen: PodCastScreen
-    },
     Home: {
       screen: HomeScreen
+    },
+    PodCastScreen: {
+      screen: PodCastScreen
     },
     TemaScreen: {
       screen: TemaScreen

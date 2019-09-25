@@ -18,7 +18,7 @@ import { ListItem, Icon, Right, Left, Toast } from 'native-base';
 import {
   InstagramText,
   FeatName,
-  PoemBodyText,
+  CustomLinks,
   ScreenBackground
 } from '../styles';
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -48,8 +48,12 @@ class SelectedEpisodeModal extends Component {
     Linking.openURL(url);
   };
   listenToThisEp = () => {
-    const { selectedPodCast } = this.props;
+    const { selectedPodCast, onClosed } = this.props;
+    this.props.postSelectedEpisode(null);
     this.props.listenToThisEp(selectedPodCast);
+    if (onClosed) {
+      onClosed();
+    }
   };
   render() {
     const { theme, selectedPodCast } = this.props;
@@ -58,6 +62,8 @@ class SelectedEpisodeModal extends Component {
     return (
       <Modalize
         ref={this.modal}
+        scrollViewProps={{ showsHorizontalScrollIndicator: false }}
+        handlePosition="outside"
         modalHeight={height / 2}
         onClosed={this.onClosed}
         modalStyle={{
@@ -71,7 +77,7 @@ class SelectedEpisodeModal extends Component {
           alignItems: 'center'
         }}
         // alwaysOpen={85}
-        handlePosition="inside"
+        // handlePosition="inside"
       >
         <View
           style={{
@@ -90,8 +96,9 @@ class SelectedEpisodeModal extends Component {
             }}
             source={{ uri: selectedPodCast.image }}
           />
-          <InstagramText onPress={this.listenToThisEp}>LISTEN</InstagramText>
+          <CustomLinks onPress={this.listenToThisEp}>LISTEN</CustomLinks>
           <InstagramText>
+            POSTED ON:{' '}
             {moment(selectedPodCast.pub_date_ms).format('DD-MM-YYYY')}
           </InstagramText>
           <HTMLView

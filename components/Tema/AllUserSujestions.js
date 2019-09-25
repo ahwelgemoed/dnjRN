@@ -51,7 +51,7 @@ class AllUserSujestions extends Component {
   render() {
     const { userTemas, theme } = this.props;
     return (
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: theme ? '#2b2b2b' : '#efefef' }}>
         {userTemas ? (
           userTemas.map((t, i) => {
             if (!t.wasUsed) {

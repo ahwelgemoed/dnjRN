@@ -58,7 +58,6 @@ const getTheRest = date => async dispatch => {
   // console.log(ALLEPS);
 };
 export const listenToThisEp = episode => async dispatch => {
-  console.log('paspaspaspaps');
   dispatch({
     type: 'OPENPLAYER',
     payload: false
@@ -69,4 +68,10 @@ export const listenToThisEp = episode => async dispatch => {
       payload: episode
     });
   }, 500);
+};
+export const closePlayer = () => async dispatch => {
+  dispatch({
+    type: 'OPENPLAYER',
+    payload: false
+  });
 };

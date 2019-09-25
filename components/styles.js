@@ -220,8 +220,11 @@ export const CustomLinks = styled.Text`
   font-family: 'PTSansCaptionRegular';
   font-size: 16;
   padding: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
   border-radius: 5px;
-  text-align: left;
+  margin-top: 10px;
+  text-align: center;
   margin-bottom: 5px;
 `;
 export const MainPageTema = styled.Text`
