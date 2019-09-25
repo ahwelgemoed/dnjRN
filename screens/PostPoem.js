@@ -155,7 +155,8 @@ class PostPoem extends Component {
         nsfw,
         withInstagram,
         adminNotes,
-        reported
+        reported,
+        tema
       } = this.state;
       let payLoad;
 
@@ -165,7 +166,7 @@ class PostPoem extends Component {
         nsfw,
         reported,
         bookmarkedCount,
-        activeTema: activeTema ? activeTema.title : null,
+        activeTema: tema ? activeTema.title : null,
         name,
         adminNotes,
         richText: true,
@@ -201,7 +202,7 @@ class PostPoem extends Component {
         bookmarkedCount,
         withInstagram,
         nsfw,
-        adminNotes
+        adminNotes,tema
       } = this.state;
       let payLoad;
 
@@ -212,7 +213,7 @@ class PostPoem extends Component {
         name,
         adminNotes,
         bookmarkedCount,
-        activeTema: activeTema ? activeTema.title : null,
+        activeTema: tema ? activeTema.title : null,
         reported,
         handle: withInstagram ? this.props.profile.Instagram : '',
         richText: true,
