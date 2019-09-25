@@ -3,7 +3,7 @@ import { Text, View, Dimensions } from 'react-native';
 import Modal from 'react-native-modal';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { PoemName, MetaAppolo } from './Styles';
+import { PoemName, MetaAppolo } from './styles';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon } from 'native-base';
 var { height, width } = Dimensions.get('window');

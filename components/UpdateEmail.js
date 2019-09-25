@@ -19,7 +19,7 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Modal, Dimensions, View, Alert, StyleSheet } from 'react-native';
 import { successfullyAddedPoem } from '../actions/poemsActions';
-import { ScreenBackground } from './Styles';
+import { ScreenBackground } from './styles';
 
 class UpdateEmail extends Component {
   state = {

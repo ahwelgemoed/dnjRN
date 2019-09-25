@@ -16,7 +16,7 @@ import {
   StaticPills,
   StaticPillsText,
   InstagramText
-} from './Styles';
+} from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
 const defaultStyles = getDefaultStyles();
 let customStyles = {

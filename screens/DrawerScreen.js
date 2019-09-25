@@ -23,7 +23,7 @@ import {
   NavBarHeaderText,
   OnlinePills,
   OnlinePillsText
-} from '../components/Styles';
+} from '../components/styles';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';

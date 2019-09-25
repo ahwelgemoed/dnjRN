@@ -45,8 +45,8 @@ import {
   PoemBodyText,
   InstagramText,
   ScreenBackground
-} from './Styles';
-// import { ScreenBackground } from './Styles';
+} from './styles';
+// import { ScreenBackground } from './styles';
 
 class NewCardPoem extends Component {
   state = {

@@ -11,7 +11,7 @@ import {
   OptionsListView,
   OptionsListText,
   StyledOptions
-} from './Styles';
+} from './styles';
 
 class OptionsComponents extends Component {
   reportPoem = () => {

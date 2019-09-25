@@ -12,7 +12,7 @@ import {
   ScreenBackground,
   PoemName,
   NavBarHeaderText
-} from '../components/Styles';
+} from '../components/styles';
 
 class AuthLoadingScreen extends React.Component {
   state = { firstVisit: null, animation: null, speed: 1, modalVisible: false };

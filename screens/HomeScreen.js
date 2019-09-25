@@ -28,7 +28,7 @@ import NewFeature from '../components/NewFeature';
 import ListAllAudioComponent from '../components/ListAllAudioComponent';
 import { Icon, Button } from 'native-base';
 import UpdateUserInfo from '../components/UpdateUserInfo';
-import { ScreenBackground } from '../components/Styles';
+import { ScreenBackground } from '../components/styles';
 import TopNav from '../components/TopNav';
 import MorningModal from '../components/MorningModal';
 import SwipeLottie from '../components/SwipeLottie';

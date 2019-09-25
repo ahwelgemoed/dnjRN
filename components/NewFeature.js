@@ -13,7 +13,7 @@ import {
   FeatName,
   PoemBodyText,
   ScreenBackground
-} from './Styles';
+} from './styles';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase';

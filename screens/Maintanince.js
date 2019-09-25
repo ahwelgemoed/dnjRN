@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions, Text, View } from 'react-native';
 import { successfullyAddedPoem } from '../actions/poemsActions';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { ScreenBackground, PoemName } from '../components/Styles';
+import { ScreenBackground, PoemName } from '../components/styles';
 import { firestoreConnect } from 'react-redux-firebase';
 
 import wiggly from './book.json';

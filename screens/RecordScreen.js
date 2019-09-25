@@ -8,7 +8,7 @@ import {
   StaticPillsText,
   RecordScrollView,
   InstagramText
-} from '../components/Styles';
+} from '../components/styles';
 import {
   CNRichTextView,
   getDefaultStyles

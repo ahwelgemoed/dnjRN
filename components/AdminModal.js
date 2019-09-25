@@ -12,7 +12,7 @@ import {
   Input,
   Switch
 } from 'native-base';
-import { OptionsListText } from './Styles';
+import { OptionsListText } from './styles';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';

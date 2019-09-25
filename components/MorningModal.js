@@ -3,7 +3,7 @@ import { StyleSheet, View, Modal, Text, Linking } from 'react-native';
 import Lottie from 'lottie-react-native';
 import wiggly from './data.json';
 import { Button, Grid, Col } from 'native-base';
-import { ScreenBackground, PoemName } from './Styles';
+import { ScreenBackground, PoemName } from './styles';
 import moment from 'moment';
 
 export default class MorningModal extends React.Component {
