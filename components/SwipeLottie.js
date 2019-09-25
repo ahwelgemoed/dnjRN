@@ -5,7 +5,7 @@ import { successfullyAddedPoem } from '../actions/poemsActions';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { ScreenBackground } from './Styles';
+import { ScreenBackground } from './styles';
 import { Button } from 'native-base';
 import wiggly from './swipe.json';
 import Lottie from 'lottie-react-native';

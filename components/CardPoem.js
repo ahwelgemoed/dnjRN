@@ -47,8 +47,8 @@ import {
   PoemBodyText,
   InstagramText,
   ScreenBackground
-} from './Styles';
-// import { ScreenBackground } from './Styles';
+} from './styles';
+// import { ScreenBackground } from './styles';
 
 const defaultStyles = getDefaultStyles();
 let customStyles = {

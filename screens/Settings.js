@@ -14,7 +14,7 @@ import { successfullyAddedPoem } from '../actions/poemsActions';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { ScreenBackground } from '../components/Styles';
+import { ScreenBackground } from '../components/styles';
 import { changePoem, toggleSwipeMode } from '../actions/themeActions';
 import TopNav from '../components/TopNav';
 

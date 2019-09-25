@@ -24,7 +24,7 @@ import {
   ScreenBackground,
   PoemName,
   InstagramText
-} from '../components/Styles';
+} from '../components/styles';
 import { changePoem, toggleSwipeMode } from '../actions/themeActions';
 import AppologiesModal from '../components/AppologiesModal';
 import TemaItem from '../components/Tema/TemaItem';

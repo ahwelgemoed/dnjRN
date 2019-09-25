@@ -10,7 +10,7 @@ import { Input, Right, Left, Button, Text, ListItem, Toast } from 'native-base';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { ScreenBackground, PoemName } from '../Styles';
+import { ScreenBackground, PoemName } from '../styles';
 import moment from 'moment';
 
 class GetUserSudjestion extends Component {

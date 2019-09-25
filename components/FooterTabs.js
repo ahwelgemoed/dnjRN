@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, AsyncStorage, View } from 'react-native';
 import { Container, Header, Content, Button, Icon, Badge } from 'native-base';
 
-import { Footer, FooterTab } from './Styles';
+import { Footer, FooterTab } from './styles';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
 class FooterTabs extends Component {

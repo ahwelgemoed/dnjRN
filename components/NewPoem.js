@@ -44,7 +44,7 @@ import {
   StyledAduioText,
   NSFWPillsText,
   AduioPills
-} from './Styles';
+} from './styles';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import OptionsComponents from './OptionsComponents';
 import moment from 'moment';

@@ -16,7 +16,7 @@ import {
   StaticPills,
   StaticPillsText,
   InstagramText
-} from './Styles';
+} from './styles';
 const defaultStyles = getDefaultStyles();
 let customStyles = {
   ...defaultStyles,

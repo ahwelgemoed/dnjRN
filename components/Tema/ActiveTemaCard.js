@@ -3,7 +3,7 @@ import { Text, View, ActivityIndicator } from 'react-native';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { Poop, InstagramText, MainPageTema } from '../Styles';
+import { Poop, InstagramText, MainPageTema } from '../styles';
 import { activeTema } from '../../actions/poemsActions';
 
 class ActiveTemaCard extends Component {

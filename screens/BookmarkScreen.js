@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import CardPoem from '../components/CardPoem';
 import { Button, Icon } from 'native-base';
-import { ScreenBackground } from '../components/Styles';
+import { ScreenBackground } from '../components/styles';
 import TopNav from '../components/TopNav';
 import NewPoem from '../components/NewPoem';
 

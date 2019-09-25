@@ -16,7 +16,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import NewPoem from '../components/NewPoem';
 import { Button, Icon } from 'native-base';
 import UpdateUserInfo from '../components/UpdateUserInfo';
-import { ScreenBackground } from '../components/Styles';
+import { ScreenBackground } from '../components/styles';
 import TopNav from '../components/TopNav';
 
 class YourPoems extends Component {

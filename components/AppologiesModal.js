@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Dimensions } from 'react-native';
 import Modal from 'react-native-modal';
-import { InstagramText, PoemBodyText } from './Styles';
+import { InstagramText, PoemBodyText } from './styles';
 import { Button } from 'native-base';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
