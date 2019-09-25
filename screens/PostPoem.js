@@ -12,7 +12,7 @@ import {
   JustColorBack,
   InstagramText,
   PoemName
-} from '../components/Styles';
+} from '../components/styles';
 import {
   HideWithKeyboard,
   ShowWithKeyboard

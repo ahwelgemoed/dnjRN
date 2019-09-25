@@ -11,12 +11,16 @@ import {
   Text,
   Platform
 } from 'react-native';
-import { getHuidig } from '../actions/podcastActions';
+import { getHuidig, listenToThisEp } from '../actions/podcastActions';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { Icon, Button } from 'native-base';
-import { ScreenBackground, InstagramText } from '../components/Styles';
+import { Icon, Button, Left, Right } from 'native-base';
+import {
+  ScreenBackground,
+  InstagramText,
+  CustomLinks
+} from '../components/styles';
 import ListPodcastEpisodes from '../components/Podcast/ListPodcastEpisodes';
 import SelectedEpisodeModal from '../components/Podcast/SelectedEpisodeModal';
 import TopNav from '../components/TopNav';
@@ -60,16 +64,25 @@ class PodCastScreen extends React.PureComponent {
 
               <Image
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: 150,
+                  height: 150,
                   justifyContent: 'center',
                   alignItems: 'center'
                 }}
                 source={{ uri: podCast.image }}
               />
-              <InstagramText onPress={() => Linking.openURL(podCast.website)}>
-                LISTEN
-              </InstagramText>
+              <Row style={{ height: 40, paddingLeft: 20, paddingRight: 20 }}>
+                <Left>
+                  <CustomLinks onPress={() => this.props.listenToThisEp('all')}>
+                    LISTEN ALL
+                  </CustomLinks>
+                </Left>
+                <Right>
+                  <CustomLinks onPress={() => Linking.openURL(podCast.website)}>
+                    SPREAKER
+                  </CustomLinks>
+                </Right>
+              </Row>
               <HTMLView
                 value={dispP}
                 stylesheet={StyleSheet.create({
@@ -77,7 +90,7 @@ class PodCastScreen extends React.PureComponent {
                     fontSize: 16,
                     padding: 10,
                     fontFamily: 'raleway-regular',
-                    color: theme ? '#fff' : '#000'
+                    color: theme ? '#fff' : '#474554'
                   },
 
                   a: { fontSize: 12 }
@@ -121,7 +134,7 @@ export default compose(
       swipeMode: state.theme.toggleSwipeMode,
       podCast: state.podcasts.podCast
     }),
-    { getHuidig }
+    { getHuidig, listenToThisEp }
   )
 )(PodCastScreen);
 

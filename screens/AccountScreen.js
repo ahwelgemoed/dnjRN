@@ -30,7 +30,7 @@ import {
   Body,
   Icon
 } from 'native-base';
-import { ScreenBackground } from '../components/Styles';
+import { ScreenBackground } from '../components/styles';
 import TopNav from '../components/TopNav';
 
 class AccountScreen extends Component {

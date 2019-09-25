@@ -6,7 +6,7 @@ import {
   NavBarView,
   DrawerText,
   NavBarHeaderTextBig
-} from './Styles';
+} from './styles';
 import { View, Text, Platform } from 'react-native';
 import { Icon, Button } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';

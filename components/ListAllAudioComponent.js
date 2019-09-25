@@ -6,7 +6,7 @@ import {
 } from 'react-native-audio-player-recorder-no-linking';
 import moment from 'moment';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { PoemName, PlayerScrollView, InstagramText } from './Styles';
+import { PoemName, PlayerScrollView, InstagramText } from './styles';
 var { height, width } = Dimensions.get('window');
 
 export default class ListAllAudioComponent extends Component {

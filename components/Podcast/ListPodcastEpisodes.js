@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Text, View } from 'react-native';
 import { ListItem, Icon, Right, Left, Toast } from 'native-base';
-import { InstagramText } from '../styles';
+import { InstagramText, PodList } from '../styles';
 import { postSelectedEpisode } from '../../actions/podcastActions';
 
 class ListPodcastEpisodes extends Component {
@@ -17,7 +17,7 @@ class ListPodcastEpisodes extends Component {
     return (
       <ListItem onPress={this.postSelectedEpisode}>
         <Left>
-          <InstagramText>{episode.title}</InstagramText>
+          <PodList>{episode.title}</PodList>
         </Left>
         <Right></Right>
       </ListItem>

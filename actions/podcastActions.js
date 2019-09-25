@@ -57,3 +57,16 @@ const getTheRest = date => async dispatch => {
     .catch(err => console.log(err));
   // console.log(ALLEPS);
 };
+export const listenToThisEp = episode => async dispatch => {
+  console.log('paspaspaspaps');
+  dispatch({
+    type: 'OPENPLAYER',
+    payload: false
+  });
+  setTimeout(() => {
+    dispatch({
+      type: 'OPENPLAYER',
+      payload: episode
+    });
+  }, 500);
+};

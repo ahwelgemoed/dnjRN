@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, AsyncStorage, View } from 'react-native';
 import { Container, Header, Content, Button, Icon, Badge } from 'native-base';
 
-import { Footer, FooterTab } from './Styles';
+import { Footer, FooterTab } from './styles';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
 class FooterTabs extends Component {
@@ -22,10 +22,10 @@ class FooterTabs extends Component {
     this.props.navigation.navigate(name);
   };
   render() {
-    const { theme } = this.props;
+    const { theme, playerStatus } = this.props;
     const { activeTab } = this.state;
     return (
-      <Footer>
+      <Footer style={{ height: playerStatus ? 125 : 50 }}>
         {/* <FooterTab> */}
         <FooterTab vertical onPress={this.changeTab.bind(this, 'Home')}>
           Home
@@ -72,6 +72,7 @@ class FooterTabs extends Component {
 
 const mapStateToProps = state => ({
   auth: state.firebase.auth,
+  playerStatus: state.podcasts.playerStatus,
   profile: state.firebase.profile,
   admin: state.poems.activateDelete,
   theme: state.theme.isThemeDark

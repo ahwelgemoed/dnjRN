@@ -22,7 +22,10 @@ import {
   ScreenBackground
 } from '../styles';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { postSelectedEpisode } from '../../actions/podcastActions';
+import {
+  postSelectedEpisode,
+  listenToThisEp
+} from '../../actions/podcastActions';
 import HTMLView from 'react-native-htmlview';
 var { height, width } = Dimensions.get('window');
 
@@ -32,13 +35,9 @@ class SelectedEpisodeModal extends Component {
     this.modal.current.open();
   };
   componentDidMount() {
-    console.log('POOP');
-
     this.openModal();
   }
   onClosed = () => {
-    console.log('MESA');
-
     const { onClosed } = this.props;
     this.props.postSelectedEpisode(null);
     if (onClosed) {
@@ -46,8 +45,11 @@ class SelectedEpisodeModal extends Component {
     }
   };
   clickedLink = url => {
-    console.log(url);
     Linking.openURL(url);
+  };
+  listenToThisEp = () => {
+    const { selectedPodCast } = this.props;
+    this.props.listenToThisEp(selectedPodCast);
   };
   render() {
     const { theme, selectedPodCast } = this.props;
@@ -88,6 +90,7 @@ class SelectedEpisodeModal extends Component {
             }}
             source={{ uri: selectedPodCast.image }}
           />
+          <InstagramText onPress={this.listenToThisEp}>LISTEN</InstagramText>
           <InstagramText>
             {moment(selectedPodCast.pub_date_ms).format('DD-MM-YYYY')}
           </InstagramText>
@@ -139,7 +142,7 @@ export default compose(
       addedPoem: state.poems.addedPoem,
       theme: state.theme.isThemeDark
     }),
-    { postSelectedEpisode }
+    { postSelectedEpisode, listenToThisEp }
   )
 )(SelectedEpisodeModal);
 

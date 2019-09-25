@@ -27,7 +27,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import { successfullyAddedPoem } from '../actions/poemsActions';
-import { ScreenBackground } from './Styles';
+import { ScreenBackground } from './styles';
 
 class DelelteAccount extends Component {
   state = {

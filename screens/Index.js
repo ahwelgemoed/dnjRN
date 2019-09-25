@@ -12,7 +12,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { darkTheme, lightTheme } from '../components/theme';
-import SelectedEpisodeModal from '../components/Podcast/SelectedEpisodeModal';
+import PodcastPlayer from '../components/Podcast/PodcastPlayer';
 import GetTemas from '../components/Tema/GetTemas';
 import { changePoem, toggleSwipeMode } from '../actions/themeActions';
 import { firestoreConnect } from 'react-redux-firebase';
@@ -32,7 +32,7 @@ class Index extends Component {
     });
   }
   render() {
-    const { theme, selectedPodCast } = this.props;
+    const { theme, playerStatus } = this.props;
 
     return (
       <ThemeProvider theme={theme ? darkTheme : lightTheme}>
@@ -44,6 +44,7 @@ class Index extends Component {
             <StatusBar translucent barStyle="dark-content" />
           )}
           <AppNavigator />
+          {playerStatus ? <PodcastPlayer /> : null}
         </React.Fragment>
       </ThemeProvider>
     );
@@ -73,6 +74,7 @@ export default compose(
   connect(
     state => ({
       poems: state.firestore.ordered.poems,
+      playerStatus: state.podcasts.playerStatus,
       selectedPodCast: state.podcasts.selectedPodCast,
       profile: state.firebase.profile,
       auth: state.firebase.auth,

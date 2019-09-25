@@ -17,7 +17,7 @@ import {
   uploadVoiceRecording,
   changeAudioStatus
 } from '../actions/poemsActions';
-import { PoemName, MetaAppolo } from './Styles';
+import { PoemName, MetaAppolo } from './styles';
 var { height, width } = Dimensions.get('window');
 class RecodingComponent extends Component {
   state = { uploading: false };

@@ -3,7 +3,7 @@ import { Text, ScrollView, ActivityIndicator } from 'react-native';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { InstagramText } from '../styles';
+import { InstagramText, PodList } from '../styles';
 import { compareValues } from '../../helperFuctions';
 import { ListItem, Icon, Right, Left, Toast } from 'native-base';
 
@@ -30,7 +30,6 @@ class AllUserSujestions extends Component {
       .then(res => {});
   };
   vote = t => {
-    console.log(t.id);
     const { firestore } = this.props;
     firestore
       .update({ collection: 'userTemas', doc: t.id }, { votes: t.votes + 1 })
@@ -59,7 +58,7 @@ class AllUserSujestions extends Component {
               return (
                 <ListItem key={i} onPress={this.vote.bind(this, t)}>
                   <Left>
-                    <InstagramText>{t.title}</InstagramText>
+                    <PodList>{t.title}</PodList>
                   </Left>
                   <Right style={{ textAlign: 'center' }}>
                     <Text

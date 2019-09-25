@@ -41,7 +41,10 @@
     "facebookDisplayName": "DisNetJy",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.disnetjy.ahwelgemoed"
+      "bundleIdentifier": "com.disnetjy.ahwelgemoed",
+      "infoPlist": {
+        "UIBackgroundModes": ["audio"]
+      }
     },
     "description": "",
     "hooks": {
