@@ -12,7 +12,7 @@ import {
 } from 'native-base';
 import AppologiesModal from '../AppologiesModal';
 import AllItemsInTema from './AllItemsInTema';
-import { InstagramText } from '../styles';
+import { InstagramText, PodList } from '../styles';
 
 export default class TemaItem extends Component {
   state = { openReplyModal: false };
@@ -33,7 +33,7 @@ export default class TemaItem extends Component {
         </AppologiesModal>
         <ListItem onPress={this.toggleReplyHistory}>
           <Left>
-            <InstagramText>{t.title}</InstagramText>
+            <PodList>{t.title}</PodList>
           </Left>
           <Right>
             <Icon

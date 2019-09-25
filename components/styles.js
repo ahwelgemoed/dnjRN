@@ -100,6 +100,14 @@ export const PoemName = styled.Text`
   font-family: 'PTSansCaptionBold';
   text-align: left;
 `;
+export const FeatNamePodName = styled.Text`
+  color: ${props => props.theme.CARD_FONT_COLOR};
+  font-size: 12;
+  padding-top: 10;
+  width: 90%;
+  font-family: 'PTSansCaptionBold';
+  text-align: center;
+`;
 export const FeatName = styled.Text`
   color: ${props => props.theme.CARD_FONT_COLOR};
   font-size: 22;
@@ -196,6 +204,27 @@ export const InstagramText = styled.Text`
   font-family: 'PTSansCaptionRegular';
   font-size: 14;
   text-align: left;
+  margin-bottom: 5px;
+`;
+export const PodList = styled.Text`
+  color: ${props => props.theme.CARD_FONT_COLOR};
+  font-family: 'PTSansCaptionRegular';
+  font-size: 14;
+  text-align: left;
+  margin-bottom: 5px;
+`;
+export const CustomLinks = styled.Text`
+  color: ${props => props.theme.CARD_FONT_COLOR};
+  border-width: 1;
+  border-color: ${props => props.theme.CARD_FONT_COLOR};
+  font-family: 'PTSansCaptionRegular';
+  font-size: 16;
+  padding: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+  margin-top: 10px;
+  text-align: center;
   margin-bottom: 5px;
 `;
 export const MainPageTema = styled.Text`

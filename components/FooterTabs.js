@@ -22,10 +22,10 @@ class FooterTabs extends Component {
     this.props.navigation.navigate(name);
   };
   render() {
-    const { theme } = this.props;
+    const { theme, playerStatus } = this.props;
     const { activeTab } = this.state;
     return (
-      <Footer>
+      <Footer style={{ height: playerStatus ? 125 : 50 }}>
         {/* <FooterTab> */}
         <FooterTab vertical onPress={this.changeTab.bind(this, 'Home')}>
           Home
@@ -72,6 +72,7 @@ class FooterTabs extends Component {
 
 const mapStateToProps = state => ({
   auth: state.firebase.auth,
+  playerStatus: state.podcasts.playerStatus,
   profile: state.firebase.profile,
   admin: state.poems.activateDelete,
   theme: state.theme.isThemeDark
