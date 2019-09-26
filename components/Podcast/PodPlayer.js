@@ -50,6 +50,12 @@ export default class App extends Component {
     };
   }
   componentDidUpdate(pP, pS) {
+    console.log(this.props.playerStatus);
+
+    if (this.props.playerStatus == 'stopAndClose') {
+      this._onStopPressed();
+    }
+    // playerStatus
     if (pP.podPlaylist != this.props.podPlaylist) {
       PLAYLIST = this.props.podPlaylist;
       console.log(this.props.podPlaylist);

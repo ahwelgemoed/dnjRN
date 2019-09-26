@@ -68,10 +68,24 @@ class TemaScreen extends React.PureComponent {
         >
           <GetUserSudjestion toggleReplyHistory={this.toggleReplyHistorys} />
         </AppologiesModal>
-        <Row style={{ height: 70 }}>
+        <Row
+          style={{
+            backgroundColor: theme ? '#000' : '#fff',
+            marginBottom: 0.5,
+            height: 70,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 5,
+              height: 2
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+            elevation: 5
+          }}
+        >
           <Col style={{ width: '100%', marginLeft: 10 }}>
-            <PoemName>Past and Current Temas</PoemName>
-            <InstagramText>Select To View The Submissions</InstagramText>
+            <PoemName>View Past TEMAs</PoemName>
+            {/* <InstagramText>Select To View The Submissions</InstagramText> */}
           </Col>
         </Row>
         {tema ? (
@@ -90,10 +104,24 @@ class TemaScreen extends React.PureComponent {
                 }
               })}
             </ScrollView>
-            <Row style={{ height: 70 }}>
+            <Row
+              style={{
+                backgroundColor: theme ? '#000' : '#fff',
+                marginBottom: 0.5,
+                height: 70,
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 5,
+                  height: 2
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5
+              }}
+            >
               <Col style={{ width: '90%', paddingLeft: 10 }}>
-                <PoemName>User Suggestion Tema</PoemName>
-                <InstagramText>Pressing It Votes For That Tema</InstagramText>
+                <PoemName>Love & Submit Upcoming TEMAs</PoemName>
+                {/* <InstagramText>Pressing It Votes For That Tema</InstagramText> */}
               </Col>
               <Col style={{ width: '10%' }}>
                 <Icon

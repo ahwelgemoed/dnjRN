@@ -4,7 +4,7 @@ import Modalize from 'react-native-modalize';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { CustomLinks } from '../styles';
+import { CustomLinks, InstagramText } from '../styles';
 import PodPlayer from './PodPlayer';
 import { closePlayer } from '../../actions/podcastActions';
 var { height, width } = Dimensions.get('window');
@@ -49,6 +49,8 @@ class PodcastPlayer extends Component {
     }
   };
   onClosed = () => {
+    console.log('RANS');
+
     const { onClosed } = this.props;
 
     if (onClosed) {
@@ -56,6 +58,7 @@ class PodcastPlayer extends Component {
     }
   };
   closePlayer = () => {
+    this.closeModal();
     this.props.closePlayer();
   };
 
@@ -65,7 +68,7 @@ class PodcastPlayer extends Component {
       <Modalize
         ref={this.modal}
         scrollViewProps={{ scrollEnabled: false }}
-        modalHeight={height * 0.5}
+        modalHeight={height * 0.7}
         onClosed={this.onClosed}
         modalStyle={{
           backgroundColor: theme ? '#2b2b2b' : '#efefef',
@@ -82,7 +85,10 @@ class PodcastPlayer extends Component {
           theme={theme}
           playerStatus={playerStatus}
         />
-        <CustomLinks onPress={this.closePlayer}>Close Player</CustomLinks>
+        <InstagramText> Swipe Down To Keep Listening</InstagramText>
+        <CustomLinks onPress={this.closePlayer}>
+          Stop & Close Player
+        </CustomLinks>
       </Modalize>
     );
   }

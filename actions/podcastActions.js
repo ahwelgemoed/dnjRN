@@ -72,6 +72,12 @@ export const listenToThisEp = episode => async dispatch => {
 export const closePlayer = () => async dispatch => {
   dispatch({
     type: 'OPENPLAYER',
-    payload: false
+    payload: 'stopAndClose'
   });
+  setTimeout(() => {
+    dispatch({
+      type: 'OPENPLAYER',
+      payload: false
+    });
+  }, 500);
 };

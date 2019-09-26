@@ -300,10 +300,10 @@ class HomeScreen extends React.PureComponent {
         <UpdateUserInfo />
         {poems ? (
           <React.Fragment>
-            <RefreshButton
+            {/* <RefreshButton
               scroll={this.state.scrollPosition}
               clickedRefreshButton={this.clickedRefreshButton}
-            />
+            /> */}
             {swipeMode ? (
               <React.Fragment>
                 <View

@@ -461,7 +461,7 @@ class PostPoem extends Component {
                 {this.props.profile.isLoaded && this.props.profile.Instagram ? (
                   <ListItem>
                     <CheckBox
-                      color={'#000'}
+                      color={'#3CADA0'}
                       checked={this.state.withInstagram}
                       onPress={this.withInstagram}
                     />
@@ -479,7 +479,7 @@ class PostPoem extends Component {
                 {this.props.activeTema ? (
                   <ListItem>
                     <CheckBox
-                      color={'#000'}
+                      color={'#3CADA0'}
                       checked={this.state.tema}
                       onPress={this.temaSelect}
                     />
@@ -492,7 +492,7 @@ class PostPoem extends Component {
                 ) : null}
                 <ListItem>
                   <CheckBox
-                    color={'#000'}
+                    color={'#3CADA0'}
                     checked={this.state.nsfw}
                     onPress={this.nsfw}
                   />

@@ -24,11 +24,11 @@ const HomeStack = createStackNavigator(
     Home: {
       screen: HomeScreen
     },
-    PodCastScreen: {
-      screen: PodCastScreen
-    },
     TemaScreen: {
       screen: TemaScreen
+    },
+    PodCastScreen: {
+      screen: PodCastScreen
     },
     Post: {
       screen: PostPoem
