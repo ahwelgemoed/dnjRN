@@ -33,20 +33,12 @@ class VoteItems extends Component {
     return (
       <ListItem onPress={this.vote.bind(this, t)}>
         <Left>
-          {t.votes === 1 ? (
-            <React.Fragment>
-              <PodList>{t.votes} Heart for</PodList>
-              <PodList> {t.title}</PodList>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <PodList>{t.votes} Hearts for</PodList>
-              <PodList> {t.title}</PodList>
-            </React.Fragment>
-          )}
+          <React.Fragment>
+            <PodList> {t.title}</PodList>
+          </React.Fragment>
         </Left>
-        <Right style={{ textAlign: 'center' }}>
-          <HeartIcon play={this.state._playAnimation} />
+        <Right style={{ textAlign: 'center', alignSelf: 'center' }}>
+          <HeartIcon t={t} play={this.state._playAnimation} />
         </Right>
       </ListItem>
     );

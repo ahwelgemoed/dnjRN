@@ -8,17 +8,12 @@ import {
   AsyncStorage
 } from 'react-native';
 // import Modal from 'react-native-modal';
-import {
-  InstagramText,
-  FeatName,
-  PoemBodyText,
-  ScreenBackground
-} from '../styles';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase';
 import wiggly from './heart.json';
 import Lottie from 'lottie-react-native';
+import { InstagramText, PodList } from '../styles';
 import { Icon, Button } from 'native-base';
 var { height, width } = Dimensions.get('window');
 
@@ -73,24 +68,33 @@ class HeartIcon extends Component {
     this.setState({ animation: wiggly });
   };
   render() {
-    const { theme } = this.props;
+    const { theme, t } = this.props;
     return (
       <View>
         {/* <ScreenBackground> */}
         {this.state.animation && (
-          <Lottie
-            ref={animation => {
-              this.animation = animation;
-            }}
-            style={{
-              width: 50,
-              height: 50,
-              alignSelf: 'center'
-            }}
-            source={this.state.animation}
-            speed={this.state.speed}
-            loop={false}
-          />
+          <React.Fragment>
+            <PodList
+              style={{
+                alignSelf: 'center'
+              }}
+            >
+              {t.votes}
+            </PodList>
+            <Lottie
+              ref={animation => {
+                this.animation = animation;
+              }}
+              style={{
+                width: 40,
+                height: 40,
+                alignSelf: 'center'
+              }}
+              source={this.state.animation}
+              speed={this.state.speed}
+              loop={false}
+            />
+          </React.Fragment>
         )}
       </View>
     );
