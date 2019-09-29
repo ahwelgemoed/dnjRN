@@ -125,8 +125,8 @@ class PodCastScreen extends React.PureComponent {
             >
               <Col style={{ height: '50%', marginLeft: 10 }}>
                 {allEps ? (
-                  allEps.map(p => (
-                    <React.Fragment>
+                  allEps.map((p, i) => (
+                    <React.Fragment key={i}>
                       <ListPodcastEpisodes episode={p} />
                     </React.Fragment>
                   ))

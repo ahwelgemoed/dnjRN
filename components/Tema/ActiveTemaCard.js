@@ -31,7 +31,6 @@ class ActiveTemaCard extends Component {
           }
         >
           <CustomLinks
-            style={{ textAlaign: 'center' }}
             onPress={() =>
               this.props.navigation.navigate('Post', { comingForTema: true })
             }
