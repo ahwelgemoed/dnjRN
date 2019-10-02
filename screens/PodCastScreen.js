@@ -85,7 +85,7 @@ class PodCastScreen extends React.PureComponent {
                     <CustomLinks
                       onPress={() =>
                         Linking.openURL(
-                          'https://podcasts.apple.com/za/podcast/huidig'
+                          'https://podcasts.apple.com/za/podcast/huidig/id1455484265'
                         )
                       }
                     >
