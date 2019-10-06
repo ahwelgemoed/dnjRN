@@ -32,8 +32,6 @@ import { activateDeleteAction } from '../actions/poemsActions';
 import { changePoem, toggleSwipeMode } from '../actions/themeActions';
 import OnlineUsers from '../components/OnlineUsers';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import NewFeature from '../components/NewFeature';
-
 const { manifest } = Constants;
 // import { DrawerActions, DrawerItems, SafeAreaView } from 'react-navigation';
 // import styles from '../../styles/index';
@@ -260,7 +258,36 @@ class DrawerScreen extends Component {
             />
           </Right>
         </ListItem>
-
+        <ListItem onPress={this.changeTab.bind(this, 'PodCastScreen')}>
+          <Left>
+            <Icon
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+              name="headphones"
+              type="FontAwesome"
+            />
+            <Text
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.label
+              ]}
+            >
+              {' '}
+              huiDIG
+            </Text>
+          </Left>
+          <Right>
+            <Icon
+              name="arrow-forward"
+              style={[
+                theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
+                styles.icons
+              ]}
+            />
+          </Right>
+        </ListItem>
         <ListItem
           onPress={() =>
             WebBrowser.openBrowserAsync(`https://www.instagram.com/disnetjy`)
@@ -359,38 +386,9 @@ class DrawerScreen extends Component {
             />
           </Right>
         </ListItem>
+
         {profile.auth ? (
           <View>
-            <ListItem onPress={this.changeTab.bind(this, 'PodCastScreen')}>
-              <Left>
-                <Icon
-                  style={[
-                    theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
-                    styles.icons
-                  ]}
-                  name="headphones"
-                  type="FontAwesome"
-                />
-                <Text
-                  style={[
-                    theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
-                    styles.label
-                  ]}
-                >
-                  {' '}
-                  huiDIG
-                </Text>
-              </Left>
-              <Right>
-                <Icon
-                  name="arrow-forward"
-                  style={[
-                    theme ? { color: '#D8D9D9' } : { color: '#2C2D2D' },
-                    styles.icons
-                  ]}
-                />
-              </Right>
-            </ListItem>
             <ListItem
               itemDivider
               style={[

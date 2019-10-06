@@ -13,6 +13,7 @@ import {
   Platform
 } from 'react-native';
 import { Notifications } from 'expo';
+import GetPodcasts from '../components/Podcast/GetPodcasts';
 import { HZScroll } from 'horizontaltextscroll';
 import * as Permissions from 'expo-permissions';
 import { successfullyAddedPoem } from '../actions/poemsActions';
@@ -272,6 +273,7 @@ class HomeScreen extends React.PureComponent {
 
     return (
       <ScreenBackground style={styles.container}>
+        <GetPodcasts navigation={this.props.navigation} />
         <TopNav
           pageTitle={'DNJ'}
           navigation={this.props.navigation}
@@ -292,11 +294,11 @@ class HomeScreen extends React.PureComponent {
           }
         />
         <MorningModal navigation={this.props.navigation} />
-        <NewFeature
+        {/* <NewFeature
           ref={el => {
             modal = el;
           }}
-        />
+        /> */}
         <UpdateUserInfo />
         {poems ? (
           <React.Fragment>

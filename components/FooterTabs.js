@@ -25,7 +25,7 @@ class FooterTabs extends Component {
     const { theme, playerStatus } = this.props;
     const { activeTab } = this.state;
     return (
-      <Footer style={{ height: playerStatus ? 125 : 50 }}>
+      <Footer style={{ height: playerStatus ? 130 : 50 }}>
         {/* <FooterTab> */}
         <FooterTab vertical onPress={this.changeTab.bind(this, 'Home')}>
           Home

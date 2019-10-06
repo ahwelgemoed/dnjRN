@@ -44,12 +44,15 @@ class PodCastScreen extends React.PureComponent {
     // headerTransparent: true,
   });
   componentDidMount() {
-    this.props.getHuidig();
+    if (!this.props.allEps) {
+      this.props.getHuidig();
+    }
   }
 
   render() {
     const { theme, podCast, selectedPodCast, allEps } = this.props;
     const dispP = podCast ? `<p>${podCast.description}</p>` : null;
+    // console.log(allEps);
 
     // website
     return (
@@ -82,15 +85,17 @@ class PodCastScreen extends React.PureComponent {
                     </CustomLinks>
                   </Col>
                   <Col style={{ paddingLeft: 20, paddingRight: 20 }}>
-                    <CustomLinks
-                      onPress={() =>
-                        Linking.openURL(
-                          'https://podcasts.apple.com/za/podcast/huidig/id1455484265'
-                        )
-                      }
-                    >
-                      PODCAST
-                    </CustomLinks>
+                    {Platform.OS === 'ios' ? (
+                      <CustomLinks
+                        onPress={() =>
+                          Linking.openURL(
+                            'https://podcasts.apple.com/za/podcast/huidig/id1455484265'
+                          )
+                        }
+                      >
+                        PODCAST
+                      </CustomLinks>
+                    ) : null}
                   </Col>
                   <Col>
                     <CustomLinks

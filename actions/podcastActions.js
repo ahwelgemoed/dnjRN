@@ -46,9 +46,12 @@ const getTheRest = date => async dispatch => {
     .then(res => {
       res.data.episodes.map(e => ALLEPS.push(e));
       // ALLEPS.push(res.data.episodes);
+      console.log(res.data.next_episode_pub_date);
+      console.log(ALLEPS.length);
       if (res.data.next_episode_pub_date) {
-        getTheRest(res.data.next_episode_pub_date);
+        dispatch(getTheRest(res.data.next_episode_pub_date));
       }
+
       dispatch({
         type: 'ALLEPISODES',
         payload: ALLEPS

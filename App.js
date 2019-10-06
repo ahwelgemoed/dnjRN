@@ -11,6 +11,7 @@ import store from './store';
 import Sentry from 'sentry-expo';
 import Maintanince from './screens/Maintanince';
 import Version from './screens/Version';
+import GetPodcasts from './components/Podcast/GetPodcasts';
 
 Sentry.config(
   'https://36083bf90a3448a3ba1fe017613bf988@sentry.io/1457296'
