@@ -32,7 +32,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "android": {
-      "versionCode": 26,
+      "versionCode": 27,
       "package": "com.disnetons.googlesignin",
       "googleServicesFile": "./google-services.json"
     },
